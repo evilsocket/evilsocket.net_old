@@ -1,0 +1,13 @@
+Date: 2011-03-24 18:10:20
+Author: evilsocket
+Categories: Misc, Tools
+Tags: wordpress, swg, static, html, github, 1.2.0, zip, gzip, comppressed, htaccess, performance, space, hd, harddisk, hosting, apache, httpd
+Title: Pubblicati su GitHub i template e file di configurazione di questo sito.
+
+<p align="justify">
+Successivamente al piccolo commit della 1.2.1 di <a href='http://www.evilsocket.net/?s=swg'>SWG</a>, il quale fixa un piccolo bug nella compressione gzip (un graziamento a i miei colleghi per avermelo
+fatto notare ^^), ho pensato di pubblicare un repository di questo stesso sito, sia per comodità personale sia per dar modo a chiunque voglia cimentarsi nell'utilizzo di SWG di avere una solida base
+di partenza.
+
+Pertanto, trovate i templates, l'htaccess ed il file di configurazione swg di <b>evilsocket.net</b> su GitHub a <a href='http://github.com/evilsocket/evilsocket.net' target='_blank'>questo indirizzo</a>.
+</p>
