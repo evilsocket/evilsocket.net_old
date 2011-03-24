@@ -1,0 +1,22 @@
+Date: 2010-04-24 19:27:21
+Author: evilsocket
+Categories: Misc
+Tags: 
+Title: Una risposta che stavolta verrà letta :)
+
+A distanza di quasi un mese da <a href="http://www.evilsocket.net/954/una-risposta-che-probabilmente-non-verra-letta.html" target="_blank">questo</a> post, ho deciso di partecipare a quella discussione nella mailing list e dire brevemente la mia, quindi vi copio quella che è stata la mia risposta.
+<blockquote>Salve, sono l'autore del "giocattolo" e vorrei dire la mia :)
+
+Inizialmente ho preso molto male questo thread, per quanto le critiche possano essere giuste o meno non è mai facile vedere un progetto sul quale hai sudato il sangue "smontato" in questo modo.
+Successivamente però mi son calmato e ho avuto modo di riflettere parecchio su quanto da voi detto ed in effetti, a parte un vago (nemmeno tanto) tono di arroganza da parte di alcuni dei partecipanti, ho trovato le vostre critiche giuste, critiche che mi hanno spinto a quasi un mese di lavoro incessante, giorno e notte.
+
+Da questo ne è seguito che:
+
+- Sono state sistemate alcune imprecisioni che erano presenti nella definizione di Hybris e nella documentazione in generale.
+- Ora il core di Hybris è completamente separato dalla libreria standard (che comunque viene compilata ed installata contestualmente all'interprete stesso).
+- E' stata rivoluzionata la gestione dei tipi ed introdotto un garbage collector decisamente efficace.
+- E' stato implementato pieno supporto alla programmazione ad oggetti, con tanto di ereditarietà, specificatori di accesso e overloading degli operatori.
+- E' stata implementata la gestione delle eccezioni.
+- Stiamo sviluppando una libreria standard "parallela" a quella binaria, implementata in Hybris, che offre delle classi con le quali operare secondo il paradigma OO.
+
+Colgo quindi questa occasione per ringraziare i qui presenti della spinta, anche se indiretta, che mi hanno dato per migliorare Hybris .</blockquote>

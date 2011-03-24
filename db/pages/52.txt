@@ -1,0 +1,9 @@
+Date: 2009-05-13 08:15:30
+Author: evilsocket
+Categories: Papers
+Tags: cacko, customization, pda, rom, sd driver, sharp zaurus, zaurus
+Title: Cacko ROM Customization
+
+Paper nel quale spiego come customizzare l'immagine "teoricamente" readonly di una ROM per palmari Sharp Zaurus, sostituendo il driver dello slot sd con uno hackerato per leggere schede di capacitÃ  superiori ad 1GB .
+
+<a href="http://www.evilsocket.net/papers/cacko_mmc.pdf" target="_blank">Scarica</a>

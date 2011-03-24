@@ -1,0 +1,9 @@
+Date: 2009-05-13 08:27:17
+Author: evilsocket
+Categories: Hacking, Papers, Web Hacking
+Tags: cookie, cookie grabber, google hacking, goole, hack, xss
+Title: Google Hacking
+
+Un video proof of concept nel quale mostro come anche Google, da molti ritenuto una delle infrastrutture piÃ¹ sicure al mondo, presenta tutta via delle "falle" che potrebbero mettere a repentaglio la sicurezza di milioni di utenti .
+
+<a href="http://www.evilsocket.net/papers/noia_o_schifio.tar.gz" target="_blank">Scarica</a>

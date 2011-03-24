@@ -1,0 +1,36 @@
+Date: 2010-02-28 23:25:58
+Author: evilsocket
+Categories: Misc
+Tags: game, hack game, Hacking, hackthissite, hts
+Title: HTS - Training The Hacker Underground
+
+<img class="alignleft" src="http://data.hackthissite.org/themes/Dark/images/training.jpg" alt="" width="283" height="170" />Dei famosi "hacker game" è piena la rete si sa e, vuoi per curiosità, vuoi perchè mi trovavo in una di quelle poche giornate nelle quali non ho niente da fare, ne ho provati veramente tanti e alcuni li ho anche finiti .
+
+Veramente pochissime volte questi giochi mi hanno "lasciato" qualcosa, che sia un insegnamento, una nozione o anche solo l'ammirazione verso lo sviluppatore che si è sbattuto per realizzarlo, ed in questo articolo voglio parlare di quello che più mi è piaciuto (e continua a piacermi dato che in ben tre anni ancora non l'ho finito XD) e che più mi ha insegnato.
+
+<break>Parlo di<a href="http://www.hackthissite.org/" target="_blank"> HackThiSite</a> (per gli amici HTS :D), un progetto nato tanto tempo fa e che ho visto svilupparsi nel corso di questo tempo in maniera veramente eccezionale.
+
+Lo scopo di questo sito, come recita il titolo di questo articolo (che poi è il "motto" stesso di HTS) è "allenare" l'underground hacker ... ed è proprio questo quello che fa!
+
+I livelli sono divisi in varie sezioni (che analizzeremo più avanti), ad ogni livello si deve sapere (o si deve imparare :P) una nozioe (o un insieme di nozioni) sempre più avanzata, al punto che per molti livelli saranno necessarie diverse ore di studio per capire bene come procedere allo stage successivo ... ed in questo lo staff ha fatto davvero un eccellente lavoro, poichè si può avvicinare al gioco sia il novizio, che partendo dai primi livelli imparerà man mano tantissime cose nuove, che l'esperto il quale rispolvererà concetti che erroneamente considerava banali e successivamente dovrà mettere alla prova il suo intelletto per i livelli avanzati ... il tutto condito da una comunità veramente amichevole e soprattutto competente.
+
+I livelli (o missioni) si dividono nelle seguenti categorie :
+<ol>
+	<li><strong>Basic </strong>(11 missioni), come suggerisce il nome sono i livelli più semplici, quel tanto che basta per "scaldare i motori" (semplici per modo di dire, hanno la difficoltà degli ultimi livelli della maggior parte degli hack game italiani XD).</li>
+	<li><strong>Realistic</strong> (16 missioni), qua si inizia a far sul serio ... ogni missione simula una situazione reale nella quale ci si potrebbe trovare, un sito, una web app buggata, ecc ecc ed anche in questo caso la difficoltà aumenta gradualmente.</li>
+	<li><strong>Application </strong>(18 missioni), in questa tipologia si affrontano le tematiche del reversing e del cracking ... sostanzialmente ci si troverà davanti a 18 applicazioni compilate, ognuna da crackare per trovare una password, un seriale, bypassare un meccanismo di autenticazione o creare un keygen ... inutile dire che in questa sezione sono necessarie buone conoscenze di assembly e dell utilizzo di debugger, quanto meno per le missioni avanzate.</li>
+	<li><strong>Programming</strong> (12 missioni), ci troveremo davanti dei dati in ingresso, criptati, randomizzati, inseriti in un immagine, ecc ecc ecc e dovremo scrivere un programma che li elabori nel minor tempo possibile restituendoci l'output relativo da inserire come password del livello.</li>
+	<li><strong>Extended Basic</strong> (14 missioni), nate "recentemente" come estenzioni delle <strong>Basic</strong>, le extbasic continuano il percorso delle missioni "semplici" offrendo però spunti più originali e complessi, che in alcuni casi metteranno alla prova anche i più bravi.</li>
+	<li><strong>Javascript</strong> (7 missioni), sezione nella quale dovremo crackare, reversare, interpretare, bypassare ecc del codice javascript, può sembrare banale ma vi assicuro che non lo è per niente XD .</li>
+	<li><strong>Stego</strong> (17 missioni), le missioni consistono nel estrarre dei dati incapsulati in un immagine seguendo vari algoritmi, in alcuni casi anche algoritmi "casalinghi" che rendono il reversing veramente complicato.</li>
+	<li><strong>IRC</strong> (???), missioni che si affrontano nel loro server irc, non so quante sono xkè ancora devo fare la prima XD.</li>
+</ol>
+Ogni missione di ogni sezione, in base al grado di difficoltà, una volta finita farà guadagnare dei punti che si aggiungeranno al vostro profilo utente, ogni tot punti aumenterete di "grado" fino ad entrare nella hall of fame della comunità, sezione riservata più che altro a chi, oltre ad aver ottenuto un punteggio molto alto nelle missioni, ha trovato dei bug nel sito stesso notificandoli allo staff.
+
+Insomma, c'è davvero da imparare tanto, anche grazie alla sezione di articoli che è gigantenorme e alla quale ogni utente può contribuire .
+
+Vi lascio con il link al sito ed un link al mio profilo nel caso voleste venirmi a rompere le palle pure la XD
+
+<a href="http://www.hackthissite.org" target="_blank">http://www.hackthissite.org/</a>
+
+<a href="http://www.hackthissite.org/user/view/evilsocket/" target="_blank">http://www.hackthissite.org/user/view/evilsocket/</a>

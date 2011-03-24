@@ -1,0 +1,11 @@
+Date: 2010-04-18 23:52:36
+Author: evilsocket
+Categories: Misc
+Tags: hybris, OO
+Title: E ora che mi vengano a dire che è un giocattolo!
+
+Piccolo esempio di ereditarietà singola e multipla, polimorfismo e programmazione object oriented in genere in Hybris.
+
+E ora, che "certi signori" mi vengano a dire che è un giocattolo!!!
+<h4 style="text-align: center;"><strong>Cliccare sull'immagine per ingrandirla</strong></h4>
+<a href="http://www.evilsocket.net/wp-content/uploads/2010/04/Screenshot-2.png"><img class="aligncenter size-medium wp-image-996" title="Screenshot-2" src="http://www.evilsocket.net/images/Screenshot-2-204x300.png" alt="" width="204" height="300" /></a>

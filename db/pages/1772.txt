@@ -1,0 +1,10 @@
+Date: 2010-09-10 01:25:37
+Author: evilsocket
+Categories: Misc
+Tags: hybris
+Title: Da ora Hybris anche su Mac OS X!!!
+
+<p>Era un bel po che non toccavo il codice di Hybris, vuoi un po per impegni di lavoro, vuoi un po per mancanza di ispirazione ... beh dopo tanto tempo ed una new entry nella mia camera-laboratorio, un Mac Book Pro, ho portato a termine le modifiche necessarie al progetto per compilarlo su piattaforme Apple!
+</p><p>Le varie dipendenze, così come mostrato nella <a href="http://www.hybris-lang.org/wiki/doku.php?id=compilazione_ed_installazione" >documentazione</a>, andranno installate tramite <a href="http://www.macports.org/" >MacPorts</a>, il resto dei passaggi son sempre gli stessi.</p>
+<p>Enjoy :)</p>
+<p><a href="http://www.hybris-lang.org/story/da-ora-hybris-anche-su-mac-os-x.html" >read more</a></p><img src="http://feeds.feedburner.com/~r/HybrisProgrammingLanguageOfficialSite/~4/53pIwVCo2UY" height="1" width="1"/>

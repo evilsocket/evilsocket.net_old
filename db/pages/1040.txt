@@ -1,0 +1,9 @@
+Date: 2010-05-10 17:58:19
+Author: evilsocket
+Categories: Misc
+Tags: hybris
+Title: Implementati attributi e metodi statici.
+
+<p>Per <strong>membro statico</strong>, dichiarato con la keyword <strong>static</strong> si intende un attributo o un metodo che esiste a prescindere dall'istanza della classe, poichè risiede direttamente nel prototipo della classe stessa.<br />
+Sono valori o metodi che in pratica possono essere utilizzati tramite il nome della classe e non necessariamente da un istanza di essa.</p>
+<p>Per ulteriori informazioni consultare la <a href="http://www.hybris-lang.org/wiki/doku.php?id=classe#membri_statici">documentazione</a> .</p><img src="http://feeds.feedburner.com/~r/HybrisProgrammingLanguageOfficialSite/~4/0AdDAdw10jA" height="1" width="1"/>

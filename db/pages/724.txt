@@ -1,0 +1,47 @@
+Date: 2009-06-12 13:11:05
+Author: evilsocket
+Categories: Misc
+Tags: 
+Title: Di nuovo online :)
+
+Rieccomi online dopo l'attacco subito, ci tengo a spiegare un po come Ã¨ successo, cosa Ã¨ successo, quando ecc ...
+
+- Il <strong>2 Giugno</strong>, io e SystemFAILURE decidiamo di trasferirci su un altro server dedicato, cosÃ¬ completiamo i backup e ripristiniamo i domini che avevamo sul vecchio dedicato sul nuovo .
+
+- Il <strong>3 Giugno </strong>effettuo una scansione sul server per controllare eventuali vulnerabilitÃ  dell sistema di default, e trovo una vuln della ssh (che era una versione abbastanza datata) ma, data la stanchezza (era notte) decido di patcharla in seguito e me ne vo a dormire (e qui sono stato io il coglione) .
+
+<break>- Il <strong>5 Giugno</strong> due persone trovano questa vulnerabilitÃ  sul server, scaricano il relativo exploit che si trova in giro, ed entrano come root, cancellando tutti i domini (quindi danneggiando non solo me ma anche Sys) e bloccando l'accesso dall'esterno .
+
+Su uno di questi domini era presente uno script in php, un bot msn al quale stavo lavorando, dove per ragioni di testing avevo salvato il mio account messenger e relativa password. quindi uno dei due tizi Ã¨ entrato nell'account, ha cambiato la password, la domanda di riserva e l'email di recupero .
+
+- Il <strong>6 Giugno</strong>, tramite la mia casella hotmail, uno dei due riesce a recuperare la password della mia casella gmail (e qui ancora coglione io a non aver cambiato l'indirizzo secondario di gmail), quindi riserva a quest'ultima lo stesso trattamento della prima .
+
+Tramite quella recupera una password di amministrazione di questo blog ed inizia a postare con la mia utenza articoli diffamatori (il perchÃ¨ sono diffamatori lo vediamo piÃ¹ avanti) .
+
+Alle 17.00 circa, tale persona mi chiama sul cellulare (numero che puÃ² essere recuperato facilmente con un whois), insultando, insultando la mia ragazza, la mia famiglia e cosa ancora piÃ¹ ridicola, chiedendo soldi in cambio dei miei account .
+
+Dopo circa 10 minuti elimino ogni file di questo sito, dopo aver backuppato tutto, ed inizio la procedura per la denuncia .
+
+Dopo circa un'ora riesco a recuperare gmail e successivamente hotmail (ancora sto ringraziando i rispettivi servizi di supporto clienti XD).
+
+E qui viene il bello, i due idioti non si sono resi conto che su questo sito c'Ã¨ un sistema di logging delle richieste http effettuato dal provider stesso e di conseguenza hanno lasciato delle tracce piÃ¹ che visibili del loro attacco .
+
+Dopo essermi spulciato svariati MB di log, ho isolato i due indirizzi degli stronzi, uno un ip fastweb (quindi presumibilmente uno dei due idioti non si Ã¨ nemmeno proxato), e l'altro l'ip di un server dedicato strettamente legato ad una persona di mia conoscenza .
+
+L'ip in questione Ã¨ <strong>213.202.247.154</strong>, se lo cercate su google vi fate un idea (non dico niente di specifico xkÃ¨ sto deficiente avrebbe pure la faccia da culo di querelarmi per diffamazione XD, ma cercate e vedrete ;)) .
+
+- L'<strong>8 Giugno</strong> avevo raccolto circa 23 pagine fitte di informazioni tra log ed email tracciate e tracciabili, cosÃ¬ mi sono presentato alla questura della Polizia Postale di Roma esponendo regolare denuncia/querela allegando alla stessa tutte le info che avevo raccolto e che <strong>oggettivamente</strong> rappresentano delle prove abbastanza attendibili per inchiodare i responsabili .
+
+In conclusione, ci tengo a dire un paio di cose ...
+
+Innanzitutto, la *famosa* lista di password messenger pubblicata in giro Ã¨ evidente essere stata rimediata da qualcun'altro e pubblicata come mia per diffamarmi, non a caso il primo account era il mio (di certo non mi fotto la password di msn da solo XD) e soprattutto, <strong>mi dite che minchia ci faccio con tutti quegli account?</strong> Chi mi segue sa quali sono i miei interessi, non pubblico/scrivo nemmeno exploit perchÃ¨ prediligo la programmazione e io stesso mi ritengo un programmatore, non un hacker, figuriamoci se mi metto a lamerare password di messenger in giro per farci non so cosa -.- .
+
+Altra cosa ... alcuni potrebbero pensare che sono stato duro a denunciare le persone alla Polizia, che in fondo si tratta di ragazzi e non posso rovinarli cosÃ¬ ... beh fatemi dire una cosa, non Ã¨ la prima volta che subisco degli attacchi, e mai, dico MAI, in passato ho fatto ricorso a questi metodi proprio per questo motivo .
+
+Ma stavolta queste persone, come si dice, hanno cagato fuori dal vasetto, colpendo la mia sfera personale insultando via messenger la mia ragazza, me, cancellando il lavoro che non era solo mio, chiamando a casa alle 2 di notte un altra persona coinvolta come amministratore in uno dei due domini disturbando ed insultando lui e la sua famiglia .
+
+Con questo concludo, chi vuole pensare che io stesso sia un lamer che ruba account di messenger faccia pure, onestamente non mi interessa piÃ¹ di tanto l'opinione che persone tanto tonne da farsi imbambolare cosÃ¬ si fa di me, del resto le persone che davvero mi conoscono e hanno stima nei miei confronti sapevano fin dall'inizio che io non c'entravo nulla, e quella Ã¨ l'unica cosa che mi interessa .
+
+Bye .
+
+<strong>PS</strong>: Ho bloccato i commenti a questo articolo perchÃ¨, come ho potuto constatare, di polemica ce n'Ã¨ stata pure troppa in altri posti, queste sono le mie spiegazioni a titolo informativo, non c'Ã¨ ne da rispondere ne da commentare .

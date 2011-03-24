@@ -1,0 +1,16 @@
+Date: 2009-05-29 03:52:06
+Author: evilsocket
+Categories: C, Programmazione, Sorgenti
+Tags: 
+Title: Come creare finestre su X11
+
+Questi giorni, data la necessitÃ  su un paio di progetti che sto portando avanti, ho avuto la necessitÃ  di studiarmi il server grafico X per capire come creare finestre ed interagire con loro in C/C++ .
+
+<break>Avrei potuto usare un framework grafico di livello piÃ¹ alto, ma a me piace "chiacchierare" direttamente col server grafico sia per una questione di dipendenze che per una questione di efficienza del codice .
+
+AimÃ¨, X Ã¨ stra documentato, ma non si trovano facilmente esempi completi e/o funzionanti di una semplice implementazione ... cosÃ¬ ho scritto una bozza veloce in C che condivido con voi, nel caso potesse essere utile a qualcuno :D .
+
+per compilare :
+<pre><strong>gcc x11_example.c -o x11ex -lX11 </strong>
+<a href="http://evilsocket.net/sources/x11_example.c.txt" target="_blank">
+Scarica il sorgente</a></pre>

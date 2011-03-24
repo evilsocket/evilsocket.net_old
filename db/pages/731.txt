@@ -1,0 +1,132 @@
+Date: 2009-06-13 17:44:08
+Author: evilsocket
+Categories: Hacking, Papers, Reversing, Web Hacking
+Tags: band clicker, hack, hits, http, myspace, reversing, song, statistics
+Title: MySpace Protocol Reversing - Band Auto Clicker
+
+<img class="alignleft" src="http://blog.recordunion.com/dogblog/wp-content/uploads/2009/05/myspace_logo088.jpg" alt="" width="142" height="142" />Un po di tempo fa, una certa persona mi commisionÃ² un progetto che riguardava MySpace ed i profili delle band.
+
+Come alcuni di voi sapranno, su questo social network Ã¨ possibile creare un profilo per la propria band, nel quale poter uploadare i propri brani (o alcuni di essi) in formato mp3 che verranno poi eseguiti nel profilo stesso dall'apposito player in flash .
+
+CiÃ² che non tutti sanno, o perlomeno che non tutti hanno notato, Ã¨ che questo player tiene traccia delle statistiche di ogni brano, principalmente quanta gente lo ha ascoltato complessivamente, giornalmente, ecc ecc. Tali statistiche vengono poi utilizzate per scegliere le band da promuovere nella sezione musicale di myspace, in parole povere, le band piÃ¹ ascoltate usufruiranno di una pubblicizzazione gratuita (e decisamente remunerativa) nella sezione di MySpace .
+
+Il mio compito era di reversare il protocollo di comunicazione di MySpace tra i vari server e sfruttare tali informazioni per scrivere un programma che incrementi arbitrariamente le statistiche di un brano o di tutta la playlist .
+
+Per un motivo o per un altro il mio rapporto professionale con questa persona Ã¨ andato a farsi benedire e mi son trovato in mano una settimana di ricerche e coding, che a questo punto decido di condividere con chiunque sia interessato, soprattutto perchÃ¨ software analoghi sono sempre proprietari e a pagamento .
+
+<break>Come Ã¨ facile immaginare, tutto ha inizio con una richiesta http al profilo dell'artista, nella forma :
+<blockquote>
+<pre><em>http://profile.myspace.com/index.cfm?fuseaction=user.viewprofile&amp;friendid=<strong>{ID DEL PROFILO}</strong></em></pre>
+</blockquote>
+Dove ovviamente l'ultimo parametro Ã¨ un id numerico che identifica il profilo, ad esempio, un profilo che avevo creato per i test :
+<blockquote>
+<pre><a href="http://profile.myspace.com/index.cfm?fuseaction=user.viewprofile&amp;friendid=454317278" target="_blank"><em>http://profile.myspace.com/index.cfm?fuseaction=user.viewprofile&amp;friendid=<strong>454317278</strong></em></a></pre>
+</blockquote>
+Richiedendo ai server myspace questa pagina, ovviamente verrÃ  scaricato l'html e il blocco del player flash, con dei parametri (le flashvars) molto importanti che ci serviranno in seguito, questi parametri si presentano nella forma :
+<blockquote>
+<pre>...
+<strong>plid=92912</strong> <span style="color: #ff0000;">&lt;--- id della playlist</span>
+<strong>profid=454317278</strong> <span style="color: #ff0000;">&lt;--- id del profilo</span>
+...
+<strong>artid=19268119</strong> <span style="color: #ff0000;">&lt;--- id dell'artista </span>
+...</pre>
+</blockquote>
+Tramite questi parametri, iniziamo ad addentrarci nel protocollo vero e proprio che sfrutta il player di myspace per ottenere le informazioni rigurdanti la playlist ... reversando tale sfw, ho verificato che le informazioni sulla playlist vengono richieste in formato xml e possono essere ottenute tramite la seguente richiesta :
+<blockquote><em>http://musicservices.myspace.com/Modules/MusicServices/Services/MusicPlayerService.ashx?artistUserId=<strong>{ID PROFILO}</strong>&amp;playlistId=<strong>{ID PLAYLIST}</strong>&amp;action=<strong>getArtistPlaylist</strong>&amp;artistId=<strong>{ID ARTISTA}</strong></em></blockquote>
+Quindi nel nostro profilo di esempio, l'url risulterÃ  essere :
+<blockquote><a href="http://musicservices.myspace.com/Modules/MusicServices/Services/MusicPlayerService.ashx?artistUserId=454317278&amp;playlistId=92912&amp;action=getArtistPlaylist&amp;artistId=19268119" target="_blank"><em>http://musicservices.myspace.com/Modules/MusicServices/Services/MusicPlayerService.ashx?artistUserId=<strong>454317278</strong>&amp;playlistId=<strong>92912</strong>&amp;action=getArtistPlaylist&amp;artistId=<strong>19268119</strong></em></a></blockquote>
+E con questo otteniamo un xml con le informazioni della playlist, traccia per traccia, compresi gli id di ogni canzone, le statistiche, eventuali immagini cover, etc etc etc ... in particolare ci interessa l'attributo <strong>songId</strong> del nodo xml <strong>song</strong> della canzone che ci interessa, nel caso del mio profilo di esempio, l'xml relativo all'unica canzone che ho caricato risulta essere :
+<blockquote>
+<pre><em>... 
+&lt;song <strong>songId</strong>="<strong>40916167</strong>"</em> ...
+...</pre>
+</blockquote>
+A questo punto, dobbiamo iniziare la procedura http che genererebbe un normale utente aprendo il profilo, caricando il player flash, richiedendo l'ascolto di una traccia e di conseguenza incrementando il valore di ascolto della stessa .
+
+La gestione del tutto Ã¨ delegata al player swf e una volta reversato ho notato che la logica di ogni richiesta effettuata dal player stesso Ã¨ la seguente :
+<ul>
+	<li>Richiedo un nuovo "<strong>token</strong>" (un id alfanumerico che identifica ogni richiesta) di autorizzazione al server <strong>musicservices.myspace.com</strong> .</li>
+	<li>Richiedo al server <strong>profile.myspace.com</strong> di iniziare lo stream della traccia e successivamente di incrementarne le statistiche .</li>
+</ul>
+Ovviamente le due richieste vengono eseguite in http tramite una serie di campi nell'header specifici, impostati dal player, che identificano in modo univoco il player rendendo "sicura" e "non riproducibile" (almeno secondo loro XD) tutta la transazione .
+
+Analiziamo ora la prima richiesta, ovvero l'impostazione del nuovo token di autorizzazione verso l'host <strong>musicservices.myspace.com :</strong>
+<blockquote>
+<pre><strong>POST</strong> /Modules/MusicServices/Services/MusicPlayerService.ashx?action=<strong>getToken</strong> HTTP/1.0
+<strong>Host</strong>: musicservices.myspace.com
+<strong>Accept</strong>:Â  application/x-shockwave-flash,text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5
+<strong>Accept-Language</strong>: en-us,en;q=0.5
+<strong>User-Agent</strong>: <strong>{USER AGENT DELL'UTENTE CHE VISITA IL PROFILO}</strong>
+<strong>Accept-Encoding</strong>: gzip,deflate
+<strong>Accept-Charset</strong>: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+<strong>Referer</strong>: http://lads.myspace.com/videos/Main.swf
+<strong>Content-type</strong>: application/x-www-form-urlencoded
+<strong>x-myspace-id</strong>: ownerId=<strong>{ID PROFILO}</strong>;contentId=<strong>{ID TRACCIA}</strong>
+<strong>x-myspace-type</strong>: Music
+<strong>x-myspace-action</strong>: Stream
+<strong>Content-length</strong>: 16
+<span style="color: #ff0000;"><em>service=tokennew</em></span><strong>
+</strong></pre>
+</blockquote>
+Quindi, una richiesta di esempio con Firefox e alla traccia del profilo che ho appositamente creato, risulterebbe :
+<blockquote>
+<pre><strong>POST</strong> /Modules/MusicServices/Services/MusicPlayerService.ashx?action=<strong>getToken</strong> HTTP/1.0
+<strong>Host</strong>: musicservices.myspace.com
+<strong>Accept</strong>:Â  application/x-shockwave-flash,text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5
+<strong>Accept-Language</strong>: en-us,en;q=0.5
+<strong>User-Agent</strong>: <span style="color: #ff0000;">Mozilla/5.0 (X11; U; Linux i686; en-GB; rv:1.8.1b1) Gecko/20060710 Firefox/2.0b1
+</span><strong>Accept-Encoding</strong>: gzip,deflate
+<strong>Accept-Charset</strong>: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+<strong>Referer</strong>: http://lads.myspace.com/videos/Main.swf
+<strong>Content-type</strong>: application/x-www-form-urlencoded
+<strong>x-myspace-id</strong>: ownerId=<strong>454317278</strong>;contentId=<strong>40916167</strong>
+<strong>x-myspace-type</strong>: Music
+<strong>x-myspace-action</strong>: Stream
+<strong>Content-length</strong>: 16
+<span style="color: #ff0000;"><em>service=tokennew</em></span><strong>
+</strong></pre>
+</blockquote>
+Il server a questo punto ci risponde con un xml del tipo :
+<blockquote>
+<pre>&lt;?xml version="1.0" encoding="utf-8"?&gt;&lt;token&gt;<strong>N1jfEyw1SLA2E2s6qcFAxaqIdbqU5dC/47iDlNUVpPoZXXzWqgzrX8bxMZAS2Np/UGKFeb+bO8EEANKT6fSIatp9ueAK9oKrDpP90lCHlAI=</strong>&lt;/token&gt;</pre>
+</blockquote>
+Dove la parte in grassetto identifica il famoso token .
+
+<em><strong>Una piccola nota</strong>: Ai fini del nostro obiettivo, cioÃ¨ incrementare le statistiche di una canzone, NON Ã¨ importante ritrasmettere questo token nella richiesta successiva, ma Ã¨ OBBLIGATORIO richiederlo per ogni streaming simulato, poichÃ¨ da quel punto in poi il server contrassegnerÃ  il nostro indirizzo ip come "autorizzato" ad ascoltare la canzone, per poi cancellare tale autorizzazione alla richiesta successiva .</em>
+
+Detto questo, possiamo procedere con la seconda richiesta, ovvero l'inizializzazione dello streaming vero e proprio, che aumenterÃ  le statistiche della canzone richiesta :
+<blockquote>
+<pre><strong>GET</strong> /index.cfm?fuseaction=user.viewprofile&amp;friendID=<strong>{ID PROFILO}</strong> HTTP/1.0
+<strong>Accept</strong>:Â  application/x-shockwave-flash,text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5
+<strong>Accept-Language</strong>: en-us,en;q=0.5
+<strong>User-Agent</strong>: <strong>{USER AGENT DELL'UTENTE CHE VISITA IL PROFILO}</strong>
+<strong>Accept-Encoding</strong>: gzip,deflate
+<strong>Accept-Charset</strong>: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+<strong>Referer</strong>: http://lads.myspace.com/videos/Main.swf
+<strong>Host</strong>: profile.myspace.com
+<strong>x-myspace-id</strong>: ownerId=<strong>{ID ARTISTA}</strong>;contentId=<strong>{ID TRACCIA}</strong>
+<strong>x-myspace-type</strong>: Music
+<strong>x-myspace-action</strong>: Stream</pre>
+</blockquote>
+Quindi nel nostro caso la richiesta appare come :
+<blockquote>
+<pre><strong>GET</strong> /index.cfm?fuseaction=user.viewprofile&amp;friendID=<strong>454317278</strong> HTTP/1.0
+<strong>Accept</strong>:Â  application/x-shockwave-flash,text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5
+<strong>Accept-Language</strong>: en-us,en;q=0.5
+<strong>User-Agent</strong>: <span style="color: #ff0000;">Mozilla/5.0 (X11; U; Linux i686; en-GB; rv:1.8.1b1) Gecko/20060710 Firefox/2.0b1</span><strong>
+Accept-Encoding</strong>: gzip,deflate
+<strong>Accept-Charset</strong>: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+<strong>Referer</strong>: http://lads.myspace.com/videos/Main.swf
+<strong>Host</strong>: profile.myspace.com
+<strong>x-myspace-id</strong>: ownerId=<strong>19268119</strong>;contentId=<em><strong>40916167</strong></em>
+<strong>x-myspace-type</strong>: Music
+<strong>x-myspace-action</strong>: Stream</pre>
+</blockquote>
+Ed in seguito a questa richiesta il server incrementerÃ  le statistiche della canzone ^^ .
+
+Ovviamente, per chi volesse realizzare un applicazione che incrementasse le stats in modo consistente, dovrebbe instaurare parecchie richieste in parallelo (threads rule :D), possibilmente utilizzando una lista di proxy http abbastanza corposa da utilizzare singolarmente per ogni richiesta http .
+<blockquote>
+<pre><strong>
+
+</strong></pre>
+</blockquote>

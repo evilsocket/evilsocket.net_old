@@ -1,0 +1,85 @@
+Date: 2009-05-18 09:55:42
+Author: evilsocket
+Categories: Hacking, Papers, Tools
+Tags: address, arp, arp poisoning, cam, ettercap, Hacking, hub, ip, lan, mac, router, sniffing, switch
+Title: ARP Poisoning, ovvero come avere il totale controllo della rete .
+
+<blockquote>Non me ne vogliano i colleghi sistemisti ed amministratori di rete se la mia terminologia sarÃ  inesatta o quantomeno imprecisa, ma aimÃ¨, sono solo un povero programmatore XD.
+
+<break></blockquote>
+<h2><strong>Un po di storia / Introduzione
+</strong></h2>
+Qualche anno fa, nelle reti LAN, divertirsi in maniera non proprio legale era relativamente facile . Bastava infatti un banalissimo sniffer di rete per intercettare il traffico dell'intera lan e divertirsi in praticaÂ  a farsi i cazzi di tutti i colleghi, compagni di corso, mogli, mariti o quant'altro .
+
+Questo avveniva *grazie* ad un difetto sia hardware che strutturale dei nodi della rete, che si occupavano di gestire il traffico, i cosiddetti <strong>hub</strong> di rete.
+
+Tale difetto consisteva nel fatto che, ogni singolo pacchetto ip veniva inviato in broadcasting su tutta la rete (ovvero un pacchetto indirizzato a Pippo, raggiungeva sia il suo pc che quello di tutti gli altri utenti) per poi essere scartato dai pc che non erano i destinatari originari dell'informazione confrontando il <a href="http://it.wikipedia.org/wiki/Indirizzo_MAC" target="_blank"><strong>mac address</strong></a> della propria scheda con quello contenuto nel pacchetto stesso tramite, se la memoria non mi inganna, l'operazione logica AND .
+
+Chi tra di voi ha dai 20 anni in su si ricorda che bastava mettere un socket nella cosiddetta modalitÃ  promiscua per far si che la propria scheda non eseguisse piÃ¹ questo "scarto" e di conseguenza ricevere il traffico dell'intera rete .
+
+Ve lo dico subito, Ã¨ inutile che corriate ad aprire wireshark per farvi gli affari altrui, allo stato attuale delle cose NON funzionerÃ  (doh ! XD) .
+
+Questo succede poichÃ¨, dopo anni e anni di sniffing i tecnici del settore si sono accorti che forse era il momento di inventarsi qualcosa per risolvere questo problema ... e cosÃ¬ sono nati gli <strong>switch di rete</strong> .
+
+Tali dispositivi di instradamento, al contrario dei loro rozzi antenati, determinano quale Ã¨ il pc destinatario <strong>prima </strong>di inviare il pacchetto tramite una tabella (detta <a href="http://it.wikipedia.org/wiki/Content_addressable_memory" target="_blank"><strong>CAM table</strong></a>) che associa un indirizzo ip nella rete al rispettivo mac address della scheda hardware sulla quale gira .La cam table a sua volta si appoggia su un altra <a href="http://it.wikipedia.org/wiki/MAC_Address" target="_blank">tabella dei MAC</a> sulla quale verrÃ  effettuata la ricerca vera e propria dell'associazione ip-mac appena illustratavi .
+<h2><strong>Il protocollo ARP</strong></h2>
+Tutto questo meccanismo di ricerca e associazione si basa sull <strong>A</strong>ddress <strong>R</strong>esolution <strong>P</strong>rotocol, solitamente abbreviato con <strong>ARP</strong>, che mette a disposizione un metodo per scambiare e ottenere informazioni relative ai computer connessi sulla propria rete .
+
+Scendendo nella pratica, vediamo come il computer di <strong>Pippo</strong>, sapendo l'indirizzo ip di <strong>Giovanni</strong>, puÃ² risalire al MAC della scheda di rete di quest'ultimo per poter inviare un pacchetto ip in maniera selettiva .
+<ol>
+	<li><strong>Pippo</strong> invia in broadcasting (ovvero a tutta la rete) una richiesta <strong>ARP Request</strong> contenente l'indirizzo ip di <strong>Giovanni</strong> .</li>
+	<li><strong>Giovanni</strong>, essendo nella rete, riceve come gli altri la richiesta e, riconoscendo il proprio indirizzo ip, risponde con un <strong>ARP Reply</strong> nel quale inserirÃ  il proprio <strong>MAC</strong> .</li>
+	<li><strong>Pippo</strong> a questo punto riceve il <strong>MAC</strong> di <strong>Giovanni</strong> e quindi da adesso in poi sarÃ  in grado di comunicare con lui in maniera selettiva, senza inviare dati ad eventuali curiosi .</li>
+</ol>
+Per ottimizzare il tutto ed evitare di eseguire questo scambio di informazioni per ogni singolo pacchetto (scambio che saturerebbe la rete o perlomeno la rallenterebbe di parecchio se dovesse essere eseguito ogni volta) ogni computer mantiene una sorta di cache, ovvero una tabella salvata in locale sul pc nella quale terrÃ  salvati i MAC address che ha rilevato in modo da poterli consultare in locale senza doverli richiedere ogni volta seguendo i passaggi che ho appena illustrato . In pratica, ricalcando la procedura di poco fa, avviene la seguente cosa :
+<ol>
+	<li><strong>Pippo</strong> invia in broadcasting (ovvero a tutta la rete) una richiesta <strong>ARP Request</strong> contenente l'indirizzo ip di <strong>Giovanni</strong> .</li>
+	<li><strong>Giovanni</strong>, essendo nella rete, riceve come gli altri la richiesta e, riconoscendo il proprio indirizzo ip, risponde con un <strong>ARP Reply</strong> nel quale inserirÃ  il proprio <strong>MAC</strong> .</li>
+	<li><strong>Pippo</strong> a questo punto riceve il <strong>MAC</strong> di <strong>Giovanni</strong> e quindi da adesso in poi sarÃ  in grado di comunicare con lui in maniera selettiva, senza inviare dati ad eventuali curiosi .</li>
+	<li><strong>Pippo</strong> salva il <strong>MAC</strong> di <strong>Giovanni</strong> nella propria <strong>cache locale</strong> .</li>
+	<li>Per il prossimo pacchetto, <strong>Pippo</strong> consulta tale cache che giÃ  contiene il <strong>MAC</strong> di <strong>Giovanni</strong> e quindi lo invia senza dover ripetere i primi 4 punti .</li>
+</ol>
+<h2><strong>L'Attacco !</strong></h2>
+E dopo tutta sta pappardella teorica (che cmq Ã¨ necessaria se si vuole capire come funziona il tutto) veniamo al sodo :D .
+
+L'<strong>ARP Poisoning</strong> Ã¨ una tecnica di tipo <strong>Man In The Middle</strong> o <strong>MITM</strong> (letteralmente "uomo nel mezzo"), ovvero ci metterÃ  nella condizione di "inserirci" tra Pippo e Giovanni in modo (quasi) invisibile intercettando il loro canale di comunicazione *teoricamente* selettivo e di conseguenza tutto il traffico che si stanno scambiando .
+
+Analiziamo la procedura pocanzi descritta partendo dal punto 2 sotto un altra ottica e vediamo se vi viene in mente qualcosa :P
+<ol>
+	<li>Un computer in una rete invia un pacchetto <strong>ARP Reply</strong> ad un altro computer inserendoci un determinato <strong>MAC</strong> associato ad un determinato <strong>indirizzo ip</strong> .</li>
+	<li>Il computer che riceverÃ  tale pacchetto, aggiornerÃ  la sua <strong>cache</strong> locale associando quel <strong>MAC</strong> a quel determinato <strong>ip</strong> .</li>
+	<li>Da quel momento in poi, per comunicare con quel <strong>ip</strong>, il pc ricevente invierÃ  dati a quel <strong>MAC</strong> .</li>
+</ol>
+Non vi viene in mente niente ? No ?!?!? PIPPE !!! LOL scherzo dai XD
+
+Questo significa che, inviando un pacchetto ARP Reply appositamente creato (in gergo detto "spoofato") una persona all'interno della rete puÃ² manipolare le cache di tutti i computer connessi, manipolando di conseguenza tutto il flusso del traffico a suo piacimento .
+
+Ora, volendo si potrebbero inserire dei MAC fasulli generati randomicamente ed associarli a tutti gli ip della rete, in tal caso non si otterrebbe molto, al massimo si incasina la rete rendendo in pratica impossibile ogni tipo di comunicazione tra i computer connessi ... divertente, ma inutile e lameresco !
+
+Invece, manipolando con accuratezza tali cache, si puÃ² far in modo che avvenga la seguente cosa :
+<ol>
+	<li>Dopo il nostro attacco, <strong>Pippo</strong> invierÃ  a noi i dati <strong>credendo</strong> di comunicare con <strong>Giovanni</strong> .</li>
+	<li>Noi, dopo averli visionati, sniffati, etc, li manderemo a <strong>Giovanni</strong> di rimbalzo .</li>
+	<li>A <strong>Giovanni</strong> arriveranno i dati originariamente inviati da <strong>Pippo</strong>, e a lui risulterÃ  che proprio da lui arrivano .</li>
+	<li><strong>Giovanni</strong>, per rispondere, invierÃ  <strong>a noi</strong> i dati credendo di comunicare con <strong>Pippo</strong> .</li>
+	<li>Noi snifferemo nuovamente i dati, li reinvieremo a <strong>Pippo</strong>, e cosÃ¬ via fino a quando non ci stufiamo di farci i cazzi degli altri XD .</li>
+</ol>
+Questo genere di manipolazione, che si chiama appunto <strong>ARP Poisoning</strong>, fotte in pratica tutta la logica alla base delle tabelle ARP e CAM e dell'indirizzamento selettivo dei pacchetti nata proprio per ovviare al problema dello sniffing .
+
+In pratica, a <strong>Pippo</strong> invieremo un <strong>ARP Reply</strong> con l'ip di <strong>Giovanni</strong> ma il <strong>NOSTRO</strong> <strong>MAC</strong> address, mentre a <strong>Giovanni</strong> invieremo un <strong>ARP Reply</strong> con l'indirizzo ip di <strong>Pippo</strong> e il <strong>NOSTRO MAC</strong> address, in questo modo, proprio come vi ho illustrato nei 5 punti di poco fa, i due crederanno di comunicare direttamente e selettivamente tra di loro, mentre in realtÃ  manderanno tutto a me e io mi occuperÃ² di effettuare il corretto redirezionamento dei dati una volta sniffati .
+<h2><strong>Gli Strumenti</strong></h2>
+Come per ogni cosa anche per effettuare questo tipo di attacco ci sono una miriade di tools disponibili online, ma di certo il migliore sia per quanto riguarda la facilitÃ  di utilizzo, sia per la completezza dei suoi filtri etc Ã¨ <a href="http://ettercap.sourceforge.net/" target="_blank"><strong>Ettercap</strong></a> che puÃ² essere utilizzato sia da console, sia tramite una comoda ed intuitiva interfaccia grafica.
+
+Per quanto riguarda l'utilizzo da console, la riga di comando Ã¨ abbastanza corta e semplice :
+<blockquote><strong>ettercap -T -q -M ARP // //</strong></blockquote>
+Comando il quale eseguirÃ  l'attacco su tutta la rete, ovvero voi riceverete il traffico di ogni singolo computer presente sulla vostra LAN, cosa che sconsiglio se vi trovato in una rete aziendale o universitaria, poichÃ¨ la mole di dati che riceverete sarÃ  talmente elevata da rendere difficile determinare quali sono i dati che vi interessano (password, cookies, account vari) e quelli che non vi interessano.
+
+Quindi vi consiglio di utilizzare, se vi trovate in una rete potenzialmente molto trafficata, il comando selettivo :
+<blockquote><strong>ettercap -T -q -M ARP /computer_1/ /computer_2/</strong></blockquote>
+Che manipolerÃ  le tabelle ARP in cache solo tra due singoli computer, ovviamente al posto di computer_1 e computer_2 dovrete mettere il nome o gli indirizzi ip dei pc che vi interessano (ad esempio il pc del prof di analisi e quello della segreteria ? :D) .
+<h2><strong>Conclusioni</strong></h2>
+Nonostante esistano dei rimedi per questo genere di attacco, per quanto concerne la mia esperienza personale non sono mai implementati, anche in posti che teoricamente dovrebbero essere il top della sicurezza (un esempio Ã¨ la mia facoltÃ  di ingegneria informatica, se non c'Ã¨ sicurezza la figuriamoci altrove XD), di conseguenza questo genere di attacco MITM risulta essere uno dei piÃ¹ efficaci e veloci da eseguire se si sa dove mettere le mani, nonchÃ¨ uno dei piÃ¹ divertenti se si usa il tool giusto, ad esempio una funzionalitÃ  molto carina di ettercap Ã¨ la possibilitÃ  di modificare, prima di spedirlo al destinatario originale, un pacchetto .
+
+Non sapete quante volte mi sono intrufolato in conversazioni MSN facendo litigare le due persone perchÃ¨ inserivo qua e la qualche insulto facendo pensare che se li inviavano a vicenda !!! XD
+
+In fine, ringrazio i miei amici Pippo e Giovanni, che ogni volta si prestano ai miei esempi e che spero, un giorno o l'altro, di incontrare per ringraziarli ! MUAUAUUAUA XD

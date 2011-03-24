@@ -1,0 +1,89 @@
+Date: 2010-09-14 13:31:35
+Author: evilsocket
+Categories: iPhone, Objective C, Programmazione, Sorgenti
+Tags: five tabs, iphone, more, more tab, moreViewController, sdk, seven tabs, six tabs, tab, tabs, uitabbar, uitabbarcontroller, uitabbardelegate, xcode
+Title: [iPhone SDK] UITabBar con più di cinque tabs in sequenza, senza UITabBarController
+
+Wowowo, questo è il primissimo articolo che scrivo per quanto concerne la programmazione per iPhone ed Objective-C, mi sento quasi emozionato :D
+
+Allora, voglio festeggiare questo momento con un "trucchetto" che non si trova in giro e che, proprio perchè ho impiegato un po per tirarlo fuori, mi ha fanno dannare l'anima, così lo condivido con tutti sperando che possa aiutare il prossimo programmatore che come me si trova nella stessa situazione.
+
+Dunque.
+
+Senza dilungarmi troppo, quando in una view viene messo il controllo grafico UITabBar (la barra dei tab nera in basso), normalmente la si gestisce con il relativo UITabBarController che ci aiuterà ad associare facilmente le sotto views con la selezione di un tab, le animazioni per le transizioni, ecc ecc ecc.
+
+Tutto figo, fatto bene (come ogni cosa su XCode e IB devo dire), tranne per un "piccolissimo" dettaglio.
+
+<break>Come la <a href="http://developer.apple.com/iphone/library/documentation/uikit/reference/UITabBarController_Class/Reference/Reference.html" target="_blank">documentazione di UITabBarController</a> dice, dopo il <strong>quinto tab</strong> che aggiungiamo, gli altri verranno letteralmente segati.
+
+Ovvero, invece di visualizzare il sesto, il settimo e così via come ci aspettiamo (e come IB ci fa vedere nell'anteprima, il bastardo!) ci visualizza un quinto tasto "<strong>More ...</strong>" che ci porta ad un, a mio avviso, orrendo menù di selezione dei restanti N tab che avanzano, per capirci :
+<p style="text-align: center;"><a href="http://www.evilsocket.net/wp-content/uploads/2010/09/more.png"><img class="size-medium wp-image-1787 aligncenter" title="more" src="http://www.evilsocket.net/images/more-196x300.png" alt="" width="196" height="300" /></a></p>
+E non c'è scampo, ovvero non c'è modo di evitarlo a meno che non si ridisegni a mano tutta la barra e si implementino sempre a mano i vari controlli, cosa che porterebbe quasi certamente ad un rifiuto da parte della Apple dell'applicazione sull'App Store, dato che una cosa del genere violerebbe palesemente le famose <a href="http://developer.apple.com/mac/library/documentation/UserExperience/Conceptual/AppleHIGuidelines/XHIGMenus/XHIGMenus.html" target="_blank">Apple Human Interface Guidelines</a> .
+
+Ora, finchè si parla di un applicazione "amatoriale", o comunque un applicazione dove non è necessario mantenere un aspetto estetico di un certo tipo, questo compromesso del "more" può anche andare bene, ma non nel caso di un applicazione realizzata professionalmente, per la quale le linee guida di realizzazione stabiliscono chiaramente che l'aspetto estetico è fondamentale (eh, a volte i clienti son proprio rompi XXXXXXXX ! :P).
+
+Bene, navigando in giro per la rete, studiandomi la documentazione, bevendo litri di caffè che poi risudavo immancabilmente sulle proverbiali sette camice, ho trovato un modo (anche abbastanza semplice, ma non documentato 'tacci loro!) per ovviare a questo problema senza infrangere le HIGs e senza diventare scemi dietro al codice :P
+
+Il trucco risiede sostanzialmente, nell'inserire nella view principale SOLAMENTE una UITabBar SENZA associarla al relativo UITabBarController (che ho scoperto essere il responsabile della brutale mutilazione dei tabs), e gestirla tramite la classe controller principale, impostandola come UITabBarDelegate della UITabBar.
+
+Per capirci, diciamo di avere la classe MainViewController, controller della vista principale, la dichiareremo come :
+
+[cc lang="objc"]@interface MainViewController : UIViewController  {
+...
+}[/cc]
+
+L'implementazione della classe dovrà quindi gestire l'evento <strong>didSelectItem</strong>, che ci viene inviato in quanto delegati della barra, tramite il quale potremmo determinare quale tab è stato selezionato (in base al suo tag, che imposteremo tramite IB), e di conseguenza visualizzare la view corrispondente.
+
+Nell'esempio che sto per proporvi, ho inizializzato un array (NSMutableArray) di UIViewController, chiamato viewControllers, che caricano ognuno il NIB della vista corrispondente al tab :
+
+[cc lang="objc"]/*
+ * Metodo per gestire il protocollo di UITabBarController nel momento in cui viene 
+ * selezionato un tab.
+ */
+- (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item {	
+    [self selectTab:item.tag];
+}
+
+/*
+ * Metodo per attivare la View in base al tab selezionato.
+ */
+- (void)selectTab:(int)tag {
+	/*
+	 * Prelevo dall'array il view controller che mi interessa.
+	 */
+	UIViewController *viewController = [viewControllers objectAtIndex:tag];
+	/*
+	 * Accertiamoci che non sia già selezionata la vista.
+	 */
+	if( viewController == currentView ){
+		return;
+	}
+	/*
+	 * Inserisco la view al di sotto della UITabBar.
+	 */
+	[self.view insertSubview: viewController.view belowSubview: tabBar];
+	/*
+	 * Se è già attiva una vista, la rimuovo.
+	 */
+	if( currentView != nil ){
+		[currentView.view removeFromSuperview];
+	}
+	/*
+	 * Imposto la vista attualmente attiva.
+	 */
+	currentView = viewController;
+}[/cc]
+
+Come vedete, tramite i metodi <strong>insertSubview </strong>e <strong>removeFromSuperview</strong> della vista principale, riusciamo ad inserire e rimuovere selettivamente le viste rispettive ai tab selezionati, agganciandoci all'evento didSelectTab in quanto delegati di UITabBar .
+
+In questo modo, bypasseremo del tutto lo standard UITabBarController, riusciremo ad avere tutti i tab che vogliamo per esteso, ed il tutto senza violare le HIGs della Apple ^^
+
+<a href="http://www.evilsocket.net/wp-content/uploads/2010/09/tab1.png"><img class="alignleft size-full wp-image-1788" title="tab1" src="http://www.evilsocket.net/wp-content/uploads/2010/09/tab1.png" alt="" width="397" height="735" /></a><a href="http://www.evilsocket.net/wp-content/uploads/2010/09/tab2.png"><img class="alignnone size-full wp-image-1789" title="tab2" src="http://www.evilsocket.net/wp-content/uploads/2010/09/tab2.png" alt="" width="405" height="738" /></a>
+
+Come vedete dalle due immagini del mio simulatore, abbiamo ben 7 tabs per esteso, ognuno che visualizza la view ad esso associata ^^
+
+Vi allego un progetto completo di XCode, con tutto il restante codice, così potrete comprendere, qual'ora vi serva questo tipo di layout grafico, come è stato gestito il tutto.
+
+Spero possa essere utile a qualcuno, così come lo è per me al momento, soprattutto considerata la difficoltà nel trovare documentazione a riguardo :)
+
+<a title="UITabBar Example" href="http://www.evilsocket.net/UITabBar_Example.zip" target="_self"><strong>UITabBar_Example.zip</strong></a>

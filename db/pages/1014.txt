@@ -1,0 +1,113 @@
+Date: 2010-04-30 15:54:51
+Author: evilsocket
+Categories: Misc
+Tags: class, ereditarietà, eval, hybris, load, plugin, pluginbase, pluginmanager
+Title: Nuova funzione load, come realizzare in poche righe un sistema di plugin
+
+<strong><img class="alignleft" src="http://www.hybris-lang.org/logos/hybris_hex_logo.png" alt="" width="69" height="69" />Come sempre, per una corretta visualizzazione degli script in questione, consiglio di visualizzare l'<a href="http://www.hybris-lang.org/story/nuova-funzione-load-come-realizzare-in-poche-righe-un-sistema-di-plugin.html" target="_blank">articolo originale</a> sul sito di Hybris.</strong>
+
+In uno degli ultimi commit, sono state implementate le funzioni <strong>load</strong> ed <strong>eval.</strong>
+
+Entrambe servono ad eseguire del codice a runtime (a differenza della  direttiva include che viene eseguita in fase di pre parsing), la prima  funzione accetta il nome di uno script Hybris che caricherà in memoria  ed eseguirà, mentre la seconda serve per eseguire una stringa contenente  del codice Hybris.
+
+Molti linguaggi implementano queste due funzioni, ma sono pochi  quelli che come Hybris, data la sua gestione dei tipi estremamente  astratta e il sistema di ereditarietà delle classi, consentono di  implementare tramite loro un sistema di plugin generalizzato con poche  righe di codice.
+
+Analiziamo un sistema di esempio, realizzato appunto tramite la  funzione <strong>load</strong>.
+
+<break>La struttura delle directory è composta come nella figura
+
+<img src="http://img62.imageshack.us/img62/4407/screenshotvk.png" alt="" />
+
+Dove la cartella "plugins" contiene i due plugin di esempio e la  cartella principale contiene <strong>PluginBase</strong>. ovvero la  classe dalla quale tutti i plugin devono ereditare i metodi per essere  ammessi nel sistema, <strong>PluginManager</strong>, cioè la classe che  si occupa del caricamento di tutti i plugin dalla cartella plugins, e <strong>main</strong> che è lo script che lancia il programma.
+
+Partiamo dalla classe <strong>PluginBase</strong>
+<div>
+<pre>include std.Exception;
+ 
+class PluginBase {
+ 
+	public method onEvent( e ){
+		throw new Exception( __FILE__, __LINE__, "Virtual function !" );
+	}
+ 
+	public method run( e ){
+		me-&gt;onEvent( e );
+	}
+}</pre>
+</div>
+Come è possibile intuire, questa classe rappresenta l'interfaccia  virtuale di tutti i plugin, la quale non può essere eseguita  direttamente poichè serve solo come prototipo.
+
+<strong>PluginManager</strong>
+<div>
+<pre>import  std.*;
+include std.io.Directory;
+ 
+class PluginManager extends Directory {
+	private plugins;
+ 
+	method PluginManager(){
+		me-&gt;Directory("./plugins");
+		me-&gt;plugins = array();
+		me-&gt;loadPlugins();
+	}
+ 
+	private method loadPlugins(){
+		if( sizeof(me) == 0 ){
+			throw new Exception( __FILE__, __LINE__, "Plugin directory is empty!" );
+		}
+ 
+		foreach( file of me ){
+			load( "./plugins/".file );
+			me-&gt;plugins[] = __plugin_instance;
+		}
+	}
+ 
+	method run( e ){
+		foreach( plugin of me-&gt;plugins ){
+			plugin-&gt;run(e);
+		}
+	}
+}</pre>
+</div>
+Questa classe, che eredita da std.io.Directory, caricherà tutti i  file dalla cartella plugins tramite la funzione load, aggiungendo ad un  suo vettore interno la variabile "__plugin_instance" che ogni plugin  sarà incaricato di impostare con un riferimento a se stesso.
+
+Il metodo <strong>PluginManager</strong>::<strong>run</strong> richiamerà poi iterativamente tutti i metodi "run" dei plugin caricati.
+
+I due plugin di esempio, <strong>Plugin0</strong> e <strong>Plugin1</strong> ereditano entrambi da <strong>PluginBase</strong> e hanno praticamente  la stessa struttura :
+<div>
+<pre>class Plugin0 extends PluginBase {
+	public method onEvent( e ){
+		println( "Plugin0 : ".e )
+	}
+}
+ 
+__plugin_instance = new Plugin0();</pre>
+</div>
+<div>
+<pre>class Plugin1 extends PluginBase {
+	public method onEvent( e ){
+		println( "Plugin1 : ".e )
+	}
+}
+ 
+__plugin_instance = new Plugin1();</pre>
+</div>
+L'utilizzo di questo sistema la vediamo nel <strong>main</strong>
+<div>
+<pre>include PluginBase;
+include PluginManager;
+include std.io.Console;
+ 
+try{
+	pm = new PluginManager();
+ 
+	pm-&gt;run( "evento di prova" );
+}
+catch( e ){
+	console &lt;&lt; e &lt;&lt; "\n";
+}</pre>
+</div>
+Che, se eseguito, darà il seguente output :
+<blockquote><em>Plugin1 : evento di prova
+Plugin0 : evento di  prova</em></blockquote>
+Abbiamo visto in finale, come con pochissime righe di codice è  possibile realizzare quello che in altri linguaggi richiederebbe una  quantità di codice nettamente superiore e che implicherebbe meno  leggibilità e un sistema meno mantenibile.

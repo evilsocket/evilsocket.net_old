@@ -1,0 +1,27 @@
+Date: 2011-01-13 17:59:43
+Author: evilsocket
+Categories: Exploiting, Hacking, Reversing, Tools, Web Hacking
+Tags: backbox, blackhat, ethical hacking, hack, linux, pentest, seminario, whitehat
+Title: Seminario "Penetration Testing con BackBox Linux"
+
+<p style="text-align: center;"><img class="aligncenter" src="http://www.backbox.org/public/sites/all/themes/corolla/images/header.png" alt="" width="648" height="122" /></p>
+<strong>Quando</strong>: Martedì 18 Gennaio 2011
+<strong> Inizio evento</strong>: ore 19:00
+<strong> Costi</strong>: Partecipazione libera e gratuita
+<strong>Località</strong>:Rende (Cosenza)
+
+Seminario introduttivo all'uso di BackBox Linux, nuova distribuzione sviluppata per effettuare penetration tests e security assessments.
+Martedì 18/1/2011, Aula Zenith Unical, ore 19.00
+
+<break>
+
+"<strong>Penetration Testing con BackBox Linux</strong>"
+
+Seminario introduttivo all'uso di BackBox Linux, nuova distribuzione
+sviluppata per effettuare penetration tests e security assessments.
+BackBox è stato progettato per essere flessibile, veloce e facile da
+usare, fornendo un ambiente desktop minimo ma completo.
+
+Durante il seminario verranno illustrate le caratteristiche principali
+della distribuzione e saranno inoltre effettuate dimostrazioni
+pratiche sull'uso dei principali tools.

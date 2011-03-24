@@ -1,0 +1,9 @@
+Date: 2010-05-24 02:15:11
+Author: evilsocket
+Categories: Misc
+Tags: hybris
+Title: Implementati operatori aritmetici per i vettori.
+
+<p>In effetti non so perchè non li avevo implementati prima ... forse perchè l'engine, per come era strutturato <a  href="http://www.hybris-lang.org/story/rivoluzionato-il-sistema-di-gestione-dei-tipi-ed-il-garbage-collector.html">prima</a>, non l'avrebbe consentito e poi una volta ristrutturato mi sono scordato di farlo ... o semplicemente mi sono scordato a priori :)</p>
+<p>In ogni caso, ho appena implementato (e ovviamente documentato) gli operatori aritmetici per i vettori, che consentono quindi di eseguire differenze o merge tra vettori e/o valori .</p>
+<p><a href="http://www.hybris-lang.org/story/implementati-operatori-aritmetici-per-i-vettori.html" >read more</a></p><img src="http://feeds.feedburner.com/~r/HybrisProgrammingLanguageOfficialSite/~4/jfgZf1o69pI" height="1" width="1"/>

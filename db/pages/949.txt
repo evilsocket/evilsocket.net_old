@@ -1,0 +1,92 @@
+Date: 2010-04-01 21:41:28
+Author: evilsocket
+Categories: Misc, Programmazione
+Tags: 1.0, 1.0b, beta, class, classe, hybris, object oriented, OO, struct, structure, struttura
+Title: Hybris 1.0 beta, strutture e primo passo per l'OO 
+
+Non ho resistito, avevo ripromesso a me stesso che avrei iniziato a lavorare sul supporto agli oggetti (le classi per intenderci) di Hybris dopo il rilascio ufficiale della 1.0 pacchettizzata, magari per una 2.0 o quantomeno una 1.n, ma ho dovuto iniziare a buttar giù qualcosa XD .
+
+Ho appena effettuato il commit della 1.0 beta che, oltre a correggere alcuni bugs che affliggevano il lexer ed il parser di <a href="http://www.hybris-lang.org/" target="_blank">Hybris</a>, presenta una grande novità ... le strutture !
+
+Sostanzialmente, una volta implementate quelle e trovato il modo di gestirle al meglio (non vi immaginate che casino scrivere le regole del parser XD), il passo verso l'OO è un attimo, basta qualche piccolo ritocco qua e la ed ecco che Hybris diventerà un linguaggio che supporta al 100% la programmazione ad oggetti, ma per questo, stavolta dico davvero, è il caso di aspettare il rilascio della 1.0.
+
+Ma vediamo un po queste strutture ^^
+
+<break>Nella <a href="http://www.hybris-lang.org/wiki/" target="_blank">documentazione</a> ho scritto che :
+
+Una struttura è un tipo di dato arbitrario, ovvero che può essere definito dall'utente tramite la direttiva <strong>struct</strong>. Una struttura è identificata da un nome e da uno o più attributi, la forma più semplice per dichiarare una struttura è :
+<blockquote>
+<pre> 
+   <strong>struct</strong> UnNome {
+      attributo_1;
+      attributo_2;
+   }</pre>
+</blockquote>
+O, nella forma abbreviata :
+<blockquote>
+<pre> 
+   <strong>struct</strong> UnNome {
+      attributo_1, attributo_2;
+   }</pre>
+</blockquote>
+Per creare una variabile del tipo che abbiamo dichiarato, useremo il nome della struttura come fosse una funzione (più o meno come i costruttori del C++) :
+<blockquote>
+<pre> 
+   a = UnNome();</pre>
+</blockquote>
+<pre><span style="font-family: Georgia, 'Times New Roman', 'Bitstream Charter', Times, serif; line-height: 19px; white-space: normal; font-size: 13px;">Oppure sfruttando l'inizializzatore degli attributi :</span></pre>
+<blockquote>
+<pre> 
+   a = UnNome( "ciao", 1234 );</pre>
+</blockquote>
+Che attribuirà quei valori rispettivamente a <em>attributo_1</em> e <em>attributo_2</em>.
+
+Per accedere ad un attributo, si può usare l'operatore <strong>-&gt;</strong> :
+<blockquote>
+<pre> 
+   <a href="http://www.hybris-lang.org/documentazione?function=println">println</a>( a-&gt;attributo_1 );</pre>
+</blockquote>
+Vediamo un esempio più esplicativo .
+<blockquote>
+<pre> 
+   <strong>struct</strong> Carattere {
+      simpatico;
+      sveglio;
+      modesto;
+   }
+
+   <strong>struct</strong> Persona {
+      genere;
+      nome, cognome;
+      anni;
+
+      carattere;
+   }
+
+   guy            = <strong>Persona</strong>( 'M', "Mario", "Rossi", 24 );
+   guy-&gt;carattere = <strong>Carattere</strong>( "Si", "No", "Si" );
+
+   <a href="http://www.hybris-lang.org/documentazione?function=println">println</a>(guy);
+
+   if( guy-&gt;anni &gt;= 18 ){
+      <a href="http://www.hybris-lang.org/documentazione?function=println">println</a>( guy-&gt;nome." ".guy-&gt;cognome." è maggiorenne." );
+   }
+   else{
+      <a href="http://www.hybris-lang.org/documentazione?function=println">println</a>( guy-&gt;nome." ".guy-&gt;cognome." è minorenne." );
+   }
+
+   if( guy-&gt;carattere-&gt;sveglio == "Si" ){
+      if( guy-&gt;carattere-&gt;modesto == "No" ){
+         <a href="http://www.hybris-lang.org/documentazione?function=println">println</a>( guy-&gt;nome." ".guy-&gt;cognome." è una persona arrogante." );
+      }
+      else{
+         <a href="http://www.hybris-lang.org/documentazione?function=println">println</a>( guy-&gt;nome." ".guy-&gt;cognome." è un tipo sveglio." );
+      }
+   }
+   else{
+      <a href="http://www.hybris-lang.org/documentazione?function=println">println</a>( guy-&gt;nome." ".guy-&gt;cognome." è un po tonto." );
+   }</pre>
+</blockquote>
+La cosa più tosta da gestire è stata l'eventualità, come nell'ultimo esempio, di una struttura che a sua volta contenga una struttura ... in pratica ho dovuto reimplementare un mini lookup di symboli per questa tipologia di dato ... fatto quello, dopo un paio di giorni (insonni) di bestemmie, il risultato è venuto fuori quasi da solo ^^
+
+<strong>PS</strong> : Non so perchè ma la possibilità di inizializzare gli attributi di una struttura tramite il suo dichiaratore anche se non è stato implementato alcun tipo di costruttore (del resto non è ancora concepita una cosa del genere nella logica di Hybris) mi piace da morire :D

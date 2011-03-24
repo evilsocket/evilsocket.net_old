@@ -1,0 +1,9 @@
+Date: 2009-05-12 23:37:28
+Author: evilsocket
+Categories: PHP, Programmazione, Sorgenti
+Tags: decrypt, ws_ftp, ws_ftp.ini password decoder
+Title: WS_FTP Password Decoder
+
+Come per FileZilla, questa Ã¨ uno script php analogo ma che serve per il file .ini dove il client WS_FTP salva codificandole le password di accesso ai server ftp salvati nel programma .
+
+<a href="http://www.evilsocket.net/sources/wsftp.php.txt" target="_blank">Scarica</a>

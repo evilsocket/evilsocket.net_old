@@ -1,0 +1,11 @@
+Date: 2009-06-17 14:30:48
+Author: evilsocket
+Categories: C++, Programmazione, Sorgenti
+Tags: alix, kerby, Light weight video surveillance system, linux, v4l, video surveillance, webcam
+Title: Kerby - Light weight video surveillance system.
+
+<img class="alignleft" src="http://www.zwtm.com/wp-content/uploads/2007/12/wireless-spy-camera-remote.jpg" alt="" width="104" height="70" />Con mio grande piacere ho avuto modo di constatare che l'installazione di una webcam v4l compliant sulla mia scheda Alix Ã¨ estremamente semplice, cosÃ¬ mi Ã¨ venuto in mente di riadattare un mio vecchio sistema di video sorveglianza per questa scheda, migliorandone le prestazioni, ottimizzandolo, etc .
+
+CosÃ¬ Ã¨ nato <strong>Kerby</strong>, per ora Ã¨ poco quello che fa (ho appena eseguito il primo commit su github), mostra semplicemente la percentuale di movimento che il software rileva dalla webcam, ma presto diventerÃ  qualcosa di molto + utile ;)
+
+<a href="http://github.com/evilsocket/Kerby/tree/master" target="_blank">Pagina del progetto</a>

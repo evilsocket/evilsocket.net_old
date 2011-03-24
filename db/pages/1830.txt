@@ -1,0 +1,47 @@
+Date: 2010-09-24 20:18:59
+Author: evilsocket
+Categories: Papers, Programmazione
+Tags: add, bare, commit, git, init, no root, over ssh, pull, push, repo, repository, ssh
+Title: Come configurare un repository GIT remoto privato.
+
+<a href="http://www.evilsocket.net/images/git-logo.png"><img class="alignleft size-full wp-image-1831" title="git-logo" src="http://www.evilsocket.net/images/git-logo.png" alt="" width="111" height="111" /></a>In questa piccola guida, vedremo come impostare su un server remoto, del quale si dispone di un accesso SSH (non necessariamente di root), un repository GIT sul quale tenere i backup del nostro repository locale e/o mettere a disposizione di altre persone con tale accesso il codice e le modifiche in corso.
+
+Ci sono molti privider di "free shell", ovvero di account SSH gratuiti su server privati che si potrebbero sfruttare per l'occasione, oppure si potrebbe usare un proprio server "casalingo" ... insomma, la scelta è vostra :)
+
+Bon ... diciamo che voi avete una cartella chiamata "Progetto" nella vostra home directory la quale contiene il codice sorgente che state scrivendo, prima di tutto vediamo come inizializzare un repository git locale in quella cartella.
+<break><blockquote>cd ~/Progetto
+git init .
+git add *
+git commit -m "Questo è il commit iniziale."</blockquote>
+Bene, con questo abbiamo inizializzato il repository in locale importando tutti i file e taggando il primo commit con il messaggio "Questo è il commit iniziale.".
+
+Per verificare che il repo è stato creato correttamente
+<blockquote>git status</blockquote>
+Ovviamente nella stessa directory, e se riceverete un messaggio del genere:
+<blockquote>
+<div id="_mcePaste"># On branch master</div>
+<div id="_mcePaste">nothing to commit (working directory clean)</div></blockquote>
+<div>Tutto è andato a buon fine.</div>
+<div>Ora, dovremmo creare una copia temporanea "esportabile" di questo repository, quindi :</div>
+<blockquote>
+<div>git clone --bare ~/Progetto/.git /tmp/myrepo.git</div></blockquote>
+<div>Fatto questo, dobbiamo copiare via ssh (quindi tramite scp) questo repo temporaneo sul server remoto, diciamo nella cartella /home/utente/Progetto.git dove "utente" è il vostro nome utente su quel server :</div>
+<blockquote>
+<div>scp -r /tmp/myrepo.git <strong>utente</strong>@v<strong>ostro-server.com</strong>:/home/<strong>utente</strong>/Progetto.git</div></blockquote>
+<div>Naturalmente sostituite "utente" e "vostro-server.com" rispettivamente con il vostro nome utente e l'indirizzo o nome host del server sul quale volete copiare il repository.</div>
+<div>A questo punto torniamo in locale nella directory del nostro progetto poichè dobbiamo "dirgli" quale repository remoto utilizzare per il pushing :</div>
+<blockquote>
+<div>git remote add origin ssh://<strong>vostro-server.com</strong>/home/<strong>utente</strong>/Progetto.git</div></blockquote>
+<div>Abbiamo finito! ^^</div>
+<div>Fate le vostre modifiche in locale, add-ate i file, committate e per inviare le modifiche al repo remoto vi basterà un :</div>
+<blockquote>
+<div>git push</div></blockquote>
+<div>Se volete che qualcun'altro possa clonare il repository da remoto con tutte le modifiche storicizzate (visualizzabili tramite il comando git log per i commit, o git diff per tutte le modifiche ai file), dovrete dirgli di eseguire il comando :</div>
+<blockquote>
+<div>git clone <strong>vostro-server.com</strong>/home/utente/Progetto.git</div></blockquote>
+<div>E naturalmente di inserire username e password SSH che voi gli darete ^^</div>
+<div>Nel caso in cui il server dovesse rifiutare il vostro primo push, darete questi comandi (sul server):</div>
+<blockquote>
+<div>cd /home/<strong>utente</strong>/Progetto.git</div>
+<div>git config receive.denycurrentbranch ignore</div></blockquote>
+<div>Per un riferimento su come usare git nello sviluppo di "tutti i giorni", vi rimando al link <a href="http://www.spheredev.org/wiki/Git_for_the_lazy" target="_blank">Git For The Lazy</a>.</div>

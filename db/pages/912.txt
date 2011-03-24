@@ -1,0 +1,27 @@
+Date: 2010-03-17 10:27:28
+Author: evilsocket
+Categories: Misc
+Tags: grafica, gtk, icone, idioti, sconforto, temi, ubuntu lucid lynx
+Title: Che sconforto!
+
+Da qualche tempo son cominciate ad uscire le alpha release di Ubuntu Lucid Lynx e, in perfetta sincronia, una mandria inbufalita di pseudo smanettoni ha iniziato ad installarsi queste versioni, per definizione instabili ed incomplete, vuoi per la smania di "avere l'ultimo tweak", vuoi per curiosità, vuoi (in pochissimi casi) per testare il sistema e riportare i bug al team di sviluppo.
+
+Poco male penso, in fondo come ho spesso affermato il bacino di utenza di un progetto open source è il suo tesoro più grande, tesoro che migliora e velocizza lo sviluppo e l'individuazione/risoluzione delle imperfezioni.
+
+Ma poi cosa è successo?
+
+Nel giro di pochi giorni mi son trovato nei feed un quadrilione di articoli provenienti dai blog più disparati di utenti che si lamentavano di queste release ... e per cosa?
+
+Per i nuovi driver aperti nVidia che non vanno ancora bene? Per il complessivo rallentamento del sistema? Per l'instabilità di un prodotto che per definizione DEVE essere instabile?!?!?
+
+Noooooo! Ebbene,<strong> nonostante i changelogs kilometrici</strong> di queste nuove release, tutti quanti sono interessati solo ed unicamente ad un aspetto :
+<p style="text-align: center;"><strong>!!! Le nuove icone, il nuovi temi gtk, la nuova disposizione dei pulsanti ed il nuovo font del logo di Ubuntu !!!</strong></p>
+<break>Ma dico io, a parte il fatto che SE NON VI PIACE LA NUOVA GRAFICA NESSUNO VI IMPEDISCE DI CAMBIARLA, MODIFICARLA, MIGLIORARLA e magari perchè no, postare delle patch agli sviluppatori proponendo le vostre migliorie così, nel caso in cui venissero accettate, QUANTO MENO TUTTI LA SMETTEREBBERO DI LAMENTERSI E MENARE I COGLIONI CO 'STA STORIA, ma perchè ca**o non vi soffermate ad analizzare gli altri aspetti che sono cambiati !?!?!?
+
+Io mi immedesimo in quei poveracci del team di sviluppo, che passano settimane, mesi davanti ad uno schermo impegnandosi per rendere migliore un qualcosa che viene usato da tantissime persone negli aspetti più disparati, e poi si ritrovano davanti decine di migliaia di blog di persone che non si cagano minimamente tutto il lavoro fatto ed i cambiamenti effettuati, bensì la nuova veste grafica O___O
+
+IMHO questo denota una cosa tristissima ... le persone usano Ubuntu e più generalmente GNU/Linux solo ed esclusivamente "perchè fa figo" ... senza consapevolezza, senza capire cosa fanno e di cosa si parla e senza il benchè minimo motivo per usare un OS che sostanzialmente non sfruttano se nn per le cazzatine grafiche che offre in più rispetto alle sue controparti .
+
+E no, non giustifico queste persone perchè "sono inesperte", o perchè "devono imparare" ... l'ATTITUDINE è una cosa ben diversa dalla competenza, e di certo l'attitudine è innata, in particolare nel caso degli idioti .
+
+Bah.

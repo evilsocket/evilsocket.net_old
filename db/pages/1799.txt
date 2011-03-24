@@ -1,0 +1,37 @@
+Date: 2010-09-18 20:44:26
+Author: evilsocket
+Categories: iPhone, Objective C, Papers, Programmazione
+Tags: code sign, code signing identity, cydia, iphone, iphone sdk, ldid, xcode
+Title: [iPhone SDK] Compilare un applicazione su XCode per il device senza certificato.
+
+Chi tra di voi si sta cimentando nella programmazione per iPhone, avrà notato sicuramente una cosa.
+
+Quando si prova ad impostare la modalità di compilazione da "Simulator" (compilazione ed esecuzione sul simulatore) a "Device" (compilazione per il dispositivo fisico), l'ambiente restituisce un errore riguardante la cosìddetta "Code Signing Identity", ovvero l'identità con la quale XCode cerca di firmare digitalmente l'applicazione stessa.
+
+Tale identità, consiste in un certificato digitale che la Apple rilascia a coloro che si sono iscritti come Developers, ovvero che pagano (un minimo di) 99$ l'anno per inviare applicazioni su App Store.
+
+<break>Ok, ma se io avessi un iPhone jailbreakato e volessi provare una mia applicazione solo sul mio telefono? Possibile che, senza pagare altri soldi oltre a quelli del costo del dispositivo stesso, non posso nemmeno scrivermi le applicazioni ?!?!
+
+Ovviamente c'è un modo abbastanza semplice per ovviare questo problema.
+
+Bisogna editare il file
+<blockquote>/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS<strong>[VERSIONE]</strong>.sdk/SDKSettings.plist</blockquote>
+nel mio caso
+<blockquote>/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.0.sdk/SDKSettings.plist</blockquote>
+Ed impostare la chiave <strong>CODE_SIGNING_REQUIRED </strong>da YES a NO salvando poi il file.
+
+Fatto questo, riavviate XCode (nel caso sia in esecuzione), aprite il progetto che volete compilare, doppio click sulla prima icona nel pannello "Groups &amp; Files" (quella con il nome del progetto stesso e l'immagine di xcode), cercate la chiave "Code Signing Identity" ed impostatela su "Don't Code Sign", come mostrato nei due screenshot.
+
+<a href="http://www.evilsocket.net/wp-content/uploads/2010/09/a.png"><img class="alignleft size-medium wp-image-1806" title="a" src="http://www.evilsocket.net/images/a-300x187.png" alt="" width="300" height="187" /></a> <a href="http://www.evilsocket.net/wp-content/uploads/2010/09/b.png"><img class="alignnone size-medium wp-image-1808" title="b" src="http://www.evilsocket.net/wp-content/uploads/2010/09/b-300x187.png" alt="" width="300" height="187" /></a>
+
+<a href="http://www.evilsocket.net/wp-content/uploads/2010/09/b.png"></a>Fatto questo, potrete compilare l'applicazione per il vostro device.
+
+Una volta compilata, prendete il bundle .app (ad esempio Prova.app) dalla cartella del progetto, e trasferitela tramite SSH nella cartella /Applications del vostro iPhone.
+
+Fatto questo, sempre tramite ssh, dovrete firmare l'app con un certificato fasullo, quindi il comando da eseguire sarà :
+<blockquote>chmod 755 /Applications/Prova.app/prova
+
+ldid -S /Applications/Prova.app/prova</blockquote>
+Dove 'prova' è il file binario contenuto nel bundle.
+
+Ora riavviate la springboard e godetevi la vostra applicazione auto-firmata ^^

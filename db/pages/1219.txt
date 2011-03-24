@@ -1,0 +1,44 @@
+Date: 2010-06-13 22:24:11
+Author: evilsocket
+Categories: Misc
+Tags: responsive, sport, unresponsive, yoyo, yoyomaniacs, yym
+Title: Lo YoYo : Giocattolo o piccolo capolavoro di ingegneria?
+
+Oggi non scriverò un articolo tecnico, tantomeno riguardante l'informatica.
+Bensì vista la natura "personale" di un blog, nella fattispecie questo, parlerò di una delle mie altre passioni che nulla hanno a che vedere con l'informatica ... lo <strong>yoyo</strong>!
+
+Prima di iniziare a ridacchiare e pensare "Questo sta fuori, c'ha 20 anni per gamba e ancora gioca con queste cose!!" (xkè so che molti di voi lo staranno pensando! XD), guardate questo video e poi giudicate se sto parlando di un giocattolo o di un vero e proprio sport :
+
+(Video di Jensen Kimmit)
+
+<break>
+
+<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" width="640" height="385" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0"><param name="allowFullScreen" value="true" /><param name="allowscriptaccess" value="always" /><param name="src" value="http://www.youtube.com/v/dABLmWABgmY&amp;hl=it_IT&amp;fs=1&amp;" /><param name="allowfullscreen" value="true" /><embed type="application/x-shockwave-flash" width="640" height="385" src="http://www.youtube.com/v/dABLmWABgmY&amp;hl=it_IT&amp;fs=1&amp;" allowscriptaccess="always" allowfullscreen="true"></embed></object>
+
+Bene, ora che ho la vostra attenzione (almeno spero :P), vi parlerò un po di questa parte del mio mondo ^^
+
+Lo yoyo, così come la maggior parte della gente lo conosce, ovvero quel giocattolo che, legato ad un cordino, se tirato e poi strattonato torna in mano, viene chiamato "responsive" ad indicare per l'appunto il fatto che ha un sistema ad asse fisso o comunque un sistema di ritorno automatico.
+
+Questo è solo una delle varie tipologie, che ha avuto il suo massimo successo negli anni '90, chi ha la mia età ricorderà quel periodo pieno di yoyo in tv, nei negozi di giocattoli e persino nelle bancarelle degli ambulanti.
+
+Successivamente è stato introdotto un sistema di ritorno con cuscinetto a sfera, che consente di eseguire delle figure (dette "tricks") come quelle che abbiamo visto nel video qui sopra.
+
+Tale sistema consiste in un asse di metallo che unisce le due coppe dello yoyo (solitamente in alluminio, ma ne vengono realizzate anche in plastica, carbonio e perfino titanio!), ed un cuscinetto a sfera (i più buoni con sfere ceramiche) intorno a questo asse che, essendo libero di girare, fa si che lo yoyo non torni in mano subito (in tal caso si parla di yoyo "unresponsive"), bensì rimanga in rotazione (in "sleeper") fin quando il giocatore (detto "yoer") non esegua un trick chiamato bind, il quale consente di riavvolgere il cordino e far tornare su lo yoyo.
+
+Circa un anno fa, girovagando per negozi con la mia fidanzata, mi sono imbattuto, dentro una giocoleria, in uno yoyo ad asse fisso che mi ricordava tantissimo uno che avevo quando ero piccolo ... vuoi perchè sono ancora un ragazzino cresciuto, vuoi un po per nostalgia, l'ho comprato ed ho iniziato a lanciarlo (dicasi loopare nel caso di yoyo ad asse fisso) per tutta la serata, ovviamente incuriosendo i passanti e mettendo in enorme imbarazzo la mia fidanzata che, nonostante sia abituata a queste mie stramberie, ogni tanto rimane ancora stupita di quanto io sia capace di fregarmene altamente dell'opinione di chi mi guarda XD
+
+Tornato a casa la sera, mi son messo un po a cercare su internet per trovare qualche informazione, qualche trick, qualche video insomma ed ho scoperto non un mondo, ma un intero universo che gira dietro questo sport/passione!!!
+
+Inizialmente trovai una marea inimmaginabile di video su youtube di yoer come Jensen Kimmit (il ragazzo canadese del video qui sopra), Jason Lee (pluri campione mondiale), ecc ecc ecc e poi approdai su <a href="http://www.yoyomaniacs.com/">http://www.yoyomaniacs.com/</a> .
+
+Una vera e propria associazione di giocatori, sempre pronti ad aiutarmi nell'imparare nuovi trick, a cazzeggiare ai raduni o semplicemente  a scambiare quattro chiacchiere .
+
+Ho scoperto che ogni nazione ha un suo campionato nazionale di yoyo ed in quello passato ho partecipato, come spettatore ovviamente, anche io ... così come c'è un campionato mondiale dove, i più bravi di tutto il mondo si sfidano all'ultimo trick in free style che tolgono veramente il fiato.
+
+Così, tornando alla mia esperienza personale, acquistai il mio primo yoyo unresponsive, un Plastic Grind Machine, ed iniziai a trickeggiare.
+
+Beh, sarò strano io, ma ho scoperto che non solo era divertente, ma mi rilassava moltissimo tra una sessione e l'altra di coding, nonchè stimolava i miei riflessi e la mia creatività ... insomma, una specie di super-giocattolo per adulti :P
+
+Bon, con questo chiudo perchè potrei continuare per mesi a parlarne :P
+
+Se per caso ho stimolato la vostra curiosità, sarò lieto di rispondere ad ogni domanda nei commenti di questo articolo, così come saranno pronti ad accogliere qualsiasi nuovo giocatore i ragazzi dell'<a href="http://www.yoyomaniacs.com/" target="_blank">associazione italiana yoyo</a> ^^

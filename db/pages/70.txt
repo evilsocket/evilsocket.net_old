@@ -1,0 +1,9 @@
+Date: 2009-05-13 08:33:51
+Author: evilsocket
+Categories: C, Hacking, Papers, Programmazione, Reversing
+Tags: Exploiting, ld_preload, reversing, source auditing
+Title: Realtime Source Auditing
+
+Un paper nel quale illustro una tecnica abbastanza semplice ma che ci puÃ² dare una panoramica piÃ¹ttosto completa di come un applicazione che vogliamo reversare funzioni.
+
+<a href="http://www.evilsocket.net/papers/realtimesourceauditing.pdf" target="_blank">Scarica</a>

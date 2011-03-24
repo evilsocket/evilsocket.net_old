@@ -1,0 +1,68 @@
+Date: 2009-12-19 22:53:14
+Author: evilsocket
+Categories: Misc
+Tags: 
+Title: Chromium vs Firefox
+
+Test eseguito con Chromium 4.0.274.0 e Firefox 3.5.6 (senza nessun plugin installato) su un Intel Core 2 Quad, tramite il servizio <a href="http://www2.webkit.org/perf/sunspider-0.9/sunspider.html" target="_blank">http://www2.webkit.org/perf/sunspider-0.9/sunspider.html</a> .
+
+<a href="http://www.evilsocket.net/images/chrome-vs-firefox.JPG"><img class="alignleft size-full wp-image-864" title="chrome-vs-firefox" src="http://www.evilsocket.net/images/chrome-vs-firefox.JPG" alt="chrome-vs-firefox" width="215" height="92" /></a>Nella seguente tabella, la prima colonna è il nome del test, la seconda il rapporto di velocità Chromium/Firefox, terza la velocoità di Firefox, la quarta quella di Chromium .
+
+Diciamo che gli elementi in blu sono i tempi di risposta di Chromium, quelli arancioni di Firefox.
+
+Che dire ... menomale che sono passato a Chromium!
+
+Non sono mai stato un fan di Firefox e questa è la conferma che c'è di meglio :)
+
+<break>
+<pre id="console">TEST                   COMPARISON            FROM                 TO             DETAILS
+
+=============================================================================
+
+** TOTAL **:           2.50x as fast     <span style="color: #ff6600;">1453.8ms</span> +/- 1.9%   <span style="color: #0000ff;">582.2ms</span> +/- 2.5%     significant
+
+=============================================================================
+
+  3d:                  2.51x as fast      <span style="color: #ff6600;">220.8ms</span> +/- 5.2%    <span style="color: #0000ff;">88.0ms</span> +/- 9.1%     significant
+    cube:              2.07x as fast       <span style="color: #ff6600;">65.0ms</span> +/- 6.2%    <span style="color: #0000ff;">31.4ms</span> +/- 22.2%     significant
+    morph:             1.76x as fast       <span style="color: #ff6600;">53.8ms</span> +/- 15.6%    <span style="color: #0000ff;">30.6ms</span> +/- 8.4%     significant
+    raytrace:          3.92x as fast      <span style="color: #ff6600;">102.0ms</span> +/- 1.9%    <span style="color: #0000ff;">26.0ms</span> +/- 5.9%     significant
+
+  access:              3.68x as fast      <span style="color: #ff6600;">193.4ms</span> +/- 7.4%    <span style="color: #0000ff;">52.6ms</span> +/- 6.4%     significant
+    binary-trees:      <strong>20.6x as fast</strong>       <span style="color: #ff6600;">57.8ms</span> +/- 6.9%     <span style="color: #0000ff;">2.8ms</span> +/- 19.9%     significant
+    fannkuch:          4.05x as fast       <span style="color: #ff6600;">77.8ms</span> +/- 13.9%    <span style="color: #0000ff;">19.2ms</span> +/- 10.6%     significant
+    nbody:             1.64x as fast       <span style="color: #ff6600;">40.4ms</span> +/- 10.8%    <span style="color: #0000ff;">24.6ms</span> +/- 15.4%     significant
+    nsieve:            2.90x as fast       <span style="color: #ff6600;">17.4ms</span> +/- 6.4%     <span style="color: #0000ff;">6.0ms</span> +/- 0.0%     significant
+
+  bitops:              -                   <span style="color: #ff6600;">52.6ms</span> +/- 6.2%    <span style="color: #0000ff;">50.8ms</span> +/- 5.8% 
+    3bit-bits-in-byte: *1.67x as slow*      <span style="color: #ff6600;">2.4ms</span> +/- 28.4%     <span style="color: #0000ff;">4.0ms</span> +/- 0.0%     significant
+    bits-in-byte:      ??                  <span style="color: #ff6600;">11.0ms</span> +/- 27.7%    <span style="color: #0000ff;">11.8ms</span> +/- 11.5%     not conclusive: might be *1.07x as slow*
+    bitwise-and:       *3.65x as slow*      <span style="color: #ff6600;">3.4ms</span> +/- 32.7%    <span style="color: #0000ff;">12.4ms</span> +/- 19.5%     significant
+    nsieve-bits:       1.58x as fast       <span style="color: #ff6600;">35.8ms</span> +/- 10.2%    <span style="color: #0000ff;">22.6ms</span> +/- 17.7%     significant
+
+  controlflow:         <strong>11.8x as fast</strong>       <span style="color: #ff6600;">47.2ms</span> +/- 7.1%     <span style="color: #0000ff;">4.0ms</span> +/- 22.0%     significant
+    recursive:         <strong>11.8x as fast</strong>       <span style="color: #ff6600;">47.2ms</span> +/- 7.1%     <span style="color: #0000ff;">4.0ms</span> +/- 22.0%     significant
+
+  crypto:              1.89x as fast       <span style="color: #ff6600;">86.2ms</span> +/- 8.9%    <span style="color: #0000ff;">45.6ms</span> +/- 7.4%     significant
+    aes:               3.11x as fast       <span style="color: #ff6600;">46.6ms</span> +/- 10.3%    <span style="color: #0000ff;">15.0ms</span> +/- 26.9%     significant
+    md5:               1.54x as fast       <span style="color: #ff6600;">25.0ms</span> +/- 22.2%    <span style="color: #0000ff;">16.2ms</span> +/- 10.0%     significant
+    sha1:              -                   <span style="color: #ff6600;">14.6ms</span> +/- 18.7%    <span style="color: #0000ff;">14.4ms</span> +/- 17.9% 
+
+  date:                2.55x as fast      <span style="color: #ff6600;">210.2ms</span> +/- 2.4%    <span style="color: #0000ff;">82.4ms</span> +/- 3.1%     significant
+    format-tofte:      3.01x as fast      <span style="color: #ff6600;">116.2ms</span> +/- 3.8%    <span style="color: #0000ff;">38.6ms</span> +/- 8.1%     significant
+    format-xparb:      2.15x as fast       <span style="color: #ff6600;">94.0ms</span> +/- 4.3%    <span style="color: #0000ff;">43.8ms</span> +/- 8.6%     significant
+
+  math:                1.21x as fast       <span style="color: #ff6600;">76.2ms</span> +/- 4.5%    <span style="color: #0000ff;">63.0ms</span> +/- 13.5%     significant
+    cordic:            1.34x as fast       <span style="color: #ff6600;">34.6ms</span> +/- 16.6%    <span style="color: #0000ff;">25.8ms</span> +/- 30.2%     significant
+    partial-sums:      -                   <span style="color: #ff6600;">29.6ms</span> +/- 17.5%    <span style="color: #0000ff;">27.0ms</span> +/- 4.6% 
+    spectral-norm:     -                   <span style="color: #ff6600;">12.0ms</span> +/- 20.7%    <span style="color: #0000ff;">10.2ms</span> +/- 10.2% 
+
+  regexp:              4.46x as fast      <span style="color: #ff6600;">106.2ms</span> +/- 20.9%    <span style="color: #0000ff;">23.8ms</span> +/- 11.9%     significant
+    dna:               4.46x as fast      <span style="color: #ff6600;">106.2ms</span> +/- 20.9%    <span style="color: #0000ff;">23.8ms</span> +/- 11.9%     significant
+
+  string:              2.68x as fast      <span style="color: #ff6600;">461.0ms</span> +/- 2.0%   <span style="color: #0000ff;">172.0ms</span> +/- 8.1%     significant
+    base64:            1.45x as fast       <span style="color: #ff6600;">29.0ms</span> +/- 12.5%    <span style="color: #0000ff;">20.0ms</span> +/- 11.6%     significant
+    fasta:             4.44x as fast      <span style="color: #ff6600;">102.2ms</span> +/- 4.0%    <span style="color: #0000ff;">23.0ms</span> +/- 12.7%     significant
+    tagcloud:          3.29x as fast      <span style="color: #ff6600;">134.4ms</span> +/- 2.1%    <span style="color: #0000ff;">40.8ms</span> +/- 4.0%     significant
+    unpack-code:       2.69x as fast      <span style="color: #ff6600;">142.0ms</span> +/- 1.6%    <span style="color: #0000ff;">52.8ms</span> +/- 5.9%     significant
+    validate-input:    1.51x as fast       <span style="color: #ff6600;">53.4ms</span> +/- 11.0%    <span style="color: #0000ff;">35.4ms</span> +/- 25.0%     significant</pre>

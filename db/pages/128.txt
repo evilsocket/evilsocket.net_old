@@ -1,0 +1,19 @@
+Date: 2009-05-19 21:40:53
+Author: evilsocket
+Categories: PHP, Programmazione, Sorgenti
+Tags: class, cookie, get, http, location, PHP, post, request, response, webagent
+Title: WebAgent PHP Class
+
+Eccovi una classe che potrÃ  facilitarvi non poco la vita nel caso abbiate la necessitÃ  di eseguire richieste HTTP da una vostra pagina php .
+
+<break>La classe implementa le seguenti funzionalitÃ  :
+<ul>
+	<li>Gestione del responso http affidato ad una classe specifica .</li>
+	<li>Supporto per richieste sia POST che GET con encoding dei parametri automatico .</li>
+	<li>Salvataggio temporaneo e/o permanente (su filesystem) dei cookie di ogni dominio .</li>
+	<li>La classe segue opzionalmente le redirezioni lato server (per capirci, l'header Location) .</li>
+	<li>etc etc</li>
+</ul>
+A me torna sempre molto molto utile, spero lo sia anche per voi ^^ .
+
+<a href="http://www.evilsocket.net/sources/webagent.class_php.txt" target="_blank">Scarica</a>

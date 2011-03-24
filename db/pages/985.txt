@@ -1,0 +1,49 @@
+Date: 2010-04-17 00:46:31
+Author: evilsocket
+Categories: Misc
+Tags: anjuta, editor, gedit, gtksourceview, hybris, ide, scribes
+Title: Finalmente un code editor per Hybris!
+
+<div>
+
+Non esistono editor di test che supportino la sintassi di Hybris  nativamente, eccezion fatta per <a href="http://github.com/evilsocket/hyde" target="_blank">Hyde</a>, che è ancora in una  fase alpha ed estremamente instabile.
+
+Per questo motivo sono stati realizzati dei file che aggiungono le  funzionalità necessarie per Hybris a tutti quegli editor che utilizzano  il componente <a href="http://live.gnome.org/GtkSourceView" target="_blank">GtkSourceView</a>, ad esempio  <a href="http://projects.gnome.org/gedit/" target="_blank">GEdit</a>, <a href="http://scribes.sourceforge.net/" target="_blank">Scribes</a>, <a href="http://projects.gnome.org/anjuta/" target="_blank">Anjuta</a>,  ecc.
+
+Ecco alcuni screenshots proprio di questi editor :
+
+<break><strong>Anjuta</strong>
+
+<a href="http://www.evilsocket.net/images/anjuta.png"><img class="alignleft size-full wp-image-986" title="anjuta" src="http://www.evilsocket.net/images/anjuta.png" alt="" width="602" height="497" /></a>
+
+<strong>GEdit</strong>
+
+<a href="http://www.evilsocket.net/wp-content/uploads/2010/04/gedit.png"><img class="alignleft size-full wp-image-987" title="gedit" src="http://www.evilsocket.net/wp-content/uploads/2010/04/gedit.png" alt="" width="631" height="458" /></a>
+
+<strong>Scribes</strong>
+
+<a href="http://www.evilsocket.net/wp-content/uploads/2010/04/scribes.png"><img class="alignleft size-full wp-image-988" title="scribes" src="http://www.evilsocket.net/wp-content/uploads/2010/04/scribes.png" alt="" width="603" height="467" /></a>
+
+Questi file possono essere reperiti tramite il repository <strong><a href="http://github.com/evilsocket/hybris-gtksourceview" target="_blank">Hybris-GtkSourceView</a></strong> su github insieme al file README che contiene le istruzioni per  l'installazione.
+
+Riporto brevemente queste istruzioni .
+
+Il file 'hybris.xml' serve per creare il mime type corretto sul  sistema, quindi va copiato in
+
+/usr/share/mime/packages/
+
+Poi bisogna eseguire il comando
+
+update-mime-database /usr/share/mime/
+
+per aggiornare  il db dei mime types.
+
+Successivamente, andrà copiato il file hybris.lang dentro la cartella
+
+~/.gnome2/gtksourceview-1.0/language-specs/
+
+che se non  esiste va precedentemente creata.
+
+PS: Notate nei tab di GEdit e Anjuta l'iconcina che ho creato per gli script in Hybris e che successivamente ho associato al suo mimetype per fare in modo che Gnome la usi sempre per loro ^^.
+
+</div>

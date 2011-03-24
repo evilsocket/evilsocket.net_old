@@ -1,0 +1,15 @@
+Date: 2009-05-24 16:42:13
+Author: evilsocket
+Categories: Biometria, C, Programmazione, Sorgenti
+Tags: comandi vocali, dct, discrete cousine transform, dsp, fourier, microfono, riconoscimento vocale, speech recognition, vocal, voxifera
+Title: Voxifera : Riconoscimento vocale & esecuzione comandi
+
+Chi di voi segue il sito di blacklight, saprÃ  che ultimamente sta lavorando sul software Voxifera (il vecchio nome era vocal, ma era troppo banale stando a quello che dice lui XD) .
+
+<break>In pratica Ã¨ un software che interfacciandosi al microfono, registra la vostra voce ed esegue una serie di elaborazioni .
+
+In seguito a queste elaborazioni potrete associare un comando a quella parola, comando che sarÃ  eseguito dal software ogni qual volta pronuncerete quella determinata parola .
+
+Dato che il sorgente ha bisogno di parecchie ottimizzazioni (se non uno stravolgimento totale dell'algoritmo XD) abbiamo deciso di lavorarci insieme, quindi da questo momento sono diventato co-autore di Voxifera ^^ .
+
+<a href="http://github.com/BlackLight/Voxifera/tree/master" target="_blank">Voxifera su github.com</a>

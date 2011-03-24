@@ -1,0 +1,19 @@
+Date: 2009-05-31 05:07:59
+Author: evilsocket
+Categories: Biometria, Programmazione
+Tags: 
+Title: Eigen Fast Decomposition : Work in progress :D
+
+Come avrete ormai capito, sono un fissato della biometria e computer vision in generale ... cosÃ¬, dopo aver studiato come un matto ed implementato un sistema di riconoscimento delle impronte digitali, ora passo allo studio per la realizzazione di un sistema di riconoscimento facciale :D .
+
+Il metodo che per adesso sto studiando Ã¨ abbastanza vecchiotto a dire la veritÃ , ma tutt'ora sembra essere uno dei piÃ¹ precisi ed efficienti, trattasi del metodo per decomposizione di Eigen .
+
+<break>In pratica Ã¨ un metodo che "scompone" un segnali basilari una faccia e studia, basandosi sulla distribuzione probabilistica dei tratti umani, quanto essa ha in comune con un database precedentemente calcolato .
+
+Il software Ã¨ quasi realizzato, ma in realtÃ  la prima versione che ho scritto Ã¨ troppo lenta, cosÃ¬ sto studiando il metodo di <a href="it.wikipedia.org/wiki/Carl_Jacobi" target="_blank">Jacobi</a> per un estrazione veloce degli valori di eigen partendo da una matrice di covarianza, metodo che velocizzerÃ  notevolmente i tempi di creazione del database :D .
+
+Ho trovato estremamente interessante ed esaustivo <a href="http://onionesquereality.wordpress.com/2009/02/11/face-recognition-using-eigenfaces-and-distance-classifiers-a-tutorial/" target="_blank">questo articolo </a>che, nonostante presenti un esposizione formale in linguaggio matematico, Ã¨ facilmente comprensibile, inoltre <a href="http://www.face-rec.org/algorithms/PCA/jcn.pdf" target="_blank">questo pdf </a>mi sta aiutando allo stesso modo .
+
+Avrei potuto utilizzare il framework opencv e realizzare il tutto in una decina di righe di codice, ma cosÃ¬ non avrei imparato un bel niente e non mi sarei divertito XD .
+
+Stay tuned ;)

@@ -1,0 +1,190 @@
+Date: 2010-04-26 19:27:52
+Author: evilsocket
+Categories: Misc
+Tags: descriptor, hybris, operatore, overloading
+Title: Hybris : Overloading di operatori e descrittori, come funziona.
+
+Voglio riportare un post che ho appena pubblicato nel <a href="http://www.hybris-lang.org/" target="_blank">sito ufficiale di hybris</a>, per vedere gli esempi con una colorazione appropriata vi invito a leggere l'<a href="http://www.hybris-lang.org/story/overloading-di-operatori-e-descrittori-come-funziona.html" target="_blank">originale</a>.
+<div>
+
+Chi conosce anche solo le basi del C++, sa che una classe può  eseguire l'overloading di uno o più operatori, ovvero definire come la  classe si deve comportare quando uno di questi operatori viene usato su  di essa.
+
+Ad esempio, una classe che rappresenta un numero complesso, molto  probabilmente avrà bisogno di eseguire l'overloading degli operatori  aritmetici (come +, -, *, /, ecc), così come una classe Array avrà  bisogno di eseguire l'overloading dell'operatore subscript ( [ ] ) per  consentire l'accesso diretto ai suoi elementi.
+
+Hybris, oltre a supportare questa funzionalità, propone un altra  entità, denominata "overloadable descriptor" o "descrittore  sovraccaricabile", da adesso in poi d.s. .
+
+Un d.s. è un estensione di un operatore e sostanzialmente istruisce  l'inteprete su come trattare quella classe in contesti al di fuori dei  meri operatori logici, aritmetici, bitwise, ecc, che non potrebbero  essere gestiti/gestibili tramite il normale uso di un operatore.
+
+Facciamo un esempio, il più banale, che però da una prima idea del  concetto.
+
+<break>Ipotiziamo di avere una classe del tipo :
+<div>
+<pre>class Prova {
+ 
+	method Prova(){
+		// ...
+	}
+ 
+	/*
+	 * ... altri metodi ...
+	 */
+}</pre>
+</div>
+Se volessimo stamparla direttamente, non sarebbe possibile, poichè  non si può dedurre una rappresentazione testuale di una classe, ovvero,  un eventuale chiamata alla funzione "println" non saprebbe cosa stampare  della classe e cosa no.
+
+Ma, implementando il descrittore <strong>__to_string</strong> nella  stessa classe, possiamo fornire a runtime una rappresentazione testuale  all'interprete, che così saprà come stamparne il contenuto :
+<div>
+<pre>class Prova {
+ 
+	method Prova(){
+		// ...
+	}
+ 
+	public method __to_string(){
+		return "classe Prova";
+	}
+ 
+	/*
+	 * ... altri metodi ...
+	 */
+}
+ 
+foo = new Prova();
+ 
+/*
+ * Questa chiamata stamperà la stringa "classe Prova"
+ */
+println(foo);</pre>
+</div>
+Un altro esempio, può essere una classe Array di questo tipo :
+<div>
+<pre>class Array {
+	private __array;
+ 
+	public method Array(){
+		me-&gt;__array = array();
+	}
+ 
+	public method __to_string(){
+		return "{ ".join( ", ", me-&gt;__array)." }";
+	}
+ 
+	operator [] ( index ){
+		return me-&gt;__array[index];
+	}
+ 
+	operator []&lt; ( index, object ){
+		me-&gt;__array[index] = object;
+	}
+ 
+	operator []= ( object ){
+		me-&gt;__array[] = object;
+	}
+}</pre>
+</div>
+In questo caso, il d.s. __to_string restituisce una rappresentazione  estesa degli elementi che contiene l'Array.
+
+Inoltre, questa classe implementa tutti gli operatori di accesso per  indice (subscript), per cui sarebbe possibile utilizzarla in questo modo  :
+<div>
+<pre>a = new Array();
+/* aggiungo degli elementi */
+a[] = 1;
+a[] = 18;
+a[] = 3;
+a[] = 4;
+/* sostituisco un elemento */
+a[1] = 2;</pre>
+</div>
+Ma come potremmo, ad esempio, usare questa classe in un ciclo "<strong>foreach</strong>"  come avviene invece per il vettore standard di Hybris, ovvero, come  potremmo rendere la classe Array <strong>iterabile</strong> tramite i  normali costrutti di Hybris?
+
+In questo senso, ci viene in aiuto i d.s. __size che "quantifica" in  una misura finita le dimensioni di una classe, nel nostro esempio  restituendo gli elementi che contiene il vettore interno :
+<div>
+<pre>class Array {
+	private __array;
+ 
+	public method Array(){
+		me-&gt;__array = array();
+	}
+ 
+	public method __to_string(){
+		return "{ ".join( ", ", me-&gt;__array)." }";
+	}
+ 
+    public method __size(){
+		return elements(me-&gt;__array);
+	}
+ 
+	operator [] ( index ){
+		return me-&gt;__array[index];
+	}
+ 
+	operator []&lt; ( index, object ){
+		me-&gt;__array[index] = object;
+	}
+ 
+	operator []= ( object ){
+		me-&gt;__array[] = object;
+	}
+}
+ 
+ 
+a = new Array();
+/* aggiungo degli elementi */
+a[] = 1;
+a[] = 18;
+a[] = 3;
+a[] = 4;
+/* sostituisco un elemento */
+a[1] = 2;
+ 
+/* Array è iterabile, quindi posso usare il foreach */
+foreach( item of a ){
+	println( item );
+}</pre>
+</div>
+Sostanzialmente, per rendere una classe iterabile, si deve eseguire  l'overloading sia di __size che dell'operatore [] in modo che  l'interprete sappia come quantificare la classe e come accedere ad i  suoi elementi tramite un indice.
+
+Un altro d.s. che è stato implementato è <strong>__attribute</strong>,  che viene richiamato quando lo script accede ad un membro della classe  che non è stato definito, ad esempio, senza questo d.s., il seguente  codice darebbe un errore :
+<div>
+<pre>class Prova {
+ 
+	method Prova(){
+		// ...
+	}
+ 
+	/*
+	 * ... altri metodi ...
+	 */
+}
+ 
+p = new Prova();
+/*
+ * Errore!
+ * [LINE --] Syntax error : 'non_esiste_questo_membro' is not a member of p .
+ */
+println( p-&gt;non_esiste_questo_membro );</pre>
+</div>
+Però, se trasformiamo la classe nel seguente modo :
+<div>
+<pre>class Prova {
+ 
+	method Prova(){
+		// ...
+	}
+ 
+	public method __attribute( name ){
+		println( "Hai richiesto ".name );
+		return "foo";
+	}
+ 
+	/*
+	 * ... altri metodi ...
+	 */
+}</pre>
+</div>
+Al momento della println del membro, il d.s. __attribute verrà  richiamato e lo script di conseguenza stamperà l'output :
+<blockquote>Hai richiesto non_esiste_questo_membro
+foo</blockquote>
+In futuro verranno implementati tanti altri d.s. in base alle  esigenze che emergeranno durante la realizzazione di script di prova,  quindi, stay tuned! :D
+
+</div>

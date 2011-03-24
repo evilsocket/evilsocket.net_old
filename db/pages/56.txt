@@ -1,0 +1,9 @@
+Date: 2009-05-13 08:19:04
+Author: evilsocket
+Categories: Papers, Programmazione
+Tags: introduction to programming, programming, tutorial
+Title: Programming I
+
+Primo "volume" della mia introduzione alla programmazione . Il paper Ã¨ di carattere estremamente generico ed Ã¨ adatto principalmente a completi neofiti nel campo .
+
+<a href="http://www.evilsocket.net/papers/guida_alla_programmazione%20(volume%201).pdf" target="_blank">Scarica</a>

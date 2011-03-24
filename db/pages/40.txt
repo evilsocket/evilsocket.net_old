@@ -1,0 +1,9 @@
+Date: 2009-05-12 23:47:49
+Author: evilsocket
+Categories: Hacking, PHP, Programmazione, Sorgenti, Web Hacking
+Tags: csrf, javascript encoder, tool, Web Hacking, xss
+Title: Javascript Encoder
+
+Utility che codifica del javascript in una forma "non filtrabile" da svariati sistemi di protezione anti xss, csrf, etc etc etc che puÃ² tornare utile nel caso si voglia iniettare del codice client-side in giro per la rete :D
+
+<a href="http://www.evilsocket.net/sources/jsencode.php.txt" target="_blank">Scarica</a>

@@ -1,0 +1,30 @@
+Date: 2009-06-12 16:32:38
+Author: evilsocket
+Categories: Misc
+Tags: alix, embedded, firewall, ipcop, linux
+Title: Tra un po un nuovo giocattolo :D
+
+<img class="alignleft" src="http://www.confinidigitali.it/mambo/images/stories/immagini/tux_small.jpg" alt="" width="55" height="66" />Era un po di tempo che cercavo una buona scheda embedded a basso consumo sulla quale poter installare una distro linux e l'altro giorno, su consiglio di <strong>ccjh </strong>che ringrazio vivamente, ho acquistato online una Alix 2D3 .
+
+Questo piccolo gioiellino ha le seguenti specifiche tecniche :
+<table border="0" cellspacing="0" cellpadding="3" width="100%">
+<tbody>
+<tr bgcolor="#ffffff">
+<td valign="top"></td>
+<td>â€¢ CPU: 500 MHz <strong>AMD Geode LX800 </strong>
+â€¢ DRAM: 256 MB DDR DRAM
+â€¢ Storage: <strong>CompactFlash</strong> socket, 44 pin <strong>IDE</strong> header
+â€¢ Power: DC jack or passive POE, min. 7V to max. 20V
+â€¢ Three front panel LEDs, pushbutton
+â€¢ Expansion: 1 <strong>miniPCI</strong> slot, <strong>LPC</strong> bus
+â€¢ Connectivity: <strong>3 Ethernet</strong> channels (Via VT6105M 10/100)
+â€¢ I/O: DB9 serial port, <strong>dual USB port </strong>
+â€¢ Board size: 6 x 6" (<strong>152.4 x 152.4 mm</strong>) - same as WRAP.1E
+â€¢ Firmware: tinyBIOS</td>
+</tr>
+</tbody></table>
+<break><img class="aligncenter" src="http://shop.varia-store.com/images/product_images/popup_images/600_0.jpg" alt="" width="600" height="600" />
+
+Insomma come potete capire, avendo sia degli slot usb, che 3 porte lan, Ã¨ un apparecchio che puÃ² essere usato per un infinitÃ  di scopi, dal firewall hardware casalingo con ipcop, magari che funga anche da ips, da download server per scaricare tutti i file che volete tramite torrent e emule senza un pc acceso che consumi una marea di corrente e faccia casino, etc etc .
+
+Penso che quando arriverÃ  installerÃ² una Debian, vi farÃ² sapere :P .

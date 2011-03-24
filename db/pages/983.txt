@@ -1,0 +1,17 @@
+Date: 2010-04-15 00:10:57
+Author: evilsocket
+Categories: Programmazione
+Tags: link, overflow, service, servizio, site, sito, stack
+Title: StackOverflow : Yahoo Answers per i programmatori !
+
+<img class="alignleft" src="http://sstatic.net/so/img/logo.png" alt="" width="250" height="61" />Gli articoli in questo blog nei quali pubblicizzo un sito sono davvero pochi, questo non tanto perchè non mi piace farlo, bensì perchè sono pochi i siti che ritengo interessanti e utili per i miei obiettivi.
+
+Fa eccezione <a href="http://stackoverflow.com/" target="_blank">http://stackoverflow.com/</a>, l'equivalente di Yahoo Answers per programmatori, sistemisti e tecnici informatici in genere.
+
+La logica è semplicissima ... ci si iscrive, si fanno delle domande su qualche problema che si ha, si risponde alle domande delle altre persone e si accumulano punti.
+
+Semplice quanto efficace, non ho mai visto tanti guru della programmazione in un unico sito ... c'è davvero gente molto in gamba da tutte le parti del pianeta (tutte tranne l'Italia probabilmente, chissà com'è -.-), persone che oltre ad essere tecnicamente brave sono sempre disponibili a darti una mano.
+
+Alcuni problemi che ho avuto con Hybris li ho risolti proprio grazie a loro, quindi mi sembrava carino omaggiare il servizio con un articolo.
+
+Nient'altro ... se siete curiosi il mio profilo è <a href="http://stackoverflow.com/users/300881/simone-margaritelli" target="_blank">questo</a>.

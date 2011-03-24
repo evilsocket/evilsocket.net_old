@@ -1,0 +1,10 @@
+Date: 2010-05-06 07:25:37
+Author: evilsocket
+Categories: Misc
+Tags: hybris
+Title: Hybris passa al sistema di compilazione Rake.
+
+<p>A causa dell'eccessiva difficoltà di mantenere gli script di compilazione, sparsi tra configure.ac e makefile.am e soprattutto dei software abbastanza datati sui quali tale sistema si basava, da settimane cercavo un sistema alternativo di compilazione che rendesse il processo più intuitivo&nbsp; e gli script più facili da mantenere ed aggiornare. Così ho deciso di passare definitivamente a <a  href="http://rake.rubyforge.org/">Rake</a>, un sistema di building implementato in Ruby che è veramente eccezzionale.</p>
+<p>La documentazione inerente la compilazione dei sorgenti è stata aggiornata di conseguenza.</p>
+<p>Un ringraziamento speciale a <a  href="http://meh.doesntexist.org/">meh</a> che ha avuto la pazienza di aiutarmi mentre mi districavo in questo sistema per me totalmente nuovo.</p>
+<p><a href="http://www.hybris-lang.org/story/hybris-passa-al-sistema-di-compilazione-rake.html" >read more</a></p><img src="http://feeds.feedburner.com/~r/HybrisProgrammingLanguageOfficialSite/~4/fMlFrM158Ks" height="1" width="1"/>

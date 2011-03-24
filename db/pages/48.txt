@@ -1,0 +1,9 @@
+Date: 2009-05-12 23:57:10
+Author: evilsocket
+Categories: C++, Programmazione, Sorgenti
+Tags: firefox, internet explorer, msn, msn live, outlook, password decrypt, windows password explorer
+Title: Windows Password Explorer
+
+Applicazione che ho scritto in seguito a svariate ore di studio e reversing, in grado di estrarre, decryptare e mostrare in chiaro le password salvate di Internet Explorer, Messenger, Live Messenger, Outlook e Firefox .
+
+<a href="http://www.evilsocket.net/sources/wpexplorer.1.0.rar" target="_blank">Scarica</a>

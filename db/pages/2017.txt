@@ -1,0 +1,41 @@
+Date: 2011-01-04 02:12:08
+Author: evilsocket
+Categories: Exploiting, Hacking, Tools
+Tags: backbox, distribuzione, distro, Hacking, linux, penetration test
+Title: BackBox Linux 1 Final Release
+
+<img class="alignleft" src="http://www.backbox.org/public/sites/default/files/corolla_logo.png" alt="" width="98" height="98" />Di <strong>BackBox</strong>, la distribuzione GNU/Linux orientata alla sicurezza vi avevo già parlato in <a href="http://www.evilsocket.net/1985/backbox-ottima-distribuzione-gnulinux-orientata-alla-sicurezza.html" target="_blank">questo</a> post risalente a circa un mese fa, periodo nel quale sono entrato a far parte del progetto inizialmente come core developer, successivamente (causa mancanza di tempo per lavoro :'() come semplice contributor.
+
+Sono fiero, anche se di mio c'è poco, di annunciare che a distanza di 30 giorni dalla seconda release candidate, è pronta la versione 1.0 ufficiale!
+
+Il <em>changelog</em> delle principali novità della release finale:
+
+<break>
+<ul>
+	<li>New ISO image (32bit &amp; 64bit)</li>
+	<li>System upgrade</li>
+	<li>Performance boost (using <strong>cgroup</strong>, the notorious “<strong>4 lines of code better than 200</strong>″ in user-space)</li>
+	<li>New look and feel</li>
+	<li>Improved start menu</li>
+	<li>Hacking tools new or updated: Aircrack-ng 1.1, Metasploit Framework 3.5.1, OpenVAS 3, SET 1.1, SkipFish 1.84b, SqlMap 0.9, w3af 1.0-rc4, etc.</li>
+	<li>Bug fixing</li>
+</ul>
+Ecco a voi i link per il download :
+
+<em>BackBox Linux 1 – i386</em>
+Release: 03.01.2010
+Name: backbox-1-i386.iso
+Size: 661,0 MB
+MD5: d96b27dbc698d4267d4e0818dc9ad755
+
+<a href="http://www.backbox.org/torrents/backbox-1-i386.iso.torrent" target="_blank">Torrent</a> – <a href="http://www.multiupload.com/I4YUPWQCFH" target="_blank">MultiUpload</a>
+
+<em>BackBox Linux 1 – amd64</em>
+Release: 03.01.2010
+Name: backbox-1-amd64.iso
+Size: 696,5 MB
+MD5: 34f9a01f2ee830ce7f9517d51334d329
+
+<a href="http://www.backbox.org/torrents/backbox-1-amd64.iso.torrent" target="_blank">Torrent</a> – <a href="http://www.multiupload.com/PHDCUEOGAF" target="_blank">Multiupload</a>
+
+Happy (ethical) Hacking! :)

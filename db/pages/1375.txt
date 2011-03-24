@@ -1,0 +1,11 @@
+Date: 2010-07-20 00:47:34
+Author: evilsocket
+Categories: Misc
+Tags: gpg, key, public key
+Title: Informazione di Servizio, Chiave Pubblica
+
+<a href="http://www.evilsocket.net/images/lock.png"><img class="alignleft size-full wp-image-1374" title="lock" src="http://www.evilsocket.net/images/lock.png" alt="" width="128" height="128" /></a>In questi giorni ho avuto la necessità di scambiare email cifrate con una persona, la quale ha avuto difficoltà a reperire la mia chiave pubblica gpg per autenticare e decifrare i miei messaggi.
+
+Di conseguenza ho aggiunto sulla colonna di destra un link alla suddetta chiave, così chiunque abbia la necessità di dialogare con me in maniera sicura e confidenziale potrà facilmente reperire i dati necessari.
+
+Passo e chiudo.

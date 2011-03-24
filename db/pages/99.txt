@@ -1,0 +1,145 @@
+Date: 2009-05-18 05:02:00
+Author: evilsocket
+Categories: Papers, Programmazione
+Tags: bot, corrispondenze, crawler, espressione regolare, estrazione, match, PHP, preg_match, preg_match_all, regex, regexp, regular expression, script
+Title: Introduzione alle espressioni regolari
+
+E' triste vedere come uno degli strumenti piÃ¹ versatili e potenti nella programmazione, in particolare nei linguaggi di scripting, sia snobbato, poco conosciuto o nel migliore dei casi ignorato .
+
+Sto parlando delle regex, regexp o propriamente <strong>espressioni regolari </strong>... ma cosa saranno mai queste mistiche sconosciute ?!
+
+<break>Iniziamo con una definizione generica, gentilmente concessa da wikipedia (sempre perchÃ¨ sono pigro XD) :
+<blockquote>Le <strong>espressioni regolari</strong> (in <a title="Lingua inglese" href="http://it.wikipedia.org/wiki/Lingua_inglese">inglese</a> <em>regular expression</em>, che puÃ² trovarsi abbreviata in <em>regexp</em>, <em>regex</em> o <em>RE</em>) sono sintassi attraverso le quali si possono rappresentare insiemi di <a title="Stringa (informatica)" href="http://it.wikipedia.org/wiki/Stringa_%28informatica%29">stringhe</a>. Gli insiemi caratterizzabili con espressioni regolari sono anche detti <a title="Linguaggio regolare" href="http://it.wikipedia.org/wiki/Linguaggio_regolare">linguaggi regolari</a> (e coincidono con quelli generabili dalle <a title="Grammatica regolare" href="http://it.wikipedia.org/wiki/Grammatica_regolare">grammatiche regolari</a> e riconoscibili dagli <a title="Automa a stati finiti" href="http://it.wikipedia.org/wiki/Automa_a_stati_finiti">automi a stati finiti</a>).</blockquote>
+E a questo punto immagino le vostre espressioni facciali che sono un misto tra il confuso e l'inebetito ... tranqui ogni tanto pure a me le definizioni di wikipedia fanno questo effetto, ma ora vi spiego in parole povere XD .
+
+Immaginate le espressioni regolari come un linguaggio che ha lo scopo di fornire un insieme di strumenti per trovare particolari corrispondenze su una stringa, estrarne una parte specifica e tante altre cosine interessanti che andremo pian piano a vedere insieme .
+
+Avete presente quando dal prompt del dos digitate il comando "dir *.txt" per trovare tutti i file con estensione txt ? Beh avete appena usato una piccola espressione regolare ^^ .
+
+Come ogni linguaggio che si rispetti, le regex hanno le loro strutture semantiche, vale a dire hanno delle "parole chiave" o piÃ¹ precisamente dei simboli che descrivono il linguaggio e che messi insieme formano l'espressione per intero .
+
+Vediamo i costrutti di base e qualche esempio sempre preso da wikipedia .
+<table border="0">
+<tbody>
+<tr>
+<td><strong>.</strong></td>
+<td>Trova ogni singolo carattere (se Ã¨ nella modalitÃ  <em>linea singola</em> altrimenti se Ã¨ in <em>multiriga</em> prende tutti i caratteri diversi da \n, ovvero un ritorno a capo).</td>
+</tr>
+<tr valign="top">
+<td>[ ]</td>
+<td>Trova un singolo carattere contenuto nelle parentesi. Ad esempio, [abc] trova o <strong>una</strong> "a", "b", o "c". [a-z] Ã¨ un intervallo e trova ogni lettera minuscola dell'alfabeto. Possono esserci casi misti: [abcq-z] trova a, b, c, q, r, s, t, u, v, w, x, y, z, esattamente come [a-cq-z].Il carattere '-' Ã¨ letterale solo se Ã¨ primo o ultimo carattere nelle parentesi: [abc-] o [-abc]. Per trovare un carattere '[' o ']', il modo piÃ¹ semplice Ã¨ metterli primi all'interno delle parentesi: [][ab] trova ']', '[', 'a' o 'b'.</td>
+</tr>
+<tr valign="top">
+<td>[^ ]</td>
+<td>Trova ogni singolo carattere non incluso nelle parentesi. Ad esempio, [^abc] trova ogni carattere diverso da "a", "b", o "c". [^a-z] trova ogni singolo carattere che non sia una lettera minuscola. Come sopra, questi due metodi possono essere usati insieme.</td>
+</tr>
+<tr valign="top">
+<td>^</td>
+<td>Corrisponde all'inizio della stringa (o di ogni riga della stringa, quando usato in modalitÃ  multilinea)</td>
+</tr>
+<tr valign="top">
+<td>$</td>
+<td>Corrisponde alla fine della stringa o alla posizione immediatamente precedente un carattere di nuova linea (o alla fine di ogni riga della stringa, quando usato in modalitÃ  multilinea)</td>
+</tr>
+<tr valign="top">
+<td>( )</td>
+<td>Definisce una "sottoespressione marcata". CiÃ² che Ã¨ incluso nell'espressione, puÃ² essere richiamato in seguito. Vedi sotto, \<em>n</em>.</td>
+</tr>
+<tr valign="top">
+<td>\<em>n</em></td>
+<td>Dove <em>n</em> Ã¨ una cifra da 1 a 9; trova ciÃ² che la <em>n</em>esima sottoespressione ha trovato. Tale costrutto Ã¨ teoricamente <strong>irregolare</strong> e non Ã¨ stato adottato nella sintassi estesa delle regexp.</td>
+</tr>
+<tr valign="top">
+<td>*</td>
+<td>
+<ul>
+	<li>Un'espressione costituita da un singolo carattere seguito da "*", trova zero o piÃ¹ copie di tale espressione. Ad esempio, "[xyz]*" trova "", "x", "y", "zx", "zyx", e cosÃ¬ via.</li>
+	<li>\<em>n</em>*, dove <em>n</em> Ã¨ una cifra da 1 a 9, trova zero o piÃ¹ iterazioni di ciÃ² che la <em>n</em>esima sottoespressione ha trovato. Ad esempio, "(a.)c\1*" trova "abcab" e "accac" ma non "abcac".</li>
+	<li>Un'espressione racchiusa tra "\(" e "\)" seguita da "*" non Ã¨ valida. In alcuni casi (es. /usr/bin/xpg4/grep di SunOS 5.8), trova zero o piÃ¹ ripetizioni della stringa che l'espressione racchiusa ha trovato. In altri casi (es. /usr/bin/grep di SunOS 5.8), trova ciÃ² che l'espressione racchiusa ha trovato, seguita da un letterale "*".</li>
+</ul>
+</td>
+</tr>
+<tr valign="top">
+<td>{<em>x</em>,<em>y</em>}</td>
+<td>Trova l'ultimo "blocco" almeno <em>x</em> volte e non piÃ¹ di <em>y</em> volte. Ad esempio, "a{3,5}" trova "aaa", "aaaa" o "aaaaa".</td>
+</tr>
+</tbody></table>
+Vecchie versioni di <em>grep</em> non supportano il separatore alternativo "|".
+
+<strong>Esempi:</strong>
+
+<dl> <dd>".atto" trova ogni stringa di cinque caratteri come <em>gatto</em>, <em>matto</em> o <em>patto</em></dd> <dd>"[gm]atto" trova <em>gatto</em> e <em>matto</em></dd> <dd>"[^p]atto" trova tutte le combinazioni dell'espressione ".atto" tranne <em>patto</em></dd> <dd>"^[gm]atto" trova <em>gatto</em> e <em>matto</em> ma solo all'inizio di una riga</dd> <dd>"[gm]atto$" trova <em>gatto</em> e <em>matto</em> ma solo alla fine di una riga</dd> </dl>Ovviamente questi sono esempi decisamente banali e poco utili nella pratica, quindi a questo punto mi sembra dovuto introdurre qualche esempio un po piÃ¹ interessante utilizzando il linguaggio di scripting PHP (le regex sono supportate dal 99% dei linguaggi, ma io mi trovo comodo con il PHP :D) .
+
+Il php offre diverse funzioni, piÃ¹ o meno avanzate, per gestire corrispondenze, estrazioni etc tramite le regex, ma per questo tutorial introduttivo noi ci concentreremo su due funzioni in particolare, <a href="http://www.php.net/preg_match" target="_blank"><strong>preg_match</strong></a> e <a href="http://www.php.net/preg_match_all" target="_blank"><strong>preg_match_all</strong></a>, che useremo rispettivamente per trovare corrispondenze e per l'estrazione dei dati che ci interessano .
+
+<strong>preg_match </strong>accetta due argomenti principali, l'espressione regolare da utilizzare e la stringa alla quale sottoporla, restituendo in output un numero intero che puÃ² essere 0 se non ci sono corrispondenze o 1 se ce n'Ã¨ almeno una .
+
+Uno degli esempi classici di utilizzo della funzione Ã¨ il controllo della validitÃ  di un email, ovvero data una stringa che *teoricamente* dovrebbe contenere un email, si puÃ² usare una regex per controllare se effettivamente quell'indirizzo Ã¨ valido a tutti gli effetti :
+<span style="color: #000000;">
+<span style="color: #0000bb;">&lt;?<strong style="color: black; background-color: #ffff66;">php</strong></span></span>
+
+$<strong style="color: black; ">email</strong> <span style="color: #007700;">= </span><span style="color: #dd0000;">"someone@example.com"</span><span style="color: #007700;">;</span>
+
+if(<span style="color: #0000bb;"> preg_match</span><span style="color: #007700;">( </span><span style="color: #dd0000;">"/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/"</span><span style="color: #007700;">, </span><span style="color: #0000bb;">$<strong style="color: black; ">email </strong></span><span style="color: #007700;">))Â {
+echo </span><span style="color: #dd0000;">"Email valida ."</span><span style="color: #007700;">;
+}
+elseÂ {
+echo </span><span style="color: #dd0000;">"Email NON valida !"</span><span style="color: #007700;">;
+}</span>
+
+<span style="color: #0000bb;">?&gt;</span>
+
+Da notare che nel primo parametro, oltre alla regex, vengono usati i delimitatori //, questo perchÃ¨ dopo il secondo / possono essere usati dei flag per determinare il comportamento della regex stessa, ad esempio
+<blockquote>/regex/i</blockquote>
+ControllerÃ  delle corrispondenze senza considerare se i caratteri sono maiuscoli o minuscoli, ovvero in modalitÃ  case-insensitive . Per gli altri flag vi invito a consultare la documentazione precedentemente linkata della funzione preg_match .
+
+Ok, figo, finqui (spero) niente di eccessivamente difficile e magari puÃ² tornare anche utile controllare la validitÃ  di un indirizzo email, magari in un modulo di registrazione di un utente ... ma non Ã¨ questo il vero divertimento !
+
+Personalmente, trovo l'<strong>estrazione </strong>molto piÃ¹ divertente delle corrispondenze, perchÃ¨ come ho detto prima ci consente di estrarre dati da una qualsiasi fonte filtrandoli in maniera estremamente precisa e, passatemi il termine, "intelliggente" .
+
+Ad esempio, immaginate di dover scrivere, per lavoro, divertimento o puro masochismo, un piccolo script in php che, dato l'indirizzo di una pagina web estragga tutti i link dalla stessa pagina e li stampi in output, ovvero rilevi tutti i tag
+<pre id="line1">&lt;a href="<strong>link da estrarre</strong>" ...&gt;testo del link&lt;/<span class="end-tag">a</span>&gt;</pre>
+e per l'appunto ne estragga il link che ci interessa .
+
+Volendo si potrebbe fare a suon di strpos e cosÃ¬ via, ma considerando in quante forme diverse si puÃ² presentare il tag (basta solo invertire gli attributi <strong>href</strong> e <strong>target </strong>per mandare a puttane un algoritmo basato su strpos e affini) e soprattutto considerando che questo Ã¨ solo un cazzo di esempio XD direi che Ã¨ meglio usare le regex :D
+
+<code>
+&lt;?php
+$sito = "http://www.evilsocket.net/";
+// ebbene si, file_get_contents puÃ² essere usata anche per richiedere una pagina web :P
+$html = file_get_contents($sito);</code>
+
+if( preg_match_all( "/&lt;\s*a\s+[^&gt;]*href\s*=\s*[\"']?([^\"' &gt;]+)[\"' &gt;]/i", $html, $corrispondenze ) ){
+/*
+la variabile $corrispondenze a questo punto Ã¨ un vettore bidimensionale .
+Nella prima dimensione, ovvero $corrispondenze[0], la funzione preg_match_all
+mette le parti di stringa nelle quali ci sono le corrispondenze rilevate,
+ovvero i tag &lt;a href="..." per intero, mentre nella seconda dimensione,
+ovvero $corrispondenze[1], estrae tramite gli operatori ( ) i link veri e
+propri che ci interessano .
+*/
+
+print_r($corrispondenze[1]);
+}
+?&gt;
+
+Il che una volta eseguito stamperÃ  in output una cosa del tipo :
+<blockquote>Array
+(
+[0] =&gt; http://www.evilsocket.net/
+[1] =&gt; http://www.evilsocket.net/
+[2] =&gt; http://www.evilsocket.net/category/about-me
+[3] =&gt; http://www.evilsocket.net/category/hacking
+[4] =&gt; http://www.evilsocket.net/category/hacking/exploiting
+[5] =&gt; http://www.evilsocket.net/category/hacking/reversing-hacking
+[6] =&gt; http://www.evilsocket.net/category/hacking/web-hacking
+...
+
+....
+
+)</blockquote>
+Beh, vi basti pensare che interi web crawler (ovvero i bot sui quali si basano i motori di indicizzazione come google) si basano su questo principio, cosÃ¬ come interpreti di linguaggi, gestori di traffico etc etc etc etc per capire, se ancora nn lo aveste capito da soli, quante e quali sono le potenzialitÃ  di questo strumento .
+
+Che dire, per questa piccola introduzione Ã¨ tutto, spero di aver acceso l'interesse per le regexp e di avervi reso le idee un po piÃ¹ chiare in proposito ^^
+
+Per ulteriori riferimenti consiglio <a href="http://www.google.it/search?source=ig&amp;hl=it&amp;rlz=&amp;=&amp;q=regular+expression&amp;btnG=Cerca+con+Google&amp;meta=lr%3D&amp;aq=f&amp;oq=" target="_blank">questo sito</a>, che oltre ad essere il mio preferito racchiude sempre ciÃ² che ci serve ;)

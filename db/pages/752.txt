@@ -1,0 +1,27 @@
+Date: 2009-06-17 01:19:25
+Author: evilsocket
+Categories: Misc
+Tags: editor, emacs, geany, nano, text editors, vi, vim
+Title: Vi(m) vs Emacs vs Nano vs GUI Editors
+
+Premetto innanzitutto che sia per vim che per emacs sono abbastanza ignorantello, ovvero non ho approfondito cosÃ¬ tanto il loro utilizzo per poter avere una panoramica completa delle loro funzionalitÃ , di conseguenza questo articolo non vuole essere una critica alle funzionalitÃ , alla potenza etc di un editor piÃ¹ttosto che un'altro, ma una serie di considerazioni sulla facilitÃ  di utilizzo .
+
+Mi Ã¨ capitato innumerevoli volte di sentire "ma come, non usi vim ?!?! eretico !!!" proprio perchÃ¨, appunto, non uso vim e spesso e volentieri lo disprezzo come editor .... usare vim non Ã¨ l33t, non Ã¨ h4x0r a quanto pare XD .
+
+<break>Parliamoci chiaramente, vim aveva ragione di esistere e tutt'ora ha ragione di esistere la dove non Ã¨ presente un server grafico, vedi server, terminali e quant'altro e l'utente ha la necessitÃ  di editare file di varia natura, ma su ambienti dotati di un DM che senso ha ?!
+
+PerchÃ¨ devo ricordarmi di digitare "ESC + : + q + w + ! + INVIO" per salvare e uscire invece di un normale "CTRL+S + CTRL+Q" ?!??! XD
+
+A sto punto, se proprio devo editare in console, uso nano che Ã¨ semplice e fa quello che deve fare senza troppe seghe mentali ...
+
+Poi c'Ã¨ emacs, uno dei primi editor grafici, che si dai, Ã¨ carino e soprattutto ci puoi fare in pratica tutto, dalla lettura di un newsgroup all'invio di un email, ma ormai inizia ad accusare la sua etÃ  e per tanti versi risulta ancora scomodo .
+
+Personalmente, tra tutti gli editor che ho provato, rimango fedele ad uno e uno solamente, <a href="http://www.geany.org" target="_blank">Geany</a>, che Ã¨ leggero, efficiente, estensibile con una miriade di plugin e offre tutti gli shortcuts e le facilitazioni di un ambiente grafico .
+
+Molti asseriscono che la potenza di vim sta nel poter usare l'uso di espressioni regolari per gli scopi piÃ¹ disparati, in pratica l'inclusione di grep, e io dico, ma perchÃ¨ vim Ã¨ l'unico editor che lo consente ?!?!
+
+Su Geany ho sempre usato le regex sia per la ricerca che per il replace, sia su un singolo documento, che su tutti quelli aperti o su parte di essi ... e il tutto senza dover impazzire per digitare due-cento-mila-milioni-di-miliardi di comandi O.o
+
+A questo punto io chiedo a chiunque legga questo articoli, mi indicate un <strong>VERO</strong> motivo per il quale dovrei usare vim +tosto che un altro editor, e soprattutto perchÃ¨ vengo considerato un eretico nel dire che vim Ã¨ inutilmente complesso ?
+
+Bah -.-

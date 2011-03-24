@@ -1,0 +1,11 @@
+Date: 2009-05-18 02:40:01
+Author: evilsocket
+Categories: C, Programmazione, Sorgenti
+Tags: camera, frame, grab, image, ppm, v4l, v4l2, video, webcam
+Title: V4L e WebCam - Esempio di implementazione
+
+Per chi si vuole cimentare nell'interfacciare una webcam ad un suo software in ambiente GNU/Linux Ã¨ d'obbligo (o quasi) utilizzare il framework V4L (video for linux) o il successivo V4L2 .
+
+Eccovi quindi una banalissima implementazione di esempio che, sfruttando le librerie V4L, grabberÃ  un frame dalla vostra webcam e ne salverÃ  l'output in un immagine ppm .
+
+<a href="http://www.evilsocket.net/sources/camshot.c.txt" target="_blank">Scarica</a>

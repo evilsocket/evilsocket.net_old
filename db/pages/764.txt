@@ -1,0 +1,40 @@
+Date: 2009-06-19 13:32:45
+Author: evilsocket
+Categories: Hacking, PHP, Programmazione, Sorgenti, Web Hacking
+Tags: evilsentinel, evilsocket, plugin, security, security system, sentinel, wordpress, wp-sentinel
+Title: WP-Sentinel Pubblicato
+
+Ho appena fatto le ultime modifiche fino ad arrivare alla versione 1.0 di WP-Sentinel e ho deciso di renderlo pubblico .
+
+Potete trovare il codice e le istruzioni per l'installazione la configurazione a <a href="http://github.com/evilsocket/WP-Sentinel/tree/master" target="_blank">questa pagina </a>... proprio perchÃ¨ mi sono sbattuto per scrivere il file README, <strong>NON </strong>risponderÃ² ad alcuna domanda riguardante installazione e configurazione ma solo ad eventuali domande tecniche o che comunque reputerÃ² intelliggenti .
+
+Riporto brevemente la versione italiana del readme :
+
+<break><strong>WP-Sentinel</strong>, erede in parte del progetto <strong>evilsentinel</strong> (R.I.P.), Ã¨ un plugin per la piattaforma <strong>WordPress</strong> che aumenterÃ  la sicurezza del vostro
+blog da eventuali attacchi di cracker, lamer, black hats, h4x0r, ecc .
+Il sistema verrÃ  caricato prima degli altri plugins ed eseguirÃ  una serie di controlli sulle richieste http in arrivo ed, in caso una o piÃ¹ richieste
+facciano scattare un *allarme*, la bloccherÃ  mostrando un avviso all'utente e notificherÃ  per email l'accaduto all'amministratore del sito in questione,
+con tutti i dettagli del potenziale attacco .
+
+Questo plugin Ã¨ in grado di bloccare i seguenti tipi di attacchi :
+
+-<strong> Cross Site Scriptings</strong> &lt;http://it.wikipedia.org/wiki/Cross-site_scripting&gt;
+- <strong>Remote File Inclusions</strong> &lt;http://it.wikipedia.org/wiki/Remote_File_Inclusion&gt;
+- <strong>Local File Inclusions</strong> &lt;https://www.ihteam.net/blog/hacking-tutorial/local-file-inclusion-tutorial/&gt;
+- <strong>SQL Injections</strong> &lt;http://it.wikipedia.org/wiki/SQL_injection&gt;
+- <strong>Cross Site Request Forgery</strong> &lt;http://it.wikipedia.org/wiki/Cross-site_request_forgery&gt;
+<span style="color: #ff0000;"><em>Il plugin *<strong>NON</strong>* effettua controlli nel caso in cui l'utente che effettua la richiesta Ã¨ un amministratore del blog, quindi per testare il sistema dovrete</em></span>
+
+<span style="color: #ff0000;"><em>effettuare il logout .</em></span>
+Per <strong>INSTALLARE</strong> wp-sentinel, uploadate tutta la cartella '<strong>wp-sentinel</strong>' all'interno della cartella dei plugins '<strong>/wp-content/plugins/</strong>' del vostro blog e <strong>accertatevi
+che la cartella '/wp-content/plugins/wp-sentinel/log' sia scrivibile</strong> .
+Successivamente il sistema potrÃ  essere abilitato come ogni altro plugin ed entrerÃ  immediatamente in funzione .
+
+WP-Sentinel non ha molte configurazioni disponibili al momento, ma quelle poche che ci sono possono essere modificate tramite il file '<strong>/wp-content/plugins/wp-sentinel/php/config.php</strong>' .
+I tre valori di configurazione sono :
+
+- <strong>enabled</strong> : Impostato ad 1 abilita wp-sentinel, a 0 lo disabilita .
+- <strong>notification</strong> : Abilita o meno le notifiche via email all'admin del blog .
+- <strong>logging</strong> : Abilita o meno il logging degli allarmi dentro la cartella 'wp-sentinel/log' .
+
+Enjoy :)

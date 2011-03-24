@@ -1,0 +1,13 @@
+Date: 2009-05-26 20:20:33
+Author: evilsocket
+Categories: Misc
+Tags: donations, donazioni, friends of gnome, gnome, progetto, sostenere
+Title: Adotta un hacker ! :D
+
+E' nato da poco il progetto "<a href="http://www.gnome.org/friends/" target="_blank"><strong>Friends Of GNOME</strong></a>", con l'obiettivo di raccogliere dei fondi, provenienti dalle nostre donazioni, per continuare lo sviluppo di questo fantastico manager .
+
+Le donazioni vanno da un minimo di 10$ ad un massimo di 1200$ e, in base alla cifra donata, vi verranno recapitati a casa diversi gadgets firmati GNOME .
+
+<break>Se siete convinti sostenitori di GNOME come me fateci un pensierino, o quanto meno, se avete un sito/blog, pubblicizzate il progetto tramite gli appositi banner che potete trovare a <a href="http://www.gnome.org/friends/promote.html" target="_blank">questa pagina</a> .
+<p style="text-align: center;"><strong>Fatevi avanti amici di GNOME !!! :D</strong>
+<a href="http://www.gnome.org/friends/" target="_blank"> <img class="aligncenter" src="http://www.gnome.org/friends/banners/fog-480x60.png" border="0" alt="Become a Friend of GNOME" /></a>

@@ -1,0 +1,10 @@
+Date: 2010-05-13 03:06:57
+Author: evilsocket
+Categories: Misc
+Tags: hybris
+Title: Nasce HyPaste, il nopaste gestito da Hybris.
+
+<p>Ho appena rilasciato e <a  href="http://nopaste.hybris-lang.org/">linkato nel sito</a> HyPaste, un nopaste scritto in PHP ma gestito (in remoto) da script in Hybris .</p>
+<p>Questo servizio nasce per due motivazioni, la prima è la necessità di un servizio unico da sfruttare per nopast-are script in Hybris con una corretta evidenziazione della sintassi, la seconda è creare un servizio di indicizzazione di codice il cui front-end è implementato in PHP mentre il back-end (la parte di gestione e di indicizzazione) in Hybris.</p>
+<p>Il servizio è aperto a tutti e per qualsiasi tipologia di codice/testo, non solo per script in Hybris.</p>
+<p><a href="http://www.hybris-lang.org/story/nasce-hypaste-il-nopaste-gestito-da-hybris.html" >read more</a></p><img src="http://feeds.feedburner.com/~r/HybrisProgrammingLanguageOfficialSite/~4/0eHNIA9ubTI" height="1" width="1"/>

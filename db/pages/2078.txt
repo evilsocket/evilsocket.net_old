@@ -1,0 +1,64 @@
+Date: 2011-03-18 23:45:05
+Author: evilsocket
+Categories: Misc, Tools
+Tags: wordpress, swg, static, html, github, pager, 1.1.0, rsync, sync
+Title: SWG 1.1.0 rilasciato, implementata la paginazione e comando per sincronizzare i file
+
+<p align="justify">
+Ho appena eseguito la sincronizzazione di questo sito con l'ultima versione di <a href='http://www.evilsocket.net/?s=swg'>SWG</a>, la 1.1.0, nella quale <b>finalmente</b> sono riuscito ad implementare
+(non senza sforzi :S) una cosa fondamentale, la paginazione! 
+
+Concettualmente è una cazzata, dare all'utente la possibilità di decidere, nel caso ci siano delle pagine che mostrano molti elementi (come l'indice per categoria o per tag), quanti elementi al massimo
+visualizzare, al raggiungimento dei quali si creerà una nuova pagina con gli elementi successivi e così via.
+Nel pratico, implementare una cosa del genere dentro un engine di generazione di siti web statici non è stato affatto banale, ho dovuto gestire diverse cose (come la generazione della sitemap tanto per dirne una,
+oppure offrire lato template un oggetto 'pager' da poter utilizzare per stilizzare al massimo anche i link alle pagine) ... però alla fine ce l'ho fatta! :D
+
+<break>
+Nel template della index ad esempio, possiamo inserire il codice:
+
+<pre>
+  <code>
+  % for page in pager.getCurrentPages():
+  ...  
+  % endfor
+  </code>
+</pre>
+
+Per loopare le pagine disponibili nella pagina attuale (perdonate il gioco di parole XD), mentre a piè pagina, per generare graficamente il pager:
+
+<pre>
+  <code>
+    &lt;div id=&quot;pager&quot;&gt;
+    &lt;label&gt;PAGINE&lt;/label&gt;
+    % for pagen in range( 1, pager.getTotalPages() + 1 ):
+      % if pagen == pager.getCurrentPageNumber():
+        &lt;b&gt;${ pagen }&lt;/b&gt;
+      % elif pagen == 1:
+        &lt;a href='${config.siteurl}index.${config.page_ext}'&gt;${ pagen }&lt;/a&gt;
+      % else:
+        &lt;a href='${config.siteurl}/index-${pagen}.${config.page_ext}'&gt;${ pagen }&lt;/a&gt;
+      % endif
+    % endfor
+    &lt;/div&gt;
+  </code>
+</pre>
+
+E così via ^^
+
+Un altra cosa (forse meno importante, ma altrettanto utile!) che ho implementato è la possibilità di definire nel file di configurazione di un sito, un comando che verrà eseguito alla fine della (ri)generazione,
+comando che può contenere qualsiasi cosa, ad esempio nel caso di questo sito:
+
+<pre>
+  <code>
+  ...
+  transfer = rsync -ravz out/* -e ssh evilsocket@evilsocket.net:/var/www/evilsocket.net/htdocs/
+  ...
+  </code>
+</pre>
+
+<em>( E' senza password perchè uso la mia chiave ssh per accedere =) )</em>
+
+Comando che come si può vedere esegue un rsync tra la cartella di output e la cartella web su questo server, così da uploadare <b>solo</b> i file che sono stati effettivamente aggiornati/creati.
+
+Beh, se mai qualcuno oltre me userà SWG, spero gli piaccia :D
+</p>

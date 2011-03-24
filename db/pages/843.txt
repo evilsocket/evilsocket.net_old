@@ -1,0 +1,11 @@
+Date: 2009-11-19 23:33:27
+Author: evilsocket
+Categories: Misc, Programmazione
+Tags: 
+Title: Apre il portale ufficiale di hybris !!!
+
+<a href="http://www.evilsocket.net/images/Screenshot2.png"><img class="alignleft size-full wp-image-844" title="Screenshot" src="http://www.evilsocket.net/images/Screenshot2.png" alt="Screenshot" width="321" height="102" /></a>Finalmente il lavoro di documentazione e bugtracking ha inizio!
+
+All'indirizzo <a href="http://hybris.evilsocket.net/" target="_blank">http://hybris.evilsocket.net/</a> ho creato un piccolo portale che racchiude tutte le informazioni su Hybris, compresa una documentazione che, anche se attualmente è abbastanza "rozza", sarà di estrema utilità per chiunque vorrà cimentarsi con questo linguaggio di programmazione.
+
+Per ogni riferimento su hybris da oggi in poi guardate la :D

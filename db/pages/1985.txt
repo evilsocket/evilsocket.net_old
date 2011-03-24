@@ -1,0 +1,33 @@
+Date: 2010-11-05 00:31:14
+Author: evilsocket
+Categories: Exploiting, Hacking, Tools
+Tags: autopwn, backbox, backtrack, chntpw, collaborazione, distribuzione, distro, linux, live, owasp, owasp wte, performance, raffaele forte, sicurezza, snella, veloce, wte, xfce
+Title: BackBox, ottima distribuzione GNU/Linux orientata alla sicurezza.
+
+<img class="alignleft" src="http://www.backbox.org/public/sites/default/files/corolla_logo.png" alt="" width="98" height="98" />Da qualche settimana ho inserito qui nel blog, nella colonna di destra, un badge che riporta la scritta "<strong>BackBox Linux</strong>" con un <a href="http://www.backbox.org/" target="_blank">collegamento ipertestuale al sito</a> di questa distribuzione che mi accingo a descrivere.
+
+BackBox è un progetto tutto italiano, iniziato da <a href="http://it.linkedin.com/pub/raffaele-forte/21/a9a/aa5" target="_blank">Raffaele Forte</a>, che già nei primi mesi di vita ha trovato supporto a livello internazionale (nel quale anche il mio modestissimo contributo quando posso) così come tante <a href="http://www.tuxjournal.net/?p=13415" target="_blank">recensioni</a> da testate anche abbastanza rinomate del settore.
+
+<break>Il principio di base è tanto semplice da esporre quanto difficile da raggiungere, cioè avere una distribuzione GNU/Linux orientata alla <strong>sicurezza</strong>, sia live che installabile, <strong>leggera</strong>, <strong>performante</strong>, che offra già di default un <strong>ottimo supporto hardware</strong> e tutti i pacchetti precaricati che un <strong>security researcher</strong> potrebbe desiderare, insomma, l'obiettivo era di avere una valida <strong>alternativa</strong> a distrubuzioni ben più "datate" (e forse sopravvalutate? ai posteri ...) come <strong>BackTrack</strong> e affini.
+
+Beh, partendo da una base di Ubuntu Lucid 10.04 LTS, sostituendo il desktop manager di default con il leggerissimo e completo XFCE (moddato ad arte per offrire una grafica che nulla ha da invidiare ad ambienti come Gnome, KDE, ecc) e soprattutto inserendo una suite di software orientati ai penetration test (che non sono una cosa porno! XD) in parte provenienti da nientepopòdimenoche i repository <strong><a href="http://code.google.com/p/owasp-wte/" target="_blank">OWASP Web Testing Environment </a> </strong>devo dire che Raffaele ha creato le basi per qualcosa di veramente fantastico :)
+
+Bon, marketing e frasoni a parte, vi illustro un po qual'è stata la mia esperienza in proposito, partendo dal presupposto che, in qualsiasi OS non Linux che mi sono trovato ad usare per un motivo o per un altro, ho sempre avuto una macchina virtuale Linux, la maggiorparte delle volte BackTrack.
+
+Un giorno entro in contatto con Raffaele che mi chiede una collaborazione ... era (ed è tutt'ora) un periodo un po del cavolo con tutto il lavoro che ho da fare, però la cosa mi ha incuriosito da subito così mi sono detto "provo la distro, se vedo che vale la pena do il mio contributo".
+
+Vado nel sito e subito vedo che sono disponibili le versioni sia per processori a 32bit che a 64bit, il che non è una cosa tanto scontata diciamo, in particolare per distro appena nate, già un punto a suo favore.
+
+Procedo a scaricarla, imposto una nuova vm e starto ... prima impressione, <strong>wow porco cazzo quanto cavolo è veloce a caricare!!!</strong>
+
+Considerando che ho molta esperienza anche con altre distro, considerando che sono su un laptop (che se pur apple è pur sempre un laptop), non ho MAI visto una distribuzione che in live partisse così velocemente senza essere prima moddata, veramente impressionante. Già da subito la grafica è molto carina, minimale ma elegante e per niente pesante per gli occhi durante lunghi utilizzi (niente sfondi neri con loghi stra-fighi-h4x0r che dopo 4 ore di uso intenso ti fanno diventare claustrofobico per intenderci XD) ed il menù si presenta veloce, intuitivo, snello e con tutto il necessario, la dove te lo aspetti, niente di più e niente di meno (come tools scritti 15 anni fa che nessuno utilizza più ma dato che fanno molto h4x0r vengono ancora messi nelle distro di questo tipo).
+
+L'installer, altrettanto intuitivo (basato su <a href="http://it.wikipedia.org/wiki/Ubiquity" target="_blank">Ubiquity</a>) è il classico installer degli ambienti *buntu che conosciamo, semplice e veloce, che ci consente di installare il sistema in pochissimi minuti (davvero pochi anche su vm, incredibile O_O) e ritrovarcelo bello pronto da utilizzare (ricordo che BackTrack e distro analoghe, prima di arrivare ad essere lontanamente utilizzabili una volta installate, hanno richiesto svariati anni di sviluppo), ovviamente ho subito cancellato la vm di BackTrack e ho messo BackBox che rimarrà con me per parecchio tempo, e già in più di un occasione si è rivelata una distro tanto leggera da essere utilizzata per lavori anche pesantucci in vm.
+
+Beh che dire, vi invito a provare la distro (tentar non nuoce dicevano :P) scaricandola dal <a href="http://www.backbox.org/" target="_blank">sito ufficiale</a>, e perchè no, magari a lasciare un vostro feedback nel <a href="http://www.backbox.org/public/forum" target="_blank">forum</a>, vi lascio con il link di alcuni video dimostrativi postati da Raffaele su youtube e con 4 screenshot :)
+<ul>
+	<li><a href="http://www.youtube.com/watch?v=dyMStTxZTBM" target="_blank">BackBox Linux Beta vs TikiWiki on Metasploitable</a></li>
+	<li><a href="http://www.youtube.com/watch?v=Lq1dpgOn7vg" target="_blank">BackBox Linux 1 RC2 - Howto Metasploit with autopwn</a></li>
+	<li><a href="http://www.youtube.com/watch?v=5DXsi4SqjX4" target="_blank">BackBox Linux 1 RC2 - Howto reset Windows 7 password with chntpw</a></li>
+</ul>
+<a href="http://www.backbox.org/public/content/backbox-plymouth-theme"><img title="BackBox - Plymouth Theme" src="http://www.backbox.org/public/sites/default/files/images/plymouth.thumbnail.png" alt="BackBox - Plymouth Theme" width="150" height="113" /></a> <a href="http://www.backbox.org/public/content/backbox-gdm-theme"><img title="BackBox - GDM Theme" src="http://www.backbox.org/public/sites/default/files/images/gdm.thumbnail.png" alt="BackBox - GDM Theme" width="150" height="113" /></a> <a href="http://www.backbox.org/public/content/backbox-menu"><img title="BackBox - Menu" src="http://www.backbox.org/public/sites/default/files/images/menu.preview.thumbnail.png" alt="BackBox - Menu" width="150" height="113" /></a> <a href="http://www.backbox.org/public/content/backbox-thunar"><img title="BackBox - Thunar" src="http://www.backbox.org/public/sites/default/files/images/Schermata-1.thumbnail.png" alt="BackBox - Thunar" width="150" height="113" /></a>

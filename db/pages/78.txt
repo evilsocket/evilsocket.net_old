@@ -1,0 +1,9 @@
+Date: 2009-05-13 08:41:18
+Author: evilsocket
+Categories: Hacking, Papers
+Tags: hack, nmap, port scanner, stealth scanning, syn scanning
+Title: Syn Scanning
+
+La maggiorparte degli hackers, presunti tali, scriptkiddies, wannabe, etc etc hanno, almeno una volta nella loro cyber-vita, utilizzato nmap o strumenti analoghi, ma quanti di loro veramente sanno come funziona la tecnica del syn-scanning ? ... doh ! XD
+
+<a href="http://www.evilsocket.net/papers/syn.pdf" target="_blank">Scarica</a>

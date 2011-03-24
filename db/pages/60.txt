@@ -1,0 +1,9 @@
+Date: 2009-05-13 08:23:08
+Author: evilsocket
+Categories: Assemby, C, Papers, Programmazione
+Tags: compilazione, cpu, kernel, kernel compiling, multicore, slackware, smp
+Title: Kernel SMP Recompiling
+
+Guida su come ricompilarsi un kernel Slackware per abilitare il supporto al SMP e di conseguenza sfruttare al meglio un processore multicore nel caso non venga rilevato dal kernel di default.
+
+<a href="http://www.evilsocket.net/papers/kernel_smp.pdf" target="_blank">Scarica</a>

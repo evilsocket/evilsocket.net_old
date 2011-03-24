@@ -1,0 +1,9 @@
+Date: 2009-05-12 23:11:57
+Author: evilsocket
+Categories: C++, Programmazione, Sorgenti
+Tags: buffer, class, smartsocket, socket, socket class, tcp
+Title: SmartSocket
+
+Una classe che "wrappa" i socket a basso livello offrendo degli oggetti piÃ¹ facilmente gestibili ed implementabili, con particolare attenzione sulla gestione dei buffer di invio e ricezione appositamente gestiti per facilitare le comunicazioni tcp/ip .
+
+<a href="http://www.evilsocket.net/sources/smartsocket.rar">Scarica</a>

@@ -1,0 +1,11 @@
+Date: 2009-11-02 04:15:09
+Author: evilsocket
+Categories: Misc
+Tags: 
+Title: ... di ritorno ...
+
+<img class="alignleft" src="http://sharingyoochun.files.wordpress.com/2008/11/halloween.png" alt="" width="137" height="137" />E' passato un bel po dal mio ultimo post e piano piano sto imparando ad adoperare delle giuste percentuali di *svago/divertimento/misc* e *vita virtuale* tanto per non sottovalutare ne l'uno ne l'altro aspetto dei miei interessi.
+
+Le cose fatte e scoperte son tante ed elencarle tutte, ognuna con una sua guida o un sorgente, sarebbe davvero troppo faticoso ... cosÃ¬ mi limito a dire che nella sezione "Projects" di questo sito ho aggiunto due nuovi ... projects (doh! XD) ... Giskard e SSHUtils ... fatevi un giro se vi interessa :)
+
+PS: Tra le tante cose, ho capito finalmente perchÃ¨ vim spacca e ormai lo utilizzo al posto di qualsiasi altro editor di testo, anche questa Ã¨ troppo lunga da spiegare, ma un grazie a <strong>BlackLight</strong> per la pazienza XD.

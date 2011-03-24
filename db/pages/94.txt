@@ -1,0 +1,15 @@
+Date: 2009-05-18 02:47:32
+Author: evilsocket
+Categories: PHP, Programmazione, Reversing, Sorgenti
+Tags: decoder, direct download, downloader, flv, megavideo, reverse
+Title: Megavideo FLV Downloader
+
+Ormai il gestore Megavideo sta prendendo sempre piÃ¹ piede, cosÃ¬ tempo fa mi sono incuriosito e ho deciso di studiare un po la loro tecnologia, in particolare i sistemi di protezione che impediscono agli utenti NON paganti di visualizzare oltre 70 minuti di filmato .
+
+CosÃ¬ reversando sia i pacchetti di comunicazione tra il player flash che il codice dello stesso (opportunamente decompilato dalla sua forma swf originaria) ho tirato fuori questo script, che in pratica dato un link megavideo restituirÃ  oltre ad alcune info sul video, il link diretto al file flv usato per lo streaming .
+
+<strong>NOTA 1 : </strong>Il link cambia ogni volta ed Ã¨ legato all'indirizzo ip, quindi scordatevi di usare questo script lato server (da una pagina web in php per intenderci), i link generati dall'ip del server non sarebbero validi per l'ip dell'utente essendo diversi :) ... con un po di script lato client perÃ² ... :D
+
+<strong>NOTA 2 : </strong>Questa non Ã¨ la cura definitiva, probabilmente (non ho testato fino in fondo) anche il download dell'flv Ã¨ limitato, ma Ã¨ un inizio, probabilmente un algoritmo molto simile (se non lo stesso con chiavi diverse) Ã¨ utilizzato per collegare il codice del video al link al file originale (disponibile per gli utenti premium), link quest'ultimo che invece Ã¨ sempre fisso ... presto (spero) ulteriori aggiornamenti .
+
+<a href="http://www.evilsocket.net/sources/megavideo_flv_downloader_php.txt" target="_blank">Scarica</a>

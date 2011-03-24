@@ -1,0 +1,17 @@
+Date: 2009-06-16 17:41:28
+Author: evilsocket
+Categories: Misc
+Tags: alix, alix 2d3, debian, embedded, linux, seriale
+Title: Ed infine arrivÃ² la Alix 
+
+Finalmente ieri la scheda che avevo presentato in <a href="http://www.evilsocket.net/728/tra-un-po-un-nuovo-giocattolo-d.html" target="_blank">questo articolo</a> Ã¨ arrivata ! :D
+
+Per vari motivi ho potuto smanettarci solamente oggi pomeriggio e devo dire che non avere un computer con porta seriale per seguire la procedura di boot Ã¨ stato un bel problema.
+
+<break>Ho seguito <a href="http://www.stefanolaguardia.eu/2009/01/26/guidarealizziamo-un-server-a-basso-costo-per-mail-torrent-e-condivisione-files-introduzione/" target="_blank">questa procedura</a> che li per li sembrava essere precisa e completa, ma inspiegabilmente in seguito all'installazione del sistema, la scheda non era raggiungibile sulla rete ... siamo stato un bel po io e ccjh ad impazzirci, a riprovare l'installazione e ad smanettare senza successo, finchÃ¨ mi sono deciso e sono sceso sotto casa a comprare un adattatore da USB a seriale per vedere che cavolo succedeva alla scheda ... beh, ve le volete fare due risate ? L'unico problema era che io avevo configurato l'interfaccia eth0 come da guida (impostando ad hoc il file /etc/network/interfaces) mentre per qualche motivo le tre lan sulla scheda iniziano da eth1 XD
+
+Facendo le giuste mod al file ho risolto tutto e ora il sistema Ã¨ perfettamente funzionante, l'unico problemino me l'ha dato lo strato PPPoE che ho dovuto installare avendo un router-cacca-pirelli di Alice, ma dopo un po di magheggi anche quello Ã¨ andato :D .
+
+Vi lascio con una foto della Alix con il case completamente montato e avvitato :D
+
+<img class="aligncenter size-full wp-image-749" title="img_0098" src="http://www.evilsocket.net/images/img_0098.jpg" alt="img_0098" width="400" height="300" />

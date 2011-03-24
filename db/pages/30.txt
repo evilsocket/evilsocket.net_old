@@ -1,0 +1,9 @@
+Date: 2009-05-12 23:35:40
+Author: evilsocket
+Categories: Perl, Programmazione, Sorgenti
+Tags: decrypt, filezilla, filezilla.xml password decoder
+Title: FileZilla Password Decoder
+
+Script Perl che consente di decodificare le password salvate all'interno del file xml del noto client ftp FileZilla che originariamente vengono cryptate prima di essere salvate nello store .
+
+<a href="http://www.evilsocket.net/sources/filezilla.pl.txt" target="_blank">Scarica</a>

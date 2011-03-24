@@ -1,0 +1,21 @@
+Date: 2009-11-27 18:19:30
+Author: evilsocket
+Categories: Misc
+Tags: 
+Title: Nasce http://www.hybris-lang.org/
+
+Dato che la documentazione ed il materiale su Hybris stanno aumentando esponenzialmente, ho deciso di prendere un dominio dedicato e spostare tutto il lavoro su di esso.
+<p style="text-align: center;"><strong><a href="http://www.hybris-lang.org/">http://www.hybris-lang.org/</a></strong></p>
+
+Che attualmente contiene le sezioni :
+<ul>
+	<li><a href="http://www.hybris-lang.org/licenza">LICENZA</a></li>
+	<li><a href="http://www.hybris-lang.org/download"><strong>DOWNLOAD</strong></a></li>
+	<li><a href="http://www.hybris-lang.org/documentazione"><strong>DOCUMENTAZIONE</strong></a></li>
+	<li><a href="http://www.hybris-lang.org/collabora" target="_blank">COLLABORA</a></li>
+	<li><a href="http://www.hybris-lang.org/chi-siamo">CHI SIAMO</a></li>
+	<li><a href="http://www.hybris-lang.org/contattaci" target="_blank">CONTATTACI</a></li>
+	<li><a href="http://www.hybris-lang.org/esempi" target="_blank"><strong>ESEMPI</strong></a></li>
+	<li><strong><a href="http://www.hybris-lang.org/faq" target="_blank">FAQ</a></strong></li>
+</ul>
+Eeeeee niente ... se vi interessa buttateci un occhio :P

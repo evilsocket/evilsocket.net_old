@@ -1,0 +1,29 @@
+Date: 2009-05-23 17:47:52
+Author: evilsocket
+Categories: C, Programmazione, Sorgenti
+Tags: alive hosts, arp, ARPOP_REPLY, ARPOP_REQUEST, network mapping, request, source, whosalive
+Title: Who's Alive : Rilevare i computer nella propria rete tramite richieste ARP
+
+In un <a href="http://www.evilsocket.net/109/arp-poisoning-ovvero-come-avere-il-totale-controllo-della-rete.html" target="_blank">precedente articolo </a>avevo introdotto la tecnica dell'arp poisoning che tramite richieste ARP spoofate consente di effettuare un attacco man in the middle .
+
+In realtÃ  le applicazioni possibili sfruttando il protocollo arp sono molteplici e non necessariamente incentrate sull'hacking della rete o cose simili XD
+
+E' per questo che ho sviluppato un piccolo applicativo che, sfruttando tale protocollo, Ã¨ in grado di rilevare con estrema velocitÃ  quali sono i pc attivi sulla rete, quale Ã¨ il loro indirizzo ip e il loro mac address .
+
+PerchÃ¨ utilizzare ARP invece di un normale ping ? Bhe xkÃ¨ ormai i pacchetti ICMP vengono scartati nel 99% dei casi da un firewall (hardware o software che sia), rendendo quindi difficile sfruttare i ping per questo scopo .
+
+<break>Per compilare il sorgente :
+<blockquote>gcc whosalive.c -lpcap -lnet -lpthread -o whosalive</blockquote>
+Mentre per l'esecuzione appare in questo modo :
+<blockquote>[evilsocket@masamune ~/code] sudo ./whosalive eth0
+** whosalive 1.0 copyright 2009-2010 evilsocket (evilsocket@gmail.com - http://www.evilsocket.net)
+
+* Scanning up to 255 hosts ...
+* ARP requests sent, waiting for replies ...
+<strong>* Got ARP reply from 192.168.1.1 [00:17:c2:a8:be:4f] !</strong> <span style="color: #ff0000;"><em>&lt;--- il mio router</em></span><strong>
+* Got ARP reply from 192.168.1.20 [00:15:af:a6:4b:45] ! </strong><span style="color: #ff0000;"><em>&lt;--- il mio eeepc</em></span><strong>
+* Got ARP reply from 192.168.1.27 [00:23:6c:f3:51:f4] ! </strong><span style="color: #ff0000;"><em>&lt;--- il mio iphone</em></span>
+^C</blockquote>
+Buon divertimento ^^
+
+<a href="http://www.evilsocket.net/sources/whosalive.c.txt" target="_blank">Scarica sorgente</a>

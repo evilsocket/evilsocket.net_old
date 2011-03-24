@@ -1,0 +1,25 @@
+Date: 2009-12-19 18:59:55
+Author: evilsocket
+Categories: Hacking
+Tags: 
+Title: IHTeam - Un nuovo inizio
+
+<a href="http://www.evilsocket.net/images/logo_grey.jpg"><img class="alignleft size-full wp-image-859" title="logo_grey" src="http://www.evilsocket.net/images/logo_grey.jpg" alt="logo_grey" width="253" height="89" /></a>Ormai è tanto che seguo sul web siti di hacking, programmazione e quant'altro, anni ... di alcuni ho fatto parte in modo attivo, altri li ho fondati e poi abbandonati ... e son finito qui.
+
+Con il tempo ero giunto alla conclusione che la mia visione di questo mondo (non necessariamente "corretta", ma è pur sempre mia) non fosse destinata ad esser condivisa con nessuno, vuoi per differenze caratteriali, vuoi per differenze in quanto agli scopi ... e così decisi di chiudere il mio vecchio forum e lasciare questo blog tramite il quale condividere "tra me e me" le mie idee.
+
+<break>
+
+Il tempo è passato, molti siti ho continuato a controllarli di tanto in tanto senza intervenire attivamente e le mie conclusioni hanno quasi sempre trovato un ulteriore conferma ... quasi ... poichè un sito, una comunity, mi è sempre sembrata diversa.
+
+Questo gruppo di ragazzi ha iniziato da 0 e con il tempo ha continuato ad ampliare le proprie conoscenze, a pubblicare materiale interessantissimo, senza mai sfociare nel lamering e senza pretendere di essere "il miglior gruppo di hacking" sulla scena ... anzi, da quel che mi risulta non si sono mai riferiti a loro stessi con queste parole, hanno lasciato parlare i loro lavori per loro.
+
+Sto parlando dell' <a href="https://www.ihteam.net/" target="_blank">Inclusion Hunter Team</a> ... con Marco (white_sheep) ci siamo conosciuti in facoltà (ebbene si, me lo ritrovo pure all'università sto rompipalle! XD) e abbiam passato intere lezioni di analisi (l'unica altra opzione era addormentarsi) a chiacchierare di server, reti neurali e amenità di questo tipo.
+
+Con Simone (r00t.ati), il quale ha iniziato la stessa facoltà quest'anno, ci sarà sicuramente modo di conoscersi presto per quanto lo conoscevo già da tanto, fin dai tempi del "fu" Notsec Group (bei tempi, se non fosse stato per un frocio maledetto sarebbe stato uno dei gruppi + tecnicamente avanzati della scena) .
+
+Mentre con Francesco (merlok) sta nascendo da qualche settimana un amicizia ed un intesa sempre più consolidate, poichè oltre a me è l'unico pazzo che sta mettendo mano al codice di Hybris collaborando attivamente :D
+
+Insomma per farla breve, sono entrato a far parte ufficialmente del loro gruppo, ne sono profondamente onorato e spero di poter dare il mio cotributo al massimo delle mie possibilità e dei miei skills, magari (magari!) imparando da loro tutte quelle cose che ancora non so (e sono tantissime :S).
+
+Che altro dire ... spacchiami il culetto ai passeri! :D

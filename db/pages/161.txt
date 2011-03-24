@@ -1,0 +1,17 @@
+Date: 2009-05-25 01:56:49
+Author: evilsocket
+Categories: C++, Programmazione, Sorgenti
+Tags: 3d, 3d rendering engine, assembly, nicolas capens, open source, runtime assembler, softwire, transgaming
+Title: SoftWire : Runtime x86 Assembler
+
+Tempo fa, cercando tutt'altro, scoprii un proggetto a dir poco eccezionale .
+
+Un certo Nicolas Capens aveva realizzato una libreria scritta in C++ in grado di assemblare a runtime del codice assembly dentro un buffer che puÃ² essere chiamato come funzione, supportando l'intero instruction set x86 sia a 32bit che a 64bit .
+
+<break>Cercando i sorgenti di questa favolosa libreria ho scoperto la brutta storia che c'era dietro ... <a href="http://www.transgaming.com/business/swiftshader/" target="_blank">una nota societÃ </a>, trovando nella rete questo proggetto, ha offerto al nostro Nicolas un sacco di soldi per tenerlo "privato" ed implementare le successive release all'interno del loro <a href="http://it.wikipedia.org/wiki/Shader" target="_blank">software shader</a> ... Nicolas ovviamente ha accettato e da quel momento ha rimosso il progetto da SourceForge ... fortunatamente sono riuscito a reperire i sorgenti dell'ultima versione open di SoftWire e a dargli una sistemata per aggiornarlo agli standard attuali (si tratta di un proggetto scritto parecchi anni fa) ... proverÃ², per quanto mi Ã¨ possibile, a portare avanti io stesso SoftWire libero, dato che avendo prelevato una release coperta da GPL posso farlo, perchÃ¨ ?
+
+PerchÃ¨ mi sono rotto i coglioni di vedere i migliori motori di rendering 3D scritti per Windows mentre il mio OS preferito viene snobbato dalle grandi societÃ  !!!
+
+Eccovi il link di github per seguire le evoluzioni <a href="http://github.com/evilsocket/SoftWire/tree/master" target="_blank">http://github.com/evilsocket/SoftWire/tree/master</a> .
+
+PS: Se qualcuno volesse collaborare Ã¨ + che benvenuto data la complessitÃ  del sistema :D

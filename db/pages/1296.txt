@@ -1,0 +1,23 @@
+Date: 2010-07-11 18:06:25
+Author: evilsocket
+Categories: Hacking, Web Hacking
+Tags: auth, cookie, csrf, emanuele gentili, emgent, google, hacked, video, widget, widgets, xss
+Title: Come hackerare Google e rimanere indisturbato per un anno.
+
+<a href="http://www.evilsocket.net/wp-content/uploads/2010/07/google_hack1.jpg"><img class="alignleft size-medium wp-image-1299" title="google_hack1" src="http://www.evilsocket.net/images/google_hack1-300x224.jpg" alt="" width="180" height="134" /></a>Circa un anno fa, per la precisione il 13 maggio 2009, postai sul blog <a href="http://www.evilsocket.net/64/google-hacking.html" target="_blank">questo articolo</a> (il video è corrotto, quello fixato lo troverete qui sotto), nel quale dimostravo senza alcuna ombra di dubbio come Google, attraverso il sistema di pubblicazione dei widgets, fosse estremamente vulnerabile ad attacchi di tipo XSS, CSRF e quant'altro si possa fare potendo eseguire codice javascript nella pagina stessa di Google.
+
+Ebbene, è passato più di un anno, Google sicuramente avrà subito tantissimi cambiamenti sia a livello grafico che a livello di funzionalità, eppure questo problema non è ancora stato patchato.
+
+<break>Qui di seguito trovate il mio video, chiedo scusa per la bassa qualità ma quello originale è stato danneggiato tra un backup e l'altro, così il meglio che ho potuto fare è stato scaricarne la versione mp4 da youtube, dove un ragazzo che non conosco ha postato lo stesso video in bassa definizione.
+
+<center>
+<object width="400" height="300"><param name="allowfullscreen" value="true" /><param name="allowscriptaccess" value="always" /><param name="movie" value="http://vimeo.com/moogaloop.swf?clip_id=13248215&amp;server=vimeo.com&amp;show_title=1&amp;show_byline=1&amp;show_portrait=0&amp;color=&amp;fullscreen=1" /><embed src="http://vimeo.com/moogaloop.swf?clip_id=13248215&amp;server=vimeo.com&amp;show_title=1&amp;show_byline=1&amp;show_portrait=0&amp;color=&amp;fullscreen=1" type="application/x-shockwave-flash" allowfullscreen="true" allowscriptaccess="always" width="400" height="300"></embed></object><p><a href="http://vimeo.com/13248215">Hacking Google 13 May 2009</a> from <a href="http://vimeo.com/user2113367">evilsocket</a> on <a href="http://vimeo.com">Vimeo</a>.</p>
+</center>
+
+Poi, qualche tempo fa, mi sono imbattuto in un <a href="http://vimeo.com/11441059" target="_blank">altro video</a>, postato su Vimeo da <a href="http://www.backtrack.it/~emgent/" target="_blank">Emanuele Gentili</a>, il quale mostra sostanzialmente la stessa vulnerabilità.
+
+Il buon emgent, noto per la sua politica di responsible disclousure, ha immediatamente scritto al team tecnico di Google ... e cosa gli hanno risposto ?
+<blockquote>Si, è vero, è un bug, ma non sappiamo come patchare.. hai qualche suggerimento?</blockquote>
+Perfetto, non solo in più di un anno non è cambiato nulla, non solo questa vulnerabilità potrebbe essere sfruttata in scenari praticamente infiniti, ma lo staff di Google si permette anche di rispondere così!
+
+Che dire ... bah! -.-

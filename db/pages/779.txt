@@ -1,0 +1,39 @@
+Date: 2009-08-10 23:09:05
+Author: evilsocket
+Categories: Misc
+Tags: attacco, censura, cyber mafia, cyber terroristi, Cyxymu, ddos, dos, georgia, Governo russo, informazione, informazione libera, kgb, mafia, rbn, russia, russian business network
+Title: Governo russo, mafia e Russian Business Network contro un blogger
+
+<img class="alignleft" src="http://1.bp.blogspot.com/_mYWTZ4UHtJ4/RqSIOa_tShI/AAAAAAAAABg/Vxmwj_gpmgc/s320/censura.jpg" alt="" width="174" height="156" />E' iniziato giovedÃ¬ scorso e, con molta probabilitÃ  Ã¨ tutt'ora parzialmente in corso, un attacco di tipo <a href="http://it.wikipedia.org/wiki/Denial_of_service" target="_blank">DDoS</a> nei confronti di diversi circuiti di social networking, fin'ora quelli accertati sono <strong>Twitter</strong>, <strong>Facebook</strong> e <strong>LiveJournal</strong>.
+
+Ma cosa ha portato gli autori (perchÃ¨ data la portata dell'attacco parlare di un singolo autore sarebbe affermare qualcosa di improbabile) dell'attacco ad un accanimento di questo tipo nei confronti di siti che, diciamocela tutta, non fanno male a nessuno ?
+
+Ebbene, dopo qualche ricerca da parte dei reparti tecnici delle aziende colpite, Ã¨ venuto alla luce che l'attacco era ed Ã¨ mirato a "zittire" un blogger <a href="http://it.wikipedia.org/wiki/Georgia" target="_blank">georgiano</a> conosciuto sotto lo pseudonimo di <strong>Cyxymu</strong> (spelling dal cirillico della cittÃ  <strong>Sukhumi</strong>), che dal 2008 continua, sfruttando il suo diritto alla libertÃ  di parola che ogni uomo sulla terra *dovrebbe* avere, ad attaccare il governo russo per le sue azioni belliche nei confronti del suo paese .
+
+<break>Nel giro di poche ore, gli autori dell'attacco sono riusciti a bloccare tutti gli account tramite i quali esprimeva liberamente la sua opinione, nonchÃ¨ ad inviare email di spam falsificate tramite la sua casella gmail al fine di rovinargli la reputazione (o comunque di attirare piÃ¹ gente verso i suoi profili e di conseguenza rallentarne il servizio) .
+
+Il povero <strong>Cyxymu </strong>ha esplicitamente palesato, durante un intervista, che presume con una certa sicurezza di essere stato attaccato niente-popÃ²-di-meno-che da un corpo di cyber soldati dell'ex <strong>KGB</strong> del governo russo, per il quale ovviamente era diventato un soggetto scomodo, nonchÃ¨ dall' "oscuro" gruppo denominato <strong>Russian Business Network</strong> (o piÃ¹ brevemente <strong>RBN</strong>) .
+
+Diamo una letta al volo a cosa ci dice Wikipedia su questo RBN :
+<blockquote>Il <strong>Russian Business Network</strong> (in italiano: <em>Rete d'affari russa</em>) abbreviata in <strong>RBN</strong> Ã¨ un'organizzazione cybercriminale russa multisfaccettata, specializzata nell'appropriazione di identitÃ  per rivenderle.
+
+Ãˆ l'origine di <a title="Mpack" href="http://it.wikipedia.org/wiki/Mpack">Mpack</a> e del presunto operatore di <a title="Botnet Storm" href="http://it.wikipedia.org/wiki/Botnet_Storm">Botnet Storm</a>. La RBN Ã¨ nota per ospitare affari dubbiosi e illegali, originati come <a title="ISP" href="http://it.wikipedia.org/wiki/ISP">ISP</a> per <a title="Pedopornografia" href="http://it.wikipedia.org/wiki/Pedopornografia">pedopornografia</a>, <a title="Phishing" href="http://it.wikipedia.org/wiki/Phishing">phishing</a>, <a title="Spam" href="http://it.wikipedia.org/wiki/Spam">spam</a> e distribuzione fisica di <a title="Malware" href="http://it.wikipedia.org/wiki/Malware">malware</a>.
+
+Hanno sede a <a class="new" title="San Pietrouburgo (pagina inesistente)" href="http://it.wikipedia.org/w/index.php?title=San_Pietrouburgo&amp;action=edit&amp;redlink=1">San Pietrouburgo</a>. Dal <a title="2007" href="http://it.wikipedia.org/wiki/2007">2007</a> sviluppÃ² delle tecniche in molti paesi per fornire un metodo al crimine organizzato di riconoscere le vittime a livello internazionale.
+
+La RBN Ã¨ stata descritta da <a title="VeriSign" href="http://it.wikipedia.org/wiki/VeriSign">VeriSign</a> come la "PiÃ¹ cattiva dei cattivi". Offre servizi di web hosting e accesso a internet a tutte le tipologie di criminali e alle attivitÃ  illecite, con guadagni fino a 150 milioni di dollari in un solo anno.
+
+Vende operazioni di <a class="mw-redirect" title="DoS" href="http://it.wikipedia.org/wiki/DoS">DoS</a> a 600$ al mese. Le sue attivitÃ  sono difficili da tracciare. Non Ã¨ una compagnia registrata, e il suo dominio Ã¨ registrato con indirizzi anonimi. I suoi proprietari sono conosciuti solo da un nome fittizio. Non fa pubblicitÃ , e commercia solo con transazioni elettroniche non rintracciabili.
+
+Un'attivitÃ  che sta svolgendo ultimamente Ã¨ l'invio di <a title="Exploit" href="http://it.wikipedia.org/wiki/Exploit">exploit</a> attraverso programmi anti-spia (spyware) e anti-malware falsi con lo scopo di dirottare i pc e rubare le identitÃ  personali.
+
+Nel <a title="2007" href="http://it.wikipedia.org/wiki/2007">2007</a> la minaccia informatica matrix sviluppata da Spy-Ops fu classificata al quarto posto nello sviluppo e nella vendita di armi informatiche.</blockquote>
+E ancora :
+<blockquote><strong><span class="mw-headline">Connessioni politiche</span></strong>
+
+Si ritiene che ci siano anche presunti collegamenti con il fondatore e capo dell'organizzazione Flyman, che Ã¨ correlatea con un potente e ben conosciuto partito politico russo.
+
+Alla luce di ciÃ², Ã¨ posssibvile che le recenti attivitÃ  cyber-terroristiche con gli attacchi DoS all'<a title="Estonia" href="http://it.wikipedia.org/wiki/Estonia">Estonia</a> nel <a title="Maggio" href="http://it.wikipedia.org/wiki/Maggio">maggio</a> <a title="2007" href="http://it.wikipedia.org/wiki/2007">2007</a> e alla <a title="Georgia" href="http://it.wikipedia.org/wiki/Georgia">Georgia</a> e all'<a class="mw-redirect" title="Azerbaijan" href="http://it.wikipedia.org/wiki/Azerbaijan">Azerbaijan</a> nell'<a title="Agosto" href="http://it.wikipedia.org/wiki/Agosto">agosto</a> <a title="2008" href="http://it.wikipedia.org/wiki/2008">2008</a>, potrebbero essere stati coordinati da una fonte come un'organizzazione. Sebbene tutto ciÃ² non sia porvato, i servizi segreti che questa possa essere una possibilitÃ .</blockquote>
+In pratica, ex tecnici del KGB e professionisti tecnicamente dotati, si sono unificati in una sorta di cyber-cosca mafiosa al puro e semplice fine di lucro, e la cosa assurda (nemmeno tanto, non che in Italia la mafia sia tanto diversa) Ã¨ che vengono spalleggiati e spesso sfruttati dallo stesso governo russo negli affari piÃ¹ loschi.
+
+Questo povero docente universitario di 34 anni (questo Ã¨ quanto Ã¨ stato disposto a dire sulla propria identitÃ ) insomma, si trova a dover combattere contro un governo (corrotto) e un gruppo ben addestrato di ex-spie e cyber-terroristi ... personalmente l'ho aggiunto su facebook (il profilo Ã¨ <a href="http://www.facebook.com/cyxymu" target="_blank">questo</a>) e cercherÃ² di supportare la sua azione quanto meno moralmente ... ha bisogno di tutto l'aiuto che possiamo dargli, sia anche solo far girare queste informazioni ... io sto dando il mio contributo, chiunque legga faccia altrettanto .

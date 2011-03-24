@@ -1,0 +1,10 @@
+Date: 2010-05-07 18:00:47
+Author: evilsocket
+Categories: Misc
+Tags: hybris
+Title: Implementati nuovi costrutti e nuove funzionalità!
+
+<p>Dopo che ne è stata constata l'esigenza, sono stati implementate alcune nuove funzionalità.</p>
+<p>L'<a  href="http://www.hybris-lang.org/wiki/doku.php?id=altri#operatore2">operatore @</a>, l'<a  href="http://www.hybris-lang.org/wiki/doku.php?id=altri#operatore_explode">esplosione</a> di array e oggetti iterabili, il costrutto condizionale <a  href="http://www.hybris-lang.org/wiki/doku.php?id=unless">unless</a>, e le funzioni e metodi con<a  href="http://www.hybris-lang.org/wiki/doku.php?id=le_funzioni#numero_di_argomenti_variabile"> numero di parametri variabile</a>.</p>
+<p>Come sempre tutto documentato e correlato da esempi.</p>
+<p><a href="http://www.hybris-lang.org/story/implementati-nuovi-costrutti-e-nuove-funzionalit%C3%A0.html" >read more</a></p><img src="http://feeds.feedburner.com/~r/HybrisProgrammingLanguageOfficialSite/~4/h-Jma7YB5bE" height="1" width="1"/>

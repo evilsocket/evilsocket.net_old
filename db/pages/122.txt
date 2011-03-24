@@ -1,0 +1,46 @@
+Date: 2009-05-19 01:03:36
+Author: evilsocket
+Categories: Biometria, C++, Programmazione, Sorgenti
+Tags: Biometria, biometry, blurring, class, convolution, deviance, edge detection, edges, entropy, fingerprints, frequency map, gabor, histogram, hit n miss, impronte, lowpass filter, mask, msp, Multi-Dimensional Space Processing Library, orientation, prewitt, retina, softening, thinning
+Title: MSP - Multi-Dimensional Space Processing Library
+
+Uno dei rami che mi affascina di piÃ¹ della programmazione Ã¨ la biometria, ovvero detto in parole povere, quella scienza informatica che studia i metodi di interazione tra mondo reale e mondo virtuale .
+
+Scanner dell'impronta digitale, della retina, rilevatori di movimento ... tutti questi concetti fanno parte della biometria .
+
+<break>PiÃ¹ volte mi sono trovato a dover implementare diversi algoritmi in proposito, anche molto complessi, per poi archiviare il pezzo di codice e lasciarlo li come un piccolo file a se stante .
+
+CosÃ¬ ho pensato di scrivere un unica grande classe C++ che racchiudesse la maggiorparte degli algoritmi biometrici o cmq dell'analisi digitale dei segnali, rappresentando l'oggetto principale come uno spazio N-dimensionale a discrezione di colui che usa la libreria .
+
+In questa classe template, oltre alle normali operazioni matriciali/vettoriali, ho implementato tra i tanti i seguenti algoritmi :
+<ul>
+	<li>Applicazione di maschere di sottrazione o addizione .</li>
+	<li>Caricamento e salvataggio sia di matrici "raw" che di qualsiasi formato immagine .</li>
+	<li>Redimensionamento adattivo e/o selettivo .</li>
+	<li>Filtering passa basso e passa alto .</li>
+	<li>Filtering della maschera di orientamento .</li>
+	<li>Operatore di Gabor .</li>
+	<li>Calcolo dell'entropia .</li>
+	<li>Rilevatore di bordi tramite algoritmo di Prewitt .</li>
+	<li>Thinning tramite l'algoritmo Hit-and-miss .</li>
+	<li>Calcolo della mappa delle frequenze e dell'istogramma associato allo spettro dei colori .</li>
+	<li>Blurring e softening .</li>
+	<li>Dilatazione matriciale .</li>
+	<li>Erosione matriciale .</li>
+	<li>Media, variazione, etc .</li>
+	<li>Binarizzazione e normalizzazione della matrice .</li>
+	<li>Trasposizione della matrice .</li>
+	<li>Integralizzazione della matrice .</li>
+	<li>Calcolo delle "features" di un impronta digitale .</li>
+</ul>
+La classe, contenuta in un unico file .hpp, Ã¨ totalmente documentata seguendo lo standard doxy cosÃ¬ da poter essere facilmente implementabile .
+
+<strong>Scarica</strong> <strong><a href="http://www.evilsocket.net/sources/msp.hpp.txt" target="_blank">msp.hpp</a></strong>
+
+Inoltre vi fornisco tre programmi di esempio, tanto per farvi capire le potenzialitÃ  di questa classe .
+<ol>
+	<li><a href="http://www.evilsocket.net/sources/msp_ex1.cpp.txt" target="_blank">Creazione di una rete neurale a perceptron e relativa fase di training su un pattern noto .</a></li>
+	<li><a href="http://www.evilsocket.net/sources/msp_ex2.cpp.txt" target="_blank">Acquisizione video da una webcam e sensore di movimento nell'inquadratura .</a></li>
+	<li><a href="http://www.evilsocket.net/sources/msp_ex3.cpp.txt" target="_blank">Calcolo delle features di un impronta digitale e preparazione al matching con un database noto .</a></li>
+</ol>
+Spero che vi piaccia :)

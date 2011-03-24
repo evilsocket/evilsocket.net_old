@@ -1,0 +1,27 @@
+Date: 2011-01-05 18:46:50
+Author: evilsocket
+Categories: Hacking, Misc
+Tags: attacco, deface, defaced, hack, hacked, lamering, provider, tophost
+Title: TOPHOST HACKED: Nuovo attacco al "famoso" provider low cost.
+
+Verso le 18 di oggi ero connesso sul sito di tophost per rinnovare uno dei domini che è hostato presso di loro e ad un certo punto indovinate un po cosa succede ?
+<p style="text-align: center;"><a href="http://img534.imageshack.us/f/schermata20110105a18002.png/" target="_blank"><img class="aligncenter" src="http://img534.imageshack.us/img534/674/schermata20110105a18002.th.png" border="0" alt="" /></a></p>
+<p style="text-align: center;"><strong>cliccate per ingrandire</strong></p>
+<p style="text-align: left;"><break>A quanto pare il provider è stato defacciato proprio mentre io ero loggato ... lol, strani i casi della vita a volte :)</p>
+<p style="text-align: left;">Nonostante io non condivida per niente tale metodologia (deface e simili), credo sia doveroso riportare il messaggio che questo gruppo di defacer (rimasti volutamente anonimi) ha voluto esprimere tramite la loro azione:</p>
+<p style="text-align: left;"></p>
+
+<blockquote>
+<div id="_mcePaste"><strong>!!! La sicurezza di questo provider è stata violata, tutti gli account (accessi ftp, mysql, anagrafiche, ecc) dei suoi clienti sono stati compromessi !!!</strong></div>
+<div><strong>
+</strong></div>
+<div id="_mcePaste">Nessuno di questi dati verrà utilizzato per fini illegali, ne manomesso in alcun modo, questa azione nasce da un gruppo di individui stanchi di avere costantemente</div>
+<div id="_mcePaste">a che fare con l'incompetenza dello staff di TopHost, il quale dopo ripetute email nelle quali veniva informato delle numerose falle dei suoi sistemi, ha deciso</div>
+<div id="_mcePaste">di ignorare tali avvisi e mettere a serio rischio la sicurezza dei suoi clienti pur di non spendere qualche ora per risolvere i problemi della propria infrastruttura.</div>
+<div id="_mcePaste">Anche noi siamo clienti di TopHost ed in quanto tali siamo stanchi di pagare nonostante i continui downtime dei nodi, i rallentamenti, i disagi, la maleducazione dello staff</div>
+<div id="_mcePaste">nel rispondere ai ticket e soprattutto nonostante un sistema informatico che va a picco.</div>
+<div id="_mcePaste"><strong>Un consiglio per gli altri clienti TopHost</strong> : Cambiate gestore, questo provider non è sicuro ne tantomeno professionale!</div>
+<div id="_mcePaste"><strong>Un consiglio per TopHost</strong> : Imparate la modestia e a fare il vostro mestiere come si deve!</div></blockquote>
+Inutile dire che condivido al 100% l'idea di fondo, ho espresso la mia opinione in proposito in <a href="http://www.evilsocket.net/?s=tophost" target="_blank">diversi articoli</a>, ma non condivido nemmeno in parte la metodologia.
+
+Attualmente il sito di tophost http://www.tophost.it/ è in manutenzione ... sono curioso di vedere gli eventuali risvolti della questione.

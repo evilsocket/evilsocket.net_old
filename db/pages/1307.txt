@@ -1,0 +1,15 @@
+Date: 2010-07-14 02:24:24
+Author: evilsocket
+Categories: Misc
+Tags: export, info, pdf, plugin
+Title: Informazione di Servizio, now PDF powered :)
+
+<a href="http://www.evilsocket.net/images/pdf-su-cellulari-android.jpg"><img class="alignleft size-full wp-image-1310" title="pdf-su-cellulari-android" src="http://www.evilsocket.net/images/pdf-su-cellulari-android.jpg" alt="" width="180" height="180" /></a>Informazione di servizio :)
+
+Un utente in uno dei commenti mi ha chiesto di riscrivere uno dei miei articoli (nella fattispecie l'ultimo sulle sql injections) e dare la possibilità di scaricarlo in PDF come facevo prima di aprire questo blog.
+
+In effetti, non è che mi vada più di tanto ogni volta di rifare lo stesso articoli sia in html che in pdf, così ho installato un plugin per wordpress e l'ho modificato a puntino.
+
+E' ora possibile, tramite l'apposito link sotto al titolo, esportare ogni articolo in PDF, spero sia una funzionalità utile ^^
+
+PS: Le modifiche al plugine  la grafica con la quale viene generato il pdf sono ancora sperimentali, man mano che avrò tempo e voglia perfezionerò il tutto.

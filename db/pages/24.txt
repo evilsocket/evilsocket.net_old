@@ -1,0 +1,9 @@
+Date: 2009-05-12 23:29:38
+Author: evilsocket
+Categories: C++, Hacking, Programmazione, Sorgenti
+Tags: network sniffer, sniffer, sniffer di rete, win32
+Title: IPMan
+
+Codice di esempio che mostra come creare uno sniffer di rete utilizzando le semplici API di Windows, che purtroppo non sempre sono documentate come dovrebbero <a href="http://www.evilsocket.net/sources/ipman.rar" target="_blank">.</a>
+
+<a href="http://www.evilsocket.net/sources/ipman.rar" target="_blank">Scarica</a>

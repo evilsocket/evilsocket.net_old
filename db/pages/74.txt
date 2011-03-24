@@ -1,0 +1,9 @@
+Date: 2009-05-13 08:37:37
+Author: evilsocket
+Categories: Hacking, Papers, Web Hacking
+Tags: exploit, security, sql, sql injections, vulnerability, Web Hacking
+Title: Introduction to SQL Injections
+
+Un introduzione sufficientemente completa alla tecnica di iniezione di codice SQL, solitamente nota come SQL Injection, al fine di capire come sfruttare tale vulnerabilitÃ  per garantirsi l'accesso ad informazioni sensibili .
+
+<a href="http://www.evilsocket.net/papers/sqlinjections.pdf" target="_blank">Scarica</a>

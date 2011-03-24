@@ -1,0 +1,35 @@
+Date: 2009-06-03 22:41:09
+Author: evilsocket
+Categories: Hacking, Papers, Tools
+Tags: 
+Title: iPhone Hacking
+
+Ho appena scoperto un tool veramente, ma veramente eccezionale per il mio amato iPhone ... Pirni!
+
+Pirni Ã¨ il primo sniffer/arp poisoner nativo per iPhone e giÃ  dalla versione 1.0 presenta tutto il necessario per effettuare un attacco alla rete in modo semplice, veloce e soprattutto insospettabile (dai chi Ã¨ che immaginerebbe che state hackerando la rete da un iPhone!? :D) .
+
+<break>Per l'installazione dovete ovviamente avere un iPhone jailbreaked e Cydia, inoltre dovrete inserire, se giÃ  non l'avete, tra i repository di cydia il repo
+<blockquote>http://apt.modmyi.com/</blockquote>
+Una volta inserito il repo cercate il pacchetto "pirni" ed installatelo ... lanciate il terminale (io invece uso una ssh loopback connection tramite TouchTerm che trovo molto + comodo di terminal :P) ed eseguite i comandi
+<blockquote>su <em>(per loggarvi come root, se non avete mai impostato la password quando la chiede inserite <strong>alpine</strong>)</em>
+
+pirni -s <em>[ip del nostro router]</em> -b <em>[broadcast en0]</em> -o <em>[file dove catturare i pacchetti]</em></blockquote>
+Io ad esempio da casa mia digito :
+<blockquote>su<em></em>
+
+pirni -s 192.168.1.1 -b 192.168.1.255 -o pacchettonzi.cap</blockquote>
+Ma ovviamente sono parametri che variano da connessione a connessione :) .
+
+Da questo momento pirni effettuerÃ  un attacco <a href="http://www.evilsocket.net/109/arp-poisoning-ovvero-come-avere-il-totale-controllo-della-rete.html" target="_self">arp poisoning</a> ed inizierÃ  a catturare il traffico dell'intera rete .
+
+Oltre ai parametri di base che vi ho illustrato, Ã¨ disponibile anche il parametro
+<blockquote>-f <em>[filtro]</em></blockquote>
+Dove per filtro si intende una stringa nella sintassi BPF, un po come tcpdump, tcpsmash, ipgrep, wireshark e cosÃ¬ via ... ad esempio, se volessi intercettare il traffico di tutte i pc nella mia rete verso dei siti web, utilizzerei il comando
+<blockquote>pirni -s 192.168.1.1 -b 192.168.1.255 -f "tcp dst port 80" -o pacchettonzi.cap</blockquote>
+Il file .cap che verrÃ  salvato potrÃ  successivamente essere aperto tramite wireshark o qualunque editor di file cap che preferiate .
+
+Vi lascio con il link del <a href="http://code.google.com/p/n1mda-dev/" target="_blank">sito ufficiale su google</a> dove troverete un utile wiki, ed un video dove viene mostrato l'utilizzo di questo fantastico tool .
+
+NOTA: Pirni, in quanto arp poisoner, si occuperÃ  di forwardare tutto il traffico di rete, ovvero agirÃ  come fosse un router lui stesso stressando non poco la cpu e la ram dell'iPhone, per questo vi consiglio di utilizzare dei filtri BPF estremamente precisi e selettivi che vi consentano di catturare SOLO il traffico che vi interessa, evitando di farvi esplodere il cellulare tra le mani per il troppo sforzo XD .
+
+<object width="560" height="340" data="http://www.youtube.com/v/Laf1f5uQz3I&amp;hl=it&amp;fs=1" type="application/x-shockwave-flash"><param name="align" value="center" /><param name="allowFullScreen" value="true" /><param name="allowscriptaccess" value="always" /><param name="src" value="http://www.youtube.com/v/Laf1f5uQz3I&amp;hl=it&amp;fs=1" /><param name="allowfullscreen" value="true" /></object>

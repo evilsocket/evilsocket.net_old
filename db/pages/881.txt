@@ -1,0 +1,11 @@
+Date: 2010-02-17 14:03:33
+Author: evilsocket
+Categories: Misc
+Tags: 
+Title: Finalmente I'm back!
+
+Dopo un bel po di tempo (precisamente dal 23 dicembre 2009), finalmente riprendo possesso del mio computer, dei miei dispositivi e di gran parte delle mie cianfrusaglie elettroniche :D
+
+In questo periodo, durante il quale con me avevo solo un MSi Wind U100 (gran bel netbook x carità, ma di certo non si può paragonare al mio quad core XD), un mio amico mi ha fatto conoscere la distro Arch Linux, della quale mi sono innamorato per la sua semplicità, velocità ed efficienza, di conseguenza, dopo aver backuppato tutto l'inverosimile, ho rimosso "bubuntu" (white_sheep docet :D) dal mio fisso e ho messo l'ultima core release di arch.
+
+Naturalmente non ho tanto tempo libero quanto prima, il lavoro a tempo pieno mi porta via tempo ed energie, ma quando torno la sera e nei fine settimana, c'è sempre tanta voglia di fare e di codare, quindi posso ufficialmente dire di essere di nuovo tornato ! :D

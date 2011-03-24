@@ -1,0 +1,170 @@
+# -*- coding: utf-8 -*-
+<div id="leftwrap">
+  <div class="navwidth">
+      <ul class="navigation">
+        <li
+        %if page != UNDEFINED and page.title == 'index':
+          class="current_page_item"  
+        %else:
+          class="page_item page-item"
+        %endif    
+        >  
+          <a href='${config.siteurl}/index.${config.page_ext}'>Home</a>
+        </li>
+        %for cat in categories:
+          %if category != UNDEFINED and category.title == cat.title:
+            <li class="current_page_item"><a href="${config.siteurl}${cat.url}" title="Visualizza tutti gli articoli archiviati in ${cat.title | h}">${cat.title | h}</a></li> 
+          %else:
+            <li class="page_item page-item"><a href="${config.siteurl}${cat.url}" title="Visualizza tutti gli articoli archiviati in ${cat.title | h}">${cat.title | h}</a></li> 
+          %endif
+        %endfor
+
+        <li
+        %if author != UNDEFINED and author.username == 'evilsocket':
+          class="current_page_item"  
+        %else:
+          class="page_item page-item"
+        %endif    
+        >  
+          <a href='${config.siteurl}/members/evilsocket.${config.page_ext}'>About Me</a>
+        </li>
+      </ul>
+  </div> <!-- navwidth -->
+
+  <div id="sidebar">
+    <div id="searchdiv">
+      <form role="search" method="get" id="searchform" action="${config.siteurl}/" >
+        <input type="text" value="Search" name="s" id="searchinput" onblur="setTimeout('closeResults()',2000); if (this.value == '') {this.value = '';}"  onfocus="if (this.value == 'Search') {this.value = '';}"/>
+      </form>
+    </div> <!-- searchdiv -->
+    <br/>
+
+    <h2>GPG Public Key</h3>  
+    <ul>
+			  <li> 
+        <a href="${config.siteurl}/public-key.txt" target="_blank">
+          <img src="${config.siteurl}/images/lock.png" style="border:0px;">
+        </a>
+        </li>
+    </ul>
+
+    <h2>Translation</h3>
+      <ul>
+			  <li> 
+
+<a target="_blank" rel="nofollow" onclick="window.open('http://www.google.com/translate?u='+encodeURIComponent(location.href)+'&sl=auto&tl=en'); return false;" title="Translate to English"><img  style="cursor: pointer;" alt="Translate to English" src="http://www.backbox.org/forum/Themes/kani_119/images/english.png" title="Translate to English" height="24" width="24" border="0" /></a>
+
+<a target="_blank" rel="nofollow" onclick="window.open('http://www.google.com/translate?u='+encodeURIComponent(location.href)+'&sl=auto&tl=de'); return false;" title="Translate to German"><img  style="cursor: pointer;" alt="Translate to German" src="http://www.backbox.org/forum/Themes/kani_119/images/german.png" title="Translate to German" height="24" width="24" border="0" /></a>
+
+<a target="_blank" rel="nofollow" onclick="window.open('http://www.google.com/translate?u='+encodeURIComponent(location.href)+'&sl=auto&tl=es'); return false;" title="Translate to Spanish "><img  style="cursor: pointer;" alt="Translate to Spanish " src="http://www.backbox.org/forum/Themes/kani_119/images/spanish.png" title="Translate to Spanish " height="24" width="24" border="0" /></a>
+
+<a target="_blank" rel="nofollow" onclick="window.open('http://www.google.com/translate?u='+encodeURIComponent(location.href)+'&sl=auto&tl=fr'); return false;" title="Translate to French "><img  style="cursor: pointer;" alt="Translate to French " src="http://www.backbox.org/forum/Themes/kani_119/images/french.png" title="Translate to French " height="24" width="24" border="0" /></a>
+<br/>
+<a target="_blank" rel="nofollow" onclick="window.open('http://www.google.com/translate?u='+encodeURIComponent(location.href)+'&sl=auto&tl=ja'); return false;" title="Translate to Japanese BETA"><img  style="cursor: pointer;" alt="Translate to Japanese BETA" src="http://www.backbox.org/forum/Themes/kani_119/images/japanese.png" title="Translate to Japanese BETA" height="24" width="24" border="0" /></a>
+
+<a target="_blank" rel="nofollow" onclick="window.open('http://www.google.com/translate?u='+encodeURIComponent(location.href)+'&sl=auto&tl=ko'); return false;" title="Translate to Korean BETA"><img  style="cursor: pointer;" alt="Translate to Korean BETA" src="http://www.backbox.org/forum/Themes/kani_119/images/korean.png" title="Translate to Korean BETA" height="24" width="24" border="0" /></a>
+
+<a target="_blank" rel="nofollow" onclick="window.open('http://www.google.com/translate?u='+encodeURIComponent(location.href)+'&sl=auto&tl=ru'); return false;" title="Translate to Russian BETA "><img  style="cursor: pointer;" alt="Translate to Russian BETA " src="http://www.backbox.org/forum/Themes/kani_119/images/russian.png" title="Translate to Russian BETA " height="24" width="24" border="0" /></a>
+
+<a target="_blank" rel="nofollow" onclick="window.open('http://www.google.com/translate?u='+encodeURIComponent(location.href)+'&sl=auto&tl=zh-CN'); return false;" title="Google-Translate-Chinese (Simplified) BETA"><img  style="cursor: pointer;" alt="Google-Translate-Chinese (Simplified) BETA" src="http://www.backbox.org/forum/Themes/kani_119/images/chinese.png" title="Google-Translate-Chinese (Simplified) BETA" height="24" width="24" border="0" /></a>
+         </li>
+    </ul>
+
+   
+    <h2>Articoli Recenti</h2>		
+    <ul>
+      %for p in pages[0:10]:
+        <li><a href="${config.siteurl}${p.url}" title="${p.title | h}">${p.title | h}</a></li>
+      %endfor
+    </ul>
+
+    <h2>Tags</h3>  
+    <ul>
+			  <li style='text-align: justify;'> 
+        <%
+          import math
+          import random
+
+          total       = 50
+          minOccurs   = len( tags[total].items )
+          maxOccurs   = len( tags[0].items )
+          minFontSize = 12;
+          maxFontSize = 30;
+          randomized  = tags[0:total]
+          random.shuffle(randomized)
+        %>
+        % for tag in randomized:
+          <%
+            current = len( tag.items )
+            weight  = ( math.log(current) - math.log(minOccurs) ) / ( math.log(maxOccurs) - math.log(minOccurs) );
+            size    = minFontSize + round( ( maxFontSize - minFontSize ) * weight );
+          %>
+          <a href="${config.siteurl}${tag.url}" title="${len(tag.items)} argomenti" style="font-size: ${size}px">${tag.title | h}</a>         
+        % endfor
+        </li>
+    </ul>
+
+    <h2>Social Links</h2>
+    <ul>
+      <li><a href="http://github.com/evilsocket" rel="me">Github <img src="${config.siteurl}/images/github.png" alt="Github" title="Github"></a></li>
+      <li><a href="http://identi.ca/evilsocket" rel="me">Identi.ca <img src="${config.siteurl}/images/identica.png" alt="Identi.ca" title="Identi.ca"></a></li>
+      <li><a href="http://twitter.com/evilsocket" rel="me">Twitter <img src="${config.siteurl}/images/twitter.png" alt="Twitter" title="Twitter"></a></li>
+      <li><a href="http://www.last.fm/user/evilsocket" rel="me">Last.fm <img src="${config.siteurl}/images/lastfm.png" alt="Last.fm" title="Last.fm"></a></li>
+      <li><a href="http://it.linkedin.com/in/simonemargaritelli" rel="me">LinkedIn <img src="${config.siteurl}/images/linkedin.png" alt="LinkedIn" title="LinkedIn"></a></li>
+      <li><a href="http://www.google.com/reader/shared/07374427796734922326" rel="me">Google Reader <img src="${config.siteurl}/images/googlereader.png" alt="Google Reader" title="Google Reader"></a></li>
+    </ul>
+
+    <h2>My Tweets</h2>
+    <ul>
+      <li>
+      <script src="http://widgets.twimg.com/j/2/widget.js"></script> 
+      <script> 
+      new TWTR.Widget({
+        version: 2,
+        type: 'profile',
+        rpp: 5,
+        interval: 6000,
+        width: 'auto',
+        height: 350,
+        theme: {
+          shell: {
+            background: 'transparent',
+            color: '#3E4449'
+          },
+          tweets: {
+            background: 'transparent',
+            color: '#AAA',
+            links: '#FFFFFF'
+          }
+        },
+        features: {
+          scrollbar: false,
+          loop: false,
+          live: true,
+          hashtags: true,
+          timestamp: true,
+          avatars: false,
+          behavior: 'all'
+        }
+      }).render().setUser('evilsocket').start();
+      </script>
+      </li>
+    </ul>
+
+    <h2>Siti Amici</h2>
+    <ul>
+      <li><a href="http://www.backbox.org/" title="BackBox Linux Security Distro" target="_blank">BackBox Linux</a></li>
+      <li><a href="http://www.bernardotti.it/portal/" target="_blank">Bernadotti</a></li>
+      <li><a href="http://blacklight.gotdns.org/" target="_blank">BlackLight</a></li>
+      <li><a href="http://www.clshack.it/">ClsHack</a></li>
+      <li><a href="http://www.ihteam.net/" target="_blank">IHTeam</a></li>
+      <li><a href="http://www.ilbloggatore.com/" target="_blank">ilBloggatore</a></li>
+      <li><a href="http://www.tuxmealux.net/" target="_blank">Matrix86</a></li>
+      <li><a href="http://meh.doesntexist.org/" target="_blank">Meh</a></li>
+      <li><a href="http://www.milw0rm.com/" target="_blank">milw0rm</a></li>
+      <li><a href="http://retrogod.altervista.org/" target="_blank">rgod</a></li>
+      <li><a href="http://ultimoprofetawebblog.wordpress.com/" target="_blank">UltimoProfeta</a></li>
+    </ul>
+
+  </div> <!-- sidebar -->
+</div> <!-- leftwrap -->

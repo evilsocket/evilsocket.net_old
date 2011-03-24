@@ -1,0 +1,15 @@
+Date: 2010-09-28 17:19:11
+Author: evilsocket
+Categories: Hacking, Programmazione, Web Hacking
+Tags: approvato, approved, plugin, repository, sentinel, wordpress, wp-sentinel
+Title: WP-Sentinel 1.0.1 - Il sistema di sicurezza per wordpress da ora nei repo ufficiali!
+
+<img class="alignleft size-medium wp-image-1928" title="4 T UMAX     PL-II            V1.4 [6]" src="http://www.evilsocket.net/images/spumante-300x288.jpg" alt="" width="108" height="104" />Sono lieto di annunciare che, contestualmente al rilascio della versione 1.0.1 di <strong>WP-Sentinel</strong>, ho rimosso il repository git poichè il plugin è stato approvato ed inserito nel repository ufficiale dei plugin di wordpress.
+
+Potrete trovare il plugin a <a href="http://wordpress.org/extend/plugins/wp-sentinel/" target="_blank">questo indirizzo</a>, oppure cercandolo tramite il pannello di installazione plugin del vostro blog.
+
+Nella nuova release, i layout sono stati migliorati e tradotti in inglese poichè il plugin ora (spero) gode di visibilità internazionale, quindi se volete dei layout in italiano dovrete tradurli e/o modificarli tramite l'apposito tab nel pannello di gestione dei layout.
+
+Beh che dire, spero che il plugin serva a molti, funzioni bene e mi faccia passare diverse ore di coding e svago ^^
+
+PS: Si cercano grafici per sistemare i layout e realizzare il logo.

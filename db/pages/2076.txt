@@ -1,0 +1,31 @@
+Date: 2011-03-13 21:08:27
+Author: evilsocket
+Categories: Hacking, Misc, Wardriving  
+Tags: 2011, backbox, cat, cat2011, podio, cracca al tesoro, Wardriving
+Title: CAT2011, sul podio la squadra equipaggiata con BackBox!
+
+<p align="justify">
+L'esperienza milanese si conclude nel migliore dei modi per i “Jumpin Jester” 4 ragazzi di origine sarda che hanno deciso di partecipare alla quarta edizione dell'ormai noto evento “Cracca al Tesoro”.
+
+Questa edizione ha visto sfidarsi ben 22 squadre per un totale di circa 100 partecipanti provenienti da tutta italia: Trento, Sassari, Varese, Torino, Pistoia, Fidenza e altre città della penisola.
+
+Armati di vistose antenne le squadre hanno dovuto individuare cinque access point apprestati per l'occasione, quindi penetrare nei server ad essi collegati, configurati in modo da poter essere violati in modo più o meno facile. Una sala di controllo riceveva e verificava le avvenute intrusioni, poi stava ai concorrenti reperire indizi per proseguire ed ottenere le istruzioni che facevano guadagnare punti.
+
+I Jumpin Jester equipaggiati appunto con BackBox Linux e sponsorizzati da Akhela hanno ottenuto 36 punti classificandosi cosi secondi alla loro prima partecipazione al CAT (primi i ragazzi di E-Quipe di Torino, terzi i Crackers Salati di Trento). Emilio Pinna, aka norby, studente di ingegneria informatica presso il Politecnico di Torino nonché nostro collaboratore ci ha fatto un breve resoconto della sua esperienza di cui riporto le parti più interessanti.
+
+<break>
+
+Gli access point erano 5, sparsi in alcuni negozi della zona di Corso Como, che proteggevano due macchine su cui fare breccia con ogni mezzo. La partenza della gara (ore 14.30) è stata abbastanza lenta per tutti... Sia per la difficoltà a trovare gli access point ufficiali, sia per i numerosi burloni che inondavano l'etere di finti beacon al fine di confondere gli avversari. La maggior parte di essi erano protetti con un'inefficace cifratura WEP abbastanza facile da craccare a patto di aver localizzato correttamente la posizione degli access point. Una volta entrati in possesso della password e guadagnati i primi 5 punti, era necessario scoprire velocemente gli IP delle macchine da attaccare.
+
+Gli utenti erano separati dalle macchine bersaglio con VLAN proprio per evitare che i partecipanti si attaccassero tra di loro (credendo fossero le macchine target). Motivo di confusione è stato l'uso di netmask /25, al contrario della solita /24, che ha tenuto impegnati i partecipanti meno preparati durante l'host discovery. Altra forma di protezione è stata l'adozione di tecniche per il flood protection che ha complicato e non di poco la mappatura della rete tramite port-scan.
+
+Gli host e le vulnerabilità esposte erano diverse: la prima, con cui tanti si sono confrontati, era un SQL injection sfruttabile in maniera abbastanza banale, ma corredata di un limite di 5 tentativi e di un filtro sul tipo di dato inserito nel form exploitabile. Il filtro era in javascript lato browser e i tentativi venivano contati sul PHP session ID. Lascio a voi immaginare i due semplici passaggi da fare per bypassare queste protezioni.
+
+La seconda prova esponeva il codice dei cgi del server per permettere un veloce auditing allo scopo di trovare il giusto punto di attacco. Gli access point successivi al terzo erano protetti da WPA, compito di uno degli organizzatori era il generare il giusto traffico per permettere la cattura dell'handshake su cui fare il bruteforce delle password.
+
+Come al solito la parte più scenografica dell'evento erano le tante squadre corredate di antenne di tutti i tipi, dalle Yagi al lungo tubo omnidirezionale dell'organizzatore Mayhem, dalle alte e pesanti antenne direzionali alle antennine di default incluse nelle schede wireless usb esterne Alpha (usate dalla gran parte dei partecipanti). Le squadre più attrezzate avevano dietro un carrello della spesa che conteneva gruppi di continuità o come nel caso dei Jumpin Jester, una batteria di macchina e un inverter, che hanno permesso di tenere accesi i pc con meno autonomia per tutto il tempo della gara.
+
+<center>
+  <img src='http://gallery.oziosi.org/d/55274-2/DSC03242.JPG' style='width: 700px; height: 525px;'/>
+</center>
+</p>

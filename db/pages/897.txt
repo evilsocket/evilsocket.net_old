@@ -1,0 +1,7 @@
+Date: 2010-03-03 19:25:52
+Author: evilsocket
+Categories: Misc
+Tags: connection, down, downtime, grant, mysql
+Title: Downtime
+
+Chi avesse visitato questo blog oggi pomeriggio avrà notato l'errore di connessione al db ... niente di grave, è solo stato uno degli altri ragazzi su questo server (tacci vostra!!! XD) che aveva incasinato i grant sulle tabelle ... tutto ok ora :P

@@ -1,0 +1,31 @@
+Date: 2010-12-06 23:54:59
+Author: evilsocket
+Categories: Hacking, Misc, Personali
+Tags: autocensura, censura, dns, domain, dominio, host, informatica, italia, italiana, minacce, mirror, società, wikileaks
+Title: WikiLeaks e la censura, un fenomeno anche italiano.
+
+<img class="alignleft" src="http://www.evilsocket.net/images/wikileaks-banner.jpg" alt="" width="120" height="120" />Scrivo per denunciare, se pur <strong>senza riferimenti</strong> espliciti ad enti e/o persone (principalmente per tutelare terze parti coinvolte che poco c'entrano con la questione), un fatto che dal mio personalissimo e modesto punto di vista reputo decisamente <strong>grave</strong> ed indicativo dell'attitudine di alcune società italiane riguardo la questione <strong>WikiLeaks</strong> e la <strong>censura</strong>.
+
+Questo blog è hostato su un server dedicato che pago e in parte gestisco insieme ad altre persone (la maggior parte amici), quindi ogni mese si fa colletta e si paga la quota del server tutti insieme, così come tutti insieme lo gestiamo, risolviamo i problemi, lo configuriamo e così via ... insomma, è un server che appartiene in parti uguali a tutti coloro, me compreso, che partecipano al pagamento (ovviamente).
+
+Di conseguenza, ci sono diversi altri domini e siti hostati oltre al mio, uno dei quali è quello interessato nella vicenda.
+
+Una precisazione che tengo a fare, <strong>nessuno dei domini è utilizzato per scopi professionali</strong>, lavorativi o quant'altro, così come nessuno dei domini è legato ad un azienda esterna, se non nel caso in cui l'azienda stessa appartenga alla persona che gestisce il dominio, insomma è un server puramente personale, per ricerche, pubblicazioni e quant'altro.
+
+Ieri insieme ad alcuni degli altri ragazzi, decidiamo di <a href="http://www.evilsocket.net/2005/aiutiamo-wikileaks-help-wikileaks.html" target="_blank">aderire all'iniziativa</a> per mirrorare wikileaks, quindi passiamo a decidere, tra i vari domini, quale utilizzare di preciso per creare un sotto dominio del tipo http://wikileaks.*********.***/, ed optiamo per quello con i server DNS più veloci, così da attivare quanto prima possibile il subdomain in questione.
+
+<break>Procediamo alla creazione, configurazione dei vari account per l'accesso e così diventiamo mirror ufficiale.
+
+E qui avviene il fattaccio.
+
+Uno dei ragazzi che gestisce oltre che al server quello specifico dominio, lavora per un azienda informatica della sua regione, azienda gestita da una persona relativamente conosciuta nel suo settore.
+Da quanto mi è stato riferito oggi, i "capi" di questa azienda, hanno espressamente chiesto al ragazzo di rimuovere quel mirror dal suo dominio (che ribadisco, <strong>nulla c'entra con l'azienda</strong>) poichè non volevano che "qualcuno" (non meglio specificato chi) risalisse in qualche misterioso (misterioso poichè il dominio non è nemmeno intestato a lui) modo all'azienda stessa collegandola ai leaks causandole (all'azienda, mica al ragazzo!) noie legali.
+In poche parole, hanno gentilmente (gentilmente? questo non mi è dato saperlo) chiesto al ragazzo di auto censurarsi, tra l'altro in uno spazio (il server) che non appartiene solamente a lui.
+
+Per fare un favore ad un amico (favore del quale non sono molto convinto, ma vabbè, la maggioranza vince) quel mirror verrà rimosso, mentre è stato aperto un nodo tor (quindi raggiungibile solo tramite rete tor) e ho personalmente spostato tale mirror su <a href="http://wikileaks.evilsocket.net/">http://wikileaks.evilsocket.net/</a>, sperando che queste persone non si sentano ulteriormente coinvolte dato che comunque <strong>rimane sempre sullo stesso serve</strong>r ... in tal caso, beh, mi dispiace, ma non sono loro a darmi lavoro di conseguenza hanno veramente poco con cui "convincermi" a rimuoverlo :)
+
+Questo tanto per far capire che un fenomeno come la <strong>censura</strong>, che spesso si pensa come un qualcosa di distante che non ci riguarda, è geograficamente molto più vicino di quanto immaginiamo.
+
+Detto questo, se qualcuno dovesse riconoscersi in questa vicenda e volesse specificare qualcosa che ho omesso o riportato in maniera inprecisa, può contattarmi privatamente (se intende tutelare la sua <strong>privacy</strong>) e sarà mio dovere apporare le opportune correzioni a questo articolo ... ammesso che ce ne siano da fare.
+
+Bye

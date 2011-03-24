@@ -1,0 +1,14 @@
+Date: 2010-05-12 03:10:35
+Author: evilsocket
+Categories: Misc
+Tags: hybris
+Title: Hybris v1.0 beta 3, tante le novità!
+
+<p>Ho appena eseguito l'ultimo commit della seconda beta e siamo entrati nella terza, le novità sono molte.</p>
+<p>Innanzitutto, ho risolto un bug abbastanza grave (e difficile da inquadrare) nel garbage collector che causava in determinate circostanze la cancellazione di oggetti contenuti in altri oggetti (l'elemento di un vettore ad esempio), prima che venisse cancellato l'oggetto padre.</p>
+<p>Come <a  href="http://www.hybris-lang.org/forum/index.php?topic=8">discusso questi giorni</a> con alcuni utenti, sono cambiati un paio di operatori per favorire la leggibilità e l'eleganza della grammatica di Hybris.</p>
+<p>L'operatore per concatenare dei valori ad una stringa non è più . (il punto) ma + che normalmente serve per l'addizione algebrica, ma se rileva che la parte sinistra o la parte destra di un espressione è una stringa, effettuera la concatenazione.</p>
+<p>In questo modo, l'operatore . si è liberato, e viene ora usato per accedere ad attributi e metodi di classi e strutture.</p>
+<p>Inoltre ho introdotto il concetto di metodi intrinsechi dei tipi, ovvero ora anche i tipi di base (stringa, array, ecc) sono oggetti e possiedono dei metodi "di default" per controllarne la grandezza ed eseguire operazioni di vario generi su di essi.</p>
+<p>Per questo rimando alla <a  href="http://www.hybris-lang.org/page/documentazione.html">documentazione</a> che è stata aggiornata di conseguenza.</p>
+<p><a href="http://www.hybris-lang.org/story/hybris-v10-beta-3-tante-le-novit%C3%A0.html" >read more</a></p><img src="http://feeds.feedburner.com/~r/HybrisProgrammingLanguageOfficialSite/~4/iEABdYfRgTY" height="1" width="1"/>

@@ -1,0 +1,11 @@
+Date: 2009-05-13 08:39:29
+Author: evilsocket
+Categories: Assemby, C, Exploiting, Hacking, Papers, Programmazione
+Tags: function pointers, Hacking, stack
+Title: StackHack
+
+Lo stack, questo sconosciuto ! :P
+
+In questo paper illustro alcuni aspetti basilari dello stack e altri non molto noti, o quantomeno non molto considerati che presentano riscontri pratici decisamente interessanti .
+
+<a href="http://www.evilsocket.net/papers/stack.pdf" target="_blank">Scarica</a>

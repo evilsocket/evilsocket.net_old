@@ -1,0 +1,23 @@
+Date: 2010-12-05 18:20:04
+Author: evilsocket
+Categories: Hacking, Misc, Personali
+Tags: cablegate, censura, chensorship, hosting, italia, julian assange, manifesto, mentor, mirror, server, uk, usa, wikileaks
+Title: Aiutiamo WikiLeaks! Help WikiLeaks!
+
+E' ormai noto che in questi ultimi giorni <a href="http://www.wikileaks.ch/" target="_blank">wikileaks</a> sta subendo una serie di attacchi di varia natura (DoS, DDoS, legali, ecc) che mirano a rendere irraggiungibile il sito e le relative informazioni in esso contenute, così come in forma analoga a portare la censura in un posto, la rete, che per sua natura non dovrebbe tollerare tale abuso di potere.
+
+Per questo motivo lo staff di WL sta chiedendo a chiunque ne abbia la possibilità di hostare un mirror del sito per diffonderne e preservarne il più possibile i contenuti (cit. "<strong>Potete anche fermare me, ma non potete fermarci tutti, dopo tutto, siamo tutti uguali</strong>") e così io e gli altri gestori di questo server abbiamo fatto la nostra parte, il mirror sarà reso pubblico una volta che verrà sincronizzato dal loro staff con i contenuti in questione.
+
+<strong>Chiedo a CHIUNQUE possa farlo di aderire a questa iniziativa.</strong>
+
+Per poter mirrorare wikileaks basta avere un dominio (non necessariamente su un server dedicato) e la possibilità di creare un account ftp che dia modo a loro di inviare i contenuti, meglio ancora (ma nn necessario) un account ssh con un servizio rsync attivo.
+
+La pagina che spiega come fare e tramite la quale si possono inviare i dati è <a href="http://www.wikileaks.ch/mass-mirror.html" target="_blank">http://www.wikileaks.ch/mass-mirror.html</a>, se pensate di poter aiutare, ma non sapete esattamente come fare o riscontrate qualche problema durante la procedura, potete tranquillamente chiedere aiuto tramite un commento in questo post e cercherò di aiutarvi.
+
+I motivi per i quali è doveroso aiutare quei ragazzi sono innumerevoli, e qualunque persona che sappia ragionare con la propria testa già li conosce, quindi non starò qui ad elencarli.
+
+Dico solo che, nella storia dell'informatica e dell'underground, ce ne sono state poche di occasioni come questa, occasioni per cambiare le cose dando il proprio contributo attivamente, occasioni per unirci tutti, cit. senza distinzioni di razza o religione, per un unica causa che ci vede tutti coinvolti.
+
+The Mentor scriveva qualcosa del genere se non ricordo male nel 1986 nel suo famoso manifesto, documento che molti di noi abbiamo più volte condiviso nei nostri siti, discusso ed ammirato insieme ... per una volta, la prima volta, abbiamo la possibilità di trarre un effettiva ispirazione da quelle parole e renderle <strong>vive</strong> dopo più di venti anni.
+
+<strong>Rompiamo il culo a questi bastardi che tentano di uccidere l'informazione!</strong>

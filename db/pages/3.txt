@@ -1,0 +1,9 @@
+Date: 2009-05-12 23:08:01
+Author: evilsocket
+Categories: C++, Programmazione, Sorgenti
+Tags: nmap, port scanner, scanner, syn, synapse
+Title: Synapse
+
+Port scanner che utilizza la tecnica del syn scanning (vedere il paper relativo a questo metodo nell'apposita sezione) per rilevare i servizi in esecuzione su un server remoto .
+
+<a href="http://www.evilsocket.net/sources/synapse.rar" target="_blank">Scarica</a>

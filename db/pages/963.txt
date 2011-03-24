@@ -1,0 +1,95 @@
+Date: 2010-04-05 21:32:15
+Author: evilsocket
+Categories: Misc, Programmazione
+Tags: 1.0, hybris, library, release, stable, standard
+Title: [IMPORTANTE] Hybris 1.0 Roadmap, ho bisogno di consigli user-side
+
+A volte staccare la spina (nel mio caso il cervello) porta consiglio, credo che il cosìddetto distrarsi su cose che non impegnino il nostro cervello faccia si che una parte del cervello stessa lavori "in background" elaborando a livello subconscio e trovando soluzioni a problemi che normalmente non potevamo affrontare, o più semplicemente offrendoci punti di vista diversi da quelli che prima ci sembravano giusti.
+
+Questi tre giorni non sono stato a casa, ho passato la Pasqua (ah, a proposito, auguri in ritardo a tutti! :)) con la mia fidanzata, la sua famiglia, amici ecc e ho avuto modo proprio di sperimentare su me stesso questo fenomeno ...
+
+Ho pensato a come è nato Hybris, al motivo per il quale è nato, a come si è evoluto nel tempo ...
+
+Inizialmente era un progetto quasi "intimo", nel senso che non avevo intenzione alcuna di pubblicarlo, non tanto perchè sono geloso del mio lavoro (lol figuriamoci XD), ma perchè ero partito con la consapevolezza che non sarebbe mai diventato un qualcosa di completo e funzionale come un vero e proprio linguaggio di programmazione, bensì doveva essere il mio piccolo tool personalizzato/personale per automatizzare determinate cose che normalmente facevo a mano (una specie di linguaggio macro + specializzato insomma) e per questo non adatto ad altre persone che potessero avere esigienze e forme mentis diverse dalle mie.
+
+Il tempo ha dimostrato quanto il mio presupposto iniziale fosse sbagliato, il tempo e la mia costante voglia di migliorare me stesso ed i miei software, e me ne sono reso conto benissimo, peccato che non ho (fino ad un giorno fa) considerato oltre al fatto in se stesso (che di per se in effetti è poco più di una sega mentale) le conseguenze sul mio lavoro che questa cosa possa avere.
+
+Ok, giri di parole e pensieri contorti a parte, faccio il punto della situazione (finalmente) .
+
+<break>Pensando a <a href="http://www.evilsocket.net/954/una-risposta-che-probabilmente-non-verra-letta.html" target="_blank">questo post</a> ed al <a href="http://it-comp.confusenet.com/showthread.php?t=1215842&amp;amp;s=07f392262f5fd6178d019bdc708db461" target="_blank">topic</a> del quale doveva essere una risposta, ho capito che su alcune cose avevo completamente torto o, se non altro, partivo da una visione ristretta delle cose.
+
+Hybris non è più il "mio giocattolo", non lo è da quando ho eseguito il primo commit su github e da quando ho aperto un sito dedicato ... mi son reso conto di quanto sia stato arrogante e stupido da parte mia voler "regalare" un qualcosa alla comunità, e poi, quando qualcuno mi faceva notare (in modo brusco ok, ma non tutti siamo perfetti) lo standard qualitativo che questa comunità impone, ignorare la cosa e voler fare di testa mia continuando a considerare Hybris "il mio giocattolo" ... arrogante, stupido ed incoerente ... mea culpa.
+
+Da questa deduzione son seguite delle decisioni.
+
+<strong>Prima</strong> di rilasciare la 1.0 stable, saranno implementate le seguenti cose :
+<ol>
+	<li>Supporto completo sia per Linux (come ora), per Windows e possibilmente per *BSD.</li>
+	<li>Supporto completo alla programmazione object oriented, polimorfismo, ereditarietà, ecc.</li>
+	<li><strong>Reimplementazione della libreria standard tramite moduli dinamici</strong> .</li>
+	<li>Implementazione di una seconda libreria standard, tramite classi scritte direttamente in Hybris.</li>
+</ol>
+Ebbene, mi serve un consiglio da chiunque abbia voglia di aiutarmi ... sono indeciso sul punto 3.
+
+Ho studiato la situazione e ci sono tre approcci possibili, ognuno con i suoi pro ed i suoi contro, che mi accingo ora a spiegare.
+<h3>** Libreria standard integrata nel core.</h3>
+Questa è la situazione attuale di Hybris, le funzioni standard sono integrate nel core stesso di Hybris, quindi per un ambiente funzionante non servono moduli aggiuntivi se non l'eseguibile stesso dell'interprete.
+
+<strong>Pro :</strong>
+<ul>
+	<li><span style="color: #339966;">Nessun modulo da distribuire insieme all'interprete.</span></li>
+	<li><span style="color: #339966;">Non occorre dichiarare quale modulo importare per usare la singola funzione (tipo l'include del C/C++).</span></li>
+	<li><span style="color: #339966;">Estrema interoperabilità tra libreria standard e core.</span></li>
+</ul>
+<strong>Contro:</strong>
+<ul>
+	<li><span style="color: #ff0000;">Uso maggiore di memoria.</span></li>
+	<li><span style="color: #ff0000;">Tempi di lookup di una funzione più elevati.</span></li>
+	<li><span style="color: #ff0000;">Non è possibile implementare una nuova funzione che abbia il nome di una funzione già presente nella libreria.</span></li>
+</ul>
+<strong>Esempio :</strong>
+<blockquote>page <strong>=</strong> http_get<strong>(</strong> <em>"www.hybris-lang.org"</em>, <em>"/"</em> <strong>)</strong>;
+<strong> if</strong><strong>(</strong> page <strong>&amp;&amp;</strong> (page <strong>~=</strong> <em>"/&lt;body&gt;.+&lt;\/body&gt;/im"</em>)[0] <strong>)</strong><strong>{</strong>
+print<strong>(</strong>page<strong>)</strong>;
+<strong> }</strong></blockquote>
+<h3>** Libreria standard implementata in moduli dinamici separati.</h3>
+Questo è il metodo nel quale son realizzati molti dei linguaggi esistenti attualmente, il core di per se è piccolo e non gestisce le funzionalità del linguaggio, ma offre un insieme di funzioni ed oggetti per realizzarne, in questo caso tutta la libreria standard è implementata in moduli esterni che vengono caricati a scelta dall'utente in base a quello che serve, un po come quando in C scriviamo un "#include &lt;stdio.h&gt;" e linkiamo la libc .
+
+<strong>Pro :</strong>
+<ul>
+	<li><span style="color: #339966;">Uso della memoria nettamente inferiore.</span></li>
+	<li><span style="color: #339966;">Tempi di lookup di una funzione ridotti (naturalmente rispetto a quanto è grande il set completo, per capirci se il set è composto da 20 elementi la differenza nemmeno si nota).</span></li>
+	<li><span style="color: #339966;">Possibilità di usare nomi di funzioni che sono nella libreria ma che non vengono inclusi.</span></li>
+	<li><span style="color: #339966;">Possibilità di caricare selettivamente una o più funzioni dal singolo modulo invece di caricare tutto.</span></li>
+</ul>
+<strong>Contro :</strong>
+<ul>
+	<li><span style="color: #ff0000;">E' necessario dichiarare esplicitamente quale moduli importare in base alle funzioni utilizzate.</span></li>
+	<li><span style="color: #ff0000;">Oltre all'interprete stesso, vanno distribuiti i moduli dinamici della libreria standard.</span></li>
+	<li><span style="color: #ff0000;">Meno interoperabilità tra core e moduli.</span></li>
+</ul>
+<strong>Esempio :</strong>
+<blockquote><strong>import</strong> io.network.http;
+<strong>import</strong> io.console;
+<em>// oppure, per caricare selettivamente alcune funzioni dai moduli</em>
+<strong>import</strong> io.network.http.[get];
+<strong>import</strong> io.console.[print];
+
+page <strong>=</strong> get<strong>(</strong> <em>"www.hybris-lang.org"</em>,  <em>"/"</em> <strong>)</strong>;
+<strong> if</strong><strong>(</strong> page <strong>&amp;&amp;</strong> (page <strong>~=</strong> <em>"/&lt;body&gt;.+&lt;\/body&gt;/im"</em>)[0]  <strong>)</strong><strong>{</strong>
+print<strong>(</strong>page<strong>)</strong>;
+<strong> }</strong></blockquote>
+<h3>** Soluzione ibrida, libreria esterna, preloading e lookup dinamico.</h3>
+Questo è un compromesso tra le due soluzioni, la libreria standard risiede in moduli esterni, tuttavia l'interprete "è al corrente" di questi moduli e, quando trova nel codice una funzione che ancora non ha caricato, la carica dinamicamente trovando il modulo relativo.
+
+E' difficile stabilire esattamente i pro ed i contro di questa soluzione, poichè i tempi di lookup, memoria utilizzata, ecc dipendono completamente dallo script che va eseguito ... più funzioni di moduli diversi si utilizzeranno, più cose verranno precaricate in memoria, più sarà lento il lookup.
+
+Tutta via questo metodo consentirebbe di non dover necessariamente dichiarare gli imports di un dato script come nella seconda soluzione, quindi mantenendo la comodità della prima e, in un caso ottimale (poche funzioni usate o tante funzioni ma da pochi moduli o algoritmi poco complessi), l'efficienza della seconda.
+<h3>** Conclusione</h3>
+Bon, detto tutto questo, ho bisogno di consigli ... la domanda è semplice :
+
+<strong>Se voi foste degli sviluppatori che usano Hybris, quale dei tre approcci preferireste ?</strong>
+
+Esponete qui nei commenti la vostra opinione, possibilmente motivata, in base alla quale mi aiuterete a scegliere quale approccio implementare per la 1.0 stable di Hybris.
+
+Let me know :)

@@ -1,0 +1,11 @@
+Date: 2010-04-19 23:49:46
+Author: evilsocket
+Categories: Misc
+Tags: class, hybris, object, object oriented, OO, oriented
+Title:  Hybris, da ora Object Oriented!
+
+Sono felice di annunciare che la prima stesura del codice che rende  Hybris un linguaggio OO è pronta.
+
+La grammatica supporta le classi (ovviametne), l'ereditarietà (anche  multipla), gli specificatori di accesso (private, public e protected)  con relativi controlli, costruttori e distruttori (lazy destructors  precisamente, vedremo tra un po di che si tratta).
+
+Su <a href="http://www.hybris-lang.org/story/hybris-da-ora-object-oriented.html" target="_blank">questa pagina</a> potrete trovare alcuni esempi.

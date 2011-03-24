@@ -1,0 +1,86 @@
+Date: 2009-12-21 18:13:36
+Author: evilsocket
+Categories: Exploiting, Hacking
+Tags: alpine, default, iphone, jailbreak, password, ssh, worm
+Title: Il Worm dell'iPhone ... il Jailbreak è rischioso?
+
+<a href="http://www.evilsocket.net/wp-content/uploads/2009/12/iphone_worm.jpg"><img class="alignleft size-medium wp-image-875" title="iphone_worm" src="http://www.evilsocket.net/images/iphone_worm-300x300.jpg" alt="iphone_worm" width="108" height="108" /></a>Un po di tempo fa ha fatto scalpore il primo virus di tipo worm per iPhone, che nel giro di pochi giorni aveva ownato una miriade di melafonini in giro per il mondo.
+
+Dopo l'accaduto, subito nella rete si sono sparsi svariati rumors, la maggior parte dei quali si può riassumere in :
+<blockquote>Non eseguite il jailbreak dell'iPhone se non volete essere infettati!</blockquote>
+Dato che sta frase è evidentemente stupida e, in alcuni casi, aimè è stata pronunciata con secondi fini (della serie "ecco una scusa x far credere a tutti che jailbreakare non va bene"), tanto xkè non c'ho niente da fare scrivo un po nel dettaglio cosa faceva sto worm, come funzionava ma soprattutto <strong>PERCHE'</strong> funzionava.
+
+<break>Innanzitutto, c'è da fare un preambolo.
+
+Nel momento in cui si jailbreaka il proprio iPhone, viene installato il demone ssh configurato con la password di root di default "<strong>alpine</strong>" (e qui i più svegli hanno già capito l'inghippo).
+
+Naturalmente è scontato che tale password va <strong>contestualmente cambiata </strong>con una più sicura e meno conosciuta, ma a quanto pare tanto scontato non è dato che gli iPhone ownati erano proprio di persone che non hanno eseguito questo procedimento.
+
+In pratica, il worm in questione, eseguiva una scansione sui seguenti indirizzi:
+<table style="text-align: left; width: 478px; margin-left: auto; margin-right: auto;" border="1" cellspacing="0" cellpadding="2">
+<tbody>
+<tr>
+<td style="vertical-align: top;"><small>192.168.0.0-192.168.3.255</small></td>
+<td style="vertical-align: top;"><small>Local network</small></td>
+</tr>
+<tr>
+<td style="vertical-align: top;"><small>94.157.100.0-94.157.255.255</small></td>
+<td style="vertical-align: top;"><small>T-mobile, Netherlands</small></td>
+</tr>
+<tr>
+<td style="vertical-align: top;"><small>87.103.52.255-87.103.66.255</small></td>
+<td style="vertical-align: top;"><small>Vodafone, Portugal</small></td>
+</tr>
+<tr>
+<td style="vertical-align: top;"><small>94.157.0.0.0-120.157.99.255</small></td>
+<td style="vertical-align: top;"><small>T-mobile, Netherlands</small></td>
+</tr>
+<tr>
+<td style="vertical-align: top;"><small>114.72.0.0-114.75.255.255</small></td>
+<td style="vertical-align: top;"><small>OPTUSINTERNET, Australia</small></td>
+</tr>
+<tr>
+<td style="vertical-align: top;"><small>92.248.90.0-92.248.120.255</small></td>
+<td style="vertical-align: top;"><small>MOBILKOM, Austria</small></td>
+</tr>
+<tr>
+<td style="vertical-align: top;"><small>81.217.74.0-81.217.74.255</small></td>
+<td style="vertical-align: top;"><small>Kabelsignal AG, Austria</small></td>
+</tr>
+<tr>
+<td style="vertical-align: top;"><small>84.224.60.0-84.224.80.255</small></td>
+<td style="vertical-align: top;"><small>Pannon GSM Telecommunications Inc, Hungary</small></td>
+</tr>
+<tr>
+<td style="vertical-align: top;"><small>188.88.100.0-188.88.160.255</small></td>
+<td style="vertical-align: top;"><small>T-Mobile, Netherlands</small></td>
+</tr>
+<tr>
+<td style="vertical-align: top;"><small>77.248.140.0-77.248.146.255</small></td>
+<td style="vertical-align: top;"><small>UPC Broadband, Austria</small></td>
+</tr>
+<tr>
+<td style="vertical-align: top;"><small>77.54.160.0-77.54.190.255</small></td>
+<td style="vertical-align: top;"><small>Vodafone, Portugal</small></td>
+</tr>
+<tr>
+<td style="vertical-align: top;"><small>80.57.116.0-80.57.131.255</small></td>
+<td style="vertical-align: top;"><small>UPC Broadband Austria</small></td>
+</tr>
+<tr>
+<td style="vertical-align: top;"><small>84.224.0.0-84.224.63.255</small></td>
+<td style="vertical-align: top;"><small>Pannon GSM Telecommunications Inc, Hungary</small></td>
+</tr>
+</tbody></table>
+<h5 style="text-align: center;"><em>(tabella prelevata da </em><a href="http://www.csl.sri.com/users/porras/iPhone-Bot/" target="_blank"><em>questo sito</em></a><em>)</em></h5>
+Come è facile intuire, sono gli intervalli di indirizzi ip che identificano i maggiori provider di connettività mobile.
+
+Una volta identificato un host attivo tra quelli nell'intervallo, il worm sostanzialmente verificava se la porta 22 era aperta (quella del demone ssh) e provava a loggarsi con la password di default alpine.
+
+Una volta dentro, copiava se stesso sul dispositivo e continuava la scansione sulla subnet locale del telefono infettato, e così via, ripdoducendosi esponenzialmente.
+
+<strong>That's fucking all!</strong>
+
+Non è stata colpa del jailbreak, non è stata colpa di un mistico exploit 0day che sfruttava qualche strana falla nel sistema ... è stata colpa solo ed esclusivamente, come nel 99% dei casi, della stupidità umana.
+
+Cazzo ma non ti viene in mente di cambiarla la password ssh quando lo installi ?!?!? Bah -.-

@@ -1,0 +1,9 @@
+Date: 2009-05-12 23:14:50
+Author: evilsocket
+Categories: C++, Programmazione, Sorgenti
+Tags: class, nt, service, system, win32
+Title: Win32 Service Class
+
+Classe C++ che wrappa le API windows per l'installazione ed esecuzione dei servizi di sistema e che consente, ereditandone i metodi virtuali, di realizzare un servizio NT con estrema semplicitÃ  concentrandosi principalmente sulle funzionalitÃ  piÃ¹ttosto che nel districarsi tra le API .
+
+<a href="http://www.evilsocket.net/sources/service.rar" target="_blank">Scarica</a>

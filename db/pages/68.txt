@@ -1,0 +1,9 @@
+Date: 2009-05-13 08:31:20
+Author: evilsocket
+Categories: Hacking, Papers, PHP, Programmazione, Web Hacking
+Tags: php hacking, prevention, safe code, security, Web Hacking
+Title: PHP Hacking & Prevention
+
+Purtroppo non tutti coloro che si proclamano web developers sanno quanto una loro svista possa essere fatale per la sicurezza delle loro web applications, cosÃ¬ ecco alcuni piccoli accorgimenti da seguire per mettere in sicurezza il proprio codice PHP dalle falle piÃ¹ comunemente sfruttate.
+
+<a href="http://www.evilsocket.net/papers/phpacaro.pdf" target="_blank">Scarica</a>

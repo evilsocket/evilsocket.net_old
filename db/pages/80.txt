@@ -1,0 +1,9 @@
+Date: 2009-05-13 08:43:22
+Author: evilsocket
+Categories: Exploiting, Hacking, Papers
+Tags: clipboard grabbing, Hacking, vmware, vmware exploit
+Title: VMWare Hacking
+
+Un video nel quale mostro la fattibilitÃ  di un attacco ad un sistema vmware sfruttando <a href="http://www.evilsocket.net/?p=42" target="_blank">il tool </a>che si trova nell'apposita sezione .
+
+<a href="http://www.evilsocket.net/papers/vmgrabbing.tar.gz" target="_blank">Scarica</a>

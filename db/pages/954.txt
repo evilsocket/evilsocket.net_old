@@ -1,0 +1,91 @@
+Date: 2010-04-02 18:49:17
+Author: evilsocket
+Categories: Misc
+Tags: 
+Title: Una risposta che probabilmente non verrà letta
+
+Un utente mi ha segnalato <a href="http://it-comp.confusenet.com/showthread.php?t=1215842&amp;amp;s=07f392262f5fd6178d019bdc708db461" target="_blank">questa conversazione</a> nella quale si parla di Hybris ed in particolare di alcuni miei errori sia nella progettazione che nella descrizione del linguaggio stesso.
+
+Avrei voluto rispondere, ma le registrazioni sono disabilitate e quindi dovrò accontentarmi di rispondere qui, magari qualcuno di quei signori se ne accorgerà :)
+
+Elencherò le critiche punto per punto e darò la mia risposta .
+
+<break>
+
+<strong>Il Sig. Enrico Franchi dice :</strong>
+<blockquote>Diciamo che anche sulla pratica. Intanto e' uno che dice che il suo
+linguaggio e' typeless, mentre in realta' e' semplicemente dinamicamente
+tipizzato con (credo) tipizzazione debole.
+E la tipizzazione debole e' qualcosa che non vuoi. Poi continua ad
+insistere con sto typeless... boh.</blockquote>
+Caro Sig. Franchi, fonti ben più autorevoli del mio sito definiscono, ad esempio, il PHP come linguaggio typeless e, dato che il modello di dichiarazione di Hybris è stato ispirato proprio dal PHP, pensare che abbiano una tipizzazione diversa mi sembra un po strano.
+
+Poi, facendo una ricerca sulla definizione di "tipizzazione debole", sono incappato in <a href="http://it.wikipedia.org/wiki/Tipizzazione_forte" target="_blank">questa pagina</a> di wikipedia che dice :
+<blockquote>Per esempio, il <a title="Linguaggio C" href="/wiki/Linguaggio_C">linguaggio C</a> fornisce almeno tre meccanismi che lo qualificano come linguaggio debolmente tipizzato:
+<ul>
+	<li>le operazioni di <em><a title="Casting (programmazione)" href="/wiki/Casting_(programmazione)">casting</a></em>, che consentono di forzare l'interpretazione di un qualunque valore secondo un qualunque tipo (anche un tipo diverso da quello a cui il valore è stato precedentemente associato);</li>
+	<li>i <a title="Puntatore (programmazione)" href="/wiki/Puntatore_(programmazione)">puntatori</a> a <em>void</em>, che godono di conversione di tipo implicita verso qualunque altro tipo puntatore;</li>
+</ul>
+	<li>le <em><a title="Union (C)" href="/wiki/Union_(C)">unioni</a></em> consentono di interpretare una collezione di dati correlati secondo diverse attribuzioni di tipo indipendenti.</li>
+</blockquote>
+Bhe, se il C viene considerato un linguaggio con tipizzazione debole, non vedo come si possa associare questo paradigma anche ad Hybris, che credo sia la cosa più lontana che esiste dal C.
+
+<strong>Poi, sempre il Sig. Enrico Franchi continua :</strong>
+<blockquote>No, segue la filosofia "non abbiamo imparato nulla dal C", mostra una
+patologica ignoranza del concetto di "libreria standard" vs. linguaggio.
+
+Ovvero: se un modulo lo metti nella libreria standard, quello lo trovi
+ovunque sia disponibile il linguaggio. Punto. Non deve "essere parte del
+linguaggio".
+
+In C printf e' una funzione della libreria standard. In tutte le
+implementazioni hosted di C la trovi. La trovi *per forza*. Se non la
+vuoi, non la includi. Se vuoi la tua versione usi quella. Non e' *nel*
+linguaggio.
+
+Allo stesso modo il modulo os.path in Python lo trovi ovunque hai
+Python, ma non ti inzozza i namespace se non lo vuoi usare e dove non lo
+vuoi usare.
+
+Nota che la filosofia di C e' quella che ha reso C uno fra i linguaggi
+piu' utilizzati negli ultimi 40 anni, tutt'ora usato e verosimilmente
+sulla strada per non diminuire particolarmente. Penso che se non
+sappiamo imparare dal passato...</blockquote>
+Riferendosi al fatto che ho inserito molte funzionalità non standard già nel core di Hybris .
+
+Beh, innanzitutto tengo a precisare che, da quando è nato il C, i computer hanno subito dei cambiamenti radicali in quanto a prestazioni, nonchè il fatto che se per 40 anni si è fatto in un modo, non significa che 40 anni dopo quel modo sia ancora quello migliore, ma anche ammettendo questo, c'è da fare una parentesi.
+
+I linguaggi che hanno un core minimale ed incorporano le funzionalità standard in librerie esterne, hanno questa struttura per alcuni motivi principali :
+<ol>
+	<li>Potendo caricare solo alcune funzioni, il tempo di lookup su una funzione richiamata è minore rispetto a quando sono tutte precedentemente caricate in memoria.</li>
+	<li>Così facendo, oltre al tempo di lookup, diminuisce anche l'uso della memoria stessa.</li>
+	<li>Per fare un esempio, se non si importa il modulo che espone la funzione "print", si può scrivere una propria "print" senza incorrere a collisioni tra i nomi.</li>
+</ol>
+Detta così sembra che il Sig. Franchi abbia ragione ... se non fosse che, come ho detto, in 40 anni la potenza di calcolo di un pc è aumentata notevolmente quindi, qual'ora queste considerazioni erano valide 40 anni fa, oggi, mi permetta caro Sig.Franchi, non credo che 15-20 elementi in più precaricati su una hash table aumentino così drasticamente i tempi di lookup, tantomeno l'uso di memoria ... se poi lei vuole implementare una sua "println" in hybris, può sempre chiamarla in un altro modo non trova?
+
+Facendo dei test, l'approccio da Lei proposto rispetto al mio approccio, offre un miglioramento di meno di un nano secondo (difficilmente misurabile in effetti) contro però la "rogna" di doversi ricordare ogni volta quale modulo importare per fare cosa ... sinceramente preferisco aspettare meno di un nano secondo in più ed evitarmi la rogna :)
+
+<strong>Sempre lui continua :</strong>
+<blockquote>PHP e' la degradazione di Perl. Perl ha un suo fascino perverso,
+una sua incoerente coerenza interna. PHP non ha niente di tutto questo.
+PHP e' un aborto di linguaggio.</blockquote>
+A parte il fatto che non credo esista, sulla faccia della terra, una persona con un autorità tale da poter affermare una cosa del genere senza sfociare nell'arroganza, ma poi voglio dire, parliamone! :)
+
+Conosco tante persone che, come me, non gradiscono il Perl più di tanto ma adorano il PHP ... siamo tutti scemi noi?
+
+Beh anche se fosse, mi spiega come mai il PHP, nonostante sia un aborto di linguaggio, ha rimpiazzato il Perl così come altri linguaggi per scrivere CGI ecc nel giro di poco tempo ?
+
+Se lei avesse ragione, non trova che il PHP non sarebbe quello che è oggi invece? E ANCHE SE FOSSE, chi è lei per dire che un linguaggio fa schifo?
+
+PHP avrà sicuramente i suoi difetti (ne potrei elencare molti), ma esiste un linguaggio che non ne ha?
+
+<strong>Ancora lui :</strong>
+<blockquote>E chissene... e' praticamente un giocattolo. Un giocattolo completo e
+funzionante, un bel giocattolo, se vuoi. Ma per ora un giocattolo.
+Supporta *un* sistema operativo (l'autore dice perche' c'e' "un solo
+sistema operativo degno" e direi che si e' qualificato per bene).</blockquote>
+Ehehe mi ha beccato! Si, Hybris è un giocattolo che nasce come divertimento ... però un giorno ho scoperto che questo "giocattolo" mi tornava molto utile nello scripting di tutti i giorni e così dall'essere un semplice giocattolo è passato ad essere qualcosa di UN PO di più ... scommetto che molti pensavano la stessa cosa del PHP quando nacque ... eppure oggi quante web app girano in PHP? :)
+
+Per la storia del sistema operativo, a parte il fatto che è una frase riferita alle vecchie versioni dato che un bel po di cose son cambiate, non commento ulteriormente ... a quanto pare il Sig. Franchi non conosce o non sa apprezzare l'ironia ... deve essere una persona molto triste .
+
+Detto questo, ribadisco che Hybris è pieno zeppo di difetti, alcuni dei quali vanno solo corretti, altri vanno proprio rivisti poichè potrebbero limitare molto le potenzialità di Hybris ... fatto sta che quando si critica il mio lavoro, a ragione o meno, mi piacerebbe poter rispondere e far nascere un dibattito costruttivo, cosa che su quel sito non ho potuto fare.

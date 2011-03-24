@@ -1,0 +1,11 @@
+Date: 2009-05-12 23:54:49
+Author: evilsocket
+Categories: Hacking, Java, Programmazione, Sorgenti, Web Hacking
+Tags: exploit, iscan, Web Hacking, web vulnerability scanner
+Title: iScan
+
+Scanner di vulnerabilitÃ  web simil-acunetix opensource, multipiattaforma (Ã¨ scritto in java) e con qualche accorgimento in piÃ¹ rispetto ai normali scanner in console ormai decisamente datati .
+
+Il database dei pattern di ricerca delle vulnerabilitÃ  consiste in un file xml che puÃ² essere facilmente modificato, ampliato e/o eventualmente adattato alle proprie necessitÃ  .
+
+<a href="http://www.evilsocket.net/sources/iScan_0.1beta.zip" target="_blank">Scarica</a>

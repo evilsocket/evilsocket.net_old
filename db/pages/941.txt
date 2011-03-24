@@ -1,0 +1,30 @@
+Date: 2010-03-24 14:20:44
+Author: evilsocket
+Categories: Misc, Programmazione
+Tags: documentazione, hybris, wiki, wikimedia
+Title: Spostata la documentazione di Hybris su Wiki
+
+E' passato un bel po da quando ho scritto la primissima stesura della documentazione di Hybris e man mano che aumentavano i contenuti mi sono reso conto che una semplice pagina non era più sufficiente per contenerla tutta in modo ordinato e facilmente comprensibile.
+
+Così ho installato un wiki e copiato tutta la documentazione al suo interno, migliorando e correggendo qua e la ed inserendo nuove sezioni.
+
+<break>La struttura attuale dell'indice è :
+<ul>
+	<li><a title="L’interprete" href="http://www.hybris-lang.org/wiki/index.php/L%E2%80%99interprete">L’interprete</a></li>
+	<li><a title="Variabili e grammatica di base" href="http://www.hybris-lang.org/wiki/index.php/Variabili_e_grammatica_di_base">Variabili e grammatica di base</a></li>
+	<li>Gli Operatori
+<ul>
+	<li><a title="Operatori aritmetici" href="http://www.hybris-lang.org/wiki/index.php/Operatori_aritmetici">Operatori aritmetici</a></li>
+	<li><a title="Operatori logici" href="http://www.hybris-lang.org/wiki/index.php/Operatori_logici">Operatori logici</a></li>
+	<li><a title="Operatori booleani" href="http://www.hybris-lang.org/wiki/index.php/Operatori_booleani">Operatori booleani</a></li>
+	<li><a title="Altri operatori" href="http://www.hybris-lang.org/wiki/index.php/Altri_operatori">Altri operatori</a></li>
+</ul>
+</li>
+	<li><a title="Costrutti condizionali" href="http://www.hybris-lang.org/wiki/index.php/Costrutti_condizionali">Costrutti condizionali</a></li>
+	<li><a title="Costrutti iterativi" href="http://www.hybris-lang.org/wiki/index.php/Costrutti_iterativi">Costrutti iterativi</a></li>
+	<li><a title="Funzioni e visibilità variabili" href="http://www.hybris-lang.org/wiki/index.php/Funzioni_e_visibilit%C3%A0_variabili">Funzioni e visibilità variabili</a></li>
+	<li><a title="Gestione della memoria in Hybris" href="http://www.hybris-lang.org/wiki/index.php/Gestione_della_memoria_in_Hybris">Gestione della memoria in Hybris</a></li>
+	<li><a title="Funzionalità avanzate &amp; Script di esempio" href="http://www.hybris-lang.org/wiki/index.php/Funzionalit%C3%A0_avanzate_%26_Script_di_esempio">Funzionalità avanzate &amp; Script di esempio</a></li>
+	<li>Documentazione delle funzioni</li>
+</ul>
+Speriamo che ne sia valsa la pena :)

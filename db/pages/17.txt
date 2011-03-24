@@ -1,0 +1,9 @@
+Date: 2009-05-12 23:22:35
+Author: evilsocket
+Categories: Javascript/AJAX, Programmazione, Sorgenti
+Tags: ajax, javascript operating system, web os
+Title: jXGS
+
+Un piccolo esperimento con lo scopo di simulare un sistema operativo web tramite un insieme di funzioni javascript interfacciate a file xml di configurazione tramite tecnologia ajax .
+
+<a href="http://www.evilsocket.net/sources/jxgs.rar" target="_blank">Scarica</a>

@@ -1,0 +1,11 @@
+Date: 2009-05-31 19:12:55
+Author: evilsocket
+Categories: Biometria, C++, Programmazione, Sorgenti
+Tags: 
+Title: Pubblicato Eigetron
+
+<img class="alignleft" src="http://www.eeel.nist.gov/oles/images/biomface.jpg" alt="" width="65" height="88" />Come anticipato nell'<a href="http://www.evilsocket.net/193/eigen-fast-decomposition-work-in-progress-d.html" target="_blank">articolo di ieri</a>, ho realizzato un sistema di riconoscimento facciale che ora ho pubblicato .
+
+Eigetron Ã¨ un sistema di riconoscimento facciale completamente scritto da zero che utilizza l'algoritmo delle <a href="http://en.wikipedia.org/wiki/Eigenface" target="_blank">facce di Eigen</a> per un matching abbastanza preciso rispetto ad un database precedentemente calcolato . Per la decomposizione degli eigenvalues e eigenvectors ho utilizzato l'algoritmo di Jacobi che rende la procedura, su matrici simmetriche, molto molto veloce .
+
+<break><a href="http://github.com/evilsocket/Eigetron/tree/master" target="_blank">Pagina del progetto su github</a>

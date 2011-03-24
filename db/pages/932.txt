@@ -1,0 +1,22 @@
+Date: 2010-03-21 15:10:01
+Author: evilsocket
+Categories: Misc, Programmazione
+Tags: forum, hybris, scripting, supporto
+Title: Aperto il forum di supporto per Hybris
+
+Ebbene si, siamo vicinissimi alla 1.0 e di conseguenza abbiamo deciso di aprire un <a href="http://www.hybris-lang.org/forum/index.php" target="_blank">forum di supporto</a> per Hybris .
+
+Speriamo che questo serva sia a noi sviluppatori come "base logistica" per organizzarci meglio, sia per gli utenti al fine di trovare un luogo nel quale poter chiedere consigli ed eventualmente proporre idee per quanto riguarda il mondo della programmazione in Hybris .
+
+Riporto quello che dice il post sticked "<a href="http://www.hybris-lang.org/forum/index.php/topic,2.0.html" target="_blank">Informazioni sul forum</a>" :
+<blockquote>Questo è un forum di supporto e sviluppo per il linguaggio di programmazione Hybris .
+
+E' diviso in sotto sezioni, ognuna delle quali con un preciso intento ed un altrettanta precisa tematica, tematica che in nessun modo si può prescindere (leggere: "vietato offtopic").
+
+Al fine di un corretto utilizzo dei servizi del forum, ogni utente è pregato di ragionare bene sulla natura della propria domanda prima di postarla, possibilmente facendosi le seguenti domande :
+<ol>
+	<li>Ho cercato bene nella documentazione prima di fare questa domanda?</li>
+	<li>Se la domanda riguarda un problema di compilazione dei sorgenti di Hybrys, sono sicuro di aver installato tutte le dipendenze?</li>
+	<li>Sto per postare nella sezione giusta o forse un altra sarebbe più appropriata?</li>
+</ol>
+Fatte queste domande, sentitevi liberi di postare qualsiasi dubbio, domanda e/o suggerimento riguardanti Hybris, tenendo presente che questo forum non serve per socializzare e/o chiacchierare, ma come detto all'inizio di questo post serve come base logistica per il team di sviluppo.</blockquote>

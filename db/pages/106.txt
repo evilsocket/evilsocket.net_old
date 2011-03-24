@@ -1,0 +1,21 @@
+Date: 2009-05-18 05:23:37
+Author: evilsocket
+Categories: Programmazione
+Tags: evilsentinel, security system, sentinel, sistema di sicurezza, wp-sentinel
+Title: WP-Sentinel
+
+Dopo piÃ¹ di un anno di testing del mio sistema evilsentinel sono giunto ad una conclusione ... un sistema di sicurezza universale Ã¨ *tecnicamente* possibile, evilsentinel era de-facto tale, ma quando dalla teoria si passa alla pratica ci si scontra con l'ostacolo invalicabile della stupiditÃ  e/o pigrizia umana .
+
+<break>
+
+Quasi nessuno di coloro che lo hanno installato si Ã¨ preso la briga di leggere la documentazione (e ancora mi chiedo che cazzo ho sprecato a fare il tempo per scriverla -.-) e di capire come configurare al meglio la propria installazione al fine di evitare falsi positivi, incasinamenti vari o peggio ancora un sistema non agganciato propriamente al sentinel stesso .
+
+Quindi mi son deciso ad iniziare un secondo esperimento, ovvero "specializzare" il sentinel per le maggiori web application in modo da fondere il piÃ¹ possibile il sistema all'interno dell'applicazione stessa, rendendo installazione e configurazione processi alla portata di chiunque (o quasi) .
+
+Da questo ragionamento sta nascendo il primo porting, wp-sentinel, un plugin per wordpress che protegge tale piattaforma dagli attacchi che non sto qui a ri-elencare per la N^inf volta .
+
+Essendo ancora in sperimentazione non Ã¨ pubblico, ma se la cosa interessa chiunque stia leggendo e soprattutto se vi interessa vedere il porting anche su piattaforme quali phpbb, vbulletin, phpnuke e cosÃ¬ via avvisatemi se riscontrate una qualsiasi anomalia nel blog .
+
+Dal canto mio analizzerÃ² scrupolosamente ogni log al fine di capire se e dove sono presenti eventuali difetti nel sistema, il tutto con lo scopo di giungere ad una release stabile e facile da usare .
+
+<img class="aligncenter size-full wp-image-119" title="wpshot" src="http://www.evilsocket.net/images/wpshot.png" alt="wpshot" width="641" height="269" />

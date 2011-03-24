@@ -1,0 +1,41 @@
+Date: 2010-02-17 18:04:29
+Author: evilsocket
+Categories: Misc
+Tags: arch, arch linux, aur, distribuzione, distro, linux, pacman, rc.conf, yaourt
+Title: Perchè ho scelto Arch Linux
+
+<a href="http://www.evilsocket.net/wp-content/uploads/2010/02/arch-linux-logo.png"><img class="alignleft size-thumbnail wp-image-884" title="arch-linux-logo" src="http://www.evilsocket.net/images/arch-linux-logo-150x150.png" alt="arch-linux-logo" width="150" height="150" /></a>Di distribuzioni GNU/Linux in questi anni ne ho provate veramente tante, partendo da Red Hat (quando ancora esisteva in quanto distro libera, bei tempi :)), a SuSe, Mandrake (predecessore dell'attuale Mandriva), DSL, Debian, Ubuntu, Slackware, Fedora, Gentoo, ecc ecc ecc e, per quanto due o tre tra queste fossero le mie preferite, non ne ho mai trovata una che mi soddisfacesse al 100% sotto tutti gli aspetti .
+
+Un paio di mesi fa acquistai un MSi Wind U100 e, come è al mio solito, iniziai a provare mille mila distro per trovare quella che meglio si adattasse all'hardware del netbook, finchè una sera sul canale irc dell'ihteam, merlok mi propose di installare Arch Linux, che fino a quel momento avevo solo sentito nominare vagamente.
+
+Beh, dopo due mesi di forte utilizzo, posso affermare di aver finalmente trovato la distro che fa per me ! :D
+
+Di conseguenza, voglio elencare le motivazioni che mi fanno affermare ciò, tanto per far conoscere meglio ai lettori questa fantastica distribuzione, così poco conosciuta ma così tanto eccezionale.
+
+<break>Prima di tutto, vanno specificate due cose che *secondo me* sono fondamentali ai fini di una giusta comprensione .
+
+Arch non si basa su nessun'altra distrubuzione esistente, per intenderci non è come Ubuntu che è debian based o cose così, semplicemente Arch è Arch, con tutte le conseguenze che questo comporta (e che in parte elencherò più avanti).
+
+Arch segue uno schema di rolling release, ovvero, nei repository troverete praticamente le ultimissime versioni dei software che volete installare già pacchettizzate (o meno, ma anche questo lo vedremo più avanti :P)  e pronte per essere installate, quindi avrete un sistema sempre aggiornatissimo senza complicarsi la vita scaricando i src del vostro software preferito via svn &amp; co .
+
+Inizio con il dire, che uno dei punti di forza di Arch è (come *teoricamente* dovrebbe essere per qualsiasi altra distro) l'utenza ... in particolare ho riscontrato questo aspetto nel <a href="http://wiki.archlinux.org" target="_blank">Wiki ufficiale</a> dove si trova veramente di tutto, partendo dall'installazione dei software principali (vedi Xorg, driver video, ecc) a quelli più specifici (driver particolari per schede wifi, tweacks per le schede grafiche più recenti, ecc), tutto, ma DAVVERO tutto, in un unico wiki, senza dover impazzire per cercare informazioni sparse tra vari forum pseudo-ufficiali.
+
+Questa cosa (e l'aiuto di merlok ovviamente :P) mi è stata di grande aiuto durante la fase di installazione, poichè di default l'immagine contiene solo un sistema di base con bash e pochi altri applicativi sempre da riga di comando ... tutto il resto (ad iniziare dall'ambiente grafico) va installato manualmente.
+
+"Che palle!" direte voi ... ed invece no, perchè potendo scegliere cosa installare, come installarlo e come configurarlo, si ha fin dall'inizio una distribuzione estremamente snella e veloce, adatta alle nostre esigienze (e che non abbia installato di default un mare di merda che non serve, stile Bubuntu insomma XD).
+
+Una volta installati driver nvidia, Xorg, GDM, Gnome e le altre cose che mi servivano tramite il package manager di Arch (pacman, che è facilissimo da usare come le sue controparti), ho affrontato un altro aspetto fighissimo di Arch che ora vi illustrerò.
+
+Tutto (o quasi ovviamente) ciò che concerne l'avvio del sistema, quali moduli caricare, come caricarli, e tante altre cosette interessanti, si trova in un unico file, rc.conf, situato in /etc/ .
+
+Può sembrare banale questa cosa, ma in realtà è la cosa che preferisco, poichè modificando un solo file posso tranquillamente decidere come si comporta il sistema e quanto scattante lo voglio.
+
+Proprio grazie a questo, noto una velocità globale nettamente superiore a debian ad esempio, ma continuiamo ...
+
+Ho nominato <strong>pacman </strong>... come apt, yum e gli altri package manager delle varie distro, pacman è veramente semplice da utilizzare ed offre una trasparenza che pochi altri hanno, così da tenere sempre sotto controllo i pacchetti che si installano e le varie dipendenze che si portano dietro.
+
+Un altro punto di forza è <strong>AUR</strong>, acronimo di <strong>A</strong>rch <strong>U</strong>ser <strong>R</strong>epository, che è proprio quello che il nome suggerisce, un repository di Arch a completa disposizione degli utenti ... quindi, se non trovate un determinato software nei repo di pacman (cosa cmq alquanto difficile), potete stare certi che un altro utente Arch lo abbia inserito dentro AUR (figata!), al quale potrete accedere con un secondo package manager chiamato <strong>yaourt </strong>che si interfaccia a sua volta a pacman per installare eventuali dipendenze dei suoi pacchetti (può sembrare complesso ma non lo è fidatevi ! ). Dentro AUR i pacchetti in realtà non vengono distribuiti nel senso stretto del termine, bensì il pacchetto consiste in uno script chiamato <strong>PKGBUILD </strong>che automatizza completamente il processo di download dei sorgenti, compilazione ed installazione, tenendo comunque traccia di quello che si sta installando.
+
+Quello che intendo è che, su altre distro, quando si installa un qualche pacchetto dai sorgenti, tale installazione non è gestibile dal package manager, per intenderci se compilo ed installo la versione svn di aMSN su Ubuntu, non potrò rimuoverla e/o aggiornarla con apt proprio perchè non l'ho installata tramite lui, mentre con Arch, ciò che si installa con yaourt (o meglio che si scarica e compila), si gestisce con yaourt come qualsiasi altro pacchetto.
+
+Detto questo, sostanzialmente mi ritrovo con una distribuzione che ho personalizzato senza fatica al 100%, leggerissima e veloce ma che allo stesso tempo ha veramente tutto quello di cui ho bisogno ... per non parlare poi del fatto che, seguendo la rolling release, sostanzialmente ogni giorno (a volte più volte nello stesso giorno) ci sono degli aggiornamenti da installare, e quando mi ritrovo tutte le ultimissime versioni dei software mi sento come un ragazzino che sta per aprire un regalo XD.

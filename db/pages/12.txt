@@ -1,0 +1,9 @@
+Date: 2009-05-12 23:17:37
+Author: evilsocket
+Categories: Biometria, C++, Programmazione, Sorgenti
+Tags: ann, back propagation, class, neural network, rete neurale
+Title: Neural Network
+
+Una classe che rappresenta, object-oriented-parlando, una rete neurale a back propagation piÃ¹ un insieme di altre classi di supporto come i pattern di allenamento .
+
+<a href="http://www.evilsocket.net/sources/nnet.rar" target="_blank">Scarica</a>

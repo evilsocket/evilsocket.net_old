@@ -1,0 +1,24 @@
+Date: 2010-03-16 23:26:37
+Author: evilsocket
+Categories: Misc, Programmazione
+Tags: autoconf, automake, builtins, changelog, configure, hy, hybris, makefile
+Title: Hybris, riprende lo sviluppo!
+
+Finalmente questa sera ho trovato il tempo e l'ispirazione necessari per riprendere lo sviluppo di <a href="http://www.hybris-lang.org/" target="_blank">Hybris</a> e, per quanto la sessione odierna di sviluppo non sia stata lunghissima (dovevo stendere i panni e fare una seconda lavatrice, lol) ha portato i suoi frutti e qualche spunto per il futuro.
+
+Il changelog di questa nuova minor release comporta :
+<ol>
+	<li>Ho aggiunto il file CHANGELOG al repo su github tanto per tener traccia dei cambiamenti consistenti.</li>
+	<li>Cambiata l'estensione degli script da hs a hy, per non creare confusione con i sorgenti Haskell, come suggerito da un amico.</li>
+	<li>Migliorato il parsing degli argomenti della riga di comando e rimosso del codice inutile.</li>
+	<li>Implementato la lettura ed esecuzione del codice anche dallo standard input (figo eh!).</li>
+	<li>Sistemati i permessi di alcuni file che per una motivazione che mi sfugge erano tutti a +x O_o.</li>
+	<li>Migliorato tantissimo il Makefile e separato il Makefile per i builtins.</li>
+</ol>
+<break>Ora, è su questo punto 6 che vorrei dire una cosa.
+
+Vorrei veramente tanto, riuscire a sfruttare la potenza dei build tools di GNU (autoconf e automake) per generare uno script 'configure' e relativo template Makefile.in ... ma il problema è che non ho mai usato i build tools XD
+
+Quindi chiedo aiuto, a chiunque abbia esperienza in merito e voglia di aiutarmi, di contattarmi per implementare gli script di configurazione e compilazione ad hoc per Hybris .
+
+Beh ... è tutto :P

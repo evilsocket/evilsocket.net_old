@@ -1,0 +1,9 @@
+Date: 2009-05-12 23:31:19
+Author: evilsocket
+Categories: C++, Programmazione, Sorgenti
+Tags: 3d, 3d rendering engine, geode, rendering
+Title: Geode
+
+Un tentativo, o meglio un esperimento, di realizzare un rudimentale motore di rendering 3D che non si appoggi su OpenGL o Direct3D ma implementi il proprio set di algoritmi e funzioni .
+
+<a href="http://www.evilsocket.net/sources/geode.rar" target="_blank">Scarica</a>

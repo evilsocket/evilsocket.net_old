@@ -1,0 +1,39 @@
+Date: 2010-06-05 06:18:13
+Author: evilsocket
+Categories: Exploiting, Hacking, PHP, Programmazione, Sorgenti, Wardriving
+Tags: chiave, fastweb, hack, key, pirelli, ssid, telsey, warcracking, wifi, win32, wpa
+Title: Script per il calcolo della chiave WPA dei router FastWeb Pirelli.
+
+Oggi mi sono inbattuto per caso in <a href="http://www.oversecurity.net/wpa-recovery/" target="_blank">questo servizio</a>, ovvero un servizio per "recuperare" la chiave WPA di un router Fastweb Pirelli.
+
+"Bene" mi sono detto, "Se hanno questo servizio, avranno anche una pagina dove spiegano l'algoritmo e pubblicano il codice" .
+
+Beh, la <a href="http://www.oversecurity.net/2010/03/29/recupero-chiave-wpa-fastweb-dettagli-tecnici/" target="_blank">pagina</a> c'era, e non era nemmeno un loro lavoro bensì quello di un altro gruppo (vedere il link "fonte" alla fine di quell'articolo), ma non c'era il sorgente!
+
+In pratica, queste persone, hanno preso il lavoro che altri hanno pubblicato <strong>liberamente e per tutti</strong>, lo hanno ri-pubblicato (citando la fonte eh, per carità), ne hanno ricavato un servizio (guarda caso un servizio che fa gola a molti su un sito con degli ads pubblicitari) ma non hanno condiviso a loro volta le conoscenze distribuendo il codice del servizio ... un po disonesto non vi pare?
+
+Cioè, se io prendo un informazione libera, sono moralmente tenuto a rendere altrettanto libera qualsiasi opera io ne possa ricavare ... non legalmente, ma moralmente.
+
+Ebbene, ci penso io con un mio script fresco fresco :D
+
+<break>
+
+Vi posto qui di seguito il codice di uno script PHP che, seguendo quell'algoritmo, parte dal SSID di un router e stampa la chiave WPA di default.
+
+Ribadisco, come loro, che :
+
+Attualmente è possibile recuperare la chiave Wireless degli Access Point <strong>FastWeb Pirelli</strong>, nello specifico con i seguenti Mac Address:
+<blockquote><em>00:08:27 Pirelli Broadband Solutions
+00:13:C8 </em><em>Pirelli Broadband Solutions</em>
+<em>00:17:C2 Pirelli Broadband Solutions
+00:19:3E P</em><em>irelli Broadband Solutions</em>
+<em>00:1C:A2 </em><em>Pirelli Broadband Solutions</em>
+<em>00:1D:8B </em><em>Pirelli Broadband Solutions</em>
+<em>00:22:33 Pirelli Broadband Solutions
+00:23:8E </em><em>Pirelli Broadband Solutions</em>
+<em>00:25:53 </em><em>Pirelli Broadband Solutions</em>
+<em>00:03:6F </em><em>Telsey S.p.A.</em><em> </em><em>(in fase di Test)
+00:21:96 Telsey S.p.A.</em><em> (in fase di Test)</em></blockquote>
+Detto questo, a breve pubblicherò uno script analogo ma per i router Alice, dato che stanno uscendo lavori anche in questo senso ;)
+
+<strong><a href="http://sharecash.org/download.php?file=1279027" target="_blank">SCARICA SCRIPT</a></strong>

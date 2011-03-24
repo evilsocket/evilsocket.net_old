@@ -1,0 +1,37 @@
+Date: 2009-11-03 18:22:35
+Author: evilsocket
+Categories: Programmazione, Sorgenti
+Tags: 
+Title: Aggiornamento Hybris : Strutture e Server Socket
+
+Già da tempo Hybris è dotato (o dotatA ? :D) delle funzionalità necessarie per il loading dinamico delle librerie (i file .so su Linux e in futuro le .dll di Windowz), così ieri mi sono messo a lavoro per estendere il supporto anche alle funzioni che richiedono come parametri delle strutture.
+
+<break>
+
+Di conseguenza, ho creato una libreria di test (libtest.so) che esporta una funzione, il codice è il seguente :
+
+<img class="aligncenter size-full wp-image-809" title="libtest" src="http://www.evilsocket.net/images/libtest.png" alt="libtest" width="467" height="206" />
+
+Come si può evincere dal codice, la funzione 'print_struct' richiede come parametro un puntatore ad una variabile del tipo 'test_struct_t', ovvero una semplice struttura con un intero, una stringa e un double .
+
+Ecco il codice hybris che creerà questa struttura, ne imposterà i valori, linkerà la funzione dalla libreria e la richiamerà correttamente (la prima parte del codice è semplicemente un test su puntatori, alias e reference) :
+
+<img class="aligncenter size-full wp-image-810" title="struct" src="http://www.evilsocket.net/wp-content/uploads/2009/11/struct.png" alt="struct" width="425" height="383" />
+
+E naturalmente l'output è :
+<blockquote>
+<pre>[evilsocket@masamune ~/Desktop/code/hybris] hybris examples/alias_as_ptr.hs
+numero    : 123 (int)
+reference : 0x92E49E0 (alias)
+nuovo     : 123 (int)
+test_struct_t::number : 123
+test_struct_t::str    : Hello World
+test_struct_t::dbl    : 10.120000</pre>
+</blockquote>
+Da qui, linkare le funzioni più usate nelle varie librerie di sistema e richiamarle con la giusta tipologia di dati strutturati è un attimo ^^ .
+
+Inoltre, ho continuato a lavorare sul supporto per i socket (nel file netio.cc dei builtins), aggiungendo le funzioni 'server' e 'accept' così da dotare il linguaggio di un minimo di funzionalità lato server ... beh, ecco un echo server di esempio :
+
+<img class="aligncenter size-full wp-image-811" title="echo_server" src="http://www.evilsocket.net/wp-content/uploads/2009/11/echo_server.png" alt="echo_server" width="426" height="307" />
+
+Già che c'ero ci ho buttato dentro il multi processo con fork che tanto era già implementato :D a breve il supporto per i threads ;) (ovviamente POSIX).

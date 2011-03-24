@@ -1,0 +1,25 @@
+Date: 2009-05-29 05:54:10
+Author: evilsocket
+Categories: Misc
+Tags: 
+Title: Che tristezza -.-
+
+Da felice possessore di un eeepc asus non potevo riportare questa triste notizia ... ma prima un po di storia .
+
+Circa un anno fa (forse qualcosina di +) hanno spopolato in tutti i negozi hi-tech, catene, etc etc i mini pc della asus ... proprio in quel periodo cercavo qualcosa di facile da trasportare in vacanza (era estate) che mi desse l'opportunitÃ  di montare tutti i miei tools ed averli sempre con me (non sia mai, le wifi sono ad ogni angolo :D) ... e quindi mi prese "la fissa" dell'eeepc e me lo comprai .
+
+<break>Era disponibile in due versioni, una con Windows preinstallato ed un'altra (meno costosa) con una distro Linux chiamata Xandros ... beh, puÃ² sembrare una banalitÃ  ma vedere una grossa industria come Asus fornire al cliente dei pc con Linux preinstallato (per di + invogliando a comprare proprio quella versione data la differenza di prezzo) Ã¨ qualcosa che fa pensare, se non sperare, che l'1% di mercato che ha il pinguino sia destinato ad aumentare .
+
+Ebbene, a distanza di circa un anno, Ã¨ praticamente ufficiale la notizia che asus ha abbandonato Linux, i nuovi modelli di eeepc monteranno solamente windows ... e cosÃ¬ addio alla speranza di veder linux alla portata di tutti -.-
+
+Questo perchÃ¨, secondo delle loro ricerche di mercato, dopo il primo *boom* le versioni linux nn avrebbero + venduto molto ...e a questo punto viene il mio ragionamento, e se l'ho fatto io che non sono nessuno perchÃ¨ non l'hanno fatto anche gli analisti/tecnici/project manager/etc della asus ?
+
+Ma porco cazzo, come pretendete che al pubblico piaccia linux se mettete una distro come Xandros che Ã¨ :
+<ul>
+	<li>Lentissima</li>
+	<li>Carente di supporto tecnico e documentazione</li>
+	<li>Difficile da customizzare</li>
+	<li><strong>Carente di software giÃ  pacchettizzato</strong></li>
+	<li>Varie ed eventuali</li>
+</ul>
+Penso seriamente che se avessero scelto distro come Ubuntu o Xubuntu (quest'ultima + adatta alla potenza degli eeepc), le cose sarebbero andate moooolto diversamente ... bah, che tristezza -.-

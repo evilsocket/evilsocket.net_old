@@ -1,0 +1,62 @@
+Date: 2009-05-25 17:37:09
+Author: evilsocket
+Categories: Hacking, Papers, Tools
+Tags: installation, installazione, nessus, openvas, security, security assesments, svn, ubuntu
+Title: OpenVAS-svn : Il nuovo Nessus
+
+<img class="alignleft" src="http://blogs.zdnet.com/security/images/open_vas.jpg" alt="" width="159" height="106" />Da pochi giorni ho aggiornato la mia installazione di Ubuntu alla 9.04 e mi sono accorto che Nessus, il famoso kit per i vulnerability assesments, non Ã¨ piÃ¹ pacchettizzato per questa versione ... male ! Sia per lavoro che per scopi personali lo utilizzavo spesso e volentieri .
+
+CosÃ¬ leggendo in giro mi sono trovato davanti due opzioni, o installare i pacchetti per le versioni precedenti, oppure installare <a href="http://www.openvas.org/" target="_blank"><strong>OpenVAS</strong></a>, ovvero un recente fork di Nessus completamente open source ... e indovinate ? Ho scelto la seconda strada :D
+
+Essendo un proggetto ancora giovane, erano presenti i deb per il server, il client ma non per i plugin, e cmq anche installando solo quei due pacchetti non funzionava molto bene (aia !) ... quindi ho deciso di prelevare i sorgenti completi direttamente dal repository svn e compilarmi a manina tutto quanto, potevo non condividere con voi i passi per eseguire questa operazione ?! :D
+
+<break>Prima di tutto accertiamoci di avere le dipendenze necessarie e i pacchetti per la compilazione
+<blockquote>sudo apt-get install bison libglib2.0-dev subversion build-essential libgnutls-dev libpcap-dev libgpgme11-dev</blockquote>
+Creiamo la directory dove scaricheremo i sorgenti e iniziamo a prelevarli da svn
+<blockquote>mkdir openvas
+cd openvas
+svn checkout https://svn.wald.intevation.org/svn/openvas/trunk/openvas-libraries
+svn checkout https://svn.wald.intevation.org/svn/openvas/trunk/openvas-libnasl
+svn checkout https://svn.wald.intevation.org/svn/openvas/trunk/openvas-server
+svn checkout https://svn.wald.intevation.org/svn/openvas/trunk/openvas-plugins
+svn co https://svn.wald.intevation.org/svn/openvas/trunk/openvas-client openvas-client</blockquote>
+E iniziamo a compilare ed installare i pacchetti uno ad uno
+<blockquote>cd openvas-libraries
+./configure
+make
+sudo make install
+sudo echo â€œinclude /usr/local/lib/â€ &gt;&gt; /etc/ld.so.conf
+sudo ldconfig
+
+cd ../openvas-libnasl
+./configure
+make
+sudo make install
+
+cd ../openvas-server
+./configure
+make
+sudo make install
+
+cd ../openvas-plugins
+./configure
+make
+sudo make install
+
+cd ../openvas-client
+./configure
+make
+sudo make install</blockquote>
+Ora, come avveniva con Nessus, creiamo un certificato per il server
+<blockquote>sudo openvas-mkcert</blockquote>
+Aggiungiamo un utente autorizzato
+<blockquote>sudo openvas-adduser</blockquote>
+E lanciamo il server sulla porta che preferiamo (nel mio caso 1012)
+<blockquote>sudo openvasd -p 1012 -D</blockquote>
+Fatto questo possiamo lanciare il client con
+<blockquote>OpenVAS-Client</blockquote>
+Ed eseguire tutti i test di sicurezza che vogliamo (devo dire che la gui Ã¨ molto + leggera ed intuitiva di quella di Nessus ^^) .
+
+PS: Ogni tanto Ã¨ bene sincronizzare il database di OpenVAS con quello aggiornato usando il comando
+<blockquote>sudo <code>openvas-nvt-sync</code></blockquote>
+<a href="http://www.evilsocket.net/wp-content/uploads/2009/05/openvas.png" target="_blank"><img class="aligncenter size-medium wp-image-174" title="openvas" src="http://www.evilsocket.net/wp-content/uploads/2009/05/openvas-300x240.png" alt="openvas" width="300" height="240" /></a>

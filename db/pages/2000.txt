@@ -1,0 +1,11 @@
+Date: 2010-11-15 01:33:18
+Author: evilsocket
+Categories: Exploiting, Hacking, Papers, Tools, Web Hacking
+Tags: backbox, Hacking, howto, linux, pynject, sql injection, sqlibf, w3af, web, Web Hacking
+Title: BackBox Linux 1 RC2 - How to use W3AF, SQLIbf and Pynject
+
+<img class="alignleft" src="http://www.r3m3mb3r-hackerz.com/wp-content/uploads/2010/01/sql_injection.jpg" alt="" width="78" height="54" />Per festeggiare l'entrata del mio piccolo <a href="http://www.evilsocket.net/1791/pynject-an-automatic-and-multithreaded-mysql-data-dumper-tool.html">Pynject</a> nei repository ufficiali di <a href="http://www.backbox.org/">BackBox Linux</a>, ho voluto fare un piccolo video dimostrativo nel quale faccio vedere come utilizzare il trio <strong>W3AF</strong> (applicazione ad interfaccia grafica per scanning ed auditing di applicazioni web), <strong>SQLIbf</strong> (applicazione per ricavare sql injections sia union che blind da url vulnerabili) e <strong>Pynject</strong> per sfruttare una vulnerabilità di una pagina di esempio (fatta in 5 minuti quindi perdonate la grafica scarna XD) e dumparsi i dati della tabella degli utenti, quindi username e password.
+
+Enjoy :)
+<break>
+<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" width="480" height="385" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0"><param name="allowFullScreen" value="true" /><param name="allowscriptaccess" value="always" /><param name="src" value="http://www.youtube.com/v/F8N4p9LF440?fs=1&amp;hl=it_IT&amp;rel=0" /><param name="allowfullscreen" value="true" /><embed type="application/x-shockwave-flash" width="480" height="385" src="http://www.youtube.com/v/F8N4p9LF440?fs=1&amp;hl=it_IT&amp;rel=0" allowscriptaccess="always" allowfullscreen="true"></embed></object>

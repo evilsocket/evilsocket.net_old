@@ -1,0 +1,12 @@
+Date: 2010-05-09 23:47:38
+Author: evilsocket
+Categories: Misc
+Tags: hybris
+Title: Implementata creazione inline di array e mappe.
+
+<p>E' stata implementata la creazione inline di array è mappe, ovvero la creazione tramite operatore [ ] .</p>
+<p>Ad esempio, un array ora si può semplicemente creare con :</p>
+<p><div class="geshifilter"><pre class="hybris geshifilter-hybris" style="font-family:monospace;">a <span style="color: #339933;">=</span> <span style="color: #009900;">&#91;</span> <span style="color: #CC0000;">1</span><span style="color: #339933;">,</span> <span style="color: #CC0000;">2</span><span style="color: #339933;">,</span> <span style="color: #CC0000;">3</span><span style="color: #339933;">,</span> <span style="color: #CC0000;">4</span> <span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span></pre></div></p>
+<p>Così come una mappa :</p>
+<p><div class="geshifilter"><pre class="hybris geshifilter-hybris" style="font-family:monospace;">m <span style="color: #339933;">=</span> <span style="color: #009900;">&#91;</span> <span style="color: #3366CC;">&quot;uno&quot;</span> <span style="color: #339933;">:</span> <span style="color: #CC0000;">1</span><span style="color: #339933;">,</span> <span style="color: #3366CC;">&quot;due&quot;</span> <span style="color: #339933;">:</span> <span style="color: #CC0000;">2</span> <span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span></pre></div></p>
+<p><a href="http://www.hybris-lang.org/story/implementata-creazione-inline-di-array-e-mappe.html" >read more</a></p><img src="http://feeds.feedburner.com/~r/HybrisProgrammingLanguageOfficialSite/~4/agJFbBuef9s" height="1" width="1"/>

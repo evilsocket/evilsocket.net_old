@@ -1,0 +1,9 @@
+Date: 2009-05-13 08:17:24
+Author: evilsocket
+Categories: C, C++, Papers, Programmazione
+Tags: C, function pointers, puntatori a funzione
+Title: C/C++ Function Pointers
+
+In questo paper spiego cosa sono i function pointers, o puntatori a funzione, nel C/C++, come utilizzarli e qualche implementazione di esempio per rendere il tutto piÃ¹ chiaro ed intuitivo .
+
+<a href="http://www.evilsocket.net/papers/cpp_e_puntatori_a_funzione.pdf" target="_blank">Scarica</a>

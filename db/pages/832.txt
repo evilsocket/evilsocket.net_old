@@ -1,0 +1,56 @@
+Date: 2009-11-18 05:13:41
+Author: evilsocket
+Categories: Misc, Programmazione
+Tags: 
+Title: !!! HYBRIS CERCA COLLABORATORI !!!
+
+<img class="alignleft" src="http://www.bgsu.edu/departments/chem/faculty/pavel/I%20want%20you.jpg" alt="" width="69" height="75" />E' arrivato il momento di riconoscerlo, hybris sta diventando una cosa grossa (x quanto riguarda le linee di codice almeno XD) e gestirlo interamente da solo magari non è un problema, ma di certo rallenta i potenziali sviluppi di quello che potrebbe diventare un linguaggio di scripting estremamente comodo .
+
+Di conseguenza, scrivo questo post nella speranza che, qualche sviluppatore di buona volontà sia interessato al progetto e abbia voglia e tempo di collaborare, ma facciamo un breve riassunto delle *puntate precedenti* .
+
+<break>
+<h2>Cosa è Hybris ?</h2>
+Hybris, acronimo (non molto fantasioso lo riconosco!) di hybrid scripiting language, è un linguaggio di programmazione, nella fattispecie di scripting, procedurale al quale sto lavorando da diversi mesi. Il tutto è nato come un semplice gioco, dal fascino che provavo nel pensare di poter scrivere un interprete, se pur rudimentale, di un qualche tipo di linguaggio, interprete che con il tempo ho sviluppato fino ad arrivare ad un "prodotto" perfettamente utilizzabile e con enormi vantaggi rispetto ad altre sintassi e/o funzionalità.
+<h2>Perchè dovrebbe essere più comodo di altri linguaggi ?</h2>
+Innanzitutto, devo precisare che durante lo sviluppo e l'impostazione della grammatica di base, ho raccolto le caratteristiche, le funzionalità, ecc che reputavo positive e utili nei linguaggi di programmazione che attualmente conosco. Di conseguenza si può pensare ad Hybris come ad un ibrido (da li il nome) di vari linguaggi che prende la parte migliore di ognuno.
+
+A partire dalla sintassi semplice e pulita del PHP, fino ad arrivare al supporto nativo per le espressioni regolari con relativo operatore del Perl o ad una certa interazione a basso livello come nel C .
+
+Questo è il primo aspetto che già per definizione lo rende in un certo qual modo migliore di altri linguaggi.
+
+Un altra delle caratteristiche alle quali ho pensato durante la sua creazione, è stata quella di includere nativamente alcune funzionalità che, se pur supportate da altri linguaggi, costituiscono delle porzioni "modulari" di questi altri interpreti, ovvero non risiedono nativamente nell'applicativo dell'interprete bensì in moduli dinamici appositamente installati per estendere le funzionalità del linguaggio.
+
+Nonostante lo stesso Hybris supporti una certa modularità, ho pensato che alcune features come la parserizzazione nativa di flussi XML, il supporto alle espressioni regolari, metodi semplici ed intuitivi per effettuare connessioni HTTP e HTTPS, ecc dovessero essere integrate nel linguaggio stesso considerando che ormai sono realtà che fanno parte del mondo informatico di tutti i giorni.
+
+Detto in parole povere, Hybris sarà in grado di parserizzare un flusso XML senza l'installazione di moduli aggiuntivi (vedere il sorgente di esempio <a href="http://github.com/evilsocket/Hybris/blob/master/examples/xml.hs" target="_blank">xml.hs</a>), così come sarà in grado di effettuare richieste http con una facilità estrema (esempio <a href="http://github.com/evilsocket/Hybris/blob/master/examples/http.hs" target="_blank">http.hs</a>) o di sfruttare le espressioni regolari con un operatore =~ nativo (esempio <a href="http://github.com/evilsocket/Hybris/blob/master/examples/pcre_operator.hs" target="_blank">pcre_operator.hs</a>), il tutto, ribadisco, senza installare altro se non l'interprete principale.
+
+Diciamo che come linguaggio segue una filosofia "<strong>AIO</strong>" (All In One) continuando tuttavia a supportare dei moduli esterni tramite i quali ognuno potrà espanderlo come preferisce .... comodo no ? ^^
+<h2>Quale apporto pratico potrei dare al progetto ?</h2>
+In effetti di lavoro da fare ce n'è tanto e non solo per quanto riguarda il codice di per se, le figure necessarie possono riassumersi in :
+<ul>
+	<li><strong>Sviluppatori</strong> in grado di partecipare attivamente alla stesura del codice, correggendo, migliorando e ampliando hybris insieme a me.</li>
+	<li><strong>Redattori</strong> atti alla stesura della documentazione della sintassi di base, delle funzionalità avanzate, ecc ecc.</li>
+	<li><strong>Traduttori</strong> che traducano in varie lingue la documentazione di Hybris .</li>
+	<li><strong>Testers</strong> che provino Hybris, scrivano codice (in hybris ovviamente) e facciano dei rapporti dettagliati nel caso riscontrino bug, anomalie o qual si voglia effetto indesiderato.</li>
+	<li><strong>Donne</strong> ... che centra? Beh non so voi, ma io senza la mia donna che ogni tanto mi sta vicina non riuscirei a programmare :D</li>
+</ul>
+Per ognuna di queste figure, i requisiti (è banale ma lo scrivo lo stesso, nn si sa mai) sono :
+<ul>
+	<li><strong>Sviluppatori</strong> : Ottima conoscenza del C/C++ e di GNU/Linux (per ora Hybris gira solo su questo OS, anche xkè mi risulta che di OS degni di questo nome non ce ne siano altri :D), dell OOP, capacità di scrivere codice ordinato (oltre che funzionante XD) e commentato, nn guasta qualche base di assembly che non fa mai male :D</li>
+	<li><strong>Redattori </strong>: Buona conoscenza di Hyrbis stesso, delle sue strutture semantiche e delle varie funzionalità "built in" del linguaggio, capacità di esprimersi con terminologia tecnica, chiara e non inutilmente prolissa (+ fatti e - pugnette! XD).</li>
+	<li><strong>Traduttori</strong> : Beh, ovviamente devono conoscere bene la lingua nella quale tradurranno la documentazione XD.</li>
+	<li><strong>Testers</strong> : Un infarinatura decente su Hybris basta, quel tanto x poter capire se un certo comportamento è un anomalia oppure è il normale comportamento del loro algoritmo (cioè, se scrivete delle cappellate non prendetevela con me! XD).</li>
+	<li><strong>Donne </strong>: Credo che sia chiara a tutti l'anatomia di una donna e quali sono i tratti fisici che la rendono tale no ? XD (Oddio di questi tempi MAI dire MAI, Marrazzo ci insegna .... XD).</li>
+</ul>
+Inutile dire che, come specificato per gli sviluppatori, tutto il lavoro (tranne quello dei traduttori e delle donne :D) si svolgerà in un ambiente GNU/Linux, non importa quale distro (anzi variare è meglio), basta che abbiate gcc e le relative dipendenze.
+
+Una volta raggiunta una cifra accettabile almeno di programmatori, inizierò a creare un portalino dedicato a hybris dove poterci coordinare, dove raccogliere la documentazione, le release ufficiali e un sistema di bug tracking.
+
+Per ora lascio il link su github che è l'unica pagina *ufficiale* del progetto :
+<p style="text-align: center;"><strong>http://github.com/evilsocket/Hybris</strong></p>
+
+Nel caso siate interessati a collaborare e disponiate dei requisiti sopra citati, contattatemi lasciando un commento a questo post o alla mia casella email :
+<p style="text-align: center;"><img class="aligncenter" src="http://www.facebook.com/string_image.php?ct=AAAAAQAQYUhEc0oGnxlEWC5-B-hEXQAAABQdCPdyr3i1CFNYYJqPJyjtEoU8qF5r10k,&amp;fp=8.7&amp;state=0&amp;highlight=" alt="" width="119" height="13" /></p>
+
+<strong>
+</strong>

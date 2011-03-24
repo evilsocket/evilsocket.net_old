@@ -1,0 +1,9 @@
+Date: 2009-05-13 08:20:43
+Author: evilsocket
+Categories: Papers, Programmazione
+Tags: introduction to programming, programming, tutorial
+Title: Programming II
+
+Secondo volume della mia introduzione alla programmazione, nel quale spiego in modo quanto piÃ¹ possibile semplice cosa Ã¨ la memoria, come viene usata da un programma e la differenza tra memoria statica e dinamica .
+
+<a href="http://www.evilsocket.net/papers/guida_alla_programmazione%20(volume%202).pdf" target="_blank">Scarica</a>

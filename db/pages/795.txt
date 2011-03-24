@@ -1,0 +1,18 @@
+Date: 2009-11-02 06:02:57
+Author: evilsocket
+Categories: Hacking, Programmazione, Tools
+Tags: 
+Title: iPhone Ettercap Port
+
+<img class="alignleft" src="http://www.erriko.it/images/hacking.png" alt="" width="115" height="98" />Recentemente ho avuto il piacere di collaborare con alcuni ragazzi di hackint0sh per il porting di Ettercap su iPhone (e si, pirni non ci bastava XD) .
+
+Inutile dire l'enorme sforzo che tutti abbiamo fatto (+ che altro loro, io sono arrivato a lavori avanzati ed ho dovuto correggere solo alcune cosette, che tutta via stavano bloccando tutto :P) e onestamente nemmeno mi sento di scrivere "finalmente ecco il porting di Ettercap per iPhone" poichè allo stato dell'arte c'è solo una versione super-sperimentale-ultra-patchata-a-mano-pork-around, che tutta via, escluse alcune piccole anomalie qua e la, sembra funzionare egregiamente.
+
+<break>Durante l'ultima sessione con i ragazzi, ho fatto uno shot del mio schermo mentre ero in ssh sul mio iPhone e stavo usando Ettercap con la funzionalità ncurses (ovviamente scordatevi della gui Gtk) :
+<p style="text-align: center; "><a href="http://img171.imageshack.us/img171/1198/screenshot2l.png"><img class="aligncenter" src="http://img171.imageshack.us/img171/1198/screenshot2l.png" alt="" width="461" height="368" /></a></p>
+
+Se vi interessa installare e provare questa versione, inutile dire che avrete bisogno di un iPhone jailbreakato, dovrete aggiungere su Cydia il repository
+<blockquote>http://theworm.altervista.org/cydia/</blockquote>
+Che è di uno dei ragazzi con i quali sto collaborando, ed installare da questo repo libnet e ettercap .... buon poisoning! :D
+
+PS: Nel repo di TheWorm trovate anche il toolchain per firmware 3.0 già compilato e pacchettizzato ;)

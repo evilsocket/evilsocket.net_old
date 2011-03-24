@@ -1,0 +1,11 @@
+Date: 2010-04-10 00:53:52
+Author: evilsocket
+Categories: Misc
+Tags: 
+Title: Basta parlare di Hybris!
+
+Ho spostato tutti i contenuti del vecchio sito su un altra piattaforma, sulla quale ho la possibilità di postare news estese e documentazione, di conseguenza non parlerò più sul mio blog personale dei dettagli tecnici di Hybris se non per major release o cose cmq molto importanti.
+
+Chi volesse tenersi aggiornato, può seguire il sito <a href="http://www.hybris-lang.org/" target="_blank">http://www.hybris-lang.org/</a> e/o iscriversi ai suoi<a href="http://feeds.feedburner.com/HybrisProgrammingLanguageOfficialSite" target="_blank"> feed di feedburner</a> .
+
+Nei widget qui accanto riporterò l'rss del feed in questione.

@@ -1,0 +1,8 @@
+Date: 2009-11-04 18:05:42
+Author: evilsocket
+Categories: Misc
+Tags: 
+Title: It's a kind of maaaagic XD
+
+<pre><span style="color: #339966;">#!/usr/bin/hybris</span></pre>
+<pre><span style="color: #0000ff;">print</span>( (<span style="color: #0000ff;">http_get</span>( <span style="color: #ff9900;">"www.whatismyip.com"</span>, <span style="color: #ff9900;">"/"</span> ) ~= <span style="color: #ff9900;">"/&gt;Your IP address is: ([^&lt;]+)&lt;/imS"</span>)[<span style="color: #ff0000;">0</span>].<span style="color: #ff9900;">"\n"</span> );</pre>

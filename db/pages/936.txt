@@ -1,0 +1,73 @@
+Date: 2010-03-22 01:32:26
+Author: evilsocket
+Categories: C, C++, Misc, Programmazione
+Tags: Craig Silverstein, dense hash, google, hash, hash map, hash table, hashing, hybris, lookup, map, memory, sparse hash, vmem
+Title: Hybris memory lookup, now Google powered!!!
+
+No, non ho inserito un motore di ricerca dentro <a href="http://www.hybris-lang.org/" target="_blank">Hybris</a> (sarebbe figo però vero? XD) !
+
+Mi spiego ... profilando un po l'interprete, mi è parso evidente che una delle funzioni che veniva richiamata più spesso durante l'esecuzione di uno script, come è facile immaginare, è quella per il look up delle variabili in memoria.
+
+In pratica è la funzione che, dato il nome di una variabile (quindi una chiave), deve trovare l'oggetto associato all'interno del'array associativo che rappresenta la memoria virtuale di Hybris .
+
+Così ho pensato a come ottimizzare l'algoritmo di ricerca, che prima si limitava a scorrere l'array contemporaneamente dall'inizio verso la fine e dalla fine verso l'inizio (in realtà un espediente abbastanza inutile quando ci sono poche variabili, ma quando sono molte si fa sentire) e ho capito che mi conveniva utilizzare una <a href="http://it.wikipedia.org/wiki/Hash_table" target="_blank">hash table</a> .
+
+Questo tipo di struttura è tanto efficiente quanto difficile da realizzare e, pensando che avrei impiegato giorni, se non settimane, per buttare giù un implementazione ottimizzata al massimo, mi son messo a cercare online se ne esistevano già di pronte e soprattutto di facilmente integrabili con quanto scritto fin'ora .
+
+E che ti vado a scoprire?
+
+<break>Scopro che gli ingegneri di Google Inc., in particolare il Sig.<a href="http://www.google.it/search?source=ig&amp;hl=it&amp;rlz=&amp;q=Craig+Silverstein&amp;btnG=Cerca+con+Google&amp;meta=lr%3D" target="_blank"> Craig Silverstein</a>, hanno realizzato un implementazione open source di hash table e hash map denominate "<a href="http://code.google.com/p/google-sparsehash/" target="_blank">Google Sparse Hash</a>", implementazioni che si dividono in due interfacce C++, una ottimizzata per il consumo della memoria ed un altra per l'elaborazione (quella che interessava a me), e una <a href="http://code.google.com/p/google-sparsehash/source/browse/#svn/trunk/experimental" target="_blank">libreria C</a> ma portabile anche per il C++ sempre configurabile per i due comportamenti .
+
+Decido di sfruttare la libreria C poichè l'approccio procedurale risulta più facilmente integrabile nell'interprete di Hybris e così mi metto a testarla.
+
+Son rimasto così -----&gt; O____O
+
+Con chiavi di tipo stringa, su 10.000.000 di record, ci mette appena un <strong>nano secondo </strong>per effettuare una ricerca e restituire un puntatore al valore mappato, ancora di meno con qualche ulteriore ottimizzazione che ho fatto io e la giusta combinazione delle direttive di pre compilazione.
+
+Li per li, oltre allo stupore ed all'immenso rispetto per l'autore, ho avuto qualche dubbio per quanto concerne la licenza dei sorgenti e la relativa compatibilità della licenza GPL 3 di Hybris .
+
+La licenza della libreria di Google riporta :
+<blockquote>/* Copyright (c) 1998 - 2005, Google Inc.
+* All rights reserved.
+*
+* Redistribution and use in source and binary forms, with or without
+* modification, are permitted provided that the following conditions are
+* met:
+*
+*     * Redistributions of source code must retain the above copyright
+* notice, this list of conditions and the following disclaimer.
+*     * Redistributions in binary form must reproduce the above
+* copyright notice, this list of conditions and the following disclaimer
+* in the documentation and/or other materials provided with the
+* distribution.
+*     * Neither the name of Google Inc. nor the names of its
+* contributors may be used to endorse or promote products derived from
+* this software without specific prior written permission.
+*
+* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+* "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+* LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+* A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+* OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+* SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+* LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+* DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+* THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+* (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+* OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*/</blockquote>
+In pratica significa :
+<blockquote>"Fateci quello che vi pare, basta che riportiate questo disclaimer e non utilizziate il marchio Google Inc per pubblicizzare un vostro prodotto."</blockquote>
+Ok mi dico, da "questo lato" la cosa sembra decisamente elastica ... poi però mi son ricordato che la GPL 3 ha delle restrizioni molto severe per quanto riguarda la distribuzione di codice di terze parti con licenze diverse dalla GPL stessa, ed è proprio questo il caso dato che la licenza della libreria di Google NON è GPL .
+
+Viene in mio aiuto il buon merlok, che mi pasta su messenger un passaggio della GPL 3 che riporta :
+<blockquote>If you found some code and wanted to incorporate it into a GPLed project, GPLv2 said that the license on the other code was not allowed to have any restrictions that were not already in GPLv2. As long as that was the case, we said the license was GPL-compatible.
+
+However, some licenses had requirements that weren't really restrictive, because they were so easy to comply with. For example, some licenses say that they don't give you permission to use certain trademarks. That's not really an additional restriction: if that clause wasn't there, you still wouldn't have permission to use the trademark. We always said those licenses were compatible with GPLv2, too.</blockquote>
+E' proprio questo il mio caso! Una licenza diversa dalla GPL, ma estremamente permissiva tranne per la questione dell'utilizzo del marchio registrato, quindi anche su questo fronte no problem.
+
+Ebbene, dopo qualche ora di coding per l'integrazione di questa libreria nella classe <a href="http://github.com/evilsocket/Hybris/blob/master/include/map.h" target="_blank">Map</a> e qualche ottimizzazione qua e la, Hybris è arrivato ad un <strong>guadagno netto di più del 20% sui tempi di elaborazione </strong>.
+
+Purtroppo ci sono alcuni limiti che non mi consentono di eliminare del tutto il vecchio comportamento della classe Map, poichè oltre ad un associazione [chiave -&gt; valore] utilizza anche altre associazioni [indice -&gt; chiave], [chiave -&gt; indice] e così via che non sono gestibili dalla hash table, tutta via sono fiducioso che in futuro, magari entro il rilascio (che è vicinissimo) della 1.0, troverò il metodo per risolvere o quanto meno aggirare questo problema.
+
+Che dire, grazie Google ma soprattutto <strong>grazie </strong><a href="http://www.google.it/search?source=ig&amp;hl=it&amp;rlz=&amp;q=Craig+Silverstein&amp;btnG=Cerca+con+Google&amp;meta=lr%3D" target="_blank"><strong>Craig Silverstein</strong></a> !

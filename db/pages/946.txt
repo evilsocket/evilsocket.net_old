@@ -1,0 +1,43 @@
+Date: 2010-03-30 01:58:13
+Author: evilsocket
+Categories: Misc, Programmazione
+Tags: hybris, ia64, libffi
+Title: E anche ia64 è fatta! (god bless libffi)
+
+Mmmm allora allora allora, nonostante siano passati solo alcuni giorni dal mio ultimo intervento, di cambiamenti e soprattutto migliorie Hybris ne ha subiti tantissimi, quasi non so da dove cominciare (ammesso che interessi a qualcuno, lol XD), quindi vediamoli uno alla volta.
+
+<break>
+<h2>Errata corrige : A volte son figo senza saperlo.</h2>
+In <a href="http://www.evilsocket.net/936/hybris-memory-lookup-now-google-powered.html" target="_blank">questo articolo</a> spiegavo la nuova hash table per il lookup delle variabili in memoria e, nel passaggio :
+<blockquote>Purtroppo ci sono alcuni limiti che non mi consentono di eliminare del tutto il vecchio comportamento della classe Map, poichè oltre ad un associazione [chiave -&gt; valore] utilizza anche altre associazioni [indice -&gt; chiave], [chiave -&gt; indice] e così via che non sono gestibili dalla hash table, tutta via sono fiducioso che in futuro, magari entro il rilascio (che è vicinissimo) della 1.0, troverò il metodo per risolvere o quanto meno aggirare questo problema.</blockquote>
+Parlavo degli indici ordinali come un "limite".
+
+Ebbene, va fatta una piccola precisazione.
+
+Ci sono due tipi di mappe/tabelle, disordinate nelle quali gli elementi non si trovano nella stessa sequenza in cui vengono inseriti, ed ordinate dove invece gli elementi si trovano nello stesso ordine di inserimento.
+
+E' ovvio che, dovendo accedere tramite indice, mi servisse una mappa ordinata e così ho provato varie implementazioni alternative per eliminare la classe che ho implementato io ... ho provato std::map, tr1::*, boost::* e ho visto che, in qualsiasi caso, il mio compromesso di tenere parallelamente una tabella ed un vettore ... <strong>è il più veloce</strong>!!
+
+Quindi problema uno risolto :)
+<h2>L'odissea dei 64bit</h2>
+Fin da quando ho implementato le funzionalità per il <a href="http://github.com/evilsocket/Hybris/blob/master/src/builtins/dll.cc" target="_blank">loading dinamico delle librerie di sistema</a> mi son trovato davanti una bella gatta da pelare.
+
+La vecchia versione della funzione dllcall era implementata in inline assembly, poichè doveva passare argomenti arbitrari ad un <a href="http://www.evilsocket.net/54/cc-function-pointers.html" target="_blank">puntatore a funzione</a> generico, quindi li pushava uno ad uno in ordine inverso sullo stack e poi chiamava la funzione.
+
+Il problema era che, essendo assmbly scritto per x86, era compatibile solo con architetture a 32 bit, di conseguenza mi son trovato costretto ad inserire un bel blocco #ifdef che escludeva quella funzione nel caso rilevasse la compilazione in un ambiente a 64bit .
+
+Data la calling convention totalmente diversa tra x86 e ia64, reimplementare dell'altro assembly non era una grande idea, e così mi son scervellato per trovare una soluzione alternativa.
+
+Inizialmente mi hanno suggerito le funzioni <a href="http://www.opengroup.org/onlinepubs/009695399/functions/makecontext.html" target="_blank">makecontext/swapcontext</a> ma non le ho potute usare poichè volevano la lista degli argomenti della funzione per esteso, cosa che non potevo fare avendoli in un vettore di dimensione arbitraria.
+
+Così, gira che ti rigira, ho trovato la spettacolare <a href="http://sourceware.org/libffi/" target="_blank">libffi</a> che è proprio quello che mi serve!
+
+Questa libreria, usata da tanti altri linguaggi tra i quali il Python, è nata appositamente per richiamare funzioni scritte in C da linguaggi di livello più alto, offrendo un substrato di conversione dei tipi a ctypes .
+
+Dopo un po di bestemmie per capirne la documentazione (pressochè nulla, tanto per cambiare), per correggere una prima implementazione che non andava (un grazie enorme a <a href="/fyskij">fyskij</a> che mi ha fatto da tester fin quando non son riuscito ad installarmi una vm ia64), ecc ecc son fiero di annunciare che ora Hybris è pienamente supportato da piattaforme a 64bit e teoricamente da qualsiasi altra piattaforma!!!
+<h2>Documentazione parte 2, speravo di non doverlo fare mai più</h2>
+Tanto per "staccare" un po la spina dal codice, mi son messo a buttare giù uno pseudo standard xml per documentare le funzioni di Hybris, in modo tale da poter elaborare questi file velocemente per crearne documentazioni html, pdf, libri, enciclopedie, carta igienica e quant'altro .
+
+Così, con tanto olio di gomito, ho riscritto tutto creado il nuovo repository <a href="http://github.com/evilsocket/hybris-doc-it" target="_blank">hybris-doc-it</a> che, oltre a contenere gli xml suddivisi per categoria, contiene anche un paio di script per la conversione in file html che utilizzo in questo sito.
+
+Ci sarebbe tanto altro da dire, ma son stanco e la 1.0 è vicina ... alla prossima! :D

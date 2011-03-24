@@ -1,0 +1,17 @@
+Date: 2009-05-19 21:51:20
+Author: evilsocket
+Categories: PHP, Programmazione, Sorgenti
+Tags: api, facebook, PHP, protocol, sdk, unofficial api, unofficial sdk
+Title: Facebook Unofficial PHP Client
+
+<img class="alignleft" src="http://www.evilsocket.net/images/facebook.png" alt="" width="60" height="60" />Come qualche giorno fa ho anticipato sul mio profilo di facebook, sto lavorando su una classe in PHP che "soppianti" l'SDK ufficiale di Facebook, poichÃ¨ reputo il pacchetto software ufficiale decisamente limitato e molto molto poco documentato .
+
+Probabilmente questa Ã¨ stata una scelta voluta dagli sviluppatori di FB, in quanto mettere a disposizione un SDK che da il completo controllo sulla piattaforma vorrebbe dire, potenzialmente, facilitare la concorrenza o quanto meno incentivare la nascita di web applications che si interfaccino ai loro sistemi in modo troppo "stretto" .
+
+<break>Vi posto qui di seguito la primissima stesura della classe, che di per se esegue solo il login e mette a disposizione un metodo per impostare il proprio status .
+
+E' solo un inizio come ho detto e ci sono parecchie migliorie da apportare, ma sono fiducioso nel futuro ;)
+
+<a href="http://www.evilsocket.net/sources/facebook.client_php.txt" target="_blank">Scarica la classe</a> (<em>la classe si appoggia sulla classe</em> <strong>webagent</strong> <em>che ho presentato nel <a href="http://www.evilsocket.net/128/webagent-php-class.html" target="_blank">precedente articolo</a></em>) .
+
+Ecco quiÂ  un <a href="http://www.evilsocket.net/sources/fbapi_example_php.txt" target="_blank">esempio di implementazione</a> .

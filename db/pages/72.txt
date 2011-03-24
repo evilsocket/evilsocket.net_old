@@ -1,0 +1,9 @@
+Date: 2009-05-13 08:35:35
+Author: evilsocket
+Categories: Biometria, C, Papers, Programmazione
+Tags: Biometria, biometry, edge detection, sobel
+Title: Sobel Edge Detection
+
+Nella biometria l'algoritmo di Sobel Ã¨ uno dei piÃ¹ famosi ed utilizzati per determinare quali sono i contorni di una data immagine e successivamente eseguire altre elaborazioni.
+
+<a href="http://www.evilsocket.net/papers/sobel.pdf" target="_blank">Scarica</a>

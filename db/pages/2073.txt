@@ -1,0 +1,13 @@
+Date: 2011-03-07 19:53:54
+Author: evilsocket
+Categories: Hacking, Misc, Wardriving
+Tags: 2011, backbox, cat, cracca al tesoro, Wardriving
+Title: 12 Mar, BackBox Linux @ CAT2011
+
+<img class="alignleft" src="http://www.backbox.org/public/sites/all/themes/corolla/images/backbox-logo.png" alt="" width="100" height="100" />A meno di una settimana dall'evento, il team di BackBox Linux scende in campo a sostegno di quello che molti definiscono uno degli eventi piu interessanti nel panorama hacker italiano. Come molti di voi sapranno il <a href="http://www.wardriving.it/programma-2/">CAT</a> (cracca al tesoro) è una iniziativa giunta alla sua quarta edizione, quest'anno si svolgerà a Milano e vedrà la partecipazione di tanti appassionati di sicurezza giunti da tutta Italia. Lo scopo del gioco è ottenere l'accesso ai vari sistemi configurati per l'occasione, la squadra che otterrà il punteggio più alto verrà proclamata vincitrice.
+
+Il nostro team, in accordo con gli organizzatori dell'evento, ha deciso di sostenere questa iniziativa al fine di sensibilizzare gli utenti sul tema della sicurezza informatica. Se da un lato un'iniziativa simile mette in evidenza i piu comuni errori di configurazione dall'altro si configura volutamente come un gioco... Sperimentare, confrontarsi, mettersi in discussione è il miglior modo per affrontare queste tematiche non solo da parte dei professionisti ma anche per i semplici appassionati.
+
+Sabato 12 Marzo il team di BackBox Linux sarà a disposizione dei partecipanti per supportare tecnicamente chiunque ne avesse la necessità ma il nostro contributo non si limiterà solo a questo... Cercheremo di tenervi informati su tutto ciò che accade in diretta, <a href="http://twitter.com/backboxlinux">Twitter</a>,<a href="http://www.facebook.com/group.php?gid=149182161794648">Facebook</a> e IRC saranno i nostri canali di comunicazione.
+
+A partire da questa iniziativa il nostro team e gli stessi promotori del CAT contano di lavorare insieme al fine di promuovere ed incentivare iniziative simili il cui scopo è unire le varie realtà italiane del settore.

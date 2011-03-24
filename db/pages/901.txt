@@ -1,0 +1,49 @@
+Date: 2010-03-03 19:49:02
+Author: evilsocket
+Categories: Papers
+Tags: forgot, grant, init-file, mysql, password, reset password
+Title: Resettare le password ed i privilegi di MySQL
+
+<a href="http://www.evilsocket.net/wp-content/uploads/2010/03/mysql_logo.png"><img class="alignleft size-medium wp-image-904" title="mysql_logo" src="http://www.evilsocket.net/images/mysql_logo-300x155.png" alt="" width="273" height="142" /></a>Dato il <a href="http://www.evilsocket.net/897/sito-down.html" target="_blank">downtime</a> di oggi e la relativa risoluzione, colgo l'occasione per scrivere un breve articolo su come risolvere i seguenti tipi di situazione :
+<ol>
+	<li> O caxxo! Ho sputtanato i privilegi sulle tabelle e ora non riesco più a loggarmi su mysql con nessun utente!</li>
+	<li>O caxxo! Ho dimenticato la password dell'utenza di mysql!</li>
+</ol>
+In entrambi i casi, le parole "O caxxo" riassumono bene lo stato d'animo del povero mal capitato, stato d'animo che conosco benissimo perchè mi è capitato più di una volta (in particolare il caso 1) e, finchè non ho scoperto il trucchetto magico che sto per esporvi, mi ha fatto passare minuti bruttissimi .
+
+<break><strong>Ovviamente </strong>la soluzione che sto per indicarvi sarà attuabile se e solo se sono verificate le seguenti condizioni :
+<ol>
+	<li>Avete un accesso al terminale del pc in questione, che sia ssh, seriale o magia nera non importa, ma è necessario poter eseguire comandi da shell.</li>
+	<li>Dovete poter eseguire comandi con privilegi di root.</li>
+</ol>
+Detto questo, la soluzione è abbastanza semplice .
+
+Prima di tutto, fermate il server MySQL, nel caso in cui il classico "/etc/(init.d|rc.d|...)/mysql stop" non funzionasse, dovrete killare il processo, quindi, per vedere in quale file mysql salva il suo pid :
+<pre>
+<blockquote>
+[root@computer ~]<strong> grep pid /etc/mysql/my.cnf</strong>
+
+<strong>pid-file	= /var/run/mysqld/mysqld.pid</strong>
+</blockquote>
+</pre>
+Vediamo quale è il pid :
+<blockquote><span style="font-family: Consolas, Monaco, 'Courier New', Courier, monospace; line-height: 18px; font-size: 12px; white-space: pre;">[root@computer ~] <strong>cat /var/run/mysqld/mysqld.pid</strong></span>
+<pre><strong>26376</strong></pre>
+</blockquote>
+E killiamo il processo :
+<blockquote>
+<pre>[root@computer ~] <strong>kill 26376</strong></pre>
+</blockquote>
+Fatto questo, creiamoci un file di testo con il seguente contenuto :
+<blockquote>
+<pre>UPDATE mysql.user SET Password=PASSWORD('lavostrapassword') WHERE User='root';</pre>
+<pre>GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' IDENTIFIED BY 'lavostrapassword';</pre>
+<pre>FLUSH PRIVILEGES;</pre>
+</blockquote>
+E chiamiamolo ad esempio resetmysql.sql (che fantasia eh? XD), ovviamente sostituendo il testo "lavostrapassword" con la password che volete (re)impostare.
+
+Fatto ciò, non ci rimane che eseguire :
+<blockquote>[root@computer ~] <strong>mysqld_safe --init-file=</strong><em>/percorso/di/resetmysql.sql</em></blockquote>
+Aspettate che l'inizializzazione finisca e poi uscite con CTRL+C ... riavviando il server MySQL ora dovrebbe tutto andare bene ^^
+
+Spero che questo piccolo articolo possa tornare utile nel caso vi trovaste in questa situazione veramente antipatica XD

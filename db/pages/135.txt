@@ -1,0 +1,64 @@
+Date: 2009-05-21 19:12:56
+Author: evilsocket
+Categories: Biometria, Papers
+Tags: Biometria, biometry, C, etropy, extraction, feature extraction, features, finger matching, fingerprints, gabor, impronte digitali, msp
+Title: Estrazione delle features dalle impronte digitali
+
+<h2>Introduzione</h2>
+Innanzitutto mi sembra doveroso inizare dando un infarinaturaÂ  generale per quanto riguarda la terminologia e la teoria dell'argomento che voglio introdurre in questo paper, ovvero le tecniche di estrazione delle feature (termine che andremo ad analizzare tra poco) dalle impronte digitali, feature che vengono successivamente utilizzate per confrontare due impronte e determinare se appartengono allo stesso individuo .
+
+<break>
+
+L'estrazione delle features, consiste nel determinare quali sono, dove sono e dove si trovano alcune caratteristiche fondamentali (chiamate appunto features) in una determinata impronta . Tali caratteristiche non sono altro che, ad esempio, i punti di intersezione di due o piÃ¹ righe dell impronta, delle "isole" ovvero punti isolati, biforcazioni e cosÃ¬ via che, considerate globalmente, rendono l'impronta unica per ogni individuo .
+
+Per l'estrazione da un immagine di partenza, si usano diversi algoritmi di digital image processing, algoritmi che generano ad ogni "step" della catena l'input dell'algoritmo successivo, e cosÃ¬ fino alla fine dell'estrazione .
+
+In <a href="http://www.evilsocket.net/122/msp-multi-dimensional-space-processing-library.html" target="_blank">questo articolo </a>ho presentato la mia libreria MSP che implementa gli algoritmi necessari per il nostro scopo, nonchÃ¨ un <a href="http://www.evilsocket.net/sources/msp_ex3.cpp.txt" target="_blank">programma di esempio </a>che usando tale libreria estrae le features da un impronta, ed Ã¨ proprio questo programma che andrÃ² ad analizzare passo passo, con i relativi output, spiegando il significato di ogni elaborazione applicata .
+
+<strong>Immagine iniziale</strong>
+
+Nel programma di esempio uso l'immagine finger.png, un png 189x256 in scala di grigi che rappresenta il nostro input iniziale .
+
+<img class="aligncenter size-full wp-image-136" title="finger" src="http://www.evilsocket.net/images/finger.png" alt="finger" width="189" height="256" />
+<h2><strong>Stage 1 : Softening </strong></h2>
+La prima elaborazione che viene applicata all'immagine Ã¨ il cosiddetto softening (letteralmente "ammorbidimento"), tramite il quale viene ridotto il contrasto dell'immagine allo scopo di eliminare eventuali disturbi ditali, una sorta di pulizia dell'immagine iniziale quindi .
+<h2><img class="aligncenter size-full wp-image-137" title="soften" src="http://www.evilsocket.net/wp-content/uploads/2009/05/soften.png" alt="soften" width="189" height="256" /><strong>
+</strong></h2>
+<h2><strong>Stage 2: Orientation Mask</strong></h2>
+Il passo successivo consiste nell'estrarre una "maschera" di orientamento, ovvero una maschera nella quale si determina letteralmente l'orientamento geometrico delle porzioni dell'immagine che contengono delle informazioni utili, tale elaborazione si ottiene tramite l'applicazione in cascata di una serie di filtri passa basso .
+
+<img class="aligncenter size-full wp-image-138" title="orientation" src="http://www.evilsocket.net/wp-content/uploads/2009/05/orientation.png" alt="orientation" width="189" height="256" />
+<h2><strong>Stage 2 : Frequency Mask</strong></h2>
+Dopo la maschera di orientamento, si estrae la mappa delle frequenze dell'immagine, vale a dire una maschera che determina in questo caso l'intensitÃ  delle informazioni nelle zone evidenziate dalla maschera precedente . In questo caso non posso inserire un immagine poichÃ¨ la maschera fondamentalmente Ã¨ un vettore monodimensionale difficilmente rappresentabile in 2D .
+<h2><strong>Stage 3 : Entropy Mask</strong></h2>
+Questo passaggio Ã¨ fondamentale ai fini della nostra estrazione finale, poichÃ¨ il calcolo della maschera dell'<a href="http://it.wikipedia.org/wiki/Entropia_(teoria_dell%27informazione)" target="_blank">entropia </a>ci consente di determinare con estrema precisione in quale "quadrante" dell'impronta si trovano le informazioni utili, escludendo dall'immagine tutte le parti che per un motivo o per un altro (es. disturbi, porzioni vuote, etc) non servono .
+<h6 style="text-align: center;"><img class="aligncenter size-full wp-image-139" title="entropy" src="http://www.evilsocket.net/wp-content/uploads/2009/05/entropy.png" alt="entropy" width="189" height="256" />(Come vedete Ã¨ stata esclusa dall'immagine tutta la porzione esterna.)</h6>
+<h2 style="text-align: left;"><strong>Stage 4: Gabor Filter Enhancement</strong></h2>
+Tramite la maschera di orientamento e la maschera delle frequenze, Ã¨ possibile applicare all'immagine il filtro di <strong>Gabor</strong>, il cui operatore fondamentale Ã¨ definito con<br/>
+
+<img class="alignleft" src="http://upload.wikimedia.org/math/7/f/7/7f773702458b003fdc813e4dc76f74e1.png" alt="" width="482" height="51" /><br/><br/>
+dove<br/>
+
+<img class="alignleft" src="http://upload.wikimedia.org/math/d/6/8/d68e7c786c169ceabfc606f06fdf00be.png" alt="" width="169" height="22" /><br/>
+
+e<br/>
+
+<img class="alignleft" src="http://upload.wikimedia.org/math/1/3/0/130935c72889358f1b37019ad92ac035.png" alt="" width="184" height="22" /><br/>
+
+Questa elaborazione, che diminuisce drasticamente i disturbi sull'immagine e ne intensifica le caratteristiche fondamentali, utilizza le due maschere precedentemente create per determinare se un determinato quadrante dell'immagine Ã¨ un disturbo e quindi va eliminato, o se si tratta di un informazione che rischia di andare persa e quindi va "incrementata" (aumentandone il contrasto) .
+
+<img class="aligncenter size-full wp-image-141" title="gabor" src="http://www.evilsocket.net/wp-content/uploads/2009/05/gabor.png" alt="gabor" width="189" height="256" />
+<h2><strong>Stage 5: Binarization</strong></h2>
+Come ultimo filtro per ripulire l'immagine, viene applicata una semplice binarizzazione, ovvero vengono rimossi tutti i pixel il cui colore non Ã¨ puro nero (o cmq non Ã¨ superiore ad una determinata soglia), questo per eliminare tutti gli eventuali disturbi residui in seguito all'applicazione del filtro di Gabor.
+
+<img class="aligncenter size-full wp-image-143" title="binarize" src="http://www.evilsocket.net/wp-content/uploads/2009/05/binarize.png" alt="binarize" width="189" height="256" />
+<h2>Stage 6: Thinning</h2>
+Arriviamo ora alla pre-elaborazione piÃ¹ importante, il thinning dell'immagine binarizzata e ripulita .
+
+Il thinning consiste nel ridurre tutti i bordi attivi dell'immagine (le righe per capirci), a linee di un pixel di spessore, creando cosÃ¬ uno scheletro vero e proprio dell'impronta, scheletro che viene calcolando tramite l'<a href="http://fourier.eng.hmc.edu/e161/lectures/morphology/node4.html" target="_blank">algoritmo hit-n-miss</a> il quale fondamentalmente applica 4 matrici di convoluzione ad ogni pixel, eliminando quelli "in piÃ¹" .
+
+<img class="aligncenter size-full wp-image-144" title="thin" src="http://www.evilsocket.net/wp-content/uploads/2009/05/thin.png" alt="thin" width="189" height="256" />
+<h2>Stage 7: Feature Extraction</h2>
+Siamo giunti allo stage finale della catena, l'estrazione vera e propria che, utilizzando le maschere precedentemente elaborate, identifica le features nello scheletro dell'impronta, calcolando i "neighbours pixels" (pixel adiacenti) per ogni pixel e in tal modo determinando se si tratta di una feature o di una normale linea da ignorare .
+<h6 style="text-align: center;"><img class="aligncenter size-full wp-image-145" title="featured" src="http://www.evilsocket.net/wp-content/uploads/2009/05/featured.png" alt="featured" width="189" height="256" />(Immagine finale con dei quadrati bianchi che segnalano le features.)</h6>
+<p style="text-align: left;">La biometria Ã¨ un campo dell'informatica in continua evoluzione e di giorno in giorno ci sono centinaia di ricercatori in tutto il mondo che ottimizzano gli algoritmi giÃ  esistenti o ne inventano di completamente nuovi e piÃ¹ efficienti e/o accurati dei predecessori, di conseguenza quello che vi ho appena illustrato e che ho implementato della libreria MSP Ã¨ solo uno dei tanti metodi attualmente possibili, tutta via, presentando vari stage ben distinti tra di loro, si presta bene alla natura didattica di questo articolo in quanto Ã¨ facile, come vedete voi stessi, capire lo scopo di ogni singolo passaggio e l'impatto che ha sull'immagine iniziale .</p>

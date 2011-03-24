@@ -1,0 +1,27 @@
+Date: 2009-12-19 18:23:09
+Author: evilsocket
+Categories: Misc, Programmazione
+Tags: 
+Title: Nuovi moduli per Hybris ^^
+
+Dato che è un po che non scrivo qua, mi sembra giusto buttare giù due righe per descrivere l'attuale situazione di <a href="http://www.hybris-lang.org/" target="_blank">Hybris</a> .
+
+Man mano che sistemavamo il core, risolvendo bug qua e la, mi è venuta voglia di iniziare ad implementare i primi moduli esterni, il che ha richiesto una riscrittura abbastanza consistente del codice (nn mi dilungo in dettagli tecnici, ma non avendolo ancora provato non mi ero accorto che il loading dinamico dei moduli non funzionava XD), ma alla fine ce l'ho fatta.
+
+I primi due moduli che ho implementato sono <a href="http://github.com/evilsocket/mod_gtk" target="_blank">mod_gtk</a> per le interfacce grafiche (non è ancora completo, ci sono miriadi di funzioni da implementare ancora :S) e <a href="http://github.com/evilsocket/mod_irc" target="_blank">mod_irc</a> che offre tutte le funzionalità necessarie per realizzare un client IRC (nella fattispecie un bot) con pochissime righe di codice, preoccupandosi solo di implementare le funzioni che gestiscono i comandi personalizzati, senza dover badare al funzionamento interno del protocollo.
+
+<break>
+
+In entrambi i casi ho postato uno script di esempio nell'apposita <a href="http://www.hybris-lang.org/esempi" target="_blank">sezione del sito</a> .
+
+Il primo, <strong>HyCalc</strong>, è una piccola calcolatrice che sfrutta i bindings delle GTK, segue uno screenshot :
+
+<a href="http://img64.imageshack.us/i/screenshotrp.png/"><img src="http://img64.imageshack.us/img64/3010/screenshotrp.png" border="0" alt="Image Hosted by ImageShack.us" /></a>
+
+Mentre il secondo esempio, <strong>HyIRCBot</strong>, sfrutta le potenzialità di mod_irc per implementare un piccolo bot .
+
+Di lavoro da fare ancora ce n'è tanto, ma siamo vicini alla 1.0 .
+
+Per questa prima release, prevediamo di offrire sia l'interprete che i moduli pacchettizzati per le maggiori distribuzioni Linux (sia 32 che 64bit) così da rendere più facile il processo di installazione.
+
+Stiamo valutando anche un eventuale porting per piattaforme Microsoft, ma il codice potrebbe necessitare di parecchie modifiche, quindi per adesso questa eventualità è ancora in "forse" ^^

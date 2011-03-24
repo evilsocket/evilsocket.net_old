@@ -1,0 +1,29 @@
+Date: 2010-06-06 18:57:26
+Author: evilsocket
+Categories: Exploiting, Hacking, PHP, Programmazione, Sorgenti, Wardriving
+Tags: AGPF, algoritmo, alice, chiave, cracking, generazione, hack, key, pirelli, warcracking, wifi, win32, wpa, wpa2
+Title: Script per il calcolo della chiave WPA dei router Alice Gate VoIP 2 Plus Wi-Fi 
+
+Come preannunciato nell'<a href="http://www.evilsocket.net/1126/script-per-il-calcolo-della-chiave-wpa-nei-router-fastweb-pirelli.html" target="_blank">artcolo precedente</a> sui router Fastweb, mi sono adoperato a studiare la <a href="http://wifiresearchers.wordpress.com/2010/06/02/alice-agpf-lalgoritmo/" target="_blank">brillante ricerca</a> della WhiteHatCrew sui router di Alice, denominati AGPF, al fine di implementare uno script per la generazione della chiave WPA di default.
+
+<break>
+
+A differenza del caso FastWeb, il quale per il calcolo si basava solo sull SSID della rete, in questo caso ci serve anche il seriale del router che, come dimostrato dalla ricerca precedentemente linkata, è ricavabile tramite un sistema a due incognite dal quale, la WHC, ha tirato fuori una tabella di valori noti, tabella che ho inserito nel mio script.
+
+Di conseguenza, a meno che il lettore non ampli la propria tabella a mano, seguendo le indicazioni della WHC, lo script funzionerà solo con SSID del tipo :
+<ul>
+	<li>Alice-96xxxxxx</li>
+	<li>Alice-93xxxxxx</li>
+	<li>Alice-56xxxxxx</li>
+	<li>Alice-55xxxxxx</li>
+	<li>Alice-54xxxxxx</li>
+	<li>Alice-48xxxxxx</li>
+	<li>Alice-46xxxxxx</li>
+</ul>
+Sono sicuro cmq che cercando nella rete delle tabelle un po più estese si trovano ;)
+
+Lo script è commentato (come il precedente), in modo tale il lettore avrà la possibilità non solo di utilizzarlo, ma anche di capirlo, che è la cosa che più mi preme al fine di una condivisione libera dell'informazione e della cultura informatica in generale.
+
+Enjoy.
+
+<strong><a href="http://sharecash.org/download.php?file=1279026" target="_blank">SCARICA SCRIPT</a></strong>

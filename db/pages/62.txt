@@ -1,0 +1,9 @@
+Date: 2009-05-13 08:24:46
+Author: evilsocket
+Categories: Papers
+Tags: driver, linux, ndis, ndiswrapper, windows
+Title: NDIS Wrapper HowTo
+
+Come utilizzare questo fantastico tool per riuscire ad installare periferiche che nativamente non sono supportate dai sistemi linux sfruttando i driver proprietari per windows .
+
+<a href="http://www.evilsocket.net/papers/ndiswrapper.pdf" target="_blank">Scarica</a>

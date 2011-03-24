@@ -1,0 +1,24 @@
+Date: 2010-09-29 23:59:15
+Author: evilsocket
+Categories: Misc, Personali
+Tags: blog, lol, lulz, tophost, wp-sentinel
+Title: Tophost: M'ama o non m'ama?!
+
+<strong>PREMETTO</strong>
+
+Questo è un post ironico/sarcastico, non voglio alludere a nulla ne insinuare nulla, la polemica che c'è stata mi ha già abbondantemente rotto le scatole, quindi lo scrivo just for the lulz.
+
+A due giorni dalla pubblicazione di wp-sentinel, quasi 200 download (dai mica male per essere stato appena pubblicato! :D) e diversi aggiornamenti tra i quali l'anti flood e l'anti brute force, nonchè la geolocalizzazione degli ip (guardatevi il changelog della 1.0.4), ho scoperto una cosa divertentissima! :D
+
+<break><a href="http://www.evilsocket.net/?s=tophost" target="_blank">Tophost</a>, il mio "nemico giurato" di sempre (leggere premessa!), forse, e dico <strong>f-o-r-s-e</strong>, è entrato a far parte di coloro che apprezzano, o quanto meno usufruiscono, il mio codice! :D
+
+Si sente una voce partire in coro : "Le prove, vogliamo le prooooveee!!!!"
+
+Ebbene, che le immagini parlino da sole :D
+
+<a href="http://img713.imageshack.us/i/wptha.png/" target="_blank"><img src="http://img713.imageshack.us/img713/4324/wptha.th.png" border="0" alt="" /></a>
+<a href="http://img96.imageshack.us/i/wpthb.png/" target="_blank"><img src="http://img96.imageshack.us/img96/6373/wpthb.th.png" border="0" alt="" /></a>
+
+Considerando la loro <a href="http://www.evilsocket.net/1762/tophost-tenta-di-censurarmi.html" target="_blank">diffida per utilizzare un marchio registrato</a>, e considerando la seconda immagine, che dite posso anche io diffidarli per lo scrivere minchiate ed appropriarsi, se pur in maniera molto blanda, della paternalità del codice altrui? :D (leggere sempre la premessa!)
+
+lulz

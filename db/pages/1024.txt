@@ -1,0 +1,57 @@
+Date: 2010-05-10 00:43:31
+Author: evilsocket
+Categories: Misc, Programmazione
+Tags: ascii tree, garbage collector, google, hash table, hybris, mark and sweep, reference
+Title: Google : 0, Io : 1
+
+Chi ha letto <a href="http://www.evilsocket.net/936/hybris-memory-lookup-now-google-powered.html" target="_blank">questo</a> post, sa che già da un po il sistema di lookup delle variabili, funzioni, metodi, tipi dinamici ecc in memoria di Hybris è implementato sulla base di una libreria rilasciata da Google, più precisamente dal Dr. <a href="http://www.google.it/search?source=ig&amp;hl=it&amp;rlz=&amp;q=Craig+Silverstein&amp;btnG=Cerca+con+Google&amp;meta=lr%3D" target="_blank">Craig Silverstein</a>, la quale mette a disposizione alcune funzioni per gestire una<a href="http://it.wikipedia.org/wiki/Hash_table" target="_blank"> hash table</a>, cioè una struttura di dati che consente di collegare una chiave (una stringa) ad un valore e di eseguire il lookup in modo molto veloce.
+
+Il tutto si basa su una funzione di hashing che, prendendo in input la stringa della chiave, restituisce in output un numero intero (l'hash) univoco per ogni chiave o, in caso non sia univoco, gestisce queste "collisioni" di hash frammentando la tabella in più "bucket" .
+
+Fatta questa introduzione, andiamo al nocciolo del discorso.
+
+<break>Era un po di tempo che avevo riscontrato dei bug in Hybris ma che, a differenza di tutti gli altri bug sia segnalati dagli utenti che trovati da me, non riuscivo ne ad isolare ne ad individuare nel codice ... un casino insomma! XD
+
+E cosa vado a scoprire? Che tutti erano dipesi proprio da quella libreria di Google! Le collisioni tra chiavi diverse e hash non univoci a quanto pare non sempre sono gestite, anzi studiandosi un po la questione sono riuscito a capire che questa libreria funziona bene solo quando la tabella contiene poche (qualche decina) chiavi, ma quando le chiavi iniziano a diventare parecchie (ed in Hybris sono usate ovunque, quindi sono veramente tante) le collisioni vengono gestite male e ne consegue che il lookup di una chiave, magari mai definita, invece restituisce il valore di un altra chiave che non c'entra niente invece di restituire NULL, indicando che la chiave non è definita.
+
+Questo era un problema veramente grande, poichè le implementazioni nella libreria standard di questa struttura di dati (std::map) sono molto poco performanti, le altre che ho provato (boost e librerie di terze parti) son sempre poco performanti, e re implementare tutto da zero avrebbe richiesto settimane di codice e altre di tuning e ottimizzazione del tutto.
+
+Di risolvere il bug nella libreria di Google proprio non se ne parlava, poichè andava riscritta praticamente da capo ... insomma, mi son trovato davanti ad un bel dilemma!
+
+Così mi son inventato un metodo tutto mio, utilizzando un albero n-ario, dove ogni nodo è composto da un valore (un carattere ascii),  un "end marker" (un puntatore all'oggetto mappato da una data chiave), e i nodi figli .
+
+Diciamo di voler definire la variabile di nome "foo" .
+
+A questo punto, la catena di nodi che verrà creata sarà :
+
+f -&gt; o -&gt; o
+
+E all'ultimo nodo (o) verrà impostato l'end marker con il valore della variabile, mentre gli altri end markers precedenti saranno impostati a NULL .
+
+Ora definiamo "fag" :
+
+f -&gt; o -&gt; o (ramificazione già esistente)
+
+\
+
+a -&gt; g (nuova ramificazione)
+
+E così via per ogni variabile, dove si creano nuovi nodi per catene non definite e se ne aggiungono degli altri per catene già esistenti.
+
+Verificare l'esistenza di una chiave ed ottenerne, se presente, il valore associato a questo punto è facilissimo .
+
+Basta traversare l'albero in base al nome della variabile, possono succedere a questo punto le seguenti cose :
+
+- Il nome della variabile porta ad una ramificazione non esistente -&gt; La chiave non esiste
+
+- Raggiunta la fine della ramificazione, l'end marker è NULL -&gt; Esiste una chiave che inizia con la stessa stringa di questa (esempio lolz e lol), ma non esiste questa in particolare.
+
+- Raggiungiamo la fine della ramificazione e troviamo un end marker valido -&gt; La chiave è definita e restituiamo l'oggetto associato.
+
+In questo modo, si mantengono prestazioni analoghe se non superiori ad una hash table, l'intera struttura usa meno memoria (una hash table, per ogni elemento ha un istanza della chiave, mentre in questo caso ha solo l'istanza del suo ultimo carattere e l'end marker), e soprattutto è impossibile che ci siano collisioni !
+
+Così è nato ASCII Tree, la struttura che ora viene utilizzata al posto della libreria di Google, problema risolto! :D
+
+Un altra importante novità è che il garbage collector, da un approccio di reference counting è passato ad un approccio <a href="http://www.brpreiss.com/books/opus5/html/page424.html" target="_blank">mark &amp; sweep</a>, molto più affidabile, veloce e soprattutto risolve alcuni problemi del vecchio garbage collector che mi ero prefissato di risolvere.
+
+That's all folks :)

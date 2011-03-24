@@ -1,0 +1,25 @@
+Date: 2010-09-25 23:09:27
+Author: evilsocket
+Categories: Hacking, PHP, Programmazione, Sorgenti
+Tags: anti hacker, config, evilsentinel, menu, plugin, release, security system, sentinel, whitelist, wordpress, wp-sentinel
+Title: Aggiornamento WP-Sentinel, il sistema di sicurezza per WordPress.
+
+A più di un anno dal <a href="http://www.evilsocket.net/764/wp-sentinel-pubblicato.html" target="_blank">rilascio al pubblico di WP-Sentinel</a>, il sistema di sicurezza per blog wordpress erede di evilsentinel, ho effettuato alcuni importanti aggiornamenti che lo rendono molto più user friendly e soprattutto arginano (vorrei dire risolvono, ma è ancora presto) alcuni bug riscontrati fin'ora sia da me che da altri utenti che lo hanno utilizzato.
+
+Prima del changelog, riporto brevemente una piccola descrizione del plugin per chi non sapesse cos'è:
+<blockquote><strong>WP-Sentinel</strong>, erede in parte del progetto <strong>evilsentinel</strong> (R.I.P.), è un plugin per la piattaforma <strong>WordPress</strong> che aumenterà  la sicurezza del vostro
+blog da eventuali attacchi di cracker, lamer, black hats, h4x0r, ecc .
+Il sistema verrà  caricato prima degli altri plugins ed eseguirà  una serie di controlli sulle richieste http in arrivo ed, in caso una o più richieste
+facciano scattare un *allarme*, la bloccherà  mostrando un avviso all’utente e notificherà  per email l’accaduto all’amministratore del sito in questione,
+con tutti i dettagli del potenziale attacco .</blockquote>
+<break>Bene, arriviamo alle novità :)
+
+Dunque, prima di tutto, ho aggiunto la possibilità di gestire il plugin tramite un menu appositamente inserito sotto il pannello "Impostazioni", menù che per ora si divide in due tab.
+
+Un tab che visualizza il log degli attacchi del giorno corrente riportandone diverse informazioni:
+<p style="text-align: center;"><a href="http://www.evilsocket.net/wp-content/uploads/2010/09/a1.png"><img class="size-medium wp-image-1838 aligncenter" title="a" src="http://www.evilsocket.net/images/a1-300x187.png" alt="" width="300" height="187" /></a></p>
+Ed un altro tab, il più importante, che consente di manipolare le configurazioni di base del plugin direttamente da wordpress, quindi senza dover agire manualmente sul file config.php:
+<p style="text-align: center;"><a href="http://www.evilsocket.net/wp-content/uploads/2010/09/b1.png"><img class="size-medium wp-image-1839 aligncenter" title="b" src="http://www.evilsocket.net/wp-content/uploads/2010/09/b1-300x187.png" alt="" width="300" height="187" /></a></p>
+Inoltre, ho introdotto la possibilità di mettere in una "white list" uno o più nomi di variabili, tali variabili non verranno filtrate dal sistema ... questo risolve un problema molto rognoso con i cookie di Google.
+
+Bon, detto questo, potete scaricare l'archivio del plugin da <a href="http://sharecash.org/download.php?file=1279575" target="_blank">questo indirizzo</a> (oppure clonate il repo da <a href="http://github.com/evilsocket/WP-Sentinel" target="_blank">qui</a>), estrarlo ed installarlo come ogni altro plugin sul vostro blog ^^

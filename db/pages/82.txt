@@ -1,0 +1,9 @@
+Date: 2009-05-13 08:44:58
+Author: evilsocket
+Categories: Hacking, Papers, Web Hacking
+Tags: aircrack, kismet, Wardriving, wep, wep cracking, wifi
+Title: WEP Cracking
+
+Un paper nel quale illustro le tecniche e gli strumenti basilari necessari per crackare la chiave WEP di una rete wifi .
+
+<a href="http://www.evilsocket.net/papers/ww.pdf" target="_blank">Scarica</a>

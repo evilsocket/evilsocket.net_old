@@ -1,0 +1,9 @@
+Date: 2009-05-13 08:13:28
+Author: evilsocket
+Categories: Hacking, Papers
+Tags: backtrack, sam hacking, windows password hacking
+Title: Win32 SAM Hacking
+
+Un paper nel quale descrivo come utilizzare gli strumenti presenti sulla distro backtrack al fine di manomettere il file SAM delle password di Windows ed entrare come amministratore in un pc protetto da password.
+
+<a href="http://www.evilsocket.net/papers/bt_sam.pdf" target="_blank">Scarica</a>

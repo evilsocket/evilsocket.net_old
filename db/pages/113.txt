@@ -1,0 +1,19 @@
+Date: 2009-05-18 10:21:17
+Author: evilsocket
+Categories: Misc
+Tags: 
+Title: La mia postazione ^^
+
+Come ogni techno-addicted che si rispetti posto uno shot della mia postazione :D
+
+<break><img class="aligncenter" src="http://photos-a.ak.fbcdn.net/photos-ak-snc1/v976/177/38/583384222/n583384222_984360_672.jpg" alt="" width="604" height="403" />
+
+Da sinistra verso destra :
+<ul>
+	<li>EEEPC <strong>Asus P701</strong> - <em>Xubuntu</em></li>
+	<li>Palmare <strong>Sharp Zaurus SL-C3100</strong> - <em>Debian / Cacko ROM</em></li>
+	<li>Palmare <strong>Shar Zaurus SL-5000</strong> - <em>Cacko ROM</em></li>
+	<li>PC Fisso assemblato, <strong>Intel Quad Core, 4 GB di RAM</strong> etc etc etc - <em>Slackware / WindowsXP / Hackintosh</em></li>
+	<li>Laptop <strong>Toshiba Satellite A100-170</strong> - <em>Backtrack / Xubuntu</em></li>
+	<li>Ultimamente si Ã¨ aggiunto un<strong> Mac Mini Intel based </strong>- <em>Mac OS X Leopard 10.x.x</em></li>
+</ul>

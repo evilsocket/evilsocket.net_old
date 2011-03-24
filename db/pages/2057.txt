@@ -1,0 +1,9 @@
+Date: 2011-01-20 23:53:32
+Author: evilsocket
+Categories: Hacking, Papers
+Tags: backbox, forwarding, linux, mac, ssh, x11, x11forwarding, xfce
+Title: Howto use a BackBox application remotely with SSH and X11 Forwarding
+
+Vi linko una guida che ho pubblicato sul portale di <a href="http://www.evilsocket.net/tag/backbox" target="_blank">BackBox Linux</a> che spiega come sfruttare la il forwarding di X11 tramite SSH al fine di eseguire un applicazione di BackBox (o un intera sessione XFCE) da un computer remoto, nel mio caso da un MacBook Pro :)
+
+<a href="http://www.backbox.org/public/content/howto-use-backbox-application-remotely-ssh-and-x11-forwarding" target="_blank">Link alla guida</a>

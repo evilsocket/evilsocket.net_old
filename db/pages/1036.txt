@@ -1,0 +1,13 @@
+Date: 2010-05-17 01:20:32
+Author: evilsocket
+Categories: Misc
+Tags: hybris
+Title: Prima bozza della documentazione sullo sviluppo dei moduli
+
+<p>Come da titolo, è pronta <a href="http://www.hybris-lang.org/wiki/doku.php?id=mod-dev" >una prima bozza della documentazione sullo sviluppo dei moduli</a>.<br />
+Questa documentazione contiene le informazioni basilari necessarie per la creazione di un modulo dinamico di Hybris, la compilazione, l'installazione, rifermenti sulle API da usare, ecc ecc ecc .</p>
+<p>Dico che è una bozza, poichè, mentre a me alcuni concetti potrebbero sembrare scontati e quindi non necessariamente da documentare, ad una persona che non ha partecipato allo sviluppo del core di Hybris magari (quasi sicuramente) non sembrano così scontati.<br />
+Quindi chiedo agli utenti volenterosi, di leggere la documentazione e, nel caso non capissero qualcosa o ritenessero che qualcosa manca proprio, di farmelo presente in <a href="http://www.hybris-lang.org/forum/index.php?topic=25">questo thread</a>, così da darmi un feedback sulla qualità della doc ed eventualmente su cosa migliorare.<br />
+Se poi proprio volete aiutarmi <strong>seriamente</strong>, potete sempre usufruire di tale documentazione per sviluppare dei moduli che, se conformi, andranno a far parte della libreria standard per il rilascio della 1.0 o, nel caso troppo specifici per far parte dello standard, comunque saranno distribuiti come moduli "ufficiali".</p>
+<p>Grazie a tutti.</p>
+<p><a href="http://www.hybris-lang.org/story/prima-bozza-della-documentazione-sullo-sviluppo-dei-moduli.html" >read more</a></p><img src="http://feeds.feedburner.com/~r/HybrisProgrammingLanguageOfficialSite/~4/j1Wcy4X1nmk" height="1" width="1"/>

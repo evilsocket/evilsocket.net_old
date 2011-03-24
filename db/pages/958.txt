@@ -1,0 +1,36 @@
+Date: 2010-04-03 06:32:18
+Author: evilsocket
+Categories: Misc
+Tags: 
+Title: Buon compleanno Hybris! (in ritardo XD)
+
+<a href="http://www.evilsocket.net/wp-content/uploads/2010/04/kind-geschenk.jpg"><img class="alignleft size-medium wp-image-959" title="kind-geschenk" src="http://www.evilsocket.net/images/kind-geschenk-300x186.jpg" alt="" width="300" height="186" /></a>A volte sono davvero rincoglionito, come faccio non lo so -.-
+
+In questi giorni stavo vedendo un po lo storico degli import di Hybris e il primo risale al 23 Maggio del 2009 ... così pensavo che sarebbe stato carino, questo 23 maggio, "festeggiare" il primo anno di Hybris in qualche modo.
+
+Poi però mi son ricordato di una cosa ... in realtà, il primo import su github non risale alla prima stesura di Hybris, poichè prima utilizzavo i repo di sourceforge e prima ancora era solo del codice sul mio computer .... mi sono inoltre ricordato che, sul mio (ex) vecchio forum, chiesi consiglio agli utenti per il nome da dare ad un linguaggio di programmazione al quale stavo lavorando (indovinate un po quale? :)) così, spulciandomi i vecchi backup di MySQL, ho ritrovato questo post :
+
+<break>
+<blockquote>Ragazzi ho bisogno del vostro aiuto stavolta ! :P
+Sto sviluppando (a dire il vero sarebbe già pronto, ma io sono perfezionista e quindi lo miglioro di giorno in giorno) un linguaggio di programmazione .
+Purtroppo, la mia bravura come programmatore nn è alla pari della mia fantasia per trovare dei nomi ai miei programmi e per questo motivo il linguaggio si chiama per ora "X" proprio xkè non riesco a trovargli un nome decente XD .
+Ed ecco che qui entrate voi in ballo, aiutatemi a trovare un nome !!! :D
+Deve essere un nome breve e facile da pronunciare in tutte le lingue .
+Vi do qualche caratteristica del linguaggio così magari vi viene meglio qualche idea in mente .
+
+Il linguaggio può essere sia interpretato (come linguaggio di scripting) che pseudo-compilato (come java) in byte-code, nel qual caso il software si comporterà come una virtual machine .
+Per adesso è prettamente funzionale, ma sarà prestissimo orientato anche a oggetti .
+E' estremamente semplice da imparare data la sua sintassi di base, estremamente semplice da usare dato un set di funzionalità abbastanza grande già incluso .
+NON è un linguaggio per scrivere applicazioni che devono essere velocissime (vedi app per calcoli matematici molto complessi o elaborazioni su immagini), bensì un algoritmo moderatamente complesso può essere implementato con una facilità impressionante .
+La sintassi è una via di mezzo tra C, PHP e Javascript, in pratica ho preso il meglio da ognuno di questi tre linguaggi e l'ho rimodellato in base alle esigienze di un programmatore medio .
+
+Per adesso ho in mente solo due nomi, "Gea" che nella mitologia greca rappresenta la madre di tutti gli dei dell olimpo il che starebbe a simboleggiare la natura estremamente semplice del linguaggio che lo renderebbe adatto ad essere il primo linguaggio da imparare, e poi ho pensato a "Bit" sempre per simboleggiare la sua semplicità, però boh, nn mi convincono particolarmente XD .
+
+Idee ? :P
+
+PS : Se ricevete un email con questo post è perchè l'ho voluto "annunciare" a tutti gli utenti, per favore non rispondetemi direttamente all'email ma scrivete qui sul forum .</blockquote>
+Datato ... rullo di tamburi ... <strong>27 Novembre 2008</strong> !!!
+
+Ebbene si, è già passato il primo anno di vita di Hybris e l'abbiamo anche superato di diversi mesi ... cavolo non pensavo che fosse passato così tanto tempo O_O
+
+Che dire ... <strong>buon compleanno Hybris</strong>!!!

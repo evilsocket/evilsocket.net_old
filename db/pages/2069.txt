@@ -1,0 +1,17 @@
+Date: 2011-02-01 00:51:19
+Author: evilsocket
+Categories: Misc, Personali
+Tags: nasa, open source, sentinel, software, wp-sentinel
+Title: WP-Sentinel alla NASA!!!
+
+Piccolo post per tirarmela un po (scherzo :D) .
+
+Dopo la pubblicazione di wp-sentinel, quasi <strong>4.000</strong> download, circa <strong>1.500</strong> installazioni in giro per la blogosfera, un *uccellino* mi ha detto una cosa che mi ha fatto molto piacere!
+
+Anche il sito dell'Electronic Parts Engineering Office della <strong>NASA</strong> usa il mio WP-Sentinel ! :D
+
+http://parts.jpl.nasa.gov/
+
+http://parts.jpl.nasa.gov/wp-content/plugins/wp-sentinel/LICENSE
+
+[/MOMENTO-DI-GLORIA] 

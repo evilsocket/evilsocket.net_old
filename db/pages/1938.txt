@@ -1,0 +1,51 @@
+Date: 2010-10-07 05:47:07
+Author: evilsocket
+Categories: Misc, Programmazione
+Tags: bug, changelog, fix, forum, lab, sentinel, update, wp-sentinel
+Title: Riassunto changelog di WP-Sentinel e forum di supporto.
+
+A pochissimi giorni <a href="http://www.evilsocket.net/1927/wp-sentinel-1-0-1-il-sistema-di-sicurezza-per-wordpress-da-ora-nei-repo-ufficiali.html" target="_blank">dall'approvazione</a> nei repo ufficiali di wordpress, wp-sentinel ha già riscosso un discreto successo superando già da un po i suoi primi 1000 downloads.
+
+Dato che sono cambiate alcune cose dall'ultima versione di cui ho parlato, vediamo un po le nuove funzionalità attualmente presenti, ripercorrendo l'attuale changelog ed esaminandone le versioni più importanti.
+
+Dalla 1.0.9, fino alla attuale 1.1.0.1 nulla di particolare, solo qualche ritocco e qualche fix.
+
+Una cosa importante che voglio segnalare è che, in un sottodominio ho aperto un forum internazionale di supporto per wp-sentinel, dato che già diverse persone, sia qua che altrove mi stanno segnalando bug e/o proponendo nuove features.
+
+Se i vostri DNS sono aggiornati (speriamo XD), trovate il forum su <strong><a title="http://lab.evilsocket.net/" href="http://lab.evilsocket.net/" target="_blank">http://lab.evilsocket.net/ </a> </strong>.
+
+Beccatevi sto changelog! :D
+
+<break>
+
+<strong>1.0.3 -
+* Upon RFI matching, the plugin attempts to classify the remote file (caching is handled) as allowed or not.</strong>
+
+Uno dei problemi più rognosi che ho avuto da quando ho iniziato a sviluppare sistemi di sicurezza web, è l'identificazione di attacchi di tipo RFI (remote file inclusion).
+
+Questo perchè, l'unico modo per matcharli è cercare in una variabile la presenza di un url ... ma questo da solo ovviamente non basta per identificare un effettivo rfi (ne sanno qualcosa coloro che hanno dovuto whitelistare i cookie di google :P) ... quindi ora il sistema è "leggermente" più sveglio ... se una variabile matcha un potenziale RFI, il plugin si scarica il contenuto di quell'url e ne controlla i contenuti, se si tratta di codice PHP beh ... è un RFI! Naturalmente il file viene scaricato solo la prima volta e tenuto in una cache locale, così da agevolare i controlli futuri sullo stesso tipo di richiesta.
+<div id="_mcePaste"><strong>1.0.4 -</strong></div>
+<div id="_mcePaste"><strong>* Implemented anti login brute forcing engine.</strong></div>
+<div id="_mcePaste"><strong>* Implemented ip address geo localization.</strong></div>
+Come è facile capire, dalla 1.0.4 è stato implementato un sistema per proteggere il proprio blog da attacchi di forza bruta al pannello di login, nonchè la geolocalizzazione di ogni ip (è utile sapere se bisogna mandare a fanculo qualcuno un turco, inglese, ecc XD).
+
+<strong>1.0.6 - 
+* MySQL enabled with local caching.</strong>
+
+Considerando la situazione peggiore, ovvero un sito con altissimo traffico, ho deciso di switchare alcune informazioni da file a database MySQL, tenendo una cache locale e ottimizzando al meglio le query e la logica del software per non pesare troppo su ogni richiesta http.
+
+<strong>1.0.7 -
+* Implemented user editable HTML tags whitelist.
+* Better log summary with facebox details display.
+* User now can delete a single log entry.
+* Other minor fixes.</strong>
+
+Da qui in poi, gli utenti possono specificare quali tag HTML sono consentiti, in modo tale da rendere più selettivo il controllo su gli attacchi di tipo XSS (cross site scripting), è stato migliorato il report dei vari eventi (con tanto di boxettini javascript-iani :D) e la possibilità di eliminare il singolo log (grazie al punto 1.0.6 soprattutto).
+
+<strong>1.0.9 -
+* Small graphical restyle.
+* Added small banner.
+* Implemented ip manual and automatic banning.
+* Ban management.</strong>
+
+Una cosa che mi era stata tanto richiesta ai tempi di evilsentinel e che non ho mai avuto modo/tempo/voglia di implementare era il ban degli indirizzi ip ... beh con wp-sentinel mi sono rifatto alla grande, ora è possibile bannare un ip sia manualmente, oppure impostare un ban automatico dopo tot attacchi loggati da parte sua, da quel momento ad un tempo deciso dall'utente, quell'indirizzo non sarà più in grado di navigare nel blog bensì vedrà una pagina di allarme (simile a quella di un attacco) in cui viene avvisato che è in ban list.

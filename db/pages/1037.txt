@@ -1,0 +1,17 @@
+Date: 2010-05-15 00:25:51
+Author: evilsocket
+Categories: Misc
+Tags: hybris
+Title: Funzioni 'array' e 'map' ora deprecate.
+
+<p>Come mi prefiggevo di fare da quando è stata implementata la <a  href="http://www.hybris-lang.org/story/implementata-creazione-inline-di-array-e-mappe.html">creazione inline di array e mappe</a> tramite operatori [] e [:], modificando leggermente il parser ho eliminato del tutto la necessità dei moduli :</p>
+<ul>
+<li>std.lang.array</li>
+<li>std.lang.map</li>
+</ul>
+<p>Rendendo così deprecate le funzioni <strong>array</strong> e <strong>map</strong> .</p>
+<p>Come la documentazione, aggiornata di conseguenza, riporta, per inizializzare mappe e array vuoti, basta fare rispettivamente :</p>
+<p><span class="geshifilter"><code class="hybris geshifilter-hybris">array <span style="color: #339933;">=</span> <span style="color: #009900;">&#91;</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span></code></span></p>
+<p>o</p>
+<p><span class="geshifilter"><code class="hybris geshifilter-hybris">mappa <span style="color: #339933;">=</span> <span style="color: #009900;">&#91;</span><span style="color: #339933;">:</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span></code></span></p>
+<p><a href="http://www.hybris-lang.org/story/funzioni-039array039-e-039map039-ora-deprecate.html" >read more</a></p><img src="http://feeds.feedburner.com/~r/HybrisProgrammingLanguageOfficialSite/~4/1AGdNssPNJE" height="1" width="1"/>

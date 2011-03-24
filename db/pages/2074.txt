@@ -1,0 +1,19 @@
+Date: 2011-03-13 06:24:54
+Author: evilsocket
+Categories: Misc
+Tags: wordpress, swg, static, html
+Title: Addio Wordpress, benvenuto SWG!
+
+Probabilmente non lo avete nemmeno notato, ma questo blog ha subito un cambiamento <b>radicale</b> rispetto a prima :)
+
+Ho completamente eliminato wordpress e l'ho convertito in pagine statiche ... non con un 'wget -r', ne con curl, bensì 
+ho implementato un software in python che, dato un insieme di file txt contenenti i dati di ogni articolo (titolo,tags,categorie,ecc) 
+ed un insieme di template nel formato <a href="http://www.makotemplates.org/" target="_blank">Mako</a>, crea un sito statico ma,
+come potete vedere, in tutto e per tutto uguale ad un vero wordpress! :)
+
+<break>
+
+La conversione dei vecchi articoli invece l'ho fatta con uno script in php, sia lui che il software in questione saranno pubblicati
+a breve, il tempo di dargli una sistemata dato che ho scritto tutto in una notte XD
+
+Beh, addio wordpress!!!! ^^

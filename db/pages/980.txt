@@ -1,0 +1,62 @@
+Date: 2010-04-15 00:02:20
+Author: evilsocket
+Categories: Misc
+Tags: function pointers, garbage collector, hybris
+Title: Hybris : Rivoluzionato il sistema di gestione dei tipi ed il garbage collector.
+
+So che avevo detto che non avrei parlato più di Hybris qui, ma questa cosa è troppo importante :P
+<div>
+
+Chi segue il progetto avrà forse notato che da per qualche giorno  non sono state effettuate modifiche al codice con relativi commit, a  differenza di quanto avviene normalmente con almeno due o tre commit  giornalieri.
+
+Questo è dipeso dal fatto che il core di Hybris è stato rivoluzionato  totalmente dal commit "<a href="http://github.com/evilsocket/hybris/commit/67ed538aa72cb5b40ddace1d20bc7daf13ec7d7d" target="_blank">67ed538aa72cb5b40ddace1d20bc7daf13ec7d7d</a>"  in poi, così come (principalmente) il sistema di gestione dei tipi, la  libreria standard e il garbage collector, per un aumento delle  prestazioni di più dell'80%, nonchè della pulizia del codice e della  modularità dello stesso.
+
+Andrò brevemente ad illustrare in cosa consistono tali modifiche,  perchè sono state fatte e a cosa portano.
+
+<break><strong>Nuovo gestore dei tipi.</strong>
+
+Originariamente (praticamente dalla prima stesura del codice), ogni  tipo in Hybris era trattato tramite un unica classe denominata "Object"  con tantissimi metodi, ognuno che svolgeva un compito in particolare,  partendo dalle semplice operazioni aritmetiche fino ad arrivare alla  serializzazione xml di un oggetto.
+
+Il problema di questo approccio, oltre al disordine generale che  apportava al codice, era che essendo la gestione delle differenze dei  tipi "centralizzata" in una serie immensa di switch/case/default  all'interno di questa classe, non esistevano dei metodi "generici" per  interfacciarsi alle funzionalità del singolo tipo, di conseguenza la  modularità del tutto ne risentiva parecchio (in particolare nei file  della libreria standard), così come l'efficienza e la pulizia.
+
+Dato questo assunto, siamo passati ad un nuovo tipo di approccio,  basato non più su una classe, bensì su diverse strutture ognuna con un  header comune a tutte (rappresentate l'oggetto di base) e una serie di  puntatori a funzione, ognuno dei quali gestisce (o meno) una data  funzionalità per il dato tipo.
+
+Se una funzionalità non è disponibile per quel tipo (ad esempio  l'accesso con operatore subscript [] ad un numero intero), il suo  puntatore a funzione è dichiarato come NULL.
+
+In seguito sono  state implementate delle funzioni generiche che  richiamano queste funzioni su un oggetto base, dando un errore di  sintassi nel caso la funzione non sia disponibile.
+
+Questo ha portato a tre migliorie fondamentali.
+
+La prima, un incremento generale dell'efficienza (intesa come tempo  di elaborazione e consumo di risorse) che si aggira tra l'80% ed il 90%.
+
+La seconda, nonchè forse la più importante, ad una generalizzazione  enorme dei tipi.
+In questo modo, quando è necessario implementare un  nuovo tipo, non bisogna più estendere una classe già confusa di per se,  bensì basta dichiarare una nuova struttura ed implementare quelle  funzioni che il tipo supporta.
+
+Inoltre, da un punto di vista "esterno" al core, un modulo qualsiasi  (e l'engine stesso) non devono più preoccuparsi dei dettagli interni di  un oggetto, poichè possono trattarlo usando le interfacce generalizzate  senza preoccuparsi di altro.
+
+La terza miglioria consiste nel fatto che questo tipo di approccio  consente di implementare un sistema di garbage collection nettamente  diverso rispetto a prima, del quale parleremo nel punto successivo.
+
+<strong>Preemptive vs </strong><strong>reference counting</strong><strong> garbage collection</strong>
+
+La logica del precedente garbage collector era semplice quanto  inefficiente, ovvero :
+<ol>
+	<li>Alloca un oggetto.</li>
+	<li>Esegui delle operazioni.</li>
+	<li>Controlla se l'oggetto verifica determinate condizioni di  deallocazione.</li>
+	<li>Dealloca.</li>
+</ol>
+Nel punto 3 si aveva il difetto principale, ovvero che non sempre,  per come era strutturato il core, si era in grado di determinare se un  oggetto era deallocabile o meno, ma un 50% delle volte un oggetto  risultava non deallocabile quando in realtà lo era, portando ad un  consumo di memoria enorme quando non era realmente necessario. Oltre a  questo, il controllo veniva fatto dopo OGNI allocazione dinamica, di  conseguenza era un operazione che richiedeva un tempo di calcolo  decisamente considerevole.
+
+Dopo la ristrutturazione del core, è stato inserita la logica di  reference counting, basata sul conteggo dei riferimenti che ogni oggetto  allocato ha in un dato punto dell'esecuzione.
+
+Per "conteggio dei riferimenti" si intende che, ogni volta che un  oggetto viene referenziato (ad esempio quando viene inserito all'interno  di un vettore che lo contiene, oppure quando viene assegnato ad una  variabile), viene incrementato un contatore e, analogamente, quando  questo oggetto non è più referenziato (stando all'esempio precedente,  quando il vettore che lo contiene viene liberato oppure quando alla  variabile viene assegnato un nuovo valore) si decrementa tale contatore.
+
+Successivamente, si chiama la funzione "gc_collect" in un punto  specifico del programma, per la precisone alla fine di uno statement, in  corrispondeza del carattere ";", e questa funzione deallocherà, se  l'utilizzo globale di memoria ha raggiunto una determinata soglia, tutti  gli oggetti senza riferimenti.
+
+Inutile dire che questo approccio, oltre ad eliminare qualsiasi tipo  di memory leak abbassando tantissimo il consumo di risorse, è  estremamente più affidable ed efficiente del suo predecessore.
+
+<strong>Nuova libreria standard</strong>
+
+In seguito a queste due modifiche fondamentali, è stato necessario  sostanzialmente reimplementare tutta la libreria standard, il che ha  portato a correggere molti bug che erano sfuggiti e a migliorare  ulteriormente l'efficienza dell'interprete.
+
+</div>

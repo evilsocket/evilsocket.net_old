@@ -1,0 +1,15 @@
+Date: 2009-05-30 00:28:43
+Author: evilsocket
+Categories: Biometria, C, C++, Programmazione, Sorgenti
+Tags: 
+Title: Pubblicato BioIdentify
+
+Dopo qualche mese dalla sua stesura ho deciso di pubblicare e condividere il mio primo progetto open che include tutte le funzioni necessarie al fine di elaborare delle impronte digitali .
+
+BioIdentify (o bioid) Ã¨ un applicazione da riga di comando che consente di estrarre le features dalle impronte digitali e salvarle in un file "BIR" (<strong>B</strong>iometric<strong> I</strong>dentification <strong>R</strong>ecord), eseguire matching tra due impronte o identificare il padrone di un impronta all'interno di un database di BIRs precedentemente elaborato dall'applicazione stessa .
+
+<break>
+
+C'Ã¨ ancora un bel po da fare, non tanto nella fase di estrazione che si puÃ² dire pressochÃ¨ completa (a parte qualche accorgimento qua e la che devo fare), ma piÃ¹ che altro nella parte di matching, che ha una precisione di circa l'88% (meglio alzarla no ? ^^) e nell'efficienza complessiva .
+
+<a href="http://github.com/evilsocket/BioIdentify/tree/master" target="_blank">Pagina github del progetto</a>

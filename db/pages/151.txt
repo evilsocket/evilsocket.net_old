@@ -1,0 +1,13 @@
+Date: 2009-05-23 20:25:27
+Author: evilsocket
+Categories: Programmazione, Sorgenti
+Tags: cvs, evilsocket, git, github, hybris, msp, Multi-Dimensional Space Processing Library, repo, repository, source, svn
+Title: GitHub : SarÃ  meglio di sourceforge ?
+
+E' da un po di giorni che sto studiando github, un servizio dove ognuno puÃ² salvare i propri proggetti tramite l'applicativo git e/o collaborare con proggetti giÃ  esistenti (come cvs, svn &amp; co) .
+
+CosÃ¬ ho deciso di registrarmi e iniziare due repository pubblici, uno per MSP e un altro per Hybris, il linguaggio di programmazione al quale sto lavorando da qualche mese e che fino ad ora non avevo ancora pubblicato .
+
+Chi fosse interessato trova il mio profilo su <a href="http://github.com/evilsocket/" target="_blank">http://github.com/evilsocket/</a> mentre un documento che spiega molto bene come utilizzare git lo trovate <a href="http://www.spheredev.org/wiki/Git_for_the_lazy" target="_blank">qui</a> .
+
+Speriamo che l'esperienza risulti piÃ¹ piaevole di quella con i repo di sourceforge che mi hanno fatto diventare scemo XD .

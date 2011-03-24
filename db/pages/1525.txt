@@ -1,0 +1,17 @@
+Date: 2010-08-02 16:28:33
+Author: evilsocket
+Categories: Misc
+Tags: feed, feedburner, feeds, rss
+Title: Informazione di Servizio, FeedBurner
+
+<a href="http://www.evilsocket.net/wp-content/uploads/2010/08/feedburner-logo.png"><img class="alignleft size-medium wp-image-1526" title="feedburner-logo" src="http://www.evilsocket.net/images/feedburner-logo-279x300.png" alt="" width="167" height="180" /></a>Altra informazione di servizio.
+
+Da ora, i feed rss di questo blog saranno gestiti tramite FeedBurner, per la precisione all'indirizzo :
+<blockquote>
+<p style="text-align: center;"><a href="http://feeds.feedburner.com/evilsocket-dot-net">http://feeds.feedburner.com/evilsocket-dot-net</a></p>
+</blockquote>
+Come è possibile vedere ho aggiunto al menu superiore un icona tramite la quale è possibile accedere al burner ed iscriversi.
+
+Prego gli eventuali utenti che fin'ora seguivano i feed direttamente tramite il generatore del blog, di aggiornare i loro reader con il nuovo indirizzo così da permettermi di monitorare eventuali iscrizioni, cilck, trick &amp; track, bim-bum-bam, ecc :)
+
+Grazie

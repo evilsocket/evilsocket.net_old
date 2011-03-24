@@ -1,0 +1,95 @@
+Date: 2009-12-21 17:13:49
+Author: evilsocket
+Categories: C, Programmazione, Sorgenti
+Tags: allocation, boundaries, boundary, check, code, pointer, security, stack, variable
+Title: C Stack Inspection
+
+Un po di tempo fa mi son posto un quesito :
+<blockquote>Avendo un puntatore ad una variabile allocata sullo stack (non l'heap, quindi memoria statica), è possibile determinare quanti byte ci posso scrivere al massimo prima di andare in overflow ?</blockquote>
+Naturalmente, nel caso di una stringa con la corretta terminazione nulla, basterebbe una semplice chiamata a strlen ed il gioco è fatto ... ma avendo un puntatore "generico", del quale non si sa niente, ne il tipo di dati ai quali punta, ne se è terminato, o altro ?
+
+Voi potreste dire "e a che scopo fare una cosa del genere ?"
+
+Beh, immaginate di dover scrivere una libreria .so o .a e, in una delle varie funzioni che volete esportare, di ricevere come parametro un puntatore del quale non conoscete la natura e nel quale dovete scrivere delle informazioni ... non sarebbe utile (più che altro doveroso XD) accertarsi quanto potete scrivere prima di fottere tutto ?! :D
+
+Inizialmente pensai ad una soluzione drastica, un piccolo modulo kernel che si interfacciava al gestore della memoria per darci le info necessarie sul puntatore in questione, ma oltre che ad estremamente complicata come soluzione, ho scoperto che era anche inutile!
+
+Ebbene si, dopo tante ricerche e ore di studio, ho scoperto finalmente il modo :)
+
+<break>
+
+Il "trucco" sostanzialmente consiste nel prelevare il puntatore al primo frame dello stack tramite il registro <strong>ebp </strong>e successivamente looparmi un frame alla volta per identificare la precisa localizzazione del nostro puntatore nei vari frame.
+
+Fatto questo, sapendo l'alignment di ogni frame e avendo la sua posizione cardinale, si calcola in modo estremamente facile quanto è vasta la zona di memoria puntata dal nostro amico puntatore ^^.
+
+Qui di seguito posto il codice di esempio, commentato il più possibile per rendere chiaro il procedimento il più possibile. Tuttavia tengo a sottolineare che per una completa comprensione del codice, è necessario conoscere la struttura dello stack e le dinamiche che ne regolano il funzionamento ... enjoy ^^
+
+[cc lang="c"]/*
+ *
+ *      Copyleft 2009 evilsocket
+ *
+ *              http://www.evilsocket.net
+ *
+ *      This program is free software; you can redistribute it and/or modify
+ *      it under the terms of the GNU General Public License as published by
+ *      the Free Software Foundation; either version 2 of the License, or
+ *      (at your option) any later version.
+ *
+ *      This program is distributed in the hope that it will be useful,
+ *      but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *      GNU General Public License for more details.
+ *
+ *      You should have received a copy of the GNU General Public License
+ *      along with this program; if not, write to the Free Software
+ *      Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ *      MA 02110-1301, USA.
+*/
+
+#include <stdio.h>
+
+unsigned long get_stack_boundary( void *address ){
+    void *        stackpointer;
+	unsigned long framepointer,
+				  i, framesize,
+				  framedelta;
+	
+	/* usando il puntatore instanziato localmente, controllo che effettivamente 'address' sia una variabile nello stack */
+    if( (void *)&stackpointer > address ){
+    	return 0;	
+    }    
+    
+    /* prelevo l'indirizzo del primo frame pointer */
+    #ifdef __x86_64__
+    	__asm__ volatile ("mov %%rbp, %0" : "=r" (framepointer));
+    #else
+   		__asm__ volatile ("mov %%ebp, %0" : "=r" (framepointer));
+    #endif
+    
+    /* loopo ogni frame dello stack fino a trovare quello che contiene il puntatore che ci interessa */
+    for( stackpointer = (void *)framepointer, i = 0; stackpointer; stackpointer = (void *)*((unsigned *)stackpointer), i++ ){
+		// trovato ?
+   		if( stackpointer > address ){
+			/* determino se il puntatore si trova nella parte alta o bassa del frame */
+   			framedelta = stackpointer - address;
+   			framesize  = 8 * i;
+   			return (framedelta >= framesize ? framedelta - framesize : framedelta);
+   		}
+   		/* il puntatore deve essere word aligned */
+   		if( (unsigned long)stackpointer & 0x03 ){
+   			return 0;	
+   		}
+    }
+
+    return 0;
+}
+
+int main(){
+	char buffer[123] = {0};
+	// in questo esempio, il risultato sarà maggiore di 123, poichè ci sono una serie di byte aggiuntivi 
+	// oltre a quelli allocati proprio per evitare sovrascritture dei frame successivi
+	printf( "buffer size : %d\n", get_stack_boundary(buffer) );
+	
+	return 0;
+}
+[/cc] 

@@ -1,0 +1,84 @@
+Date: 2010-04-06 21:38:37
+Author: evilsocket
+Categories: Misc, Programmazione
+Tags: builtins, functions, hybris, namespaces, std, stdlib
+Title: Hybris, e così son tutti contenti.
+
+Bon ... dopo l'articolo di ieri, ho pensato molto alla soluzione da adottare ed alla fine ho optato per separare le funzionalità in una libreria standard esterna (sempre compilata e distribuita insieme all'interprete) così da lasciare il core pulito e veloce.
+
+Attualmente, bisogna dichiarare esplicitamente quali moduli importare dal namespace standard (chiamato appunto <strong>std</strong>), tuttavia son venuto incontro alle necessità dei più pigri (me compreso) che, non essendo interessati alla velocità di esecuzione, preferirebbero precaricare tutto il possibile per non dover dichiarare manualmente i moduli necessari.
+
+Ho implementato l'operatore '*' per gli import, ispirato al java, tramite il quale è possibile importare ricorsivamente interi namespace e loro derivati in una sola riga ... ad esempio, se volessimo importare tutte le funzionalità di I/O (su file, console, stream xml, tcp/ip e http), basta un :
+<blockquote>import std.io.*;</blockquote>
+All'inizio dello script, oppure, se proprio vogliamo importare TUTTO, si può scrivere più semplicemente :
+<blockquote>import std.*;</blockquote>
+Questo operatore è valido SOLO se viene specificato il namespace principale (in questo caso std), ovvero una dicitura del genere :
+<blockquote>import *;</blockquote>
+Genererà l'errore :
+<blockquote><em>Could not use '*' as main namespace.</em></blockquote>
+Questo perchè ho voluto pensare al futuro ... ipotiziamo che un domani Hybris abbia 500 moduli implementati da utenti vari (magari! ^^), importare tutto con * significherebbe tempi di calcolo troppo eccessivi e troppe risorse richieste, invece indicando il namespace padre, rimane la comodità ma è più selettiva.
+
+<break>
+
+La libreria standard è composta dai seguenti moduli :
+<ul>
+	<li> <strong>std</strong>
+<ul>
+	<li> math : <em>Funzionalità matematiche </em></li>
+	<li> pcre :<em> Supporto alle espressioni regolari </em></li>
+	<li> encoding : <em>Funzionalità di encoding </em></li>
+</ul>
+</li>
+</ul>
+<ul>
+	<li>
+<ul>
+	<li> <strong>io</strong>
+<ul>
+	<li> console :<em> I/O su console </em></li>
+	<li> file : <em>I/O su file </em></li>
+	<li> xml : <em>I/O su flussi XML </em></li>
+	<li> <strong>network</strong>
+<ul>
+	<li> tcp : <em>Primitive per i socket tcp/ip </em></li>
+	<li> http : <em>Funzionalità HTTP e HTTPS </em></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+	<li>
+<ul>
+	<li> <strong>type</strong>
+<ul>
+	<li> string : <em>Gestione stringhe </em></li>
+	<li> array : <em>Gestione array</em></li>
+	<li> matrix : <em>Gestione matrici</em></li>
+	<li> binary : <em>Gestione flussi binari</em></li>
+	<li> map : <em>Gestione mappe associative</em></li>
+	<li> type : <em>Gestione dei tipi</em></li>
+	<li> reflection : <em>Introspezione dei tipi</em></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+	<li>
+<ul>
+	<li> <strong>os</strong>
+<ul>
+	<li> dll :<em> Caricamento ed esecuzione di funzioni da dll di sistema </em></li>
+	<li> threads : <em>Multithreading</em></li>
+	<li> time : <em>Gestione del tempo e della data</em></li>
+	<li> process : <em>Gestione multi processo</em></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<em>
+</em>

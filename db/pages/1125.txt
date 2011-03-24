@@ -1,0 +1,20 @@
+Date: 2010-06-05 04:00:13
+Author: evilsocket
+Categories: Misc
+Tags: hybris
+Title: Cambiato il sistema di compilazione di Hybris, da Rake a CMake.
+
+<p>Come alcuni di voi avranno letto da i miei messaggi su identi.ca e twitter, in questi ultimi due giorni ho lavorato per cambiare il sistema di compilazione di Hybris da Rake a CMake .
+</p><p>Ho preso questa decisione per diversi motivi, ne riporto solo alcuni :</p>
+
+<ul>
+<li>Il sistema Rake non genera un Makefile, di conseguenza non offre piena compatibilità con i tool di pacchettizzazione (ad esempio checkinstall) .</li>
+<li>Richiede l'installazione di Ruby e della versione dev di ruby per il supporto alle routine per il controllo delle dipendenze.</li>
+<li>Essendo più giovane di CMake, alcune soluzioni mi sono sembrate, per quanto comode, un po "arrabbattate" e poco leggibili/mantenibili.</li>
+<li>Esclude automaticamente tutti quei sistemi nei quali l'installazione di Ruby è difficoltosa.</li>
+</ul>
+<p>Di conseguenza, la procedura (come da <a href="http://www.hybris-lang.org/wiki/doku.php?id=compilazione_ed_installazione" >documentazione</a>) ora è :</p>
+<blockquote><p><sub><strong>cmake .</strong></sub></p></blockquote>
+<blockquote><p><sub><strong>make</strong></sub></p></blockquote>
+<blockquote><p><sub><strong>sudo make install</strong></sub></p></blockquote>
+<p><a href="http://www.hybris-lang.org/story/cambiato-il-sistema-di-compilazione-di-hybris-da-rake-a-cmake.html" >read more</a></p><img src="http://feeds.feedburner.com/~r/HybrisProgrammingLanguageOfficialSite/~4/kFpgQsLghtc" height="1" width="1"/>

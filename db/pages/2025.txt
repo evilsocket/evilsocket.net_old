@@ -1,0 +1,13 @@
+Date: 2011-01-09 17:57:11
+Author: evilsocket
+Categories: Exploiting, Hacking, Tools, Web Hacking
+Tags: arp, arp cache, arp poisoning, cache, clshack, paros, proxy, scapy, web spoofing
+Title: Arp poisoning with scapy and web request spoofed with paros proxy on Backbox
+
+<img class="alignleft" src="http://www.erriko.it/images/hacking.png" alt="" width="54" height="47" />Vi posto un interessantissimo video PoC eseguito dal mio amico <a href="http://www.clshack.it/" target="_blank">clshack</a> nel quale mostra, tramite scapy e paros, come eseguire un attacco di tipo web spoofing sulla distribuzione <a href="http://www.backbox.org/" target="_blank">BackBox</a> Linux .
+
+Per l'articolo sull'utilizzo di scapy vi rimando <a href="http://www.clshack.it/scapy-arp-poisoning-and-web-traffic-hijacking" target="_blank">qui</a>, mentre per l'articolo completo sulla tecnica in questione potete cliccare su <a href="http://www.clshack.it/arp-poisoning-scapy-web-request-spoofed-paros-proxy-on-backbox" target="_blank">questo link</a>, enjoy!
+
+<center>
+<iframe title="YouTube video player" class="youtube-player" type="text/html" width="360" src="http://www.youtube.com/embed/TR8F23rx5oQ?rel=0" frameborder="0"></iframe>
+</center>

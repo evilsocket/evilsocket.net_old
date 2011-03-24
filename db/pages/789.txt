@@ -1,0 +1,17 @@
+Date: 2009-11-02 05:40:40
+Author: evilsocket
+Categories: Programmazione
+Tags: 
+Title: Aggiornamento Hybris : To '~=' or not to '~=' ?
+
+Una delle caratteristiche che più adoro del perl, è decisamente l'operatore ~= per le espressioni regolari, che mi consente di estrarre, matchare e/o rimpiazzare quel che più mi aggrada.
+
+Essendo <strong>Hybris</strong> un linguaggio di scripting pensato e sviluppato per *fondere* le features dei vari linguaggi di programmazioni che più ritengo utili (ovviamente stando al mio gusto), come potevo non implementare questo operatore ?
+
+<break>E così, una nuova release di hybris è pronta e può essere trovata sul mio <a href="http://github.com/evilsocket/Hybris" target="_blank">profilo di github</a>.
+
+Tanto per capirci, eccolo un piccolo script di esempio :
+
+<img class="aligncenter size-full wp-image-790" title="Screenshot" src="http://www.evilsocket.net/images/Screenshot.png" alt="Screenshot" width="584" height="285" />
+
+Come vedete ecco l'operatore implementato sia per il matching che per l'estrazione ... per il replacing ci sto lavorando XD.

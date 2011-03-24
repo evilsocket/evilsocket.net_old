@@ -1,0 +1,48 @@
+Date: 2010-05-10 09:27:36
+Author: evilsocket
+Categories: Misc
+Tags: forum, hybris, operatori, sondaggio
+Title: [SONDAGGIO] Quali operatori preferite?
+
+Vi propongo un sondaggio che è molto importante per lo sviluppo di Hybris, vi prego di rispondere votando nel poll che ho creato su <a href="http://www.hybris-lang.org/forum/index.php?topic=8.msg16#new" target="_blank"><strong>questo thread nel forum</strong></a>.
+
+Allora allora allora, stavo pensando ad una cosa e vorrei chiedere un  opinione di voi utenti.
+
+<break>
+Chi tra voi ha studiato la sintassi di  Hybris, sa che per concatenare una stringa con qualcos'altro, si usa  l'operatore . (il punto) :
+<div>Code</div>
+<pre>
+<ol>
+	<li>
+<div>concatenata = "ciao "."mamma";</div></li>
+</ol>
+</pre>
+Mentre  per richiamare attributi e metodi di classi e strutture, si usa  l'operatore -&gt; :
+<div>Code</div>
+<pre>
+<ol>
+	<li>
+<div>classe-&gt;metodo();</div></li>
+</ol>
+</pre>
+Ora,  dato che, non so voi, ma io ODIO dover digitare più caratteri del  necessario per fare una qualche operazione, stavo pensando di adottare  una soluzione meno "php-ish", ovvero, usare il punto per le classi e  strutture :
+<div>Code</div>
+<pre>
+<ol>
+	<li>
+<div>classe.metodo();</div></li>
+</ol>
+</pre>
+Ed  il + per concatenare stringhe e altre variabili :
+<div>Code</div>
+<pre>
+<ol>
+	<li>
+<div>concatenata = "ciao " + "mamma";</div></li>
+</ol>
+</pre>
+Lo  stesso operatore non si può usare per entrambe le cose per una serie di  motivi che non sto qui a spiegare, credetemi sulla fiducia <img src="http://www.hybris-lang.org/forum/Smileys/default/smiley.gif" border="0" alt="Smiley" />
+
+Bon, io preferisco la seconda soluzione,  mi sembra + pulita da leggere e richiede un carattere in meno ( .  contro -&gt; ) ... voi che ne dite?
+
+<strong>Oltre a votare nel  sondaggio, gradirei una breve spiegazione del vostro voto, tnx ^^</strong>

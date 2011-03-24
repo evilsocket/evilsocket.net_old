@@ -1,0 +1,13 @@
+Date: 2010-04-22 18:18:57
+Author: evilsocket
+Categories: Programmazione, Sorgenti
+Tags: class, client, hybris, key-value, library, redis, store
+Title: Redis client library for Hybris
+
+<div>
+
+<img src="http://www.h-online.com/imgs/43/4/9/6/1/4/9/redis_logo200-b9d0069a4f4febaf.png" alt="" align="left" />E' disponibile, presso <a href="http://github.com/evilsocket/hybris-redis" target="_blank">questo</a> repository,  una libreria scritta in Hybris per connettersi al database Redis,  progetto che sta facendo passi da gigante grazie al supporto della  comunità open source e soprattutto del suo creatore <a href="http://github.com/antirez" target="_blank">Salvatore Sanfilippo</a>.
+
+Questa libreria vuole essere sia un omaggio che un contributo alla  scena open italiana e soprattutto agli sforzi di uno sviluppatore  brillante, in un paese che sembra ne incoraggiare ne ricompensare menti  di questo tipo.
+
+</div>

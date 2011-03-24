@@ -1,0 +1,15 @@
+Date: 2010-06-12 16:20:41
+Author: evilsocket
+Categories: Misc
+Tags: hybris
+Title: La potenza del Dll loading in un linguaggio di scripting.
+
+<p>L'altro giorno, curiosando nel <a href="http://nopaste.hybris-lang.org/" >nopaste</a>, mi sono imbattuto in uno script del buon white_sheep, nel quale provava tramite la classe std.Dll a caricare la libreria ncurses e creare del testo.
+</p><p>Una volta provato e visto che funzionava, mi son detto "beh, vediamo fino a che punto si può arrivare!" :)</p>
+<p>Bene, ho preso il <a href="http://www.captain.at/howto-curses-example.php" >primo esempio</a> di ncurses che mi ha restituito google e ho provato a convertirlo con questa tecnica, quindi senza implementare a mano un modulo di binding per la libreria ncurses per Hybris, bensì caricando direttamente il modulo nativo in C .</p>
+<p>Il risultato ?</p>
+<p><img  src="http://img217.imageshack.us/img217/1511/schermataql.png" style="width: 204px; height: 234px; " alt="" /></p>
+<p>Esattamente come la sua controparte in C!!! :D</p>
+<p>Conclusione, la tecnica del Dll loading si sta rivelando molto più potente e utile di quanto previsto! :P</p>
+<p>Il codice Hybris lo <a href="http://nopaste.hybris-lang.org/233.html" >trovate sul nopaste</a>.</p>
+<p><a href="http://www.hybris-lang.org/story/la-potenza-del-dll-loading-in-un-linguaggio-di-scripting.html" >read more</a></p><img src="http://feeds.feedburner.com/~r/HybrisProgrammingLanguageOfficialSite/~4/151Ld0Om7no" height="1" width="1"/>

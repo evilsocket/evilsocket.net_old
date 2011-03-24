@@ -1,0 +1,17 @@
+Date: 2011-01-16 18:41:05
+Author: evilsocket
+Categories: Hacking, Programmazione, Python, Sorgenti, Tools
+Tags: backbox, cracker, cracking, fang, fast, hash, md5, python, thread, threaded, tool
+Title: Fang: A multi service threaded MD5 cracker.
+
+<img class="alignleft" src="http://www.evilsocket.net/images/fang.jpg" alt="" width="150" />A volte gli strumenti più semplici sono anche quelli più utili ed aimè sottovalutati, quante volte vi è capitato di pensare "cavolo ma perchè nessuno ha fatto questo programma, è tanto banale?!" ?
+
+Sicuramente esistono programmi analoghi a Fang, sicuramente sono io che sono pigro e non ho voluto cercarli, sicuramente sono io che sono cocciuto e preferisco scrivermi da solo i programmi piùttosto che usare quelli scritti da qualcun'altro, magari dovendoli anche modificare per renderli più adatti alle mie necessità ... insomma, magari ho solo perso tempo, però mi sono divertito a scrivere questo piccolo script in Python :)
+
+Fang è molto semplice, dato un hash md5 in input cercherà di crackarlo tramite una lista di servizi online di hash cracking, presenti nel file fang.conf.
+
+Le varie richieste saranno eseguite in parallelo e, se l'utente avrà impostato il relativo flag da riga di comando, il software terminerà non appena avrà trovato un riscontro positivo, altrimenti continuerà ad eseguire richieste su tutti i servizi presenti nella lista.
+
+Con il primo metodo di esecuzione va da se che il servizio più veloce sarà anche il primo a crackare l'hash (nel caso sia presente nel suo db), di conseguenza il programma restituirà l'output nel minor tempo possibile.
+
+Potete trovare il software su github a <a href="https://github.com/evilsocket/fang" target="_blank">questo link</a>, oppure attendere (questione di ore) che venga pacchettizzato per <strong><a href="http://www.evilsocket.net/tag/backbox" target="_blank">BackBox Linux</a></strong> :)

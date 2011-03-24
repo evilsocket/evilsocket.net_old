@@ -1,0 +1,9 @@
+Date: 2009-05-13 08:28:58
+Author: evilsocket
+Categories: C, C++, Papers, Programmazione
+Tags: C, code optimization, codice, ottimizzazione
+Title: C/C++ Code Optimization
+
+Alcune semplici regole da seguire per scrivere codice C/C++ ottimizzato e performante, senza inutili sprechi di risorse quali cpu, ram e quant'altro .
+
+<a href="http://www.evilsocket.net/papers/ottimizzazione.pdf" target="_blank">Scarica</a>

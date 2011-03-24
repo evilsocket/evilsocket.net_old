@@ -1,0 +1,50 @@
+Date: 2011-03-17 23:47:00
+Author: evilsocket
+Categories: Hacking, Misc, Tools  
+Tags: backbox, fluxbox, de, desktop, lightweight, bbflux, menu
+Title: BackBox supporta nativamente FluxBox (BBFlux powered)
+
+<p align="justify">
+Diverse volte durante lo sviluppo di BackBox, gli utenti ci hanno chiesto di supportare dei desktop manager alternativi quali OpenBox, FluxBox, ecc ecc.<br/>
+Dal momento che BB si basa su i repository di Ubuntu Lucid e su dei suoi PPA, "supportare" altri desktop manager sostanzialmente significa una sola cosa,
+ovvero far si che il menù del DE alternativo rispecchi quello che dovrebbe avere XFCE (DE di default per BB per chi non lo sapesse :D), con le rispettive voci,
+icone, ecc ecc.
+
+Normalmente questo non sarebbe un problema, in quanto su per giù tutti i DE vanno a costruirsi la struttura del menu nello stesso modo ... tranne FluxBox (il maledetto!)
+che come chi lo usa sa per certo, ha una struttura tutta sua situata in ~/.fluxbox/menu .
+
+Ebbene ... siamo riusciti ad allinearci con FluxBox e a fare anche di più!
+
+<break>
+
+Grazie ad un programma che ho finito di scrivere oggi, <a href="https://github.com/evilsocket/bbflux" target="_blank">BBFlux</a>, il quale si esegue in automatico all'avvio
+di FluxBox, il menu si aggiornerà automaticamente.
+Questo significa che, nel primo avvio importerà il menu di XFCE dentro FluxBox, e da quel momento in poi qualsiasi pacchetto verrà installato e/o rimosso triggererà l'aggiornamento
+del menu stesso tramite BBFlux, che avviserà l'utente con una notifica dell'avvenuto aggiornamento.
+
+Da questo studio, è nato il pacchetto <b>backbox-fluxbox</b> che installa il DE, BBFlux ed altre personalizzazioni, quindi chi usa BackBox ed è un amante di FluxBox, non deve fare altro
+che dare un bel:
+
+<pre>
+  <code>sudo apt-get install backbox-fluxbox</code>
+</pre>
+
+Per godersi il tutto :)
+
+In fondo a <a href="http://www.backbox.org/category/image-galleries/backbox-linux-1" target="_blank">questa</a> pagina troverete gli screenshot del nuovo ambiente, mentre vi lascio 
+con uno screenshot del mio attuale desktop, con il composite abilitato e altre cosettine carine :)
+
+<center>
+  <a target='_blank' href='http://img859.imageshack.us/i/201103172359271920x1080.png/'><img src='http://img859.imageshack.us/img859/2015/201103172359271920x1080.png' border='0' width='300px'/></a>
+</center>
+
+Altro screenshot dove si vede il menu rigenerato:
+
+<center>
+  <a target='_blank' href='http://img801.imageshack.us/i/201103180024321920x1080.png/'><img src='http://img801.imageshack.us/img801/8965/201103180024321920x1080.png' border='0' width='300px'/></a>
+</center>
+
+<b>PS:</b> Una nota importante, se volete customizzare il menu, <b>NON</b> editate il file ~/.fluxbox/menu come fareste di solito, o le vostre modifiche andrebbero perse 
+durante l'aggiornamento successivo del menu, piùttosto potete modificare il file <b>~/.bbflux-custom-menu</b> .
+
+</p>

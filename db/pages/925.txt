@@ -1,0 +1,34 @@
+Date: 2010-03-20 15:01:26
+Author: evilsocket
+Categories: Programmazione
+Tags: garbage collection, gc, htree_exectute, hybris, hybris_vg_isgarbage, H_GC_COLLECT, memory leaks, valgrind
+Title: Gestione "smart" della memoria in Hybris .
+
+Uno dei problemi che affliggeva <a href="http://www.hybris-lang.org/" target="_blank">Hybris</a> sin dalla primissima release era il problema dell'utilizzo/spreco di memoria .
+
+Chi si è cimentato nella lettura del codice, avrà probabilmente notato che nella funzione <a href="http://github.com/evilsocket/Hybris/blob/master/src/hybris.cpp#L199" target="_blank">htree_execute</a> , quella che in pratica deve eseguire l'alberazione del programma parserizzato, non venivano de allocati gli oggetti "deallocabili" .
+
+Questo avveniva per due ragioni principali :
+<ol>
+	<li>Essendo una funzione fortemente ricorsiva, non si poteva stabilire a priori se un dato oggetto sarebbe stato necessario ad una ricorsione successiva od alla ricorsione "chiamante".</li>
+	<li>Data la forte generalizzazione della classe "<a href="http://github.com/evilsocket/Hybris/blob/master/include/object.h" target="_blank">Object</a>", non era facile stabilire a priori quali tipi di oggetto era possibile deallocare e quali no.</li>
+</ol>
+<break>Ebbene, la soluzione era molto più semplice del previsto in effetti ed il non averla trovata prima dipendeva dal fatto che il codice di htree_execute era abbastanza incasinato (di fatto era una delle pochissime funzioni che era rimasta praticamente invariata fin dall'inizio) e non era molto facile stabilire un criterio del genere in base all' "impatto visivo" del codice stesso.
+
+Quindi, mi son messo e l'ho ripulita, creato una funzione "<a href="http://github.com/evilsocket/Hybris/blob/master/include/executors.h" target="_blank">esecutrice</a>" per ogni tipo di nodo e dividendo il mega switchone di htree_execute dal codice operativo di ogni alberazione sintattica, giungendo alla conclusione che, <strong>un oggetto è immediatamente deallocabile se e solo se</strong> :
+<ol>
+	<li><strong>Non</strong> è una variabile globale dichiarata nell'area di memoria principale del programma.</li>
+	<li><strong>Non</strong> è una variabile locale dichiarata nello stack frame della funzione in cui ci si trova.</li>
+	<li><strong>Non</strong> rappresenta un valore costante (un numero, una stringa, ecc non derivanti da un espressione che li compone).</li>
+</ol>
+Dedotto questo, è stato relativamente semplice modificare ulteriormente il codice, creando la funzione <a href="http://github.com/evilsocket/Hybris/blob/master/src/vmem.cpp#L113" target="_blank">hybris_vg_isgarbage</a> per determinare se un dato oggetto è deallocabile tramite questo criterio e la macro <a href="http://github.com/evilsocket/Hybris/blob/master/src/executors.cpp#L8" target="_blank">H_GC_COLLECT</a> per liberare memoria in modo smart e sicuro .
+
+Detto ciò, ovviamente la questione presenta sia dei pro che dei contro .
+
+Il pro principale è che vengono utilizzate <strong>MOLTE </strong>meno risorse rispetto a prima per quanto riguarda la RAM, il che è ottimo per un programma che deve rimanere in esecuzione per parecchio tempo (un server ad esempio) o che richiede molte ricorsioni, loop ecc che vanno ad allocare spazzatura sullo stack (vedi gli esempi per calcolare numeri primi e perfetti).
+
+Il contro, come è facile immaginare, è che controllare ogni puntatore per determinare se è allocabile, scorrendo i vettori di due frame di memoria, rallenta un po la velocità di elaborazione, ho notato un incremento di circa 10ms nel programma per il calcolo dei numeri primi rispetto a prima .
+
+Per questo motivo, l'utente è in grado di scegliere se utilizzare questa funzionalità in fase di compilazione dei sorgenti di Hybris, andando ad agire sulla costante <strong>GC_SUPPORT</strong> definita nel file <a href="http://github.com/evilsocket/Hybris/blob/master/include/config.h#L34" target="_blank">config.h</a>, la quale ovviamente se è definita attiverà le funzionalità di garbage collecting, mentre se verrà commentata lascerà la gestione della memoria come prima, allocando tutto il necessario a runtime e deallocando tutto ciò che è stato allocato alla fine del programma, tuttavia non liberando alcuni blocchi di memoria dei quali non è possibile tener traccia, ovvero proprio quelli de allocabili tramite il garbage collector .
+
+Detto questo, son felice di dichiarare che con questa consistente modifica, l'ultima versione di Hybris risolve il 99% dei memory leaks, lasciandone solo altri pochi che comunque ho il dubbio siano dei falsi positivi di Valgrind (un software fatto proprio per determinare i memory leaks in un programma e che sto usando intensamente in questi giorni) ^^

@@ -1,0 +1,63 @@
+Date: 2009-11-03 06:05:14
+Author: evilsocket
+Categories: Misc, Programmazione
+Tags: 
+Title: I'm lovin it
+
+Lol più uso Hybris e più mi piace, non ho mai letto un xml + facilmente :D
+<img class="aligncenter size-full wp-image-802" title="Screenshot" src="http://www.evilsocket.net/images/Screenshot1.png" alt="Screenshot" width="408" height="205" />
+
+<break>
+<blockquote>
+<pre>[evilsocket@masamune ~/Desktop] ./lol.hs
+	Tue, 03 Nov 2009 03:27:54 +0000 :US opens cyber security command centre
+	Tue, 03 Nov 2009 03:27:01 +0000 :Intel Chipset Causing IPhone Sync Problem
+	Tue, 03 Nov 2009 03:26:23 +0000 :Security industry 'not making much difference'
+	Tue, 03 Nov 2009 03:25:36 +0000 :Bank IT Worker Charged In $1.1 Million Fraud
+	Tue, 03 Nov 2009 03:24:51 +0000 :C++ Smackdown: Competitive Coding Champ Emerges
+	Tue, 03 Nov 2009 03:24:15 +0000 :Yahoo Open Sources Traffic Server, Updates Hadoop
+	Tue, 03 Nov 2009 03:23:28 +0000 :Windows 7's share jumps 40% in first week of release
+	Tue, 03 Nov 2009 03:22:54 +0000 :Unisys says cloud computing can save money by eliminating U.S. jobs
+	Tue, 03 Nov 2009 03:20:12 +0000 :Ballmer: Spending on IT to suffer
+	Tue, 03 Nov 2009 03:19:34 +0000 :Google Wave: Changes coming
+	Tue, 03 Nov 2009 03:00:15 +0000 :Google: You too could win millions in stock
+	Tue, 03 Nov 2009 02:58:17 +0000 :Firefox gains Windows 7 features
+	Tue, 03 Nov 2009 02:57:30 +0000 :Clever fools: Why a high IQ doesn't mean you're smart
+	Tue, 03 Nov 2009 02:50:46 +0000 :Hacker charged in $1m cable ISP customer cloning scheme
+	Tue, 03 Nov 2009 02:49:26 +0000 :Adrian Lamo knows your number
+	Tue, 03 Nov 2009 02:48:48 +0000 :Dutch hacker holds jailbroken iPhones "hostage" for â?¬5
+	Tue, 03 Nov 2009 02:47:43 +0000 :Snow Leopard Update Disables Atom Processor Support
+	Tue, 03 Nov 2009 02:47:10 +0000 :Lifestyle Hackers
+	Tue, 03 Nov 2009 02:46:15 +0000 :Worms infesting computers worldwide: Microsoft
+	Tue, 03 Nov 2009 02:45:31 +0000 :Thwarting SQL Injection Threats
+	Tue, 03 Nov 2009 02:44:53 +0000 :IT security always comes first
+	Tue, 03 Nov 2009 02:44:12 +0000 :Conficker worm could be 'weaponized'
+	Tue, 03 Nov 2009 02:43:34 +0000 :Hackers force NZ web poll to close after skewing results
+	Mon, 02 Nov 2009 01:00:00 +0000 :10 Essential Windows 7 Downloads
+	Mon, 02 Nov 2009 00:57:57 +0000 :Leaked Photos of the Radeon HD 5970 Dual-GPU Card Emerge</pre>
+</blockquote>
+<div id="_mcePaste" style="position: absolute; left: -10000px; top: 179px; width: 1px; height: 1px; overflow-x: hidden; overflow-y: hidden;"><span style="white-space: pre;"> </span>Tue, 03 Nov 2009 03:27:54 +0000 :US opens cyber security command centre</div>
+<div id="_mcePaste" style="position: absolute; left: -10000px; top: 179px; width: 1px; height: 1px; overflow-x: hidden; overflow-y: hidden;"><span style="white-space: pre;"> </span>Tue, 03 Nov 2009 03:27:01 +0000 :Intel Chipset Causing IPhone Sync Problem</div>
+<div id="_mcePaste" style="position: absolute; left: -10000px; top: 179px; width: 1px; height: 1px; overflow-x: hidden; overflow-y: hidden;"><span style="white-space: pre;"> </span>Tue, 03 Nov 2009 03:26:23 +0000 :Security industry 'not making much difference'</div>
+<div id="_mcePaste" style="position: absolute; left: -10000px; top: 179px; width: 1px; height: 1px; overflow-x: hidden; overflow-y: hidden;"><span style="white-space: pre;"> </span>Tue, 03 Nov 2009 03:25:36 +0000 :Bank IT Worker Charged In $1.1 Million Fraud</div>
+<div id="_mcePaste" style="position: absolute; left: -10000px; top: 179px; width: 1px; height: 1px; overflow-x: hidden; overflow-y: hidden;"><span style="white-space: pre;"> </span>Tue, 03 Nov 2009 03:24:51 +0000 :C++ Smackdown: Competitive Coding Champ Emerges</div>
+<div id="_mcePaste" style="position: absolute; left: -10000px; top: 179px; width: 1px; height: 1px; overflow-x: hidden; overflow-y: hidden;"><span style="white-space: pre;"> </span>Tue, 03 Nov 2009 03:24:15 +0000 :Yahoo Open Sources Traffic Server, Updates Hadoop</div>
+<div id="_mcePaste" style="position: absolute; left: -10000px; top: 179px; width: 1px; height: 1px; overflow-x: hidden; overflow-y: hidden;"><span style="white-space: pre;"> </span>Tue, 03 Nov 2009 03:23:28 +0000 :Windows 7's share jumps 40% in first week of release</div>
+<div id="_mcePaste" style="position: absolute; left: -10000px; top: 179px; width: 1px; height: 1px; overflow-x: hidden; overflow-y: hidden;"><span style="white-space: pre;"> </span>Tue, 03 Nov 2009 03:22:54 +0000 :Unisys says cloud computing can save money by eliminating U.S. jobs</div>
+<div id="_mcePaste" style="position: absolute; left: -10000px; top: 179px; width: 1px; height: 1px; overflow-x: hidden; overflow-y: hidden;"><span style="white-space: pre;"> </span>Tue, 03 Nov 2009 03:20:12 +0000 :Ballmer: Spending on IT to suffer</div>
+<div id="_mcePaste" style="position: absolute; left: -10000px; top: 179px; width: 1px; height: 1px; overflow-x: hidden; overflow-y: hidden;"><span style="white-space: pre;"> </span>Tue, 03 Nov 2009 03:19:34 +0000 :Google Wave: Changes coming</div>
+<div id="_mcePaste" style="position: absolute; left: -10000px; top: 179px; width: 1px; height: 1px; overflow-x: hidden; overflow-y: hidden;"><span style="white-space: pre;"> </span>Tue, 03 Nov 2009 03:00:15 +0000 :Google: You too could win millions in stock</div>
+<div id="_mcePaste" style="position: absolute; left: -10000px; top: 179px; width: 1px; height: 1px; overflow-x: hidden; overflow-y: hidden;"><span style="white-space: pre;"> </span>Tue, 03 Nov 2009 02:58:17 +0000 :Firefox gains Windows 7 features</div>
+<div id="_mcePaste" style="position: absolute; left: -10000px; top: 179px; width: 1px; height: 1px; overflow-x: hidden; overflow-y: hidden;"><span style="white-space: pre;"> </span>Tue, 03 Nov 2009 02:57:30 +0000 :Clever fools: Why a high IQ doesn't mean you're smart</div>
+<div id="_mcePaste" style="position: absolute; left: -10000px; top: 179px; width: 1px; height: 1px; overflow-x: hidden; overflow-y: hidden;"><span style="white-space: pre;"> </span>Tue, 03 Nov 2009 02:50:46 +0000 :Hacker charged in $1m cable ISP customer cloning scheme</div>
+<div id="_mcePaste" style="position: absolute; left: -10000px; top: 179px; width: 1px; height: 1px; overflow-x: hidden; overflow-y: hidden;"><span style="white-space: pre;"> </span>Tue, 03 Nov 2009 02:49:26 +0000 :Adrian Lamo knows your number</div>
+<div id="_mcePaste" style="position: absolute; left: -10000px; top: 179px; width: 1px; height: 1px; overflow-x: hidden; overflow-y: hidden;"><span style="white-space: pre;"> </span>Tue, 03 Nov 2009 02:48:48 +0000 :Dutch hacker holds jailbroken iPhones "hostage" for â?¬5</div>
+<div id="_mcePaste" style="position: absolute; left: -10000px; top: 179px; width: 1px; height: 1px; overflow-x: hidden; overflow-y: hidden;"><span style="white-space: pre;"> </span>Tue, 03 Nov 2009 02:47:43 +0000 :Snow Leopard Update Disables Atom Processor Support</div>
+<div id="_mcePaste" style="position: absolute; left: -10000px; top: 179px; width: 1px; height: 1px; overflow-x: hidden; overflow-y: hidden;"><span style="white-space: pre;"> </span>Tue, 03 Nov 2009 02:47:10 +0000 :Lifestyle Hackers</div>
+<div id="_mcePaste" style="position: absolute; left: -10000px; top: 179px; width: 1px; height: 1px; overflow-x: hidden; overflow-y: hidden;"><span style="white-space: pre;"> </span>Tue, 03 Nov 2009 02:46:15 +0000 :Worms infesting computers worldwide: Microsoft</div>
+<div id="_mcePaste" style="position: absolute; left: -10000px; top: 179px; width: 1px; height: 1px; overflow-x: hidden; overflow-y: hidden;"><span style="white-space: pre;"> </span>Tue, 03 Nov 2009 02:45:31 +0000 :Thwarting SQL Injection Threats</div>
+<div id="_mcePaste" style="position: absolute; left: -10000px; top: 179px; width: 1px; height: 1px; overflow-x: hidden; overflow-y: hidden;"><span style="white-space: pre;"> </span>Tue, 03 Nov 2009 02:44:53 +0000 :IT security always comes first</div>
+<div id="_mcePaste" style="position: absolute; left: -10000px; top: 179px; width: 1px; height: 1px; overflow-x: hidden; overflow-y: hidden;"><span style="white-space: pre;"> </span>Tue, 03 Nov 2009 02:44:12 +0000 :Conficker worm could be 'weaponized'</div>
+<div id="_mcePaste" style="position: absolute; left: -10000px; top: 179px; width: 1px; height: 1px; overflow-x: hidden; overflow-y: hidden;"><span style="white-space: pre;"> </span>Tue, 03 Nov 2009 02:43:34 +0000 :Hackers force NZ web poll to close after skewing results</div>
+<div id="_mcePaste" style="position: absolute; left: -10000px; top: 179px; width: 1px; height: 1px; overflow-x: hidden; overflow-y: hidden;"><span style="white-space: pre;"> </span>Mon, 02 Nov 2009 01:00:00 +0000 :10 Essential Windows 7 Downloads</div>
+<div id="_mcePaste" style="position: absolute; left: -10000px; top: 179px; width: 1px; height: 1px; overflow-x: hidden; overflow-y: hidden;"><span style="white-space: pre;"> </span>Mon, 02 Nov 2009 00:57:57 +0000 :Leaked Photos of the Radeon HD 5970 Dual-GPU Card Emerge</div>

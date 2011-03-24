@@ -1,0 +1,9 @@
+Date: 2009-05-12 23:44:47
+Author: evilsocket
+Categories: PHP, Programmazione, Sorgenti
+Tags: cc, credit card, luhn, luhn algorithm
+Title: Credit Card Generator
+
+Uno script che genera dei numeri di carta di credito validi (ma non necessariamente esistenti e/o utilizzabili ;)) sfruttando l'algoritmo di Luhn
+
+<a href="http://www.evilsocket.net/sources/ccard.php.txt" target="_blank">Scarica</a>

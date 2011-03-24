@@ -1,0 +1,32 @@
+Date: 2010-09-13 13:10:45
+Author: evilsocket
+Categories: Programmazione, Python, Sorgenti
+Tags: async, pool, python, thread, threadpool
+Title: Classe Python 3 per gestire insiemi di threads
+
+<a href="http://www.evilsocket.net/images/python.png"><img class="alignleft size-full wp-image-1781" title="python" src="http://www.evilsocket.net/images/python.png" alt="" width="130" height="114" /></a>Inauguro la sezione dedicata ad i sorgenti in Python (per ora solo sintassi 3.x), linguaggio che ultimamente sto approfondendo parecchio, con una classe che può servire per gestire dei pool di thread.
+
+Facciamo un esempio ...
+
+Diciamo che vogliamo realizzare un port scanner multi thread in Python ... naturalmente lanciare 65535 threads simultaneamente (dove 65535 è il numero di porte possibili) potrebbe portare ad un *leggero* (LOL) appesantimento del sistema, per alcuni sistemi invece non è nemmeno possibile avere così tanti threads in parallelo.
+
+<break>
+
+Sarebbe interessante invece, poter dire ad un gestore (nel nostro caso la classe che sto per presentarvi) "Complessivamente abbiamo 65535 threads da eseguire, io ti passo tutti gli argomenti di ognuno e poi pensa tu ad eseguirli a "blocchi" di N (dove N è un parametro) finchè non sono tutti esauriti."
+
+Personalmente mi son trovato a dover svolgere questo compito tantissime volte e quindi, piùttosto che delegare la cosa ad una soluzione "manuale", ho preferito implementare una classe che faccia il necessario, condividendola con voi.
+
+Il link al nopaste è questo <a href="http://nopaste.hybris-lang.org/248.html" target="_blank">http://nopaste.hybris-lang.org/248.html</a>
+
+Il codice è commentato, diciamo che vanno capiti bene solo i parametri del costruttore.
+<ul>
+	<li><strong>window_size </strong>: Un intero che rappresenta la "finestra" di thread da poter eseguire contemporaneamente, la grandezza del "blocco" di cui abbiamo parlato insomma.</li>
+	<li><strong>prototype</strong> : Una classe derivata di threading.Thread che rappresenta il prototipo del thread da eseguire.</li>
+	<li><strong>async</strong> : Booleano che determina se il pool stesso dovrà essere lanciato in modo asincrono rispetto al programma stesso.</li>
+	<li><strong>eiface</strong> : Una classe (opzionale) derivata di ThreadPoolEventInterface che se impostata riceve gli eventi principali del pool.</li>
+</ul>
+Vediamo ora un piccolo esempio di utilizzo, semplicemente lanceremo 1000 threads in blocchi da 10 che stamperanno un numero che gli verrà passato come argomento .
+
+<a href="http://nopaste.hybris-lang.org/249.html" target="_blank">http://nopaste.hybris-lang.org/249.html</a>
+
+Enjoy ^^

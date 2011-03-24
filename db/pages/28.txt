@@ -1,0 +1,9 @@
+Date: 2009-05-12 23:33:30
+Author: evilsocket
+Categories: C, Programmazione, Sorgenti
+Tags: kernel headers, linux, wifi scanner
+Title: WiFi Scanner
+
+Microscopica implementazione di uno scanner wifi sotto linux, che non si appoggia su nessuna libreria ma sfrutta direttamente le chiamate native del kit di sviluppo C .
+
+<a href="http://www.evilsocket.net/sources/wifi.c.txt" target="_blank">Scarica</a>

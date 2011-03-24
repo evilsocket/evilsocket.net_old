@@ -1,0 +1,44 @@
+Date: 2010-08-04 17:23:03
+Author: evilsocket
+Categories: Hacking, Programmazione, Reversing
+Tags: beta, C, classes, client, debug, debug info, hacked, leaked, linux, objdump, source, source code, steam
+Title: Steam Linux Beta Client Leaked & Hacked
+
+<a href="http://www.evilsocket.net/images/steam_logo.jpg"><img class="alignleft size-full wp-image-1531" title="steam_logo" src="http://www.evilsocket.net/images/steam_logo.jpg" alt="" width="120" height="96" /></a>E già da un po che in giro si sente tanto parlare della versione GNU/Linux della piattaforma di gioco <a href="http://it.wikipedia.org/wiki/Steam_(informatica)" target="_blank">Steam</a>, che dovrebbe essere in fase di sviluppo e rilasciata in data da definirsi.
+
+Nonostante questo, sul wiki di supporto del sito steampowered si legge :
+<blockquote>Il client di Steam è una applicazione pensata per Windows, e al momento non è pianificata la creazione di un client di Steam nativo per Linux.</blockquote>
+Qualche giorno fa mi sono messo alla ricerca di informazioni in proposito ed indovinate cosa ho trovato ?!
+
+<break>L'eseguibile della versione di sviluppo di Steam per Linux!
+
+Ma la cosa molto, ma molto più interessante è che, tale eseguibile (del quale non conosco assolutamente la provenienza, ma sembrerebbe una versione "leaked") sembrerebbe essere una versione di debug, ovvero un eseguibile che *teoricamente* sarebbe dovuto rimanere nella ristretta cerchia degli sviluppatori addetti.
+
+Come posso affermare con certezza questa cosa?
+
+Facile, ci sono due motivazioni principali :
+<ul>
+	<li>Ho personalmente disassemblato il file prima di eseguirlo, nel caso fosse un virus, un fake o cose simili ... e posso dire al 100% che si tratta proprio del client Steam.</li>
+	<li>Il file in questione, <strong>è pieno di informazioni di debug</strong> che ne rivelano la natura.</li>
+</ul>
+Ed è questo secondo punto quello più interessante.
+
+Il compilatore GCC, tramite alcuni flag di compilazione, è in grado di integrare diverse informazioni sui sorgenti all'interno del binario stesso.
+
+Tali informazioni servono solitamente durante il debugging dell'eseguibile, in modo tale da mostrare nomi di funzioni, classi e metodi in stile C/C++ invece che in stile assembly.
+
+Il binario di Steam, è pieno zeppo di queste info, al punto che un bravo reverser (quindi non io XD) potrebbe trarre informazioni preziosissime da un eventuale analisi.
+
+Di conseguenza, pubblico :
+
+Uno screenshot tanto per farvi capire di che parlo :
+
+<a href="http://www.evilsocket.net/wp-content/uploads/2010/08/steam.png"><img class="aligncenter size-medium wp-image-1532" title="steam" src="http://www.evilsocket.net/wp-content/uploads/2010/08/steam-300x235.png" alt="" width="300" height="235" /></a>
+
+Una <a href="http://www.megaupload.com/?d=9OJAA41X" target="_blank">lista delle info di debug</a> ricavate tramite objdump .
+
+E per infinire, ovviamente, il <a href="http://www.megaupload.com/?d=KK4G5QB1" target="_blank">binario in questione</a> :)
+
+Spero che qualche bravo ricercatore possa trarne molte più informazioni di quante non ne ho ricavate io che, purtroppo, mi diletto solamente a tempo perso in questo genere di analisi.
+
+Questo è tutto, fatemi sapere se avete info e/o suggerimenti ^^

@@ -1,0 +1,47 @@
+Date: 2009-06-19 17:52:14
+Author: evilsocket
+Categories: Papers, Tools
+Tags: console, gmail, imap, invio email, mail, mutt, pop, ricezione email, smtp, ssmtp
+Title: Configurare Mutt e SSMTP con GMail
+
+Ho appena finito di installare e configurare <strong>mutt</strong> e <strong>ssmtp</strong> sulla Alix per inviare e ricevere email tramite il mio account gmail da console via ssh,Â  cosÃ¬ vi riporto molto velocemente le varie configurazioni da impostare per far funzionare questi splendidi software con il nostro account gmail .
+
+<break>
+Innanzitutto procediamo con il primo passo, cioÃ¨ l'installazione dei due sw
+<blockquote>
+<pre>sudo apt-get install <strong>mutt</strong> <strong>ssmtp</strong></pre>
+</blockquote>
+Una volta finito il processo di installazione, andiamo ad editare il file <strong>/etc/ssmtp/ssmtp.conf</strong> per configurare l'INVIO delle email, copiandoci dentro questo contenuto :
+<blockquote>
+<pre>root=<strong>vostra_email@gmail.com</strong>
+mailhub=<strong>smtp.gmail.com:465</strong>
+UseTLS=<strong>YES</strong>
+hostname=<strong>hostname_del_pc</strong>
+FromLineOverride=<strong>YES</strong></pre>
+</blockquote>
+Ora dobbiamo creare il file <strong>~/.muttrc</strong> nel quale inseriremo i parametri relativi alla connessione IMAP per la ricezione delle email ed il comando ssmtp per l'invio :
+<blockquote>
+<pre>set imap_user = "<strong>vostra_email@gmail.com</strong>"
+set imap_pass = "<strong>vostra_password</strong>"
+set from = "<strong>vostra_email@gmail.com</strong>"
+set realname = "<strong>vostro_nome</strong>"</pre>
+<pre>set sendmail = "<strong>/usr/sbin/ssmtp -f<em>vostro_nome</em> -au <em>vostra_email@gmail.com</em> -ap <em>vostra_password</em></strong>"
+set folder = "<strong>imaps://imap.gmail.com:993</strong>"
+set spoolfile = "<strong>+INBOX</strong>"
+set postponed="<strong>+[Gmail]/Drafts</strong>"
+set header_cache=<strong>~/.mutt/cache/headers</strong>
+set message_cachedir=<strong>~/.mutt/cache/bodies</strong>
+set certificate_file=<strong>~/.mutt/certificates</strong>
+set sort = '<strong>threads</strong>'
+set sort_aux = '<strong>last-date-received</strong>'
+set imap_check_subscribed
+set move = <strong>no</strong>
+
+ignore "<strong>Authentication-Results:</strong>"
+ignore "<strong>DomainKey-Signature:</strong>"
+ignore "<strong>DKIM-Signature:</strong>"
+hdr_order <strong>Date From To Cc</strong></pre>
+</blockquote>
+Fatto questo, tutto Ã¨ pronto, avviate mutt (al primo avvio dovrete premere '<strong>a</strong>' per accettare in modo permanente il certificato del server IMAP) e godetevi la vostra posta elettronica in console :D
+
+<img class="aligncenter size-full wp-image-772" title="mutt" src="http://www.evilsocket.net/images/mutt.png" alt="mutt" width="890" height="551" />

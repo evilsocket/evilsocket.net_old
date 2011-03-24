@@ -1,0 +1,35 @@
+Date: 2010-09-18 21:39:49
+Author: evilsocket
+Categories: iPhone, Objective C, Papers, Programmazione
+Tags: add framework, cydia, dylib, dylibs, frameworks, iphone, libnet, libpcap, sdk, xcode
+Title: [iPhone SDK] Utilizzare le librerie di Cydia su XCode.
+
+In questi giorni sto provando a scrivere un piccolo progettino, iPoison, il quale dovrebbe fornire una GUI e le funzionalità base per effettuare un attacco tramite <a href="http://www.evilsocket.net/109/arp-poisoning-ovvero-come-avere-il-totale-controllo-della-rete.html" target="_blank">arp poisoning</a> su iPhone, diciamo una versione open source ed alternativa a <a href="http://www.evilsocket.net/199/iphone-hacking.html" target="_blank">Pirni</a> <strong>Pro</strong>, un app a pagamento su Cydia alla quale ho collaborato tempo fa e che successivamente si è evoluta in Pro (quindi a pagamento -.-).
+
+Il primo problema che si è posto, è quello di utilizzare le librerie, trovate su Cydia, come libpcap, libnet e così via che non fanno parte (ovviamente) del SDK della Apple, quindi come fare?
+
+Niente di più semplice :)
+
+<break>Prima di tutto, accertiamoci di avere un iPhone jailbreakato, con SSH installato e in esecuzione.
+
+Installiamo tramite Cydia libpcap (che utilizzeremo in questo esempio, ma il procedimento può essere applicato a qualsiasi altra libreria) che si trova in uno dei repository configurati di default.
+
+A questo punto, dobbiamo copiare sia la libreria di per se (i file .dylib), che gli header (i file .h) dal nostro iPhone per poterli successivamente installare nel nostro kit di sviluppo, quindi usiamo scp :
+<blockquote>scp -r root@ip_iphone:/usr/include/pcap* .
+
+scp -r root@ip_iphone:/usr/lib/libpcap* .</blockquote>
+A questo punto ci troveremo nella directory di lavoro, alcuni file .dylib, una cartella pcap ed alcuni file .h.
+
+Bene, procediamo ad installarli nel nostro SDK :
+<blockquote>sudo cp -r pcap* /Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.0.sdk/usr/include/
+
+sudo cp -r libpcap* /Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.0.sdk/usr/lib/</blockquote>
+Benissimo, apriamo XCode (o riavviamolo), tasto dx sul gruppo <strong>Frameworks</strong> &gt; <strong>Add</strong> &gt; <strong>Existing Frameworks</strong>, impostiamo il filtro da All a Dylibs per renderci la vita più semplice ed aggiungiamo il file libpcap.dylib .
+
+A questo punto, grazie all'interoperabilità dei tipi C e Objective-C, potremmo includere il nostro file pcap.h come avremmo normalmente fatto ed utilizzare le funzionalità di questa libreria :)
+
+<strong>NOTA</strong>: Alcune librerie, come ad esempio libnet, sono sottoforma di librerie statiche .a, a differenza delle dylibs vanno trascinate nel progetto (dalla cartella /Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.0.sdk/usr/lib/) senza impostare il flag per copiarle fisicamente, poi tra i project settings, va impostata la chiave Library Search Paths con la directory di cui sopra.
+
+<strong>NOTA 2</strong>: Tramite questo procedimento, installerete le librerie per architettura ARM, di conseguenza non sarà possibile eseguire l'app tramite simulatore, ma dovrete provarla direttamente sul device.
+
+Per una guida su come poterlo fare senza certificati digitali, leggete il <a href="http://www.evilsocket.net/1799/iphone-sdk-compilare-un-applicazione-su-xcode-per-il-device-senza-certificato.html" target="_blank">precedente articolo</a>.

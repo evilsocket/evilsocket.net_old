@@ -1,0 +1,9 @@
+Date: 2009-05-12 23:53:32
+Author: evilsocket
+Categories: Assemby, C, Exploiting, Hacking, Programmazione, Sorgenti
+Tags: command injection, elf32, elf32 injector, injection, shellcode
+Title: ELF32 Injector
+
+Applicazione che ho scritto insieme a BlackLight che, dato un comando bash arbitrario, manipola la struttura elf di un eseguibile *nix inserendo uno shellcode che forkerÃ  in parallelo il codice originale dell'eseguibile e il comando da noi iniettato .
+
+<a href="http://www.evilsocket.net/sources/elfinj.c.txt" target="_blank">Scarica</a>

@@ -1,0 +1,9 @@
+Date: 2009-05-12 23:25:34
+Author: evilsocket
+Categories: Java, Programmazione, Sorgenti
+Tags: browser, Java, remote control, remote desktop, screenshot
+Title: jRemoteDesktop
+
+Piccola utility scritta in java che si mette in ascolto sulla porta 80 ed invia un immagine codificata in png del desktop del pc sul quale Ã¨ in esecuzione, immagine che potrÃ  successivamente essere visualizzata tramite un qualunque browser puntando sull'indirizzo ip del computer in questione .
+
+<a href="http://www.evilsocket.net/sources/jremotedesktop.rar" target="_blank">Scarica</a>

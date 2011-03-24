@@ -1,0 +1,11 @@
+Date: 2009-06-04 03:31:40
+Author: evilsocket
+Categories: C, Hacking, Programmazione, Sorgenti, Tools
+Tags: 
+Title: iPhone Hacking with Pirni (aggiornamento !)
+
+Nel <a href="http://www.evilsocket.net/199/iphone-hacking.html" target="_blank">precedente post</a> ho illustrato Pirni, lo sniffer/arp spoofer per iPhone ... beh mi sono letto al volo il codice e ho visto che in effetti si poteva modificare per trovare in automatico l'indirizzo di broadcast dell'interfaccia di rete tramite le funzionalitÃ  di libpcap ... cosÃ¬ ho modificato il codice et voilÃ , ora Ã¨ necessario specificare solamente l'indirizzo che si vuole spoofare, nella maggior parte dei casi quello del router :D .
+
+Ho lasciato un post sul <a href="http://axeldoesstockholm.se/techblog/" target="_blank">blog dell autore di pirni</a> linkandogli il codice aggiornato, speriamo che lo implementi nella 1.1 ^^ ... vi farÃ² sapere, sarebbe interessante iniziare una collaborazione con lui :) .
+
+PS: Per chi fosse interessato il codice modificato Ã¨ <a href="http://www.evilsocket.net/sources/pirni.c" target="_blank">questo</a>, le modifiche rispetto all'<a href="http://code.google.com/p/n1mda-dev/source/browse/trunk/pirni/pirni.c" target="_blank">originale </a>le trovate sostanzialmente nel main .

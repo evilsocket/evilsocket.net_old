@@ -1,0 +1,64 @@
+Date: 2010-07-08 16:42:11
+Author: evilsocket
+Categories: Misc
+Tags: fraud, frode, pessimo servizio, tophost, truffa
+Title: Tophost perde il pelo ma non il vizio.
+
+<p style="text-align: left;">Chi di voi mi segue da tempo, sa che prima di questo blog c'era un CMS scritto da me ed un forum, e che il tutto girava su tophost, "noto" provider italiano di web hosting a prezzi stracciati.</p>
+<break>
+
+Più di un anno fa, precisamente il 10 Febbraio 2009, scrivevo questo sul forum prozone :
+<blockquote>Premetto innanzitutto che questo post non vuole e non deve essere una critica gratuita e inutile al suddetto provider, bensì spero sia una spintarella un po + violenta del normale per migliorarsi e migliorare i servizi offerti agli utenti/clienti .
+
+Più di un anno fa, decisi di acquistare un dominio su tophost dati i prezzi annuali estremamente vantaggiosi e le poche pretese in termini di spazio web del mio portale .
+Inizialmente l'esperienza fu diciamo normale, niente di che, ma poi ho subito iniziato a riscontrare problemi sia per quanto riguarda il lato tecnico dell infrastruttura tophost, sia quello umano, quindi mi accingo a riportarvi una piccola serie di aneddoti tanto per farvi capire perchè, secondo me s'intende, <strong>un utente non dovrebbe affidarsi a tophost</strong> .
+
+<strong>Aneddoto 1</strong>
+Essendo un programmatore di professione, specializzato nella sicurezza delle infrastrutture informatiche e nei cosiddetti penetration tests (o hacking etico se vogliamo), mi sono da subito preoccupato di fare alcuni test sulla struttura tanto per capire quanto il mio sito avesse "le spalle coperte" da eventuali sistemi di sicurezza del provider.
+Bene, nell'arco di 30 minuti di test (che tra l'altro non avrei nemmeno dovuto fare io, ma il personale di tophost), ho scoperto diverse vulnerabilità nel sistema tophost che in pratica consentivano ad una persona qualsiasi di avere accesso ad ogni dato di ogni cliente, a partire dagli accessi ai domini fino ad arrivare alle info anagrafiche e/o bancarie del singolo cliente .
+Ca**o penso io, è gravissima sta cosa, va bene che sono umani e come tali soggetti ad errori, ma un provider prima di pubblicare i propri servizi dovrebbe come minimo essere sicuro al <strong>100%</strong> che almeno il <strong>proprio</strong> portale sia sicuro, xkè è proprio la che ho trovato queste falle .
+Vabbè, procedo nell'apertura di un ticket dove spiego tutto sperando che risolvino il problema ... il risultato ? Una sola delle varie falle è stata <strong>risolta parzialmente</strong> nell'arco di <strong>due mesi</strong> (mettendo a repentaglio tutto e tutti), una delle altre falle, è stata risolta solo di recente, quindi a distanza di + di un anno, le altre stanno ancora la .
+Ora io mi chiedo, <strong>sono loro ad essere incompetenti o gliene frega così poco della sicurezza dei loro clienti da far passare + di un anno per risolvere un problema così grave</strong> ?
+
+<strong>Aneddoto 2</strong>
+Come già detto, essendo un programmatore, mi diverto a scrivermi le funzionalità del mio portale da solo, senza ricorrere a soluzioni già pre confezionate ... tanto per fare un esempio (perchè per questo aneddoto potrei riportarne almeno una decina solo sul mio sito, a centinaia se parliamo anche dei siti di amici sempre su tophost), mi sono scritto una piccola chat in php+ajax, molto leggera e dinamica tanto per aggiungere un po + di interazione al mio sito .
+Ebbene, sapete cosa succede ? Se ci sono + di due utenti che usano la chat contemporaneamente si blocca tutto il sito ed esce fuori il maledetto messaggio (e sono sicuro che anche altri lo conoscono fin troppo bene) "<strong>Rate Limit Exceeded</strong>" .
+Vale a dire "<strong>we ragazzo, hai appena saturato la banda che ti diamo, quindi ti blocchiamo tutto</strong>" .... ma che ca**o ?!?!?
+Cioè mi volete dire che un traffico di meno di 1KB ogni 5 secondi satura la banda ? E che è i nostri domini sono hostati su un tostapane ?!?!?
+Beh, mi dico sempre da programmatore scrupoloso, magari è il mio script ad avere qualche difetto, tant'è vero che leggo nelle FAQ di tophost che questa anomalia si riscontra solo nel caso di wep applications fatte male ... e invece no ! fatalità ogni altro software php che ho installato da questo problema !!! Mi volete dire che tutti i software del mondo, collaudati da centinaia di migliaia di utenti in tutto il mondo, sono scritto male ? Ma va ! -.-
+E il bello qual'è ? Insieme a me, dozzine di altri clienti hanno da sempre richiesto di avere + banda, e ogni singolo ticket aperto in proposito è stato <strong>volutamente ignorato</strong> !
+
+<strong>Aneddoto 3</strong>
+Su un altro mio dominio (ovviamente non ne riporto i link per non spammare, ma all'occorrenza posso fornire tutti i dati per far vedere che ho prove concrete di quello che dico), avevo installato, tra i vari servizi, un insieme di script in php che permettevano agli utenti di navigare siti internet in modo anonimo, utilizzando il mio stesso sito, in pratica un proxy in php .
+Non c'è <strong>niente di illegale</strong> in questo, molti siti hanno script analoghi, e avevo messo un disclaimer grande quanto un palazzo dove dicevo che eventuali attività illegali sarebbero state loggate e le autorità avvertite, che io non ero responsabile di un uso improprio del servizio, etc etc etc etc etc ... eppure, spiegatemi il xkè, nonostate fosse stato tutto perfettamente legale, tophost mi ha bloccato il servizio, nemmeno mandandomi una mail di preavviso, ma deliberatamente entrando nel mio account ftp e bloccando i permessi di esecuzione su quei file !
+Ma che min***a siete la gestapo ?!?!?
+Studiatevi la legislatura e poi applicatela come si deve, non "a modo vostro" !
+
+Ne potrei riportare tante altre di storielle così, ma non voglio annoiarvi troppo ... il significato in fondo è uno solo, il servizio costa poco perchè fa schifo ! Personalmente preferisco aver speso qualche decina di euro in +, trasferendo il sito altrove, ma avere innanzitutto <strong>personale competente</strong>, servizi all'avanguardia, un infrastruttura sicura che non esponga i miei dati sensibili al primo deficiente che buca il server, e soprattutto senza avere quel cavolo di "<strong>Rate Limit Exceeded</strong>" per ogni formica che passa sui vostri cavi di rete !
+Vi consiglio vivamente di riformare il vostro staff tecnico con persone che sanno quel che fanno e di iniziare ad offrire un servizio non dico buono, ma quanto meno <strong>decente</strong>, anche facendolo pagare un po di +, nessuno vi chiede di regalare qualcosa in fondo .
+
+Spero che questo post non venga cancellato/censurato, ma piùttosto letto con attenzione .
+
+Distinti saluti,
+<em>Simone Margaritelli </em>aka <strong>evilsocket</strong></blockquote>
+La vicenda purtroppo sfociò in un flame, vuoi un po per lo staff che non seppe gestire il thread, vuoi un po per un "certo" coglione di mia conoscenza che di proposito si mise a trollare ... ma la sostanza rimase.
+
+Tophost, non solo offriva un servizio scadente, non solo deteneva infrastrutture bacate che mettevano a rischio i dati sensibili dei loro clienti, ma si arrogava anche il diritto di ritenere che, a prescindere dalla situazione, qualsiasi lamentela di un cliente fosse un evento isolato, da imputarsi solo ed unicamente all'ignoranza informatica del cliente stesso, cosa molto grave a priori, figuriamoci quando questa sorta di insulto lo si indirizza ad un cliente che di mestiere fa quello che dovrebbero fare loro XD.
+
+Ebbene, a distanza di più di un anno, <strong>non è cambiato assolutamente nulla</strong>!
+
+Oggi mi ritrovo tra i feed rss <a href="http://www.koalalorenzo.com/2010/07/08/sconsiglio-tophost/#comment-61117100" target="_blank">questo post dal blog iKoala</a>, che sostanzialmente riassume la stessa identica situazione e addirittura mostra l'incompetenza dello staff di tophost!
+
+Lorenzo, l'admin di iKoala, hostato su tophost, stava provando ad aggiornare il suo wordpress alla 3.0 in seguito a diversi problemi, procedura che non è riuscito a concludere a causa della bassa qualità del servizio di hosting.
+
+E cosa si sente rispondere?
+
+Che è colpa sua, che è colpa di wordpress, che non è possibile che una webapp consumi tante risorse (come se fosse una webapp nata ieri wordpress!) e addirittura che (allego immagine di un tweet inviato da non-so-quale-idiota-dello-staff-di-tophost a Lorenzo) :
+<p style="text-align: center;"><img class="aligncenter" src="http://dl.dropbox.com/u/1145876/tophost.jpg" alt="" width="917" height="586" /></p>
+Ma dico io, <strong>ma come cazzo vi permettete</strong>?!?!?
+
+Non solo offrite un servizio penoso, non solo a distanza di due anni non avete sistemato nulla, non solo siete degli emeriti ignoranti ed incompetenti che sparano cavolate astronomiche solo per pararsi il culo e non fare una (ennesima) figura di merda, non solo non rispondete ai ticket dei clienti (o se lo fate li chiudete subito con sufficienza) ma vi azzardate anche ad insultare e sbeffeggiare coloro che vi danno il pane pagandovi quel misero servizio ?!?!
+
+A questo punto, il problema non è ne il servizio, ne la sua qualità, tantomeno il suo prezzo ... il problema è la vostra arroganza! Ma vergognatevi!
+
+/EOF

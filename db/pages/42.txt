@@ -1,0 +1,9 @@
+Date: 2009-05-12 23:50:54
+Author: evilsocket
+Categories: C, Exploiting, Hacking, Programmazione, Sorgenti
+Tags: clipboard, exploit, grabber, poc, proof of concept, vmware, vmware exploit
+Title: VMWare Clipboard Grabber PoC
+
+Piccola utility/exploit che mostra come sia possibile, dall'interno di un sistema virtualizzato da vmware, "grabbare" i dati della clipboard (per intenderci ciÃ² che si copia-e-incolla) del sistema fisico che ospita l'immagine virtuale .
+
+<a href="http://www.evilsocket.net/sources/vmware.c.txt" target="_blank">Scarica</a>

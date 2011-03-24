@@ -1,0 +1,9 @@
+Date: 2009-05-12 23:42:35
+Author: evilsocket
+Categories: C, Hacking, Programmazione, Sorgenti
+Tags: espressioni regolari, ipgrep, libpcap, network sniffer, pcap, regex, regexp, sniffer, sniffer di rete
+Title: IPGrep
+
+Uno sniffer di rete estremamente versatile che accetta da riga di comando sia filtri nella grammatica accettata da libpcap che agiscono a livello di headers tcp/ip/icmp/udp etc, sia un espressione regolare che agisce e filtra a livello di datapayload, molto utile se si ha a che fare con una grande mole di pacchetti e se ne vogliono visualizzare solo alcuni in base ad un criterio arbitrario .
+
+<a href="http://www.evilsocket.net/sources/ipgrep.c.txt" target="_blank">Scarica</a>

@@ -1,0 +1,17 @@
+Date: 2009-05-25 00:21:36
+Author: evilsocket
+Categories: C++, Programmazione, Sorgenti
+Tags: eventi di rete, libnotify, network event daemon, proggetti, Projects, ted
+Title: TED - Network Event Daemon
+
+SarÃ² paranoico io, o sarÃ  che la sicurezza in ambito informatico non Ã¨ mai troppa, ma ho sentito la necessitÃ  di avere uno strumento che mi avvisasse degli "eventi" della mia rete, come connessioni (o tentativi) dall esterno verso il mio pc o nuovi pc connessi sulla mia rete (non sia mai qualcuno dovesse attaccarsi alla mia wifi XD) .
+
+<break>Sono sicuro al 100% che esiste giÃ  un tool che faccia queste cose, ma a me piace scrivermi da solo i miei strumenti, cosÃ¬ sta nascendo <strong>TED</strong>, acronimo (un po incasinato a dire il vero) di ne<strong>T</strong>work <strong>E</strong>vent <strong>D</strong>aemon .
+
+Il demone che Ã¨ sempre in esecuzione in background, controlla per l'appunto la presenza di nuovi pc che si connettono sulla sua rete cosÃ¬ come i tentativi di connessione dall'esterno, loggando il tutto su dei file di testo ordinati per data e mostrando un comodo box di notifica in basso a destra nello schermo tramite libnotify (tra l'altro molto figa, nn pensavo :D) .
+
+Eccovi uno screenshot della primissima versione (ancora non Ã¨ proprio pronta per il "grande pubblico" ma lo sarÃ  presto)
+
+<a href="http://www.evilsocket.net/wp-content/uploads/2009/05/ted_screenshot.png" target="_blank"><img class="aligncenter size-medium wp-image-158" title="ted_screenshot" src="http://www.evilsocket.net/images/ted_screenshot-300x240.png" alt="ted_screenshot" width="300" height="240" /></a>
+
+Ed eccovi l'url di git hub per seguire le evoluzioni e scaricare il sorgente <a href="http://github.com/evilsocket/TED/tree/master" target="_blank">http://github.com/evilsocket/TED/tree/master</a> .

@@ -1,0 +1,33 @@
+Date: 2010-04-09 22:01:45
+Author: evilsocket
+Categories: Misc, Programmazione
+Tags: cache, hashtable, hybris, library, lookup, std, stdlib
+Title: Cogito ergo sum
+
+Bonci bonci bom-bom-bò ... ehm ce l'avevo in testa XD
+
+Coooomunque ... nell'ultimo commit, oltre a risolvere alcuni bugghettini del timer e della classe Context, ho trovato un metodo per rendere
+<blockquote>import std.*;</blockquote>
+Veloce quanto gli import singoli .
+
+Ma prima riassunto delle puntate precedenti :D
+
+<break>Da qualche commit Hybris integra tutta la libreria standard tramite moduli esterni caricabili dall'utente con la direttiva import seguendo la gerarchia dei namespace .
+
+Ovviamente, più moduli si importavano (quindi più funzioni si importavano), più erano elevati i tempi di risoluzione di una funzione, ovvero quell'intervallo di tempo in cui l'interprete trovava il puntatore alla libreria esterna per gestire una chiamata a funzione ... questo perchè + elementi ci sono in una lista, + confronti vanno fatti prima di trovare un dato elemento.
+
+Questo rendeva preferibile una digitura (ad esempio) :
+<blockquote>import std.io.console;</blockquote>
+Alla dicitura :
+<blockquote>import std.*;</blockquote>
+che caricava tutto indiscriminatamente ...
+
+Tant'è vero che, a parità di algoritmo e di hardware, lo stesso script impiegava 21 millisecondi con l'import selettivo, e ben 26 millisecondi (a volte di più) con l'asterisco.
+
+Problema risolto! :D
+
+Il lookup nella lista ora avviene solo la prima volta che viene chiamata una funzione, da quel momento il suo puntatore viene messo in una hash table di cache che verrà usata successivamente per il lookup .
+
+Detto molto in parole povere, Hybris è ora in grado di capire quali funzioni vengono usate (e soprattutto quali più spesso), adattandosi di conseguenza ... risultato ?
+
+Entrambe le diciture ora occupano solo 21 millisecondi di esecuzione :)

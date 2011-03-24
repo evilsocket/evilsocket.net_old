@@ -1,0 +1,50 @@
+Date: 2010-03-20 14:40:44
+Author: evilsocket
+Categories: Misc, Programmazione
+Tags: autotools. configure, building, configure.ac, hybris, makefile.am
+Title: Finalmente gli autotools!!!
+
+Finalmente <a href="http://www.hybris-lang.org/">Hybris</a> supporta gli autotools grazie al lavoro svolto da merlok sul configure.ac e il mio sui Makefile.am.
+Di conseguenza la procedura di compilazione ora è :
+
+[cc lang=bash]./autogen.sh
+./configure
+make
+sudo make install[/cc]
+
+<break>
+
+Il che *dovrebbe* segnalare subito se manca qualche dipendenza .
+Per i "pigri", è stato aggiornato anche lo script di download ed
+installazione che ora è :
+
+[cc lang=bash]#!/bin/bash
+function do_error {
+echo "!!! Error during Hybris installation : "
+echo $1
+rm -rf $2 > /dev/null
+exit 1
+}
+
+if [ "$(id -u)" != "0" ]; then
+echo "This script must be run as root" 1>&amp;2
+exit 1
+fi
+TMP=`mktemp -u hybris.XXXXXXXXXX`;
+echo "* Cloning the Hybris repository..."
+git clone git://github.com/evilsocket/Hybris.git $TMP > /dev/null ||
+do_error "Could not clone repository ." $TMP
+cd $TMP
+echo "* Running autogen.sh ..."
+./autogen.sh > /dev/null || do_error "Could not run autogen.sh ." $TMP
+echo "* Running configure ..."
+./configure || do_error "Could not run configure ." $TMP
+echo "* Compiling Hybris ..."
+make > /dev/null || do_error "Could not compile source code ." $TMP
+echo "* Installing Hybris ..."
+make install > /dev/null || do_error "Could not install Hybris ." $TMP
+cd ..
+rm -rf $TMP > /dev/null
+echo "* Hybris succesfully installed :)"[/cc]
+
+Il supporto nn è ancora completo al 100% poichè dai Makefile.am non vengono gestite le variabili in ingresso dal configure come prefix o altro, però già questo è un passo avanti poichè il tutto offre un sistema di compilazione molto più scalabile e user friendly ^^

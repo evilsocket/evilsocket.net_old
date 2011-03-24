@@ -1,0 +1,143 @@
+Date: 2010-11-05 02:35:52
+Author: evilsocket
+Categories: iPhone, Objective C, Programmazione, Sorgenti
+Tags: animazione, curldown, curlup, iphone, iphone sdk, sdk, transizione, uinavigationbar, uinavigationcontroller
+Title: [iPhone SDK] Come creare una UINavigationBar a runtime senza utilizzare UINavigationController
+
+<img class="alignleft" src="http://www.brucebarrera.com/wp-content/uploads/2009/07/apple-iphone-sdk-beta-2.jpg" alt="" width="144" height="131" />In <a href="http://www.evilsocket.net/1786/iphone-sdk%C2%A0uitabbar-con-piu-di-cinque-tabs-in-sequenza-senza-uitabbarcontroller.html" target="_blank">uno dei precedenti articoli</a> sull'iPhone SDK, abbiamo visto come utilizzare il controllo grafico UITabBar senza il suo UITabBarController (la classe che ne gestisce il comportamento) al fine di superare alcuni limiti che il controller stesso ci impone a causa di come è stato progettato e per scelte tecniche (discutibili) della Apple.
+
+In questo articolo invece vedremo come poter creare un applicazione con una barra di navigazione superiore, UINavigationBar, e gestire la transizione da una vista ad un altra, senza utilizzare UINavigationController .
+Questo può essere comodo poichè, il alcune circostanze, non possiamo creare un applicazione partendo dal template "Navigation based Application" a causa magari di una struttura interna complessa tra views e subviews, ma tuttavia abbiamo bisogno di utilizzare lo stesso tali funzionalità per navigare appunto tra una vista ed un altra, ad esempio una maschera di ricerca che porta ad una lista di risultati, a sua volta che porta al dettaglio del singolo risultato.
+
+<break>
+
+Per questo scopo, ho creato i file Utilities.m ed Utilities.h (allegati nel progetto di esempio in fondo a questo articolo), che mettono a disposizione le seguenti tre funzioni:
+
+[cc lang="objc"]#import
+
+/*
+* Aggiunge una UINavigationBar alla view 'root' con il titolo 'title',
+* se 'withBack' è YES aggiunge il tasto 'Indietro'.
+*/
+UINavigationBar *AddNavigationBar( UIViewController *root, NSString *title, BOOL withBack );
+/*
+* Esegue una transazione animata dalla view 'from' alla view 'to' .
+*/
+void GoToView( UIViewController *from, UIViewController *to );
+/*
+* Esegue una transazione animata tornando alla view precedente.
+*/
+void BackFromView( UIViewController *from );[/cc]
+
+Direi che lo scopo delle funzioni è abbastanza evidente già di per se, utilizzeremo la prima per creare graficamente la barra di navigazione, la seconda per andare da una view ad un altra, e l'ultima per tornare alla view precedente quando il tasto "Indietro" è stato premuto ^^.
+
+Nel progetto di esempio abbiamo due viste, View1 e View2 ed i rispettivi controller ViewController1 e ViewController2, andiamo a vedere il primo controller come è dichiarato:
+
+[cc lang="objc"]#import
+#import "Utilities.h"
+
+/*
+* Eseguo qui una pseudo dichiarazione del secondo controller invece
+* di includere il rispettivo header per non creare inclusioni cicliche.
+*/
+@class ViewController2;
+
+@interface ViewController1 : UIViewController {
+UINavigationBar *navbar;
+ViewController2 *seconda;
+}
+
+@property (nonatomic, retain) UINavigationBar *navbar;
+@property (nonatomic, retain) ViewController2 *seconda;
+
+- (IBAction)secondaVista;
+
+@end[/cc]
+
+Anche in questo caso, niente di complicato, abbiamo la nostra UINavigationBar, un puntatore alla seconda vista che ci servirà per la transizione, ed un IBAction associata ad un pulsante sulla prima vista per passare alla seconda (tra un po lo screenshot).
+
+L'implementazione è altrettanto banale, vediamo il codice seguente:
+
+[cc lang="objc"]- (void)viewDidLoad {
+[super viewDidLoad];
+/*
+* Creo la navigation bar, senza il tasto 'Indietro' essendo questa la prima vista.
+*/
+self.navbar = AddNavigationBar( self, @"Vista 1", NO );
+/*
+* Alloco il controller per la seconda vista.
+*/
+self.seconda = [[ViewController2 alloc] initWithNibName:@"View2" bundle:nil];
+}
+
+- (IBAction)secondaVista {
+GoToView( self, self.seconda );
+}[/cc]
+
+Nel viewDidLoad, creiamo la nostra barra ed instanziamo il controller alla seconda vista, mentre nella IBAction, ovvero quando viene premuto il pulsante, usiamo la funzione GoToView per eseguire la transizione animata (il concetto di 'animata' lo approfondiremo tra un po).
+
+L'header del secondo controller è ancora più semplice:
+
+[cc lang="objc"]#import
+#import "Utilities.h"
+
+@interface ViewController2 : UIViewController {
+UINavigationBar *navbar;
+}
+
+@property (nonatomic, retain) UINavigationBar *navbar;
+
+@end[/cc]
+
+Mentre l'implementazione ha una leggera variazione:
+
+[cc lang="objc"]- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+if ((self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])) {
+/*
+* Creo la navigation bar, con il tasto 'Indietro' essendo questa la seconda vista.
+*/
+self.navbar = AddNavigationBar( self, @"Vista 2", YES );
+}
+return self;
+}
+
+- (void)navigationBar:(UINavigationBar*)bar buttonClicked:(int)button
+{
+/*
+* Il tasto 'Indietro' è stato premuto, torniamo alla prima view ^^
+*/
+BackFromView(self);
+}[/cc]
+
+L'inizializzazione è la stessa (eccezion fatta per il tasto 'Indietro', che stavolta imposteremo), mentre appare il nuovo metodo buttonClicked.
+E' necessario dichiarare tale metodo poichè il controller, dichiarato come delegate della UINavigationBar, ne riceve gli eventi, quindi anche l'evento scaturito dalla pressione sul tasto 'Indietro', che in questo caso lancerà la funzione BackFromView riportandoci alla vista principale :)
+
+Riprendiamo un attimo il concetto di transizione animata andando a vedere l'implementazione della funzione GoToView (BackFromView è quasi identica, quindi possiamo tralasciarla ^^) nel file Utilities.m:
+
+[cc lang="objc"]/*
+* Esegue una transazione animata dalla view 'from' alla view 'to' .
+*/
+void GoToView( UIViewController *from, UIViewController *to ){
+/*
+* Preparo l'animazione e aggiungo la subview.
+*/
+[UIView beginAnimations:nil context:nil];
+[UIView setAnimationDuration:1.0];
+[UIView setAnimationTransition:UIViewAnimationTransitionCurlUp forView:from.view cache:YES];
+[from.view addSubview:to.view];
+[UIView commitAnimations];
+}[/cc]
+
+A parte la riga
+
+[cc lang="objc"][from.view addSubview:to.view];[/cc]
+
+che molti di voi già conosceranno (non fa altro che aggiungere una sottovista a quella principale sovrapponendole), il resto potrà sembrare un po singolare.
+In realtà è molto semplice, la funzione istruisce l'engine grafico di aggiungere la sottovista, ma di visualizzare un animazione di 1.0 secondi nel farlo.
+In questo caso abbiamo utilizzato l'animazione UIViewAnimationTransitionCurlUp (avvolgi verso l'alto), le altre disponibili con relativa descrizione potrete trovarle a <a href="http://developer.apple.com/library/ios/#documentation/uikit/reference/UIView_Class/UIView/UIView.html" target="_blank">questo indirizzo</a> della documentazione ufficiale.
+
+Vi lascio con un video del comportamento dell'app ed il link al progetto di esempio ^^
+
+<a href="http://www.evilsocket.net/UINavigationBar_example.zip">UINavigationBar_example.zip</a>
+
+<center><iframe title="YouTube video player" class="youtube-player" type="text/html" width="640" height="390" src="http://www.youtube.com/embed/mocMrXU-4p0?rel=0" frameborder="0"></iframe></center>

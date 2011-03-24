@@ -1,0 +1,21 @@
+Date: 2010-05-28 22:39:42
+Author: evilsocket
+Categories: Misc
+Tags: hybris
+Title: Pubblicati modulo e classe per le reti neurali a back propagation.
+
+<p>Ho appena eseguito il primo commit su <a  href="http://github.com/evilsocket/hybris-nnet">questo repository </a>di un modulo C++, e una classe in Hybris che lo wrappa, atti a creare, manipolare, gestire ed ovviamente utilizzare delle reti neurali a back propagation.</p>
+<p>Ma cosa è una rete neurale ?</p>
+<p><a  href="http://it.wikipedia.org/wiki/Rete_neurale">Wikipedia</a> ci dice :</p>
+<p>Tradizionalmente il termine rete neurale (o rete neuronale) viene utilizzato come riferimento ad una rete o ad un circuito di neuroni biologici, tuttavia ne è affermato l'uso anche in matematica applicata con riferimento alle reti neurali artificiali, modelli matematici composti di "neuroni" artificiali. L'espressione può acquisire pertanto due significati distinti:</p>
+<p>&nbsp;&nbsp; 1. Le reti neurali biologiche: sono costituite dai neuroni biologici, cellule viventi tipiche degli animali connesse tra loro o connesse nel sistema nervoso periferico o nel sistema nervoso centrale. Nel campo delle neuroscienze, sono spesso identificati come gruppi di neuroni che svolgono una determinata funzione fisiologica nelle analisi di laboratorio.<br />&nbsp;&nbsp; 2. Le reti neurali artificiali: sono modelli matematici che rappresentano l'interconnessione tra elementi definiti neuroni artificiali, ossia costrutti matematici che in qualche misura imitano le proprietà dei neuroni viventi. Questi modelli matematici possono essere utilizzati sia per ottenere una comprensione delle reti neurali biologiche, ma ancor di più per risolvere problemi ingegneristici di intelligenza artificiale come quelli che si pongono in diversi ambiti tecnologici (in elettronica, informatica, simulazione, e altre discipline).</p>
+<p>Ovviamente si parla del secondo caso .</p>
+<p>Ci sono stati molti studi in proposito, molti passi avanti, ma l'algoritmo di <a  href="http://it.wikipedia.org/wiki/Rete_neurale#Algoritmo_di_backpropagation">back propagation</a> è da sempre ritenuto il più adatto per iniziare questa branca dell'intelligenza artificiale, poichè, nonostante possa sembrare il contrario, è il più semplice ed intuitivo tra quelli esistenti.</p>
+<p>Nel repository, è presente quindi un modulo C++ (nnet.cpp) che va compilato ed installato tramite il Makefile, una classe Hybris (nnetwork.hy) che verrà installata insieme al modulo nella directory di default delle librerie di Hybris ed un file di esempio che mostra quanto sia facile utilizzare il sistema.</p>
+<p>Il tutto è documentato seguendo lo standard doxygen, nenchè non ho ancora implementato un filtro per generare documentazione html/rtf/pdf partendo da un sorgente Hybris, tuttavia risulta comunque uno standard chiaro per commentare il codice al fine di redistribuirlo ad altre persone.</p>
+<p>Come sempre, per il download e l'installazione :</p>
+<p>git clone git://github.com/evilsocket/hybris-nnet.git<br />
+cd hybris-nnet<br />
+make<br />
+sudo make install</p>
+<p><a href="http://www.hybris-lang.org/story/pubblicati-modulo-e-classe-per-le-reti-neurali-a-back-propagation.html" >read more</a></p><img src="http://feeds.feedburner.com/~r/HybrisProgrammingLanguageOfficialSite/~4/1P3bGzLCi_I" height="1" width="1"/>

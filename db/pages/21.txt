@@ -1,0 +1,9 @@
+Date: 2009-05-12 23:27:52
+Author: evilsocket
+Categories: Java, Programmazione, Sorgenti
+Tags: daemon, http, httpd, Java, web server
+Title: jIWS
+
+Implementazione in java di un piccolo web server modulare, strutturato in modo da organizzare e gestire applicazioni web come entitÃ  a se stanti, in coerenza con l'ottica object oriented del linguaggio stesso .
+
+<a href="http://www.evilsocket.net/sources/jIWS.rar" target="_blank">Scarica</a>

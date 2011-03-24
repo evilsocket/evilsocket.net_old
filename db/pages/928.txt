@@ -1,0 +1,28 @@
+Date: 2010-03-20 23:20:46
+Author: evilsocket
+Categories: C, C++, Misc, Programmazione
+Tags: garbage collection, gc, htree_exectute, hybris, hybris_vg_isgarbage, H_GC_COLLECT, memory leaks, valgrind
+Title: Gestione “Smart” Della Memoria In Hybris : Parte II .
+
+Come detto nell'<a href="http://www.evilsocket.net/925/gestione-smart-della-memoria-in-hybris.html" target="_blank">ultimo articolo</a>, negli ultimi commit di <a href="http://www.hybris-lang.org/">Hybris</a> è stato inserito un garbage collector strutturato in modo tale da districarsi al meglio tra le varie ricorsioni e i vari deliri di allocazione nell'interprete .
+
+Nell'articolo avevo anche detto che questo sistema, nonostante avesse il vantaggio di diminuire drasticamente l'utilizzo della memoria durante l'esecuzione di uno script, aveva lo svantaggio di diminuire anche le prestazioni complessive dato com'era strutturato l'algoritmo per determinare se un dato oggetto era deallocabile durante l'esecuzione dello script stesso, algoritmo che effettuava diversi controlli, tra i quali due loop (quelli che rappresentavano maggiormente il collo di bottiglia) sul frame della funzione chiamante e su quello della memoria principale.
+
+Ebbene, <strong>sono un coglione</strong> XD .
+
+Si avete letto bene, sono un coglione perchè avevo strutturato l'algoritmo ragionando "a posteriori" senza pensare che prevenendo questo controllo si poteva risolvere il problema ed aumentare anche le prestazioni rispetto a prima .
+
+<break>
+
+Quello che intendo è che nella classe Object, ho inserito una bitmask chiamata "attributes" che, come suggerisce il nome stesso, rappresenta gli attributi di quell'oggetto in particolare, ovvero se è un alias, una costante e soprattutto se è deallocabile .
+
+Quest'ultimo flag in particolare, viene impostato alla creazione dell'oggetto a 1, quindi nello stato iniziale qualunque oggetto è de allocabile, successivamente, resetto il flag se e solo se si verificano le condizioni di non deallocabilità immediata, cioè se :
+<ol>
+	<li>L'oggetto viene definito in un qualunque frame (sia di una funzione che quello principale) come variabile .</li>
+	<li>L'oggetto è una costante .</li>
+</ol>
+Quindi, impostando questo flag nella maschera binaria solo quando serve, al processo di garbage collection basta controllare a posteriori se sono impostati o meno i flag giusti per determinare se è possibile deallocare l'oggetto, eliminando così il problema dei due loop e del controllo complesso che prima rallentava di parecchio l'esecuzione di uno script.
+
+Insomma come dire, a volte basta ragionare in modo "speculare" a come si ragiona in partenza per risolvere un problema :D
+
+<strong>Nota</strong>: <em>Quando parlo di calo di prestazioni significante, mi riferisco comunque a rallentamenti nell'ordine di <strong>millisecondi</strong> in algoritmi molto complessi che, per motivi di test, sono strutturati appositamente per allocare molta memoria e "stressare" l'interprete . In realtà, in programmi "normali" che non richiedono chissà quale elaborazione avanzata, la differenza non si nota nemmeno .</em>
