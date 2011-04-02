@@ -25,7 +25,7 @@
     </title>
 
     <meta name="keywords" content="${ ', '.join( config.keywords ) }" />
-
+    <meta name="description" content="evilsocket.net, hacking, extreme programming and vodka!">
 		<meta name="generator" content="SWG ${config.version}" />
 
 		<link rel="stylesheet" href="${config.siteurl}/css/style.css" type="text/css" media="screen" /> 
