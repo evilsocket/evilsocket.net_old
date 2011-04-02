@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
-<%include file="header.tpl"/>
-
+<%include file="header.tpl"/> 
   % for page in pager.getCurrentPages():
     <div class="entry">
-      <h3 class="entrytitle" id="post">
+      <h3 class="entrytitle">
         <a href="${config.siteurl}${page.url}" rel="bookmark" title="${page.title | h}">${page.title | h}</a></h3>
         <div class="entrymeta">
           Postato da <a href='${config.siteurl}${page.author.url}' title="${page.author.username | h}">${page.author.username | h}</a> il ${page.datetime.strftime("%d/%m/%Y")} alle ${page.datetime.strftime("%H:%M:%S")} in

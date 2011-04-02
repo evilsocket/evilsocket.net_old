@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 <%include file="header.tpl"/>
-  <h3 class="entrytitle" id="post">Archivio della categoria <span style='color:#C7FF68;'>${category.title | h}</span> <em style="font-size:12px; font-weight:normal;">(${len(category.items)} Articoli)</em></h3>
+  <h3 class="entrytitle">Archivio della categoria <span style='color:#C7FF68;'>${category.title | h}</span> <em style="font-size:12px; font-weight:normal;">(${len(category.items)} Articoli)</em></h3>
   %if len(category.children):
     <br/>
     <ul id="subcats">
@@ -13,7 +13,7 @@
   <br/>
   % for page in pager.getCurrentPages():
     <div class="entry">
-      <h3 class="entrytitle" id="post">
+      <h3 class="entrytitle">
         <a href="${config.siteurl}${page.url}" rel="bookmark" title="${page.title | h}">${page.title | h}</a></h3>
         <div class="entrymeta">
           Postato da <a href='${config.siteurl}${page.author.url}' title="${page.author.username | h}">${page.author.username | h}</a> il ${page.datetime.strftime("%d/%m/%Y")} alle ${page.datetime.strftime("%H:%M:%S")} in

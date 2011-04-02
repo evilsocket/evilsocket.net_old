@@ -33,40 +33,40 @@
 
   <div id="sidebar">
     <div id="searchdiv">
-      <form role="search" method="get" id="searchform" action="${config.siteurl}/" >
+      <form method="get" id="searchform" action="${config.siteurl}/" >
         <input type="text" value="Search" name="s" id="searchinput" onblur="setTimeout('closeResults()',2000); if (this.value == '') {this.value = '';}"  onfocus="if (this.value == 'Search') {this.value = '';}"/>
       </form>
     </div> <!-- searchdiv -->
     <br/>
 
-    <h2>GPG Public Key</h3>  
+    <h2>GPG Public Key</h2>  
     <ul>
 			  <li> 
         <a href="${config.siteurl}/public-key.txt" target="_blank">
-          <img src="${config.siteurl}/images/lock.png" style="border:0px;">
+          <img src="${config.siteurl}/images/lock.png" style="border:0px;" alt="My GPG Public Key" />
         </a>
         </li>
     </ul>
 
-    <h2>Translation</h3>
+    <h2>Translation</h2>
       <ul>
 			  <li> 
 
-<a target="_blank" rel="nofollow" onclick="window.open('http://www.google.com/translate?u='+encodeURIComponent(location.href)+'&sl=auto&tl=en'); return false;" title="Translate to English"><img  style="cursor: pointer;" alt="Translate to English" src="http://www.backbox.org/forum/Themes/kani_119/images/english.png" title="Translate to English" height="24" width="24" border="0" /></a>
+<a target="_blank" rel="nofollow" onclick="return translateTo('en');" title="Translate to English"><img  style="cursor: pointer;" alt="Translate to English" src="http://www.backbox.org/forum/Themes/kani_119/images/english.png" title="Translate to English" height="24" width="24" border="0" /></a>
 
-<a target="_blank" rel="nofollow" onclick="window.open('http://www.google.com/translate?u='+encodeURIComponent(location.href)+'&sl=auto&tl=de'); return false;" title="Translate to German"><img  style="cursor: pointer;" alt="Translate to German" src="http://www.backbox.org/forum/Themes/kani_119/images/german.png" title="Translate to German" height="24" width="24" border="0" /></a>
+<a target="_blank" rel="nofollow" onclick="return translateTo('de');" title="Translate to German"><img  style="cursor: pointer;" alt="Translate to German" src="http://www.backbox.org/forum/Themes/kani_119/images/german.png" title="Translate to German" height="24" width="24" border="0" /></a>
 
-<a target="_blank" rel="nofollow" onclick="window.open('http://www.google.com/translate?u='+encodeURIComponent(location.href)+'&sl=auto&tl=es'); return false;" title="Translate to Spanish "><img  style="cursor: pointer;" alt="Translate to Spanish " src="http://www.backbox.org/forum/Themes/kani_119/images/spanish.png" title="Translate to Spanish " height="24" width="24" border="0" /></a>
+<a target="_blank" rel="nofollow" onclick="return translateTo('es');" title="Translate to Spanish "><img  style="cursor: pointer;" alt="Translate to Spanish " src="http://www.backbox.org/forum/Themes/kani_119/images/spanish.png" title="Translate to Spanish " height="24" width="24" border="0" /></a>
 
-<a target="_blank" rel="nofollow" onclick="window.open('http://www.google.com/translate?u='+encodeURIComponent(location.href)+'&sl=auto&tl=fr'); return false;" title="Translate to French "><img  style="cursor: pointer;" alt="Translate to French " src="http://www.backbox.org/forum/Themes/kani_119/images/french.png" title="Translate to French " height="24" width="24" border="0" /></a>
+<a target="_blank" rel="nofollow" onclick="return translateTo('fr');" title="Translate to French "><img  style="cursor: pointer;" alt="Translate to French " src="http://www.backbox.org/forum/Themes/kani_119/images/french.png" title="Translate to French " height="24" width="24" border="0" /></a>
 <br/>
-<a target="_blank" rel="nofollow" onclick="window.open('http://www.google.com/translate?u='+encodeURIComponent(location.href)+'&sl=auto&tl=ja'); return false;" title="Translate to Japanese BETA"><img  style="cursor: pointer;" alt="Translate to Japanese BETA" src="http://www.backbox.org/forum/Themes/kani_119/images/japanese.png" title="Translate to Japanese BETA" height="24" width="24" border="0" /></a>
+<a target="_blank" rel="nofollow" onclick="return translateTo('ja');" title="Translate to Japanese BETA"><img  style="cursor: pointer;" alt="Translate to Japanese BETA" src="http://www.backbox.org/forum/Themes/kani_119/images/japanese.png" title="Translate to Japanese BETA" height="24" width="24" border="0" /></a>
 
-<a target="_blank" rel="nofollow" onclick="window.open('http://www.google.com/translate?u='+encodeURIComponent(location.href)+'&sl=auto&tl=ko'); return false;" title="Translate to Korean BETA"><img  style="cursor: pointer;" alt="Translate to Korean BETA" src="http://www.backbox.org/forum/Themes/kani_119/images/korean.png" title="Translate to Korean BETA" height="24" width="24" border="0" /></a>
+<a target="_blank" rel="nofollow" onclick="return translateTo('ko');" title="Translate to Korean BETA"><img  style="cursor: pointer;" alt="Translate to Korean BETA" src="http://www.backbox.org/forum/Themes/kani_119/images/korean.png" title="Translate to Korean BETA" height="24" width="24" border="0" /></a>
 
-<a target="_blank" rel="nofollow" onclick="window.open('http://www.google.com/translate?u='+encodeURIComponent(location.href)+'&sl=auto&tl=ru'); return false;" title="Translate to Russian BETA "><img  style="cursor: pointer;" alt="Translate to Russian BETA " src="http://www.backbox.org/forum/Themes/kani_119/images/russian.png" title="Translate to Russian BETA " height="24" width="24" border="0" /></a>
+<a target="_blank" rel="nofollow" onclick="return translateTo('ru');" title="Translate to Russian BETA "><img  style="cursor: pointer;" alt="Translate to Russian BETA " src="http://www.backbox.org/forum/Themes/kani_119/images/russian.png" title="Translate to Russian BETA " height="24" width="24" border="0" /></a>
 
-<a target="_blank" rel="nofollow" onclick="window.open('http://www.google.com/translate?u='+encodeURIComponent(location.href)+'&sl=auto&tl=zh-CN'); return false;" title="Google-Translate-Chinese (Simplified) BETA"><img  style="cursor: pointer;" alt="Google-Translate-Chinese (Simplified) BETA" src="http://www.backbox.org/forum/Themes/kani_119/images/chinese.png" title="Google-Translate-Chinese (Simplified) BETA" height="24" width="24" border="0" /></a>
+<a target="_blank" rel="nofollow" onclick="return translateTo('zh-CN');" title="Google-Translate-Chinese (Simplified) BETA"><img  style="cursor: pointer;" alt="Google-Translate-Chinese (Simplified) BETA" src="http://www.backbox.org/forum/Themes/kani_119/images/chinese.png" title="Google-Translate-Chinese (Simplified) BETA" height="24" width="24" border="0" /></a>
          </li>
     </ul>
 
@@ -78,7 +78,7 @@
       %endfor
     </ul>
 
-    <h2>Tags</h3>  
+    <h2>Tags</h2>  
     <ul>
 			  <li style='text-align: justify;'> 
         <%
@@ -106,19 +106,19 @@
 
     <h2>Social Links</h2>
     <ul>
-      <li><a href="http://github.com/evilsocket" rel="me">Github <img src="${config.siteurl}/images/github.png" alt="Github" title="Github"></a></li>
-      <li><a href="http://identi.ca/evilsocket" rel="me">Identi.ca <img src="${config.siteurl}/images/identica.png" alt="Identi.ca" title="Identi.ca"></a></li>
-      <li><a href="http://twitter.com/evilsocket" rel="me">Twitter <img src="${config.siteurl}/images/twitter.png" alt="Twitter" title="Twitter"></a></li>
-      <li><a href="http://www.last.fm/user/evilsocket" rel="me">Last.fm <img src="${config.siteurl}/images/lastfm.png" alt="Last.fm" title="Last.fm"></a></li>
-      <li><a href="http://it.linkedin.com/in/simonemargaritelli" rel="me">LinkedIn <img src="${config.siteurl}/images/linkedin.png" alt="LinkedIn" title="LinkedIn"></a></li>
-      <li><a href="http://www.google.com/reader/shared/07374427796734922326" rel="me">Google Reader <img src="${config.siteurl}/images/googlereader.png" alt="Google Reader" title="Google Reader"></a></li>
+      <li><a href="http://github.com/evilsocket" rel="me">Github <img src="${config.siteurl}/images/github.png" alt="Github" title="Github" /></a></li>
+      <li><a href="http://identi.ca/evilsocket" rel="me">Identi.ca <img src="${config.siteurl}/images/identica.png" alt="Identi.ca" title="Identi.ca" /></a></li>
+      <li><a href="http://twitter.com/evilsocket" rel="me">Twitter <img src="${config.siteurl}/images/twitter.png" alt="Twitter" title="Twitter" /></a></li>
+      <li><a href="http://www.last.fm/user/evilsocket" rel="me">Last.fm <img src="${config.siteurl}/images/lastfm.png" alt="Last.fm" title="Last.fm" /></a></li>
+      <li><a href="http://it.linkedin.com/in/simonemargaritelli" rel="me">LinkedIn <img src="${config.siteurl}/images/linkedin.png" alt="LinkedIn" title="LinkedIn" /></a></li>
+      <li><a href="http://www.google.com/reader/shared/07374427796734922326" rel="me">Google Reader <img src="${config.siteurl}/images/googlereader.png" alt="Google Reader" title="Google Reader" /></a></li>
     </ul>
 
     <h2>My Tweets</h2>
     <ul>
       <li>
-      <script src="http://widgets.twimg.com/j/2/widget.js"></script> 
-      <script> 
+      <script type="text/javascript" src="http://widgets.twimg.com/j/2/widget.js"></script> 
+      <script type="text/javascript"> 
       new TWTR.Widget({
         version: 2,
         type: 'profile',

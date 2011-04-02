@@ -3,9 +3,14 @@
     </div> <!-- content -->
     <div id="footer">
       <p> 
-        ${config.sitename} is proudly powered by <a href="https://github.com/evilsocket/SWG" target='_blank'>SWG v${config.version}</a><br/>
-        <center><script type="text/javascript" src="http://widgets.amung.us/small.js"></script><script type="text/javascript">WAU_small('w7u4dxiqkgx9')</script></center>
-      </p>
+        ${config.sitename} is proudly powered by <a href="https://github.com/evilsocket/SWG" target='_blank'>SWG v${config.version}</a>
+        <br/>
+        <script type="text/javascript" src="http://widgets.amung.us/small.js"></script>
+        <script type="text/javascript">WAU_small('w7u4dxiqkgx9')</script>
+        <br/>
+        <br/>
+        <a href="http://validator.w3.org/check?uri=referer"><img src="http://www.w3.org/Icons/valid-xhtml10" alt="Valid XHTML 1.0 Transitional" height="31" width="88" /></a>
+      </p>   
     </div>
 
     </div> <!-- pagewrap -->
