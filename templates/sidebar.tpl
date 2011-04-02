@@ -9,13 +9,13 @@
           class="page_item page-item"
         %endif    
         >  
-          <a href='${config.siteurl}/index.${config.page_ext}'>Home</a>
+          <h2><a href='${config.siteurl}/index.${config.page_ext}'>Home</a></h2>
         </li>
         %for cat in categories:
           %if category != UNDEFINED and category.title == cat.title:
-            <li class="current_page_item"><a href="${config.siteurl}${cat.url}" title="Visualizza tutti gli articoli archiviati in ${cat.title | h}">${cat.title | h}</a></li> 
+            <li class="current_page_item"><h2><a href="${config.siteurl}${cat.url}" title="Visualizza tutti gli articoli archiviati in ${cat.title | h}">${cat.title | h}</a></h2></li> 
           %else:
-            <li class="page_item page-item"><a href="${config.siteurl}${cat.url}" title="Visualizza tutti gli articoli archiviati in ${cat.title | h}">${cat.title | h}</a></li> 
+            <li class="page_item page-item"><h2><a href="${config.siteurl}${cat.url}" title="Visualizza tutti gli articoli archiviati in ${cat.title | h}">${cat.title | h}</a></h2></li> 
           %endif
         %endfor
 
@@ -26,7 +26,7 @@
           class="page_item page-item"
         %endif    
         >  
-          <a href='${config.siteurl}/members/evilsocket.${config.page_ext}'>About Me</a>
+          <h2><a href='${config.siteurl}/members/evilsocket.${config.page_ext}'>About Me</a></h2>
         </li>
       </ul>
   </div> <!-- navwidth -->

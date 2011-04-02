@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 <%include file="header.tpl"/>
     <div class="entry">
-    <h3 class="entrytitle"><a href="${config.siteurl}${page.url}" rel="bookmark" title="${page.title | h}">${page.title | h}</a></h3>
+    <h1 class="entrytitle"><a href="${config.siteurl}${page.url}" rel="bookmark" title="${page.title | h}">${page.title | h}</a></h1>
       <div class="entrymeta">
         Postato da <a href='${config.siteurl}${page.author.url}' title="${page.author.username | h}">${page.author.username | h}</a> il ${page.datetime.strftime("%d/%m/%Y")} alle ${page.datetime.strftime("%H:%M:%S")} in
         % for i, category in enumerate( page.categories ):
