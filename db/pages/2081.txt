@@ -1,0 +1,29 @@
+Date: 2011-04-02 21:23:50
+Author: evilsocket
+Categories: Misc, Tools
+Tags: wordpress, swg, static, html, github, 1.2.0, zip, gzip, comppressed, htaccess, performance, space, hd, harddisk, hosting, apache, httpd, tidy, html, tidyhtml, xhtml, w3c, validator, valid, validation, seo
+Title: SWG 1.2.2 con Tidy come HTML post processor
+
+<p align="justify">
+Piccole modifiche, ma grandi novità per questo rilascio!
+Ora <a href='http://www.evilsocket.net/?s=swg'>SWG</a> è in grado (se il rispettivo file di configurazione è impostato in tal senso) di post processare l'html dei singoli articoli.
+
+A che scopo? :)
+
+<break>
+
+I tre motivi principali sono i seguenti:
+
+<ul>
+  <li>Rimuovere eventuali errori nell'html dell'utente che potrebbero portare ad una scorretta visualizzazione dell'articolo.</li>
+  <li>Rendere il markup XHTML 1.0 valido al 100%, in modo da render felici eventuali validatori e search engine puntigliosi.</li>
+  <li>Eliminare ridondanze di codice HTML ottimizzando così la compressione del sito ed il relativo carico sul server.</li>
+</ul>
+
+Il processor che ho implementato è basato su <a href="http://pypi.python.org/pypi/PythonTidy/">Tidy HTML</a> per Python 2.x e di conseguenza è necessaria questa libreria per far funzionare
+il software.
+
+Potete testare il funzionamento della nuova versione tramite il link in fondo ad ogni pagina di questo sito, che controllerà la validità del XHTML tramite il servizio offerto dal W3C.
+
+Enjoy ^^
+</p>

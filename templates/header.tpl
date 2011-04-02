@@ -4,6 +4,7 @@
 	<head profile="http://gmpg.org/xfn/11">
 		<meta http-equiv="Content-type" content="text/html; charset=${config.charset}" />
     <meta http-equiv="Content-language" content="${config.language}" />
+    <meta name="google-site-verification" content="6qdVG0z0lac2ceITCoTCNm15CPp3K9Sq41_5IK4OLKM" />
   
 		<title>
     %if page != UNDEFINED and page.title != 'index':
