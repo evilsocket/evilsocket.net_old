@@ -154,16 +154,13 @@
     <h2>Siti Amici</h2>
     <ul>
       <li><a href="http://www.backbox.org/" title="BackBox Linux Security Distro" target="_blank">BackBox Linux</a></li>
-      <li><a href="http://www.bernardotti.it/portal/" target="_blank">Bernadotti</a></li>
       <li><a href="http://blacklight.gotdns.org/" target="_blank">BlackLight</a></li>
       <li><a href="http://www.clshack.it/">ClsHack</a></li>
-      <li><a href="http://www.ihteam.net/" target="_blank">IHTeam</a></li>
-      <li><a href="http://www.ilbloggatore.com/" target="_blank">ilBloggatore</a></li>
       <li><a href="http://www.tuxmealux.net/" target="_blank">Matrix86</a></li>
       <li><a href="http://meh.doesntexist.org/" target="_blank">Meh</a></li>
-      <li><a href="http://www.milw0rm.com/" target="_blank">milw0rm</a></li>
       <li><a href="http://retrogod.altervista.org/" target="_blank">rgod</a></li>
       <li><a href="http://ultimoprofetawebblog.wordpress.com/" target="_blank">UltimoProfeta</a></li>
+      <li><a href="http://www.oversecurity.net/" target="_blank">Over Security</a></li>
     </ul>
 
   </div> <!-- sidebar -->
