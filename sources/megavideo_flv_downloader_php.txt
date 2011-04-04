@@ -1,0 +1,218 @@
+<?php
+/***************************************************************************
+ *   Megavideo Direct Downloader                                           *
+ *                                                                         *
+ *   Copyleft 2008-2009 by evilsocket                                      *
+ *                                                                         *
+ *   http://www.evilsocket.net                                             *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ *   This program is distributed in the hope that it will be useful,       *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+ *   GNU General Public License for more details.                          *
+ *                                                                         *
+ *   You should have received a copy of the GNU General Public License     *
+ *   along with this program; if not, write to the                         *
+ *   Free Software Foundation, Inc.,                                       *
+ *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
+ *                                                                         *
+ ***************************************************************************/
+
+banner();
+
+if( $argc < 2 ){
+        usage($argv[0]);
+}
+else{  
+        $url = $argv[1];
+        preg_match_all( "/\/\?v\=(.+)/is", $url, $vcode );
+        $vcode = $vcode[1][0];
+               
+        $vlink = "http://www.megavideo.com/xml/videolink.php?v=$vcode&width=1278&id=".time()."&u=";
+        $vxml  = @file_get_contents($vlink);
+
+        $title    = get_xml_attribute( $vxml, "title" );
+        $duration = get_xml_attribute( $vxml, "runtimehms" );
+        $size     = get_xml_attribute( $vxml, "size" );
+        $k1       = get_xml_attribute( $vxml, "k1" );
+        $k2       = get_xml_attribute( $vxml, "k2" );
+        $un       = get_xml_attribute( $vxml, "un" );
+        $s        = get_xml_attribute( $vxml, "s" );
+
+        echo "TITLE    : '$title' .\n".
+             "DURATION : $duration .\n".
+             "SIZE     : ".format_size($size)." .\n".
+             "LINK     : http://www$s.megavideo.com/files/".decrypt( $un, (int)$k1, (int)$k2 )."/\n";
+}
+
+
+
+function banner(){
+        print "*-----------------------------------------------*\n" .
+                  "*   Megavideo Direct Downloader by evilsocket   *\n" .
+                  "*             evilsocket@gmail.com              *\n" .
+                  "*           http://www.evilsocket.net           *\n" .
+                  "*-----------------------------------------------*\n\n";
+}
+   
+function usage($pname){
+        print "Usage : php $pname <mediavideo_link>\n".
+                  "Example :\n".
+                  "\tphp $pname http://www.megavideo.com/?v=I7463R1F\n";
+}  
+   
+function get_xml_attribute( $xml, $a_name ){
+        preg_match_all( "/[\s]+$a_name\=\"(.+)\"/isU", $xml, $matches );
+        return $matches[1][0];
+}
+
+function decrypt( $str, $key1, $key2 ){
+        $binblock = array();
+    for( $i = 0; $i < strlen($str); ++$i ){
+        switch( $str[$i] ){
+            case "0":
+                $binblock[] = "0000";
+                break;
+            case "1":
+                $binblock[] = "0001";
+                break;
+            case "2":
+                $binblock[] = "0010";
+                break;
+            case "3":
+                $binblock[] = "0011";
+                break;
+            case "4":
+                $binblock[] = "0100";
+                break;
+            case "5":
+                $binblock[] = "0101";
+                break;
+            case "6":
+                $binblock[] = "0110";
+                break;
+            case "7":
+                $binblock[] = "0111";
+                break;
+            case "8":
+                $binblock[] = "1000";
+                break;
+            case "9":
+                $binblock[] = "1001";
+                break;
+            case "a":
+                $binblock[] = "1010";
+                break;
+            case "b":
+                $binblock[] = "1011";
+                break;
+            case "c":
+                $binblock[] = "1100";
+                break;
+            case "d":
+                $binblock[] = "1101";
+                break;
+            case "e":
+                $binblock[] = "1110";
+                break;
+            case "f":
+                $binblock[] = "1111";
+                break;
+        }
+    }
+    $binblock = join("",$binblock);
+     
+    $ciphers = array();
+    for( $i = 0; $i < 384; ++$i ){
+        $key1 = ($key1 * 11 + 77213) % 81371;
+        $key2 = ($key2 * 17 + 92717) % 192811;
+        $ciphers[] = ($key1 + $key2) % 128;
+    }
+
+    for( $i = 256; $i >= 0; --$i ){
+        $cipher = $ciphers[$i];
+        $offset = $i % 128;
+        $tmp    = $binblock[$cipher];
+        $binblock[$cipher] = $binblock[$offset];
+        $binblock[$offset] = $tmp;
+    }
+       
+    for( $i = 0; $i < 128; ++$i ){
+        $binblock[$i] = $binblock[$i] ^ $ciphers[$i + 256] & 1;
+    }
+   
+    $chunks = array();
+    for( $i = 0; $i < strlen($binblock); $i += 4 ){
+        $chunks[] = substr( $binblock, $i, 4 );
+    }
+   
+    $decrypted = array();
+    for( $i = 0; $i < count($chunks); ++$i ){
+        switch($chunks[$i]){
+            case "0000":
+                $decrypted[] = "0";
+                break;
+            case "0001":
+                $decrypted[] = "1";
+                break;
+            case "0010":
+                $decrypted[] = "2";
+                break;
+            case "0011":
+                $decrypted[] = "3";
+                break;
+            case "0100":
+                $decrypted[] = "4";
+                break;
+            case "0101":
+                $decrypted[] = "5";
+                break;
+            case "0110":
+                $decrypted[] = "6";
+                break;
+            case "0111":
+                $decrypted[] = "7";
+                break;
+            case "1000":
+                $decrypted[] = "8";
+                break;
+            case "1001":
+                $decrypted[] = "9";
+                break;
+            case "1010":
+                $decrypted[] = "a";
+                break;
+            case "1011":
+                $decrypted[] = "b";
+                break;
+            case "1100":
+                $decrypted[] = "c";
+                break;
+            case "1101":
+                $decrypted[] = "d";
+                break;
+            case "1110":
+                 $decrypted[] = "e";
+                break;
+            case "1111":
+                $decrypted[] = "f";
+                break;
+        }
+    }
+    return join("",$decrypted);
+}
+
+function format_size( $bytes ){
+        if( $bytes < 1024 ) return "$bytes bytes";
+        if( $bytes < 1048576 ) return round($bytes / 1024) . " Kb";
+        if( $bytes < 1073741824 ) return round($bytes / 1048576) . " Mb";
+
+        return round($bytes / 1073741824) . " Gb";
+}
+
+?>

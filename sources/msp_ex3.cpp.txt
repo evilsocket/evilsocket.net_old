@@ -1,0 +1,41 @@
+#include "msp.hpp"
+
+using namespace MSP;
+  
+int main(int argc, char** argv) {
+    try{
+        Matrix<double> finger("images/finger.png"), 
+                       original(finger),
+                       orientation, 
+                       frequency, 
+                       entropy,
+                      *feature;
+        vector< Matrix<double> * > features;
+        vector< Matrix<double> * >::iterator i;
+               
+        finger.soften();
+        finger.orientation( orientation );
+        finger.frequency( frequency, orientation );
+        finger.entropy( entropy, frequency );
+        finger.gabor( orientation, frequency );
+        finger.binarize();
+        finger.thin();
+        finger.features( features, orientation, entropy, 3, 4 );
+
+        double RED[] = { 255, 0, 0 };
+        
+        for( i = features.begin(); i != features.end(); i++ ){
+            feature = *i;
+            original.rect( (*feature)(0), (*feature)(1), 3, 3, RED );
+            delete *i;
+        }
+        
+        original.save("featured.png");
+    }
+    catch( MSPException me ){
+        me.what();
+    }
+    
+    return (EXIT_SUCCESS);
+}
+

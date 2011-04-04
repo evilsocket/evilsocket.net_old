@@ -86,4 +86,4 @@ Vi allego un progetto completo di XCode, con tutto il restante codice, così pot
 
 Spero possa essere utile a qualcuno, così come lo è per me al momento, soprattutto considerata la difficoltà nel trovare documentazione a riguardo :)
 
-<a title="UITabBar Example" href="http://www.evilsocket.net/UITabBar_Example.zip" target="_self"><strong>UITabBar_Example.zip</strong></a>
+<a title="UITabBar Example" href="http://www.evilsocket.net/sources/UITabBar_Example.zip" target="_self"><strong>UITabBar_Example.zip</strong></a>

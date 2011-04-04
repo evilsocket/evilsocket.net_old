@@ -1,0 +1,176 @@
+/***************************************************************************
+ *   Copyright (C) 2007 by evilsocket                                      *
+ *                                                                         *
+ *                                                                         *
+ *   http://www.evilsocket.net                                             *
+
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ *   This program is distributed in the hope that it will be useful,       *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+ *   GNU General Public License for more details.                          *
+ *                                                                         *
+ *   You should have received a copy of the GNU General Public License     *
+ *   along with this program; if not, write to the                         *
+ *   Free Software Foundation, Inc.,                                       *
+ *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
+ ***************************************************************************/ 
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
+#include <errno.h>
+
+/* cambiare questa dir in base al sistema operativo e all installazione del NASM */
+#define NASM_FILE "/usr/bin/nasm"
+
+void banner()
+{
+    printf( "*---------------------------------------------------*\n" );
+    printf( "*--       Shell Code Generator by evilsocket      --*\n" );
+    printf( "*--                                               --*\n" );
+    printf( "*--            http://www.evilsocket.net          --*\n" );
+
+    printf( "*---------------------------------------------------*\n\n" );
+}
+
+void usage( const char *pname )
+{
+    printf( "Usage : %s assembly_file.asm -o outputfile.c\n\n" );
+    printf( "assembly_file.asm : file assembly da convertire in shellcode .\n" );
+    printf( "outputfile.c      : file c dove inserire lo shell code .\n" );
+}
+
+int file_exists( char* fname )
+{
+    FILE * fp = fopen( fname, "r" );
+
+    if( fp ){
+        fclose(fp); 
+        return 1;
+    }
+    
+    return 0;
+}
+
+/* funzione alquanto rozza x controllare se il nasm è installato */
+int is_nasm_installed()
+{
+    return file_exists( NASM_FILE );
+}
+
+/* assembla il file sorgente generando il file di output binario */
+int assemble_file( char *src_file, char *dst_file )
+{
+    char cmd[0xFF] = {0};
+
+    sprintf( cmd, "%s -o %s %s", NASM_FILE, dst_file, src_file );
+
+    system(cmd);
+
+    return file_exists( dst_file );
+}
+
+/* genera il file c dello shell code partendo dal file binario generato con il nasm */
+int generate_shcode( char *src_file, char *dst_file )
+{
+    FILE * fsrc = fopen( src_file, "rb" ),
+         * fdst = fopen( dst_file, "w+t");
+
+    unsigned char byte;
+
+    int i = 1;
+
+    if( !fsrc || !fdst ) return 0;
+
+    fprintf( fdst, "/* Shell Code Generated with evilsocket's shell code generator */\n\n" );
+    fprintf( fdst, "char shell_code[] = \n" );
+    fprintf( fdst, "\t\"" );
+
+    do{
+        byte = fgetc(fsrc);
+
+        fprintf( fdst, "\\x%02x", byte );
+        
+        if( !(i % 16) ){
+            fprintf( fdst, "\"\n\t\"" );
+        }
+
+        i++;
+    }
+    while( !feof(fsrc) );
+    
+    fprintf( fdst, "\";\n\nint main() {\n\treturn 0;\n}\n" );
+
+    fclose( fsrc );
+    fclose( fdst );
+
+    return 1;
+}
+
+int main( int argc, char *argv[] )
+{
+    banner();
+
+    if(argc < 4){
+        usage(argv[0]);
+        return 1;
+    }
+
+    if( !is_nasm_installed() ){
+        printf( "@ Per l'esecuzione di questa applicazione deve essere installato il NASM !\n" );
+        usage(argv[0]);
+        return 1;
+    }
+
+    char * src_file = NULL,
+         * dst_file = NULL;
+    
+    int i;
+
+    for( i = 1; i < argc; i++ ){
+        if( strcmp( argv[i-1], "-o" ) == 0 ){
+            dst_file = argv[i];
+        }
+        else{
+            if( strcmp( argv[i], "-o" ) != 0 ){
+                src_file = argv[i];
+            }
+        }    
+    }
+
+    if( !src_file || !dst_file ){
+        usage(argv[0]);
+        return 1;
+    }
+
+    printf( "@ Assemblo %s ... ", src_file );
+
+    if( !assemble_file( src_file, "shcgen_tmp_bin" ) ){
+        printf( "ERRORE !\n" );
+        return 1;
+    }   
+
+    printf( "OK .\n" );
+
+    printf( "@ Genero %s ... ", dst_file );
+
+    if( !generate_shcode( "shcgen_tmp_bin", dst_file ) ){
+        printf( "ERRORE !\n" );
+        unlink( "shcgen_tmp_bin" );
+        return 1;
+    }   
+
+    unlink( "shcgen_tmp_bin" );
+    printf( "OK .\n" );
+
+    return 0;
+}
+

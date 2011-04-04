@@ -1,0 +1,11 @@
+<?php
+
+require "facebook.client.php";
+
+$fb = new FBClient();
+
+echo "Login : ".$fb->login( "username", "password" )."\n";
+
+$fb->setStatus( "hello world ! :D" );
+
+?>

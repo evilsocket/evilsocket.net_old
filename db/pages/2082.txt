@@ -1,0 +1,59 @@
+Date: 2011-04-04 19:37:34
+Author: evilsocket
+Categories: Misc, Personali
+Tags: ownage, settimana, deface
+Title: Sulla "Settimana dell'Ownage" e sul mio blog
+
+<p align="justify">
+<b>Emadonnasanta!</b>
+
+Non faccio in tempo a tornare a casa dal lavoro che subito mi trovo un email del tipo <b>"Stia attento!"</b> e diversi tweet che mi avvisano che potrei esser preso di mira 
+dagli autori della <b>Settimana dell'Ownage</b>, e che cazzo c'ho un età io mica mi potete far prendere sti colpi XD
+
+No a parte gli scherzi, voglio parlare di questa cosa ed esprimere la mia opinione in proposito (e ti pareva! :D).
+
+<break>
+
+La <b>Settimana dell'Ownage</b> è un iniziativa portata avanti da un gruppo (o un singolo, non c'è dato saperlo) di persone per ora anonime che sistematicamente defaccia siti
+web inerenti la sicurezza informatica, o meglio ancora che *teoricamente* dovrebbero essere inerenti alla sicurezza informatica ... mi spiego meglio.
+
+Da quello che ho capito (non avendo mai avuto un contatto diretto con queste persone probabilmente non conosco il quadro completo), hanno iniziato prendendo di mira portali i quali
+amministratori, dal basso profilo tecnico/intellettivo, si vantavano di essere grandi h4x0r quando erano praticamente bimbiminkia.
+Ogni volta è stato lasciato sulla home un messaggio con spiegazioni sintetiche ma abbastanza chiare sulle motivazioni del gesto e, aggiungo a titolo personale, per gran parte
+pienamente condivisibili.
+
+Ulteriori informazioni sul sito di <b>kn0t</b> a <a href="http://kn0t.doesntexist.org/2011/03/07/la-settimana-dellownage">questo indirizzo</a>.
+
+Dopo questo preambolo ...
+
+Dopo l'ultimo deface a UnderAtthack, che condivido un po meno degli altri come gesto di per se nonostante abbia delle basi che cmq trovano un fondamento di verità, a quanto pare
+è stato dichiarato da questo gruppo che uno dei prossimi siti ad essere colpito sarà proprio il mio ... naturalmente non si sa la motivazione (ancora), ma nel caso in cui dovessero
+riuscire verrà scoperto l'arcano :)
+
+Voglio quindi lasciare un messaggio a queste persone prima eventualmente di venir "colpito", non per paura (rimettere online questo sito è questione di un rsync essendo <b>completamente
+in html</b> ) o per insultarli, ma semplicemente per fare quello che fin'ora non è stato fatto ... cercare un dialogo con queste persone ed andare oltre al deface come gesto di per se.
+
+-----------------------------------------------------------------------------------------------------------------------
+
+
+Dunque ragazzi/o/e, non mi arrogo il diritto di avervi capito al 100% perchè sarebbe abbastanza ipocrita come affermazione ... non condivido <b>tutti</b> i vostri gesti, ne li capisco tutti,
+ma la linea generale credo mi sia abbastanza chiara e nonostante la metodologia non sia delle più ortodosse si può dire che generalmente tifo per voi.
+Come ho detto, non ho paura che questo sito venga defacciato, sono un po troppo grandicello per preoccuparmi di queste cose anche perchè non ho chissà quale reputazione da difendere (ammesso
+che un deface cambi la reputazione di una persona, lulz), perchè per rimettere online il sito ci vorrebbe solo qualche secondo e soprattutto perchè ho veramente troppi altri cazzi per la
+testa per preoccuparmi anche di questo XD
+
+Quindi vi dico, se avete veramente un opinione negativa su di me e l'unico modo fattibile che avete per comunicarmelo è in questo modo, <b>defacciatemi tranquillamente il sito</b>, dico sul
+serio, non ci sarebbe alcuna rabbia da parte mia (per così poco?), ne insulti, ne altro ... non che avete bisogno del mio permesso naturalmente :D
+L'unica cosa è che mi dispiacerebbe non poter parlare direttamente con voi della questione, in generale non mi piace stare sulle balle a qualcuno (a chi piace?) senza aver modo di dire 
+la mia in proposito direttamente a quel qualcuno e non in "network-visione", magari perdendo anche un opportunità per imparare qualcosa su me stesso.
+
+Quindi, vi chiederei solo la correttezza, una volta effettuato il deface (che cmq al ripristino del sito verrà pubblicato come articolo, quindi non andrà perso) di contattarmi privatamente
+così da poter parlare di questo eventuale "diverbio" :)
+
+PS: Il server non è solo mio e la sua configurazione non è direttamente mia responsabilità, quindi vi chiederei di lasciare fuori altre persone che non c'entrano ... ok? :)
+
+
+---------------------------------------------------------- EOF -------------------------------------------------------
+
+Detto ciò ... beh, questo sito come ho detto è solo html, non usa php ne db ... la config del server di certo non la tocco perchè non sono io ad averla impostata, quindi ... staremo a vedere ^^
+</p>

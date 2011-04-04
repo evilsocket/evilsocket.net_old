@@ -1,0 +1,133 @@
+/***************************************************************************
+ *   Copyleft 2008 by evilsocket                                           *
+ *                                                                         *
+ *   http://www.evilsocket.net                                             *
+
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ *   This program is distributed in the hope that it will be useful,       *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+ *   GNU General Public License for more details.                          *
+ *                                                                         *
+ *   You should have received a copy of the GNU General Public License     *
+ *   along with this program; if not, write to the                         *
+ *   Free Software Foundation, Inc.,                                       *
+ *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
+ ***************************************************************************/
+
+#include <stdio.h>
+#include <arpa/inet.h>
+#include <netdb.h>
+#include <linux/wireless.h>
+#include <ctype.h>
+#include <errno.h>
+
+#define SIOCSIWSCAN 0x8B18
+#define SIOCGIWSCAN 0x8B19
+
+typedef unsigned char byte;
+
+void die(char * error){
+    printf( "ERRORE : %s !\n", error );
+    exit(1);
+}
+
+void usage( char* app ){
+	printf( "\n\nUsage : %s <device>\n\n", app );
+}
+
+void print_mac( byte *buffer ){
+	int i;
+	for( i = 6; i < 12; i++ ){
+		printf( "%.02X%c", buffer[i], i == 11 ? ' ' : ':' );
+	}
+}
+
+void print_ssid( byte *buffer ){
+	char ssid[0xFF] = {0};
+	unsigned short size;
+	
+	memcpy( &size, buffer + 24, sizeof(size) );
+	memcpy( ssid, buffer + 28, size );
+
+	printf( "%s", ssid );
+}
+
+int main(int argc, char *argv[])
+{
+    struct iwreq		iwrequest;
+	struct timeval	    tv;	
+	char   *buffer = NULL;
+	int    buffsize = 4096;
+	fd_set fdset;		
+	int    i,j;
+ 	int    iwsd;
+
+	if( argc < 2 ){
+		usage(strdup(argv[0]));
+		return -1;
+	}
+
+	if( geteuid() ){
+  		die("bisogna lanciare il programma come root");
+	}
+
+	if( (iwsd = socket( AF_INET, SOCK_DGRAM, 0)) < 0 ){
+		die( "Impossibile creare un wifi kernel socket" );
+	}
+
+	iwrequest.u.data.pointer = NULL;
+	iwrequest.u.data.flags   = 0;
+	iwrequest.u.data.length  = 0;
+	strcpy( iwrequest.ifr_name, argv[1] );   
+	if( ioctl( iwsd, SIOCSIWSCAN, &iwrequest ) < 0 ){
+		die( "La scheda non supporta lo scanning" );
+	}
+
+	printf( "@ Scanning ...\n\n" );
+
+	tv.tv_sec   = 0;
+	tv.tv_usec  = 250000;
+
+	while(!iwrequest.u.data.length){
+		FD_ZERO(&fdset);
+
+		select( 0, &fdset, NULL, NULL, &tv);
+			
+		iwrequest.u.data.pointer = (caddr_t)realloc(buffer,buffsize);
+		iwrequest.u.data.flags   = 0;
+		iwrequest.u.data.length  = buffsize;
+		
+		if( ioctl( iwsd, SIOCGIWSCAN, &iwrequest ) < 0 ){
+			/* i dati sono troppi per essere contenuti nel buffer
+			   rialloco e riprovo a leggerli
+			*/
+			if( errno == E2BIG ){
+				buffsize = iwrequest.u.data.length;
+			}
+			else{
+				die( "Errore nella lettura dei dati di scansione" );
+			}
+		}	
+	}
+
+	printf( "     SSID\t\tMAC\n"
+			"------------------------------------------\n");
+	for( i = 0; i < iwrequest.u.data.length; i += 228 ){		
+		print_ssid( (byte *)&iwrequest.u.data.pointer[i] );
+		printf( "\t\t" );
+		print_mac ( (byte *)&iwrequest.u.data.pointer[i] );
+		printf("\n");
+	}
+	printf( "------------------------------------------\n" );
+
+	close(iwsd);
+
+    return 0;
+} 
+

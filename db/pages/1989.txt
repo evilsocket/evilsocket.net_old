@@ -138,6 +138,6 @@ In questo caso abbiamo utilizzato l'animazione UIViewAnimationTransitionCurlUp (
 
 Vi lascio con un video del comportamento dell'app ed il link al progetto di esempio ^^
 
-<a href="http://www.evilsocket.net/UINavigationBar_example.zip">UINavigationBar_example.zip</a>
+<a href="http://www.evilsocket.net/sources/UINavigationBar_example.zip">UINavigationBar_example.zip</a>
 
 <center><iframe title="YouTube video player" class="youtube-player" type="text/html" width="640" height="390" src="http://www.youtube.com/embed/mocMrXU-4p0?rel=0" frameborder="0"></iframe></center>

@@ -1,0 +1,96 @@
+<?php
+/*
+    Javascript Evil Encoder
+    by evilsocket
+    
+    http://www.evilsocket.net
+
+	evilsocket@gmail.com
+*/
+
+function banner(){
+    print "*-------------------------------------------------------*\n";
+    print "*                Javascript Evil Encoder                *\n";
+    print "*                     by evilsocket                     *\n";
+    print "*               http://www.evilsocket.net               *\n";
+
+	print "*                 evilsocket@gmail.com                  *\n";
+    print "*-------------------------------------------------------*\n\n";
+}
+
+function help(){
+    print "Usage   :\n";
+    print "\tphp jsencode.php <source_file> <destination_file>\n";
+    print "Example :\n";
+    print "\tphp jsencode.php page.html encoded_page.html\n\n";
+}
+
+function rand_char(){
+	$pattern = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM";
+	return $pattern[rand(0,strlen($pattern) - 1)];
+}
+
+// file_put_contents for PHP <= 4
+
+if( function_exists('file_put_contents') == false ){
+	function file_put_contents($n, $d, $flag = false) {
+		$f = @fopen($n,  'w');
+		if ($f === false) {
+			return 0;
+		} else {
+			if (is_array($d)) $d = implode($d);
+			$bytes_written = fwrite($f, $d);
+			fclose($f);
+			return $bytes_written;
+		}
+	}
+}
+
+function get_jscript( $html ){
+	preg_match_all( "/\<script\>(.*)\<\/script\>/i", $html, $matches );
+	
+	return $matches[1][0];
+}
+
+function encode_jscript( $js ){
+	$len    = strlen($js);
+	$buffer = "";
+	$vars   = array();
+	
+	for( $i = 0; $i < $len; $i++ ){
+		$var = rand_char()."$i";
+		$vars[] = $var;
+
+		$buffer .= "var $var=\"" . ($js[$i] == "\"" ? "\\\"" : $js[$i]) . "\";";
+	}
+	
+	$buffer .= "eval(";
+	for( $i = 0; $i < $len; $i++ ){
+		$buffer .= $vars[$i] . ($i < ($len - 1) ? "+" : "");
+	}
+	$buffer .= ");";
+
+	return $buffer;
+}
+
+function encode_file( $src, $dst  ){
+	$html = file_get_contents($src);
+	$html = str_replace( "\n", "", $html );
+	$html = str_replace( "\r", "", $html );
+
+	$js  = get_jscript( $html );
+	$ejs = encode_jscript( $js );
+
+	file_put_contents( $dst, str_replace( $js, $ejs, $html ) );
+}
+
+banner();
+
+if( $argc < 3 ){
+    help();
+}
+else{   
+	encode_file( $argv[1], $argv[2] );
+}
+
+?>

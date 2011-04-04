@@ -1,0 +1,164 @@
+#!/usr/bin/perl
+
+#
+
+# FileZilla.xml D3cryp73r
+
+# by: evilsocket
+
+# 
+
+# http://www.evilsocket.net/
+
+#
+
+# Questo programma trova tutti gli account salvati nel file FileZilla.xml, ovvero
+
+# il file dove FileZilla salva le password, cryptandole con un semplice XOR .
+
+#
+
+# [IMPORTANTE] Note sull algoritmo :
+
+#
+
+#   Nella funzione "fz_decrypt_password" viene usata la chiave di default di FIleZilla,
+
+#   ovvero 'FILEZILLA1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ' .
+
+#   Tutta via, alcuni utenti potrebbero aver cambiato questa chiave (cosa che non capita
+
+#   quasi mai) rendendo l'algoritmo NON funzionante, a meno che non si possegga la chiave
+
+#   salvata nel registro alla posizione :
+
+#
+
+#       HKEY_CURRENT_USER\Software\FileZilla\Site Manager\[SITO]\Pass
+
+#
+
+#   Dove [SITO] è il nome dello specifico sito .
+
+#   Una volta ottenuta la chiave, basta copiarla e sostituirla nello script .
+
+
+use strict;
+use warnings;
+
+my $fz_xml_file = shift or help();
+
+banner();
+
+unless( open XMLFILE, "<$fz_xml_file" )
+{
+  print "Errore nell apertura del file $fz_xml_file !!!\n";
+  exit(0);
+}
+
+my $line;
+
+while( $line = <XMLFILE> )
+{
+    chomp($line);
+    
+    if( $line =~ /^<Site / )
+    {
+        fz_parse_xml_line($line);
+    }
+}
+
+close XMLFILE;
+
+
+sub fz_parse_xml_line
+{
+    my $xml_line = $_[0];
+    
+    my $host  = "";
+    my $port  = "";
+    my $uname = "";
+    my $hash  = "";
+    my $pos   = 0;
+
+    # Salta questa linea perchè non contiene tutte le informazioni necessarie
+
+    if( index( $xml_line, "Host=\"" ) == -1 ||
+        index( $xml_line, "User=\"" ) == -1 ||
+        index( $xml_line, "Pass=\"" ) == -1
+      )
+    {
+        return;
+    }
+    else
+    {
+        $pos  = index( $xml_line, "Host=\"" ) + length("Host=\"");
+        $host = substr( $xml_line, $pos, index( $xml_line, "\"", $pos ) - length($xml_line) );
+        
+        $pos  = index( $xml_line, "Port=\"" ) + length("Port=\"");
+        
+        if( $pos == (length("Port=\"") - 1) )
+        {
+            $port = 21;
+        }
+        else
+        {
+            $port = substr( $xml_line, $pos, index( $xml_line, "\"", $pos ) - length($xml_line) );
+        }
+
+        $pos   = index( $xml_line, "User=\"" ) + length("User=\"");
+        $uname = substr( $xml_line, $pos, index( $xml_line, "\"", $pos ) - length($xml_line) );
+
+        $pos   = index( $xml_line, "Pass=\"" ) + length("Pass=\"");
+        $hash  = substr( $xml_line, $pos, index( $xml_line, "\"", $pos ) - length($xml_line) );
+
+        my $pass = fz_decrypt_password($hash);
+
+        print "HOST     : $host\n"; 
+        print "PORT     : $port\n"; 
+        print "USERNAME : $uname\n"; 
+        print "PASSWORD : $pass\n";
+        print "URL      : ftp://$uname:$pass\@$host\n\n"; 
+    }
+}
+
+sub banner
+{
+    system("clear");
+    print "FileZilla.xml P455w0rd C4ch3 D3cryp73r\n";
+    print "Coded by : evilsocket [http://www.evilsocket.net]\n\n";
+}
+
+sub help
+{
+    banner();
+
+    print "Uso :\n";
+    print "\tperl fzdecrypt.pl [path/to/FileZilla.xml]\n";
+    print "Esempio : \n";
+    print "\tperl fzdecrypt.pl c:\\Programmi\\FileZilla\\FileZilla.xml\n\n";
+    exit(0);
+}
+
+sub fz_decrypt_password($$)
+{
+    my $hash      = $_[0];
+    my $xorkey    = "FILEZILLA1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    my $pos       = (length($hash)/3) % length($hash);
+    my $plaintext = "";
+    my $plainchar = 0;
+    my $num       = "";
+    
+    my $i = 0;
+
+    for( $i = 0; $i < length($hash) / 3; $i++ ) 
+    {
+        $num = substr( $hash, $i * 3, 3 );
+        $num = substr( $num, 1, 2 );
+
+        $plainchar = $num ^ ord( substr( $xorkey, ($i + $pos) % length($hash), 1 ) );
+        $plaintext .= chr($plainchar);
+    }
+    
+    return $plaintext;
+}

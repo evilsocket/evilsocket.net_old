@@ -1,0 +1,102 @@
+<?php
+/***************************************************************************
+ *   Copyleft (C) 2007 by evilsocket                                       *
+ *                                                                         *
+ *                                                                         *
+ *   http://www.evilsocket.net/ 										   *
+
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ *   This program is distributed in the hope that it will be useful,       *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+ *   GNU General Public License for more details.                          *
+ *                                                                         *
+ *   You should have received a copy of the GNU General Public License     *
+ *   along with this program; if not, write to the                         *
+ *   Free Software Foundation, Inc.,                                       *
+ *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
+ ***************************************************************************/
+
+	$VISA       = array( "Visa",             16, array( "4539", "4556", "4916", "4532", "4929", "40240071", "4485", "4716", "4" ) );
+	$MASTERCARD = array( "Mastercard",       16, array( "51", "52", "53", "54", "55" ) );
+	$AM_EXPRESS = array( "American Express", 15, array( "34", "37" ) );
+	$DISCOVER   = array( "Discover",         16, array( "6011"  ) );
+	$DINERS     = array( "Diners Club",      14, array( "300", "301", "302", "303", "36", "38" ) );
+	$ENROUTE    = array( "EnRoute",          15, array( "2014", "2149" ) );
+	$JCB		= array( "JCB",              16, array( "3088", "3096", "3112", "3158", "3337", "3528" ) );
+	$VOYAGER	= array( "Voyager",          15, array( "8699" ) );
+
+	$CARDS    	= array( $VISA, $MASTERCARD, $AM_EXPRESS, $DISCOVER, $DINERS, $ENROUTE, $JCB, $VOYAGER );
+
+	function cc_generate( $type, $number ){
+		global $CARDS;
+
+		$card   = $CARDS[ $type ];
+		$name	= $card[0];
+		$length = $card[1];
+
+		print "$name:\n";
+
+		for( $i = 0; $i < $number; $i++ ){
+			$prefix = $card[2][ array_rand($card[2]) ];
+
+			while ( strlen($prefix) < ($length - 1) ) {
+				$prefix .= rand(0,9);
+			}
+		
+			$sum = $j = 0;
+    		$rev = strrev($prefix);
+
+			while ( $j < $length - 1 ){
+				$odd  = $rev[$j] * 2;
+				$odd  = ($odd > 9 ? $odd - 9 : $odd );
+				$sum += $odd;
+		
+				if( $j != ($length - 2) ){
+					$sum += $rev[ $j + 1 ];
+				}
+				$j += 2;
+			}
+
+    		$prefix .= (( floor($sum/10) + 1) * 10 - $sum) % 10;
+
+			echo "\t$prefix\n";
+		}
+	}
+
+	function banner(){
+		print "***********************************************\n" .
+			  "*           Credit Card Generator             *\n" .
+			  "*  by evilsocket [http://www.evilsocket.net]  *\n" .
+
+			  "***********************************************\n\n";
+	}	
+
+	function usage(){
+		global $CARDS;
+		print "Usage : php ccgen.php <type> <number>\n";
+		print "\t\tAllowed types are :\n\n";
+		for( $i = 0; $i < count($CARDS); $i++ ){
+			print "\t\t\t[$i] " . $CARDS[$i][0] . "\n";
+		}
+		print "\n";
+	}
+
+	banner();
+
+	$type = $argv[1];
+	$num  = $argv[2];
+
+	if( $argc < 2 || $type < 0 || $type > count($CARDS) - 1 ){
+		usage();
+	}
+	else{
+		cc_generate( $type, $num );
+	}
+
+?>

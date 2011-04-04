@@ -1,0 +1,200 @@
+/***************************************************************************
+ *   CamShot Copyleft (C) 2008-2009 by evilsocket                          *
+ *                                                                         *
+ *   evilsocket@gmail.com                                                  *
+ *   http://www.evilsocket.net/ 										   *
+ *                    													   *
+ * 	 Requires, V4L and a V4L compliant webcam .							   *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ *   This program is distributed in the hope that it will be useful,       *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+ *   GNU General Public License for more details.                          *
+ *                                                                         *
+ *   You should have received a copy of the GNU General Public License     *
+ *   along with this program; if not, write to the                         *
+ *   Free Software Foundation, Inc.,                                       *
+ *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
+ ***************************************************************************/
+
+#include <stdio.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <sys/ioctl.h>
+#include <sys/mman.h>
+#include <string.h>
+#include <unistd.h>
+#include <signal.h>
+#include <malloc.h>
+#include <linux/videodev.h>
+
+typedef unsigned char byte;
+typedef unsigned int  uint;
+
+typedef struct{
+    int  fd;
+    byte * mmap;
+    char device[0xFF];
+    char name[0xFF];
+    uint width;
+    uint height;
+    uint depth;
+}
+device_t;
+
+typedef struct{
+    byte * data;
+    uint   width;
+    uint   height;
+    uint   depth;
+    uint   size;
+}
+video_buffer_t;
+
+int cam_open( char *devname, device_t * dev ){
+    struct video_capability vcap;
+    struct video_channel    vchan;
+    
+    if( (dev->fd = open( devname, O_RDWR )) <= 0 ){
+        perror("open");
+        return -1;
+    }
+    
+    strcpy( dev->device, devname );
+    
+    if( ioctl( dev->fd, VIDIOCGCAP, &vcap ) < 0 ){
+        perror("VIDIOCGCAP");
+        return -1;
+    }
+    
+    strcpy( dev->name, vcap.name );
+    
+    dev->width  = vcap.maxwidth;
+    dev->height = vcap.maxheight;
+    dev->depth  = 3;
+    
+    vchan.channel = 1;
+    if( ioctl( dev->fd, VIDIOCGCHAN, &vchan ) < 0 ){
+        perror("VIDIOCGCHAN");
+        return -1;
+    }
+    vchan.norm = 1;
+    if( ioctl( dev->fd, VIDIOCSCHAN, &vchan ) < 0 ){
+        perror("VIDIOCSCHAN");
+        return -1;
+    }
+    
+    dev->mmap = (byte *)mmap( 0, dev->width * dev->height * dev->depth, PROT_READ|PROT_WRITE, MAP_SHARED, dev->fd, 0 );
+    
+    return 1;
+}
+
+int cam_capture( device_t * dev, video_buffer_t * vbuffer ){
+    struct video_mmap vmap;
+    
+    vmap.width     = vbuffer->width  = dev->width;
+    vmap.height    = vbuffer->height = dev->height;
+    vmap.frame     = 0;
+    vmap.format    = VIDEO_PALETTE_RGB24;
+    vbuffer->depth = dev->depth;
+    vbuffer->size  = vmap.width * vmap.height * vbuffer->depth;
+    
+    if( ioctl( dev->fd, VIDIOCMCAPTURE, &vmap ) < 0 ){
+        perror("VIDIOCMCAPTURE");
+        return -1;
+    }
+    
+    if( ioctl( dev->fd, VIDIOCSYNC, &vmap.frame ) < 0 ){
+        perror("VIDIOCSYNC");
+        return -1;
+    }
+    
+    vbuffer->data = dev->mmap;
+    
+    return 1;
+}
+
+void cam_close( device_t * dev ){
+    munmap( dev->mmap, dev->width * dev->height * dev->depth );
+    close( dev->fd);
+}
+
+int video_to_ppm( video_buffer_t *vbuffer, const char *filename ){
+	uint x, y, z;
+	FILE *fp;
+	
+	if( (fp = fopen( filename, "w+b" )) == NULL ){
+		perror("fopen");
+		return -1;	
+	}
+	
+	fprintf( fp, "P6\r\n" );
+	fprintf( fp, "# %s created with camshot by evilsocket@gmail.com .\r\n", filename );
+	fprintf( fp, "%d %d\r\n", vbuffer->width, vbuffer->height );
+	fprintf( fp, "255\r\n" );
+	
+	for( y = 0; y < vbuffer->height; y++ ){
+		for( x = 0; x < vbuffer->width; x++ ){
+			for( z = 0; z < vbuffer->depth; z++ ){
+				fprintf( fp, "%c", vbuffer->data[ (y * vbuffer->width + x) * vbuffer->depth + z ] );
+			}
+		}	
+	}	
+	
+	fclose(fp);
+}
+
+void usage( char *app ){
+	printf( "\nUsage %s <device> <output.ppm>\n"
+	        "\tExample : %s /dev/video0 capture.ppm\n\n", app, app );	
+}
+
+int main(int argc, char** argv) {
+	
+	printf( "CamShot by evilsocket <evilsocket@gmail.com> http://www.evilsocket.net/\n" );
+	
+	if( argc < 3 ){
+		usage(argv[0]);
+		return 0;
+	}
+	
+	device_t       dev;
+	video_buffer_t video;
+	
+
+
+	if( cam_open( argv[1], &dev ) < 0 ){
+		return -1;
+	}
+	
+	printf( "Device :\n"
+			"\tdevice          : %s\n"
+			"\tname            : %s\n"
+			"\tmax width       : %d\n"
+			"\tmax height      : %d\n"
+			"\tdepth           : %d\n",
+			dev.device,
+			dev.name,
+			dev.width,
+			dev.height,
+			dev.depth );
+
+
+	if( cam_capture( &dev, &video ) < 0 ){
+		return -1;
+	}
+
+	video_to_ppm( &video, argv[2] );
+
+	cam_close(&dev);
+
+	return 0;
+}
+
+

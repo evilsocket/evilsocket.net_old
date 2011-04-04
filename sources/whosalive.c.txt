@@ -1,0 +1,232 @@
+/***************************************************************************
+ *   Copyright (C) 2009 by evilsocket                                      *
+ *                                                                         *
+ *                                                                         *
+ *   http://www.evilsocket.net/ 										   *
+ *																		   *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ *   This program is distributed in the hope that it will be useful,       *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+ *   GNU General Public License for more details.                          *
+ *                                                                         *
+ *   You should have received a copy of the GNU General Public License     *
+ *   along with this program; if not, write to the                         *
+ *   Free Software Foundation, Inc.,                                       *
+ *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
+ ***************************************************************************/
+
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdarg.h>
+#include <pcap.h>
+#include <unistd.h>
+#include <libnet.h>
+#include <pthread.h>
+#include <netinet/ether.h>
+
+typedef unsigned char  byte_t;
+typedef unsigned short word_t;
+typedef unsigned int   dword_t;
+
+typedef struct {
+	word_t ar_hrd; 
+	word_t ar_pro;
+	byte_t ar_hln;
+	byte_t ar_pln;
+	word_t ar_op;
+    byte_t ar_sha[ETH_ALEN];
+    byte_t ar_spa[4];
+    byte_t ar_tha[ETH_ALEN];
+    byte_t ar_tpa[4];
+}
+arp_header_t;
+
+bpf_u_int32 network, netmask;
+dword_t dlink, dlink_shift;      
+							    
+void die( const char * fmt, ... ){
+	va_list arg_ptr ;
+
+	printf( "[ERROR] " );
+	
+	va_start( arg_ptr, fmt );
+		vfprintf( stdout, fmt, arg_ptr );
+	va_end( arg_ptr ); 
+
+    exit(1);
+}
+
+void *arp_listener( void *arg ){
+	pcap_t *pd = (pcap_t *)arg;
+	struct bpf_program filter;
+	byte_t *packet;
+	struct  pcap_pkthdr header;
+	arp_header_t *arp;
+	
+	if( pcap_compile( pd, &filter, "arp", 0, network ) < 0 ){
+		die( "Error compiling 'arp' pcap filter .\n" );
+	}
+	pcap_setfilter( pd, &filter );
+	
+	while( (packet = (byte_t *)pcap_next( pd, &header )) ){
+		packet     += dlink_shift;
+		header.len -= dlink_shift;
+		arp         = (arp_header_t *)packet;
+		
+		if( ntohs(arp->ar_op) == ARPOP_REPLY ){
+			char address[0xFF]  = {0},
+				 hardware[0xFF] = {0};
+				 
+			strncpy( address, inet_ntoa( *(struct in_addr *)&arp->ar_spa ), 0xFF );
+			sprintf( hardware, 
+					 "%.2x:%.2x:%.2x:%.2x:%.2x:%.2x",
+					 arp->ar_sha[0],
+					 arp->ar_sha[1],
+					 arp->ar_sha[2],
+					 arp->ar_sha[3],
+					 arp->ar_sha[4],
+					 arp->ar_sha[5] );
+			
+			printf( "* Got ARP reply from %s [%s] !\n", address, hardware ); 
+		}
+	}
+}
+
+void banner(){
+	printf( "** whosalive 1.0 copyright 2009-2010 evilsocket (evilsocket@gmail.com - http://www.evilsocket.net)\n\n" );	
+}
+
+void usage( char *app ){
+	printf( "Usage : %s <interface>\n\n", app );
+}
+
+
+int main( int argc, char *argv[] ){
+	pthread_t arp_listener_id;
+	char      iface[0xFF] = {0};             
+    struct libnet_ether_addr *if_mac;
+	struct in_addr            if_ip;
+	libnet_t                 *nd;
+	pcap_t                   *pd;
+	char                      n_error[LIBNET_ERRBUF_SIZE];
+	char                      p_error[PCAP_ERRBUF_SIZE];
+	dword_t nhosts,
+	        i,
+			ip;
+	libnet_ptag_t net = LIBNET_PTAG_INITIALIZER,
+	              arp = LIBNET_PTAG_INITIALIZER;
+	byte_t unknown_hw[ETH_ALEN] = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 },
+		   bcast_hw[ETH_ALEN]   = { 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF };
+		   
+	banner();
+	
+	if( argc < 2 ){
+		usage(argv[0]);
+		return -1;
+	}
+	
+	strcpy( iface, argv[1] );
+	
+	if( (nd = libnet_init( LIBNET_LINK, iface, n_error )) == NULL ){
+		die( "Error initializing first libnet layer (%s) .\n", n_error );
+	}
+	/*
+	if( iface == NULL ){
+		iface = strdup(nd->device);
+	}
+	*/
+	if( (if_mac = libnet_get_hwaddr( nd )) == NULL ){
+		die( "Error retrieving %s MAC address .\n", iface );
+	}
+
+	if( (if_ip.s_addr = libnet_get_ipaddr4( nd )) < 0 ){
+		die( "Error retrieving %s bound ip address .\n", iface );
+	}
+
+	libnet_seed_prand( nd );
+
+	pd = pcap_open_live( iface, 65535, 1, 1000, p_error );
+
+	if( (dlink = pcap_datalink(pd)) < 0 ){
+        die( "Error retrieving %s data link layer (%s) .\n", iface, p_error );
+	}
+	
+    switch( dlink )
+    {
+        case DLT_RAW        : dlink_shift = 0;  break;
+        case DLT_PPP        :
+        case DLT_LOOP       :
+        case DLT_NULL       : dlink_shift = 4;  break;
+        case DLT_PPP_ETHER  : dlink_shift = 8;  break;
+        case DLT_EN10MB     :
+        case DLT_EN3MB      : dlink_shift = 14; break;
+        case DLT_LINUX_SLL  :
+        case DLT_SLIP       : dlink_shift = 16; break;
+        case DLT_SLIP_BSDOS :
+        case DLT_PPP_BSDOS  :
+        case DLT_IEEE802_11 : dlink_shift = 24; break; 
+        case DLT_PFLOG      : dlink_shift = 48; break;
+        
+        default             : die( "Device datalink not supported .\n" );
+    }
+
+	pcap_lookupnet( iface, &network, &netmask, p_error );
+
+	nhosts = ntohl(~netmask);
+	if( pthread_create( &arp_listener_id, NULL, arp_listener, (void *)pd ) != 0 ){
+		die( "Could not create ARP packet reciever thread .\n" );
+	}
+		
+	printf( "* Scanning up to %d hosts ...\n", nhosts );
+	
+	for( i = 1; i <= nhosts; i++ ){
+		ip = (if_ip.s_addr & netmask) | htonl(i);
+		// don't send arp request to ourself :P
+		if( ip != if_ip.s_addr ){
+			arp = libnet_build_arp( ARPHRD_ETHER,
+									ETHERTYPE_IP,
+									ETH_ALEN,
+									4,
+									ARPOP_REQUEST,
+									// sender
+									if_mac->ether_addr_octet,
+									(byte_t *)&if_ip,
+									// reciever
+									unknown_hw,
+									(byte_t *)&ip,
+									NULL,
+									0,
+									nd,
+									arp );
+
+			net = libnet_build_ethernet( bcast_hw,
+										 if_mac->ether_addr_octet,
+										 ETHERTYPE_ARP, 
+										 NULL, 
+										 0, 
+										 nd, 
+										 net );
+
+			if( libnet_write(nd) < 0 ){
+				die( "Could not send ARP request .\n" );
+			}
+		}
+	}
+   
+	printf( "* ARP requests sent, waiting for replies ...\n" );
+	
+	libnet_clear_packet(nd);
+
+	while(1){ sleep(1); }	
+
+	return 0;
+}
+

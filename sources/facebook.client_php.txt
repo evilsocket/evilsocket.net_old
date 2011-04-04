@@ -1,0 +1,116 @@
+<?php
+/***************************************************************************
+ *   Unofficial Facebook Client                                            *
+ *                                                                         *
+ *   Copyleft 2008-2009 by evilsocket                                      *
+ *                                                                         *
+ *   http://www.evilsocket.net                                             *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ *   This program is distributed in the hope that it will be useful,       *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+ *   GNU General Public License for more details.                          *
+ *                                                                         *
+ *   You should have received a copy of the GNU General Public License     *
+ *   along with this program; if not, write to the                         *
+ *   Free Software Foundation, Inc.,                                       *
+ *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
+ *                                                                         *
+ ***************************************************************************/
+
+require "webagent.class.php";
+
+class FBClient {
+	private $agent;
+	private $endpoint;
+	private $cookiefile;
+	
+	private $profile_id;
+	private $post_form_id;
+	private $composer_id;
+	private $fb_dtsg;
+	private $nctr_id;
+	private $nctr_nid;
+	private $nctr_ct;
+	
+	private function updateData( $buffer = null ){
+		if( $buffer == null ){
+			$response = $this->agent->get( "http://www.facebook.com/home.php" );
+			$buffer   = $response->getContent();
+		}
+		
+		preg_match_all( "/UIComposer\.getInstance\(&quot;([\da-f]+)&quot;\)/iU", $buffer, $composer );
+		$this->composer_id  = $composer[1][0];
+		preg_match_all( "/post_form_id:\"([\da-f]+)\"/iU", $buffer, $post_form );
+		$this->post_form_id = $post_form[1][0];
+		preg_match_all( "/fb_dtsg:\"([^\"]+)\"/iU", $buffer, $fb_dtsg );
+		$this->fb_dtsg = $fb_dtsg[1][0];
+	}
+	
+	public function __construct(){
+		$this->endpoint   = ip2long($_SERVER['REMOTE_ADDR']);
+		$this->cookiefile = $this->endpoint."_facebook.com.dat";
+		
+		$this->agent = new WebAgent();
+		$this->agent->followLocation(true);
+		$this->agent->saveCookies( true, $this->endpoint."_" );
+		$this->agent->loadCookies( $this->cookiefile, "facebook.com" );
+	}
+	
+	public function logged(){
+		$response = $this->agent->get( "http://www.facebook.com/home.php" );
+		if( $response == null ){
+			return false;
+		}
+		else{		
+			return !eregi( "login\.facebook\.com", $response->getContent() );
+		}
+	}
+	
+	public function login( $email, $password ){
+		$this->agent->setHeader( "Referer", "http://www.facebook.com/" );
+		
+		$response = $this->agent->post( "http://www.facebook.com/login.php?login_attempt=1",
+		           		                array( "charset_test"     => "€,´,€,´,水,Д,Є",
+		                  		               "fb_dtsg"          => "",
+		 				  		               "locale"           => "it_IT",
+		  				  		               "email"            => $email,
+		 				  		               "pass"             => $password,
+		                  		               "pass_placeholder" => "Password" ) );
+		if( $response == null ){
+			return false;
+		}
+		else{		
+			if( eregi( "login\.facebook\.com", $response->getContent() ) ){
+				return false;
+			}
+			else{
+				$this->profile_id = $this->agent->getCookie( "facebook.com", "c_user" );
+				$this->updateData( $response->getContent() );
+				return true;
+			}
+		}	
+	}
+	
+	public function setStatus( $message ){
+		$response = $this->agent->post( "http://www.facebook.com/updatestatus.php",
+		           		                array( "action"       => "HOME_UPDATE",
+		                  		               "home_tab_id"  => "1",
+		 				  		               "profile_id"   => $this->profile_id,
+		  				  		               "status"       => $message,
+		                                       "target_id"    => "0",
+		                                       "composer_id"  => $this->composer_id, 
+		                                       "post_form_id" => $this->post_form_id,
+		                                       "fb_dtsg"      => $this->fb_dtsg,
+		  									   "post_form_id_source" => "AsyncRequest" ) );
+
+		$this->updateData();
+	}
+}
+
+?>

@@ -1,0 +1,515 @@
+/***************************************************************************
+ *   Copyright (C) 2007 by evilsocket                                      *
+ *                                                                         *
+ *                                                                         *
+ *   http://www.evilsocket.net/ 										   *
+
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ *   This program is distributed in the hope that it will be useful,       *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+ *   GNU General Public License for more details.                          *
+ *                                                                         *
+ *   You should have received a copy of the GNU General Public License     *
+ *   along with this program; if not, write to the                         *
+ *   Free Software Foundation, Inc.,                                       *
+ *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
+ ***************************************************************************/
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/types.h>
+#include <fcntl.h>
+#include <string.h>
+#include <ctype.h>
+#include <arpa/inet.h>
+#include <netdb.h>
+#include <pcap.h>
+#include <unistd.h>
+#include <regex.h>
+#include <pthread.h>
+#include <errno.h>
+#include <stdarg.h>
+#include <netinet/ip.h>
+#include <netinet/tcp.h>
+#include <netinet/ip_icmp.h>
+#include <netinet/igmp.h>
+#include <netinet/udp.h>
+     
+#define IP_PROTO_ICMP 1 
+#define IP_PROTO_IGMP 2
+#define IP_PROTO_IPIP 4
+#define IP_PROTO_TCP  6
+#define IP_PROTO_UDP  17
+
+typedef unsigned int   uint;
+typedef unsigned short ushort;
+typedef unsigned char  byte;
+typedef void * (* ipg_worker_t)(void *arg);
+
+//				   output handle, can be stdout, a file or a socket
+
+FILE *             ipgout = NULL;
+// 				   pcap descriptor
+
+struct pcap *      capd;
+//                 pcap error buffer
+
+char               errbuf[PCAP_ERRBUF_SIZE] = {0},
+//                 pcap filter of the daemon
+
+		           daemonfilter[0xFF] = {0},
+//                 pcap command line protocol filter
+
+				  *nfilter = NULL,
+//                 device to use in promiscuous mode
+
+				  *device  = NULL,
+//                 regular expression to be applied to data payloads
+
+				  *regex   = NULL;
+//                 device data link id
+
+int                dlink, 
+//                 data payload data link offset
+
+			       dlink_offset,
+//                 daemon mode flag
+
+				   daemonmode  = 0,
+//                 listening port for daemon mode
+
+				   port = -1;
+//                 device network mask
+
+bpf_u_int32        mask;
+//                 device network
+
+bpf_u_int32        net;
+//                 pcap pseudo header
+
+struct pcap_pkthdr hdr;
+//                 poiter to packet and data payload
+
+byte        *      ptr;
+//                 pcap protocol layer filter
+
+struct bpf_program filter;     
+
+// print ipgrep banner
+
+void   ipg_banner();
+// print ipgrep usage and examples
+
+void   ipg_usage( char* app );
+// print an error message and close the application
+
+void   ipg_die(char * fmt, ... );
+// print a warning message
+
+void   ipg_warn(char * fmt, ...);
+// create a server socketo bound to <port>
+
+int    ipg_create_server( int port );
+// start listening on <sd> calling <worker> to each client connection
+
+int    ipg_start_server( int sd, ushort backlog, ipg_worker_t worker );
+// daemonize the process deataching it from its tty
+
+void   ipg_daemonize(void);
+// main ipgrep function, can be called synchronously or asynchronously
+
+void * ipg_main_worker(void *arg);
+// check for one or more matches in data with <regex>
+
+int    ipg_reg_match( char *regex, char *data );
+// return a dns lookup of <addr>
+
+char * ipg_get_adrress( struct in_addr addr );
+// print the data payload of the packet
+
+void   ipg_print_data( byte *data, int size );
+// convert <proto> id to protocol string form
+
+char * ipg_proto2str( byte proto );
+// parse <pkt>
+
+void   ipg_parse_packet( byte * pkt, int size, char *regex );
+
+
+int main(int argc, char *argv[])
+{  
+    ipg_banner();
+
+	if( argc < 3 ){
+		ipg_usage(strdup(argv[0]));
+		return -1;
+	}
+
+    if( geteuid() ){
+        ipg_die("ipgrep can be runned only by root .\n");
+	}
+	
+	int c;
+	while( (c = getopt(argc,argv,"p:d:I:o:D:")) != -1 ){
+		switch(c){
+			case 'p' : nfilter = strdup(optarg); break;
+			case 'd' : regex   = strdup(optarg); break;
+			case 'I' : device  = strdup(optarg); break;
+			case 'o' : ipgout = fopen(optarg,"a+t"); break;
+			case 'D' : daemonmode = 1; port = atoi(optarg); break;
+			default  : 
+					   ipg_usage(strdup(argv[0]));
+					   return -1;
+		}
+	}
+
+	/* check if port is a valid one if we are in daemon mode */
+	if( daemonmode && (port < 1 || port > 65535) ){
+		ipg_die( "Port must be greater than 0 and lesser than 65535 .\n" );
+	}
+	/* if no file redirection, than use stdout */
+	if( ipgout == NULL ){
+		ipgout = stdout;
+	}
+	/* if no device, than lookup default one */
+	if( device == NULL ){
+		if( ( device = pcap_lookupdev(errbuf)) == NULL )
+             ipg_die( "%s .\n", errbuf);
+	}
+	/* lookup device network */
+	if( pcap_lookupnet( device, &net, &mask, errbuf ) < 0 ){
+		ipg_die( "%s .\n", errbuf);
+	}
+	/* open device in promiscuous mode */
+    if( ( capd = pcap_open_live(device,65535,1,1000,errbuf) ) == NULL ){
+        ipg_die( "%s .\n", errbuf);
+	}
+	/* get device's data link and compute correct payload offset */
+    if( ( dlink = pcap_datalink(capd) ) < 0 ){
+        ipg_die( "%s .\n", errbuf);
+	}
+    
+    switch( dlink )
+    {
+        case DLT_RAW        : dlink_offset = 0;  break;
+        case DLT_PPP        :
+        case DLT_LOOP       :
+        case DLT_NULL       : dlink_offset = 4;  break;
+        case DLT_PPP_ETHER  : dlink_offset = 8;  break;
+        case DLT_EN10MB     :
+        case DLT_EN3MB      : dlink_offset = 14; break;
+        case DLT_LINUX_SLL  :
+        case DLT_SLIP       : dlink_offset = 16; break;
+        case DLT_SLIP_BSDOS :
+        case DLT_PPP_BSDOS  :
+        case DLT_IEEE802_11 : dlink_offset = 24; break; 
+        case DLT_PFLOG      : dlink_offset = 48; break;
+        
+        default         :
+
+            ipg_die( "Device datalink not supported .\n" );
+            return 1;
+    }
+    /* if in daemon mode, we must set a pcap filter to ignore packets generated by the daemon itself 
+	   else just use optional command line pcap filter 
+	*/
+	if( nfilter ){
+		strncpy( daemonfilter, nfilter, 0xFF );
+	}
+	if( daemonmode ){
+		if(nfilter){
+			strcat( daemonfilter, " and " );
+		}
+		char tmp[0xFF] = {0};
+		sprintf( tmp, "port not %d", port );
+		strcat( daemonfilter, tmp );
+	}
+
+	if( daemonfilter[0] != 0x0 ){
+		if( pcap_compile( capd, &filter, daemonfilter, 0, net) < 0 ){
+			ipg_die( "Error compiling libpcap network filter .\n" );
+		}
+		if( pcap_setfilter( capd, &filter ) < 0 ){
+			ipg_die( "Error setting libpcap network filter .\n" );
+		}
+	}
+	
+	if( daemonmode ){
+		ipg_daemonize();
+		ipg_start_server( ipg_create_server( port ), 10, ipg_main_worker );
+	}
+	else{
+	   	ipg_main_worker(0);
+	}
+
+    return 0;
+} 
+
+
+
+void ipg_die(char * fmt, ... ){
+	va_list arg_ptr ;
+
+	fprintf( ((ipgout && !daemonmode) ? ipgout : stdout), "[ERROR] " );
+	
+	va_start( arg_ptr, fmt );
+		vfprintf( ((ipgout && !daemonmode) ? ipgout : stdout), fmt, arg_ptr );
+	va_end( arg_ptr ); 
+
+	if(ipgout && !daemonmode){
+		fclose(ipgout);
+	}
+
+    exit(1);
+}
+
+void ipg_warn(char * fmt, ...){
+	va_list arg_ptr ;
+
+	fprintf( ((ipgout && !daemonmode) ? ipgout : stdout), "[WARNING] " );
+	
+	va_start( arg_ptr, fmt );
+		vfprintf( ((ipgout && !daemonmode) ? ipgout : stdout), fmt, arg_ptr );
+	va_end( arg_ptr ); 
+}
+
+int ipg_create_server( int port ){
+	int sd, on = 1;
+    struct sockaddr_in addr;
+
+    if( (sd = socket(AF_INET, SOCK_STREAM, 0) ) == -1){
+		ipg_warn( "Couldn't create socket : %s .\n", strerror(errno) );
+        return 0;
+	}
+
+	fcntl( sd, F_SETFL, O_NONBLOCK );
+
+    if( setsockopt( sd, SOL_SOCKET, SO_REUSEADDR, &on, sizeof(int)) == -1){
+		ipg_warn( "Couldn't set socket SO_REUSEADDR option : %s .\n", strerror(errno) );
+    	return 0;
+    }
+    
+    addr.sin_family      = AF_INET;
+    addr.sin_port        = htons(port);
+    addr.sin_addr.s_addr = INADDR_ANY;
+    
+	memset(addr.sin_zero, 0, sizeof(addr.sin_zero) );
+
+    if( bind( sd, (struct sockaddr *)&addr, sizeof(addr)) == -1){
+		ipg_warn( "Couldn't bind the socket : %s .\n", strerror(errno) );
+        return 0;
+    }
+	
+	return sd;
+}
+
+int ipg_start_server( int sd, ushort backlog, ipg_worker_t worker ){
+	struct sockaddr_in addr;
+	fd_set master, readfds;
+	int    fdmax,ssize,csd;
+
+	FD_ZERO(&readfds);
+	FD_ZERO(&master); 
+
+	if( listen( sd, backlog ) == -1){
+        ipg_die( "Couldn't put the socket in listening mode : %s .\n", strerror(errno) );
+        return 0;
+    }
+	
+	FD_SET( sd, &master);
+	fdmax = sd;
+	ssize = sizeof(addr);
+
+    while( 1 ){
+		readfds = master;
+		
+		if( select( fdmax + 1, &readfds, NULL, NULL, NULL) == -1){
+           ipg_die( "Couldn't select socket for non-blocking operations : %s .\n", strerror(errno) );
+        }
+
+        if( (csd = accept( sd, (struct sockaddr *)&addr, &ssize)) == -1 ){
+            ipg_warn( "Error accepting incoming connection : %s .\n", strerror(errno) );
+        }
+		else{
+			pthread_t th;
+			pthread_create( &th, 0, worker, (void *)csd );
+		}
+    }
+
+	close(sd);
+
+	return sd;
+}
+
+int ipg_reg_match( char *regex, char *data ){
+	regex_t crex;
+	int		ret = 0;
+	
+	if( !regcomp( &crex, regex, REG_EXTENDED|REG_ICASE|REG_NOSUB|REG_NEWLINE ) ){
+		regmatch_t match[1];
+
+		ret = ( regexec( &crex, data, 1, match, 0) == 0 ? 1 : 0 );
+
+		regfree(&crex);
+	}
+
+	return ret;
+}
+
+char * ipg_get_adrress( struct in_addr addr ){
+    struct hostent * host;
+
+    host = gethostbyaddr(&addr,4,AF_INET);
+
+    return (host ? strdup(host->h_name) : strdup(inet_ntoa(addr)));
+}
+
+void ipg_print_data( byte *data, int size ){
+	int i;
+	for( i = 0; i < size; i++){
+		fprintf( ipgout, "%c", isprint(data[i]) ? data[i] : '.' );
+		if( i && !(i % 66) ){
+			fprintf( ipgout, "\n" );
+		}
+		
+	}
+	fflush(ipgout);
+}
+
+char * ipg_proto2str( byte proto ){
+	switch(proto){
+		case IP_PROTO_TCP  : return strdup("TCP"); break;
+		case IP_PROTO_UDP  : return strdup("UDP"); break;
+		case IP_PROTO_IPIP : return strdup("IP"); break;
+		case IP_PROTO_IGMP : return strdup("IGMP"); break;
+		case IP_PROTO_ICMP : return strdup("ICMP"); break;
+	}
+	
+	return strdup("???");
+}
+
+void ipg_parse_packet( byte * pkt, int size, char *regex ){
+	struct ip * iph;
+	int dataoffset,
+		datasize;
+
+	iph = (struct ip *)pkt;
+
+	switch(iph->ip_p){
+		case IP_PROTO_TCP  : 
+			dataoffset = sizeof(struct ip) + (((struct tcphdr *)(pkt + sizeof(struct ip)))->doff * 4);
+		break;
+		case IP_PROTO_UDP  : dataoffset = sizeof(struct ip) + sizeof(struct udphdr);   break;
+		case IP_PROTO_IPIP : dataoffset = sizeof(struct ip) * 2;				    break;
+		case IP_PROTO_IGMP : dataoffset = sizeof(struct ip) + sizeof(struct igmp); break;
+		case IP_PROTO_ICMP : dataoffset = sizeof(struct ip) + sizeof(struct icmphdr); break;
+		
+		default : 
+			ipg_warn( "Packet with unknown protocol '%d', try to sniff with and higher level interface ... maybe :P .\n", iph->ip_p ); 
+			return;
+	}
+
+	datasize = size - dataoffset;
+
+	if(datasize > 0){
+		byte *src     = NULL;
+		char *payload = (char *)calloc( datasize, 1 ),
+			 *dst     = payload;
+
+		for( src = (pkt + dataoffset); src < (pkt + size); src++, dst++ ){
+			*dst = isprint(*src) ? *src : ' ';
+		}
+
+		if( regex == NULL || ipg_reg_match( regex, payload ) ){
+			char   timestr[0xFF] = {0};
+			time_t t             = time(NULL);
+			struct tm *local     = (struct tm *)localtime(&t);
+
+			strftime( timestr, 0xFF, "%d.%h.%Y %H:%M:%S", local );
+
+			fprintf( ipgout, "---------------------------------------------------------------\n" );
+			fprintf( ipgout, "Time        : %s\n", timestr );
+			fprintf( ipgout, "Source      : %s\n", ipg_get_adrress(iph->ip_src) );
+			fprintf( ipgout, "Destination : %s\n", ipg_get_adrress(iph->ip_dst) );
+			fprintf( ipgout, "Protocol    : %s\n\n", ipg_proto2str(iph->ip_p) );
+			ipg_print_data( payload, datasize );      		
+			fprintf( ipgout, "\n---------------------------------------------------------------\n\n" );
+		}
+
+		free(payload);
+	}
+}
+
+void ipg_banner(){
+    printf( "*************************************************\n"
+			"*** IPGrep v2.0 ( http://www.evilsocket.net ) ***\n"
+
+			"*************************************************\n\n" );
+}
+
+void ipg_usage( char* app ){
+	printf( "Usage : %s <options> -I <interface>\n", app );
+	printf( "\tOptions : \n" );
+	printf( "\t\t-p <filter> : ip layer pcap filter .\n" );
+	printf( "\t\t-d <regex>  : data payload regex filter .\n" );
+	printf( "\t\t-o <file>   : outputs results to file .\n" );
+	printf( "\t\t-D <port>   : listen on <port> and send output to the socket .\n\n" );
+	printf( "\tExample : \n" );
+	printf( "\t\t%s -p \"port 1863\" -d \"MSG.*text/plain\" -I ppp0\n", app );
+	printf( "\t\t%s -p \"port 80\" -d \".*POST.*\"\n", app );
+	printf( "\t\t%s -I ppp0 -D 1012\n\n", app );
+}
+
+void * ipg_main_worker(void *arg){
+	/* if we are in pthread mode, dup the socket to stdout handle */
+	if(arg){
+		ipgout = fdopen( (int)arg, "wt" );
+	}
+
+	while((ptr = (byte *)pcap_next( capd, &hdr ))){
+        ipg_parse_packet( ptr + dlink_offset, hdr.len - dlink_offset, regex );
+    }
+
+    pcap_close(capd);
+	fclose(ipgout);
+
+	/* check if we are in pthread mode */
+	if(arg){
+		pthread_exit(0);
+	}
+	else{
+		return 0;
+	}
+}
+
+void ipg_daemonize(void){
+	switch(fork()){
+		case  0 : break;
+		case -1 :
+			ipg_die( "Process daemonization failed : %d - %s .\n", errno, strerror(errno));
+		break;
+		default:
+		_exit(0);
+	}
+	
+	if(setsid() < 0){
+		ipg_die( "Process daemonization failed : %d - %s .\n", errno, strerror(errno));
+	}
+
+	switch(fork()){
+		case 0  : break;
+	    case -1 :
+			ipg_die( "Process daemonization failed : %d - %s .\n", errno, strerror(errno));
+		break;
+		default:
+		_exit(0);
+	}
+	
+	chdir("/");
+}
