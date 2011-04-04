@@ -44,6 +44,10 @@
 	</head>
 
 	<body id="home" class="log">
+    <a href="http://github.com/evilsocket" target="_blank">
+      <img alt="Fork me on GitHub" src="${config.siteurl}/images/fork-me-on-github.png" style="position: fixed; top: 0; right: 0; border: 0" />
+    </a>
+
 		<div id="pagewrap">
       <%include file="sidebar.tpl"/>
       <div id="content">
