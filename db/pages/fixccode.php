@@ -5,7 +5,7 @@ $comments = array();
 foreach( glob("*.txt") as $filename ){
   $data = file_get_contents($filename);
   $data = preg_replace('#(\s*)\[cc([^\s\]_]*(?:_[^\s\]]*)?)([^\]]*)\](.*?)\[/cc\2\](\s*)#sie', 'PerformHighlightCodeBlock(\'\\4\', \'\\3\', $data, \'\\2\', \'\\1\', \'\\5\');', $data );
-  $data = preg_replace('#(\s*)\<code(.*?)\>(.*?)\</code\>(\s*)#sie', 'PerformHighlightCodeBlock(\'\\3\', \'\\2\', $data, \'\', \'\\1\', \'\\4\');', $data );
+  # $data = preg_replace('#(\s*)\<code(.*?)\>(.*?)\</code\>(\s*)#sie', 'PerformHighlightCodeBlock(\'\\3\', \'\\2\', $data, \'\', \'\\1\', \'\\4\');', $data );
  // $data = preg_replace('#(\s*)(\[cc[^\s\]_]*(?:_[^\s\]]*)?[^\]]*\].*?\[/cc\1\])(\s*)#sie', 'PerformProtectComment(\'\\2\', $data, \'\\1\', \'\\3\');', $data);
  // $data = preg_replace('#(\s*)(\<code.*?\>.*?\</code\>)(\s*)#sie', 'PerformProtectComment(\'\\2\', $data, \'\\1\', \'\\3\');', $data);
 
@@ -56,6 +56,6 @@ foreach( glob("*.txt") as $filename ){
     //$blockID = GetBlockID($content, true, '', '');
     //$comments[$blockID] = $text;
 
-    return $after;
+    return $text;
   }
 ?>
