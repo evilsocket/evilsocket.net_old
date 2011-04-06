@@ -5,20 +5,14 @@ Tags: autotools. configure, building, configure.ac, hybris, makefile.am
 Title: Finalmente gli autotools!!!
 
 Finalmente <a href="http://www.hybris-lang.org/">Hybris</a> supporta gli autotools grazie al lavoro svolto da merlok sul configure.ac e il mio sui Makefile.am.
-Di conseguenza la procedura di compilazione ora è :
-
-[cc lang=bash]./autogen.sh
+Di conseguenza la procedura di compilazione ora è :<pre><pre><code>./autogen.sh
 ./configure
 make
-sudo make install[/cc]
-
-<break>
+sudo make install</pre></pre></code><break>
 
 Il che *dovrebbe* segnalare subito se manca qualche dipendenza .
 Per i "pigri", è stato aggiornato anche lo script di download ed
-installazione che ora è :
-
-[cc lang=bash]#!/bin/bash
+installazione che ora è :<pre><pre><code>#!/bin/bash
 function do_error {
 echo "!!! Error during Hybris installation : "
 echo $1
@@ -27,7 +21,7 @@ exit 1
 }
 
 if [ "$(id -u)" != "0" ]; then
-echo "This script must be run as root" 1>&amp;2
+echo "This script must be run as root" 1>&2
 exit 1
 fi
 TMP=`mktemp -u hybris.XXXXXXXXXX`;
@@ -45,6 +39,4 @@ echo "* Installing Hybris ..."
 make install > /dev/null || do_error "Could not install Hybris ." $TMP
 cd ..
 rm -rf $TMP > /dev/null
-echo "* Hybris succesfully installed :)"[/cc]
-
-Il supporto nn è ancora completo al 100% poichè dai Makefile.am non vengono gestite le variabili in ingresso dal configure come prefix o altro, però già questo è un passo avanti poichè il tutto offre un sistema di compilazione molto più scalabile e user friendly ^^
+echo "* Hybris succesfully installed :)"</pre></pre></code>Il supporto nn è ancora completo al 100% poichè dai Makefile.am non vengono gestite le variabili in ingresso dal configure come prefix o altro, però già questo è un passo avanti poichè il tutto offre un sistema di compilazione molto più scalabile e user friendly ^^

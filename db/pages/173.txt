@@ -58,5 +58,5 @@ Fatto questo possiamo lanciare il client con
 Ed eseguire tutti i test di sicurezza che vogliamo (devo dire che la gui Ã¨ molto + leggera ed intuitiva di quella di Nessus ^^) .
 
 PS: Ogni tanto Ã¨ bene sincronizzare il database di OpenVAS con quello aggiornato usando il comando
-<blockquote>sudo <code>openvas-nvt-sync</code></blockquote>
+<blockquote>sudo<pre><code>openvas-nvt-sync</pre></code></blockquote>
 <a href="http://www.evilsocket.net/wp-content/uploads/2009/05/openvas.png" target="_blank"><img class="aligncenter size-medium wp-image-174" title="openvas" src="http://www.evilsocket.net/wp-content/uploads/2009/05/openvas-300x240.png" alt="openvas" width="300" height="240" /></a>

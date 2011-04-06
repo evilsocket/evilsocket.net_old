@@ -8,13 +8,9 @@ Title: SWG 1.2.0 con compressione GZip delle pagine.
 Nuova release di <a href='http://www.evilsocket.net/?s=swg'>SWG</a>, nuova funzionalità figa (almeno per me lo è, oltre che comoda XD) ! 
 Tramite il flag (opzionale) nel file di configurazione:
 
-<pre>
-  <code>
-  ...
+<pre><pre><code>  ...
   gzip = true  
-  ...
-  </code>
-</pre>
+  ...</pre></code></pre>
 
 Si abiliterà la compressione GZip delle pagine, quindi non ci saranno più tanti file .html, ma tanti file .html.gz ... i risultati? :)
 
@@ -24,24 +20,20 @@ Enorme risparmio di spazio!
 Tanto per capirci, questo sito generato con la 1.1.0 pesava circa <b>23 MB</b>, mentre con la 1.2.0 e la compressione abilitata pesa a malapena <b>5 MB</b>! 
 SWG, se troverà abilitata questa opzione si occuperà di creare l'apposito file .htaccess (o di aggiornarne uno esistente), inserendo le righe:
 
-<pre>
-  <code>
-  # SWG Generated Code
+<pre><pre><code>  # SWG Generated Code
   AddEncoding gzip .gz
   DirectoryIndex index.html index.htm index.shtml index.php index.php4 index.php3 index.phtml index.cgi index.html.gz
 
-  &lt;Files *.html.gz&gt;
+  <Files *.html.gz>
     ForceType text/html
-  &lt;/Files&gt;
+  </Files>
 
-  &lt;FilesMatch .*\.(html)&gt;
+  <FilesMatch .*\.(html)>
     RewriteEngine on
     RewriteCond %{HTTP:Accept-Encoding} gzip
     RewriteCond %{REQUEST_FILENAME}.gz -f
     RewriteRule ^(.*)$ $1.gz [L]
-  &lt;/FilesMatch&gt;
-  </code>
-</pre>
+  </FilesMatch></pre></code></pre>
 
 Le quali come è facile capire, faranno si che quando, ad esempio, la pagina <b>pippo.html</b> viene richiamata da browser, il server manderà il file <b>pippo.html.gz</b> (compresso) al client
 con il campo encoding settato su gzip, in modo tale che il browser stesso la estrarrà e la visualizzerà correttamente.

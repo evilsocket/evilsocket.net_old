@@ -26,13 +26,11 @@ Lo script è commentato (come il precedente), in modo tale il lettore avrà la p
 
 Enjoy.
 
-<pre>
-  <code>
-&lt;?php
+<pre><pre><code><?php
 /***************************************************************************
  *   Alice AGPF WPA Discovery                                              *
  *   by evilsocket - evilsocket@gmail.com - http://www.evilsocket.net      *
- *   based on &lt;http://wifiresearchers.wordpress.com/&gt;                      *
+ *   based on <http://wifiresearchers.wordpress.com/>                      *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -53,15 +51,15 @@ Enjoy.
 /*
  * Tabella per il calcolo del seriale.
  *
- * First SSID digits =&gt; ( SN1, k, Q )
+ * First SSID digits => ( SN1, k, Q )
  */
-$SN_TABLE   = array( '96' =&gt; array( '69102', 13, 96017051 ),
-                     '93' =&gt; array( '69101', 13, 92398366 ),
-                     '56' =&gt; array( '67902', 13, 54808800 ),
-                     '55' =&gt; array( '67904', 8,  55164449 ),
-                     '54' =&gt; array( '67903', 8,  52420689 ),
-                     '48' =&gt; array( '67903', 8,  47896103 ),
-                     '46' =&gt; array( '67902', 13, 39015145 ) );
+$SN_TABLE   = array( '96' => array( '69102', 13, 96017051 ),
+                     '93' => array( '69101', 13, 92398366 ),
+                     '56' => array( '67902', 13, 54808800 ),
+                     '55' => array( '67904', 8,  55164449 ),
+                     '54' => array( '67903', 8,  52420689 ),
+                     '48' => array( '67903', 8,  47896103 ),
+                     '46' => array( '67902', 13, 39015145 ) );
 /*
  * Numeri magici da utilizzare per il calcolo dell'SHA256.
  */
@@ -95,7 +93,7 @@ $bytes      = hash2bytes($hash);
  * Trovo la WPA utilizzando i primi 24 byte dell'hash come indici della tabella di covnersione.
  */
 $wpa   = "";
-for( $i = 0; $i &lt; 24; $i++ ){
+for( $i = 0; $i < 24; $i++ ){
     $wpa .= $CONV_TABLE[ $bytes[$i] ];
 }
 
@@ -160,6 +158,4 @@ function hash2bytes( $hash ){
     return $bytes;
 }
 
-?&gt;
-  </code>
-</pre>
+?></pre></code></pre>

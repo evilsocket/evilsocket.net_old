@@ -22,9 +22,7 @@ Il "trucco" sostanzialmente consiste nel prelevare il puntatore al primo frame d
 
 Fatto questo, sapendo l'alignment di ogni frame e avendo la sua posizione cardinale, si calcola in modo estremamente facile quanto è vasta la zona di memoria puntata dal nostro amico puntatore ^^.
 
-Qui di seguito posto il codice di esempio, commentato il più possibile per rendere chiaro il procedimento il più possibile. Tuttavia tengo a sottolineare che per una completa comprensione del codice, è necessario conoscere la struttura dello stack e le dinamiche che ne regolano il funzionamento ... enjoy ^^
-
-[cc lang="c"]/*
+Qui di seguito posto il codice di esempio, commentato il più possibile per rendere chiaro il procedimento il più possibile. Tuttavia tengo a sottolineare che per una completa comprensione del codice, è necessario conoscere la struttura dello stack e le dinamiche che ne regolano il funzionamento ... enjoy ^^<pre><pre><code>/*
  *
  *      Copyleft 2009 evilsocket
  *
@@ -91,5 +89,4 @@ int main(){
 	printf( "buffer size : %d\n", get_stack_boundary(buffer) );
 	
 	return 0;
-}
-[/cc] 
+}</pre></pre></code>

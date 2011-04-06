@@ -16,45 +16,33 @@ oppure offrire lato template un oggetto 'pager' da poter utilizzare per stilizza
 <break>
 Nel template della index ad esempio, possiamo inserire il codice:
 
-<pre>
-  <code>
-  % for page in pager.getCurrentPages():
+<pre><pre><code>  % for page in pager.getCurrentPages():
   ...  
-  % endfor
-  </code>
-</pre>
+  % endfor</pre></code></pre>
 
 Per loopare le pagine disponibili nella pagina attuale (perdonate il gioco di parole XD), mentre a piè pagina, per generare graficamente il pager:
 
-<pre>
-  <code>
-    &lt;div id=&quot;pager&quot;&gt;
-    &lt;label&gt;PAGINE&lt;/label&gt;
+<pre><pre><code>    <div id="pager">
+    <label>PAGINE</label>
     % for pagen in range( 1, pager.getTotalPages() + 1 ):
       % if pagen == pager.getCurrentPageNumber():
-        &lt;b&gt;${ pagen }&lt;/b&gt;
+        <b>${ pagen }</b>
       % elif pagen == 1:
-        &lt;a href='${config.siteurl}index.${config.page_ext}'&gt;${ pagen }&lt;/a&gt;
+        <a href='${config.siteurl}index.${config.page_ext}'>${ pagen }</a>
       % else:
-        &lt;a href='${config.siteurl}/index-${pagen}.${config.page_ext}'&gt;${ pagen }&lt;/a&gt;
+        <a href='${config.siteurl}/index-${pagen}.${config.page_ext}'>${ pagen }</a>
       % endif
     % endfor
-    &lt;/div&gt;
-  </code>
-</pre>
+    </div></pre></code></pre>
 
 E così via ^^
 
 Un altra cosa (forse meno importante, ma altrettanto utile!) che ho implementato è la possibilità di definire nel file di configurazione di un sito, un comando che verrà eseguito alla fine della (ri)generazione,
 comando che può contenere qualsiasi cosa, ad esempio nel caso di questo sito:
 
-<pre>
-  <code>
-  ...
+<pre><pre><code>  ...
   transfer = rsync -ravz out/* -e ssh evilsocket@evilsocket.net:/var/www/evilsocket.net/htdocs/
-  ...
-  </code>
-</pre>
+  ...</pre></code></pre>
 
 <em>( E' senza password perchè uso la mia chiave ssh per accedere =) )</em>
 
