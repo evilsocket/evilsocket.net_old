@@ -1,0 +1,32 @@
+Date: 2011-07-04 23:44:12
+Author: evilsocket
+Categories: Misc, Personali
+Tags: casa, vps, server, sistemi
+Title: Una nuova casa per i miei domini :)
+
+<p align="justify">
+Ieri e oggi sono state due giornate tecnicamente stimolanti ed allo stesso tempo stressanti.
+Come chiunque abbia mai configurato un server sa per esperienza, questa operazione spesso non è delle più immediate soprattutto se si devono
+trasferire dei domini e/o dei servizi pre esistenti su un altra macchina.
+
+Ed è proprio questo che ho fatto ieri e oggi ... con un po di malinconia ho lasciato i ragazzi di <a href="http://www.ihteam.net/" target="_blank">ihteam.net</a> con i quali
+condividevo il server per trasferirmi su un vps molto più economico, molto meno potente ... ma tutto <b>mio</b> !
+
+<break>
+
+La motivazione principale è stata la voglia di poter "smanettare" con configurazioni e demoni senza la preoccupazione di incasinare i siti
+di altre persone, la voglia di avere dell'hardware non proprio prestante e spingerlo al massimo a suon di tweaking e magia nera ... insomma la voglia di avere un posticino
+tutto mio dove poter fare i miei esperimenti malati :)
+
+Per questo, ora questo sito (come altri di mia proprietà) è hostato su un vps tedes con un Intel Xeon X5670 da circa 3Ghz e 2GB di RAM.
+Nonostante non sia granchè, il mio lavoro già da i suoi frutti e le prestazioni di tutta l'�infrastruttura non sono per niente male, anzi superano quelle del dedicato sul
+quale ero prima! :)
+
+In questi giorni, tempo e lavoro (quindi sempre tempo XD) permettendo, posterò alcuni articoli sulla configurazione di un vps di fascia medio bassa
+per portarlo alle prestazioni massime raggiungibili con software alternativi ai soliti Apache, MySQL e PHP, nonchè su diversi accorgimenti e diverse configurazioni
+che complessivamente aumentano la sicurezza del sistema di parecchio (anche se nessun sistema è inpenetrabile, è sempre meglio stringere le chiappe il più possibile
+invece che spalancarle e dar modo a chiunque di "entrare" no? XD).
+
+Stay tuned! :)
+
+</p>
