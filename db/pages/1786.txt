@@ -26,47 +26,55 @@ Bene, navigando in giro per la rete, studiandomi la documentazione, bevendo litr
 
 Il trucco risiede sostanzialmente, nell'inserire nella view principale SOLAMENTE una UITabBar SENZA associarla al relativo UITabBarController (che ho scoperto essere il responsabile della brutale mutilazione dei tabs), e gestirla tramite la classe controller principale, impostandola come UITabBarDelegate della UITabBar.
 
-Per capirci, diciamo di avere la classe MainViewController, controller della vista principale, la dichiareremo come :<pre><pre><code>@interface MainViewController : UIViewController  {
-...
-}</pre></pre></code>L'implementazione della classe dovrà quindi gestire l'evento <strong>didSelectItem</strong>, che ci viene inviato in quanto delegati della barra, tramite il quale potremmo determinare quale tab è stato selezionato (in base al suo tag, che imposteremo tramite IB), e di conseguenza visualizzare la view corrispondente.
+Per capirci, diciamo di avere la classe MainViewController, controller della vista principale, la dichiareremo come :
 
-Nell'esempio che sto per proporvi, ho inizializzato un array (NSMutableArray) di UIViewController, chiamato viewControllers, che caricano ognuno il NIB della vista corrispondente al tab :<pre><pre><code>/*
- * Metodo per gestire il protocollo di UITabBarController nel momento in cui viene 
- * selezionato un tab.
- */
-- (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item {	
-    [self selectTab:item.tag];
-}
+<div class="codecolorer-container objc default" style="overflow:auto;white-space:nowrap;width:100%;height:100%;"><div class="objc codecolorer"><span class="kw1">@interface</span> MainViewController <span class="sy0">:</span> UIViewController &nbsp;<span class="br0">&#123;</span><br />
+...<br />
+<span class="br0">&#125;</span></div></div>
 
-/*
- * Metodo per attivare la View in base al tab selezionato.
- */
-- (void)selectTab:(int)tag {
-	/*
-	 * Prelevo dall'array il view controller che mi interessa.
-	 */
-	UIViewController *viewController = [viewControllers objectAtIndex:tag];
-	/*
-	 * Accertiamoci che non sia già selezionata la vista.
-	 */
-	if( viewController == currentView ){
-		return;
-	}
-	/*
-	 * Inserisco la view al di sotto della UITabBar.
-	 */
-	[self.view insertSubview: viewController.view belowSubview: tabBar];
-	/*
-	 * Se è già attiva una vista, la rimuovo.
-	 */
-	if( currentView != nil ){
-		[currentView.view removeFromSuperview];
-	}
-	/*
-	 * Imposto la vista attualmente attiva.
-	 */
-	currentView = viewController;
-}</pre></pre></code>Come vedete, tramite i metodi <strong>insertSubview </strong>e <strong>removeFromSuperview</strong> della vista principale, riusciamo ad inserire e rimuovere selettivamente le viste rispettive ai tab selezionati, agganciandoci all'evento didSelectTab in quanto delegati di UITabBar .
+L'implementazione della classe dovrà quindi gestire l'evento <strong>didSelectItem</strong>, che ci viene inviato in quanto delegati della barra, tramite il quale potremmo determinare quale tab è stato selezionato (in base al suo tag, che imposteremo tramite IB), e di conseguenza visualizzare la view corrispondente.
+
+Nell'esempio che sto per proporvi, ho inizializzato un array (NSMutableArray) di UIViewController, chiamato viewControllers, che caricano ognuno il NIB della vista corrispondente al tab :
+
+<div class="codecolorer-container objc default" style="overflow:auto;white-space:nowrap;width:100%;height:100%;"><div class="objc codecolorer"><span class="coMULTI">/*<br />
+&nbsp;* Metodo per gestire il protocollo di UITabBarController nel momento in cui viene <br />
+&nbsp;* selezionato un tab.<br />
+&nbsp;*/</span><br />
+<span class="sy0">-</span> <span class="br0">&#40;</span><span class="kw4">void</span><span class="br0">&#41;</span>tabBar<span class="sy0">:</span><span class="br0">&#40;</span>UITabBar <span class="sy0">*</span><span class="br0">&#41;</span>tabBar didSelectItem<span class="sy0">:</span><span class="br0">&#40;</span>UITabBarItem <span class="sy0">*</span><span class="br0">&#41;</span>item <span class="br0">&#123;</span>&nbsp; <br />
+&nbsp; &nbsp; <span class="br0">&#91;</span>self selectTab<span class="sy0">:</span>item.tag<span class="br0">&#93;</span>;<br />
+<span class="br0">&#125;</span><br />
+<br />
+<span class="coMULTI">/*<br />
+&nbsp;* Metodo per attivare la View in base al tab selezionato.<br />
+&nbsp;*/</span><br />
+<span class="sy0">-</span> <span class="br0">&#40;</span><span class="kw4">void</span><span class="br0">&#41;</span>selectTab<span class="sy0">:</span><span class="br0">&#40;</span><span class="kw4">int</span><span class="br0">&#41;</span>tag <span class="br0">&#123;</span><br />
+&nbsp; &nbsp; <span class="coMULTI">/*<br />
+&nbsp; &nbsp; &nbsp;* Prelevo dall'array il view controller che mi interessa.<br />
+&nbsp; &nbsp; &nbsp;*/</span><br />
+&nbsp; &nbsp; UIViewController <span class="sy0">*</span>viewController <span class="sy0">=</span> <span class="br0">&#91;</span>viewControllers objectAtIndex<span class="sy0">:</span>tag<span class="br0">&#93;</span>;<br />
+&nbsp; &nbsp; <span class="coMULTI">/*<br />
+&nbsp; &nbsp; &nbsp;* Accertiamoci che non sia già selezionata la vista.<br />
+&nbsp; &nbsp; &nbsp;*/</span><br />
+&nbsp; &nbsp; <span class="kw1">if</span><span class="br0">&#40;</span> viewController <span class="sy0">==</span> currentView <span class="br0">&#41;</span><span class="br0">&#123;</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; <span class="kw1">return</span>;<br />
+&nbsp; &nbsp; <span class="br0">&#125;</span><br />
+&nbsp; &nbsp; <span class="coMULTI">/*<br />
+&nbsp; &nbsp; &nbsp;* Inserisco la view al di sotto della UITabBar.<br />
+&nbsp; &nbsp; &nbsp;*/</span><br />
+&nbsp; &nbsp; <span class="br0">&#91;</span>self.view insertSubview<span class="sy0">:</span> viewController.view belowSubview<span class="sy0">:</span> tabBar<span class="br0">&#93;</span>;<br />
+&nbsp; &nbsp; <span class="coMULTI">/*<br />
+&nbsp; &nbsp; &nbsp;* Se è già attiva una vista, la rimuovo.<br />
+&nbsp; &nbsp; &nbsp;*/</span><br />
+&nbsp; &nbsp; <span class="kw1">if</span><span class="br0">&#40;</span> currentView <span class="sy0">!=</span> <span class="kw2">nil</span> <span class="br0">&#41;</span><span class="br0">&#123;</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; <span class="br0">&#91;</span>currentView.view removeFromSuperview<span class="br0">&#93;</span>;<br />
+&nbsp; &nbsp; <span class="br0">&#125;</span><br />
+&nbsp; &nbsp; <span class="coMULTI">/*<br />
+&nbsp; &nbsp; &nbsp;* Imposto la vista attualmente attiva.<br />
+&nbsp; &nbsp; &nbsp;*/</span><br />
+&nbsp; &nbsp; currentView <span class="sy0">=</span> viewController;<br />
+<span class="br0">&#125;</span></div></div>
+
+Come vedete, tramite i metodi <strong>insertSubview </strong>e <strong>removeFromSuperview</strong> della vista principale, riusciamo ad inserire e rimuovere selettivamente le viste rispettive ai tab selezionati, agganciandoci all'evento didSelectTab in quanto delegati di UITabBar .
 
 In questo modo, bypasseremo del tutto lo standard UITabBarController, riusciremo ad avere tutti i tab che vogliamo per esteso, ed il tutto senza violare le HIGs della Apple ^^
 

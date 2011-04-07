@@ -22,71 +22,74 @@ Il "trucco" sostanzialmente consiste nel prelevare il puntatore al primo frame d
 
 Fatto questo, sapendo l'alignment di ogni frame e avendo la sua posizione cardinale, si calcola in modo estremamente facile quanto è vasta la zona di memoria puntata dal nostro amico puntatore ^^.
 
-Qui di seguito posto il codice di esempio, commentato il più possibile per rendere chiaro il procedimento il più possibile. Tuttavia tengo a sottolineare che per una completa comprensione del codice, è necessario conoscere la struttura dello stack e le dinamiche che ne regolano il funzionamento ... enjoy ^^<pre><pre><code>/*
- *
- *      Copyleft 2009 evilsocket
- *
- *              http://www.evilsocket.net
- *
- *      This program is free software; you can redistribute it and/or modify
- *      it under the terms of the GNU General Public License as published by
- *      the Free Software Foundation; either version 2 of the License, or
- *      (at your option) any later version.
- *
- *      This program is distributed in the hope that it will be useful,
- *      but WITHOUT ANY WARRANTY; without even the implied warranty of
- *      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *      GNU General Public License for more details.
- *
- *      You should have received a copy of the GNU General Public License
- *      along with this program; if not, write to the Free Software
- *      Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
- *      MA 02110-1301, USA.
-*/
+Qui di seguito posto il codice di esempio, commentato il più possibile per rendere chiaro il procedimento il più possibile. Tuttavia tengo a sottolineare che per una completa comprensione del codice, è necessario conoscere la struttura dello stack e le dinamiche che ne regolano il funzionamento ... enjoy ^^
 
-#include <stdio.h>
+<div class="codecolorer-container c default" style="overflow:auto;white-space:nowrap;width:100%;height:100%;"><div class="c codecolorer"><span class="coMULTI">/*<br />
+&nbsp;*<br />
+&nbsp;* &nbsp; &nbsp; &nbsp;Copyleft 2009 evilsocket<br />
+&nbsp;*<br />
+&nbsp;* &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;http://www.evilsocket.net<br />
+&nbsp;*<br />
+&nbsp;* &nbsp; &nbsp; &nbsp;This program is free software; you can redistribute it and/or modify<br />
+&nbsp;* &nbsp; &nbsp; &nbsp;it under the terms of the GNU General Public License as published by<br />
+&nbsp;* &nbsp; &nbsp; &nbsp;the Free Software Foundation; either version 2 of the License, or<br />
+&nbsp;* &nbsp; &nbsp; &nbsp;(at your option) any later version.<br />
+&nbsp;*<br />
+&nbsp;* &nbsp; &nbsp; &nbsp;This program is distributed in the hope that it will be useful,<br />
+&nbsp;* &nbsp; &nbsp; &nbsp;but WITHOUT ANY WARRANTY; without even the implied warranty of<br />
+&nbsp;* &nbsp; &nbsp; &nbsp;MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. &nbsp;See the<br />
+&nbsp;* &nbsp; &nbsp; &nbsp;GNU General Public License for more details.<br />
+&nbsp;*<br />
+&nbsp;* &nbsp; &nbsp; &nbsp;You should have received a copy of the GNU General Public License<br />
+&nbsp;* &nbsp; &nbsp; &nbsp;along with this program; if not, write to the Free Software<br />
+&nbsp;* &nbsp; &nbsp; &nbsp;Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,<br />
+&nbsp;* &nbsp; &nbsp; &nbsp;MA 02110-1301, USA.<br />
+*/</span><br />
+<br />
+<span class="co2">#include &lt;stdio.h&gt;</span><br />
+<br />
+<span class="kw4">unsigned</span> <span class="kw4">long</span> get_stack_boundary<span class="br0">&#40;</span> <span class="kw4">void</span> <span class="sy0">*</span>address <span class="br0">&#41;</span><span class="br0">&#123;</span><br />
+&nbsp; &nbsp; <span class="kw4">void</span> <span class="sy0">*</span> &nbsp; &nbsp; &nbsp; &nbsp;stackpointer<span class="sy0">;</span><br />
+&nbsp; &nbsp; <span class="kw4">unsigned</span> <span class="kw4">long</span> framepointer<span class="sy0">,</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; i<span class="sy0">,</span> framesize<span class="sy0">,</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; framedelta<span class="sy0">;</span><br />
+&nbsp; &nbsp; <br />
+&nbsp; &nbsp; <span class="coMULTI">/* usando il puntatore instanziato localmente, controllo che effettivamente 'address' sia una variabile nello stack */</span><br />
+&nbsp; &nbsp; <span class="kw1">if</span><span class="br0">&#40;</span> <span class="br0">&#40;</span><span class="kw4">void</span> <span class="sy0">*</span><span class="br0">&#41;</span><span class="sy0">&amp;</span>stackpointer <span class="sy0">&gt;</span> address <span class="br0">&#41;</span><span class="br0">&#123;</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; <span class="kw1">return</span> <span class="nu0">0</span><span class="sy0">;</span> &nbsp; <br />
+&nbsp; &nbsp; <span class="br0">&#125;</span> &nbsp; &nbsp;<br />
+&nbsp; &nbsp; <br />
+&nbsp; &nbsp; <span class="coMULTI">/* prelevo l'indirizzo del primo frame pointer */</span><br />
+&nbsp; &nbsp; <span class="co2">#ifdef __x86_64__</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; __asm__ <span class="kw4">volatile</span> <span class="br0">&#40;</span><span class="st0">&quot;mov %%rbp, %0&quot;</span> <span class="sy0">:</span> <span class="st0">&quot;=r&quot;</span> <span class="br0">&#40;</span>framepointer<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span><br />
+&nbsp; &nbsp; <span class="co2">#else</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; __asm__ <span class="kw4">volatile</span> <span class="br0">&#40;</span><span class="st0">&quot;mov %%ebp, %0&quot;</span> <span class="sy0">:</span> <span class="st0">&quot;=r&quot;</span> <span class="br0">&#40;</span>framepointer<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span><br />
+&nbsp; &nbsp; <span class="co2">#endif</span><br />
+&nbsp; &nbsp; <br />
+&nbsp; &nbsp; <span class="coMULTI">/* loopo ogni frame dello stack fino a trovare quello che contiene il puntatore che ci interessa */</span><br />
+&nbsp; &nbsp; <span class="kw1">for</span><span class="br0">&#40;</span> stackpointer <span class="sy0">=</span> <span class="br0">&#40;</span><span class="kw4">void</span> <span class="sy0">*</span><span class="br0">&#41;</span>framepointer<span class="sy0">,</span> i <span class="sy0">=</span> <span class="nu0">0</span><span class="sy0">;</span> stackpointer<span class="sy0">;</span> stackpointer <span class="sy0">=</span> <span class="br0">&#40;</span><span class="kw4">void</span> <span class="sy0">*</span><span class="br0">&#41;</span><span class="sy0">*</span><span class="br0">&#40;</span><span class="br0">&#40;</span><span class="kw4">unsigned</span> <span class="sy0">*</span><span class="br0">&#41;</span>stackpointer<span class="br0">&#41;</span><span class="sy0">,</span> i<span class="sy0">++</span> <span class="br0">&#41;</span><span class="br0">&#123;</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; <span class="co1">// trovato ?</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; <span class="kw1">if</span><span class="br0">&#40;</span> stackpointer <span class="sy0">&gt;</span> address <span class="br0">&#41;</span><span class="br0">&#123;</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span class="coMULTI">/* determino se il puntatore si trova nella parte alta o bassa del frame */</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; framedelta <span class="sy0">=</span> stackpointer <span class="sy0">-</span> address<span class="sy0">;</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; framesize &nbsp;<span class="sy0">=</span> <span class="nu0">8</span> <span class="sy0">*</span> i<span class="sy0">;</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span class="kw1">return</span> <span class="br0">&#40;</span>framedelta <span class="sy0">&gt;=</span> framesize <span class="sy0">?</span> framedelta <span class="sy0">-</span> framesize <span class="sy0">:</span> framedelta<span class="br0">&#41;</span><span class="sy0">;</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; <span class="br0">&#125;</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; <span class="coMULTI">/* il puntatore deve essere word aligned */</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; <span class="kw1">if</span><span class="br0">&#40;</span> <span class="br0">&#40;</span><span class="kw4">unsigned</span> <span class="kw4">long</span><span class="br0">&#41;</span>stackpointer <span class="sy0">&amp;</span> <span class="nu12">0x03</span> <span class="br0">&#41;</span><span class="br0">&#123;</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span class="kw1">return</span> <span class="nu0">0</span><span class="sy0">;</span> &nbsp; <br />
+&nbsp; &nbsp; &nbsp; &nbsp; <span class="br0">&#125;</span><br />
+&nbsp; &nbsp; <span class="br0">&#125;</span><br />
+<br />
+&nbsp; &nbsp; <span class="kw1">return</span> <span class="nu0">0</span><span class="sy0">;</span><br />
+<span class="br0">&#125;</span><br />
+<br />
+<span class="kw4">int</span> main<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#123;</span><br />
+&nbsp; &nbsp; <span class="kw4">char</span> buffer<span class="br0">&#91;</span><span class="nu0">123</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="br0">&#123;</span><span class="nu0">0</span><span class="br0">&#125;</span><span class="sy0">;</span><br />
+&nbsp; &nbsp; <span class="co1">// in questo esempio, il risultato sarà maggiore di 123, poichè ci sono una serie di byte aggiuntivi </span><br />
+&nbsp; &nbsp; <span class="co1">// oltre a quelli allocati proprio per evitare sovrascritture dei frame successivi</span><br />
+&nbsp; &nbsp; <span class="kw3">printf</span><span class="br0">&#40;</span> <span class="st0">&quot;buffer size : %d<span class="es1">\n</span>&quot;</span><span class="sy0">,</span> get_stack_boundary<span class="br0">&#40;</span>buffer<span class="br0">&#41;</span> <span class="br0">&#41;</span><span class="sy0">;</span><br />
+&nbsp; &nbsp; <br />
+&nbsp; &nbsp; <span class="kw1">return</span> <span class="nu0">0</span><span class="sy0">;</span><br />
+<span class="br0">&#125;</span></div></div>
 
-unsigned long get_stack_boundary( void *address ){
-    void *        stackpointer;
-	unsigned long framepointer,
-				  i, framesize,
-				  framedelta;
-	
-	/* usando il puntatore instanziato localmente, controllo che effettivamente 'address' sia una variabile nello stack */
-    if( (void *)&stackpointer > address ){
-    	return 0;	
-    }    
-    
-    /* prelevo l'indirizzo del primo frame pointer */
-    #ifdef __x86_64__
-    	__asm__ volatile ("mov %%rbp, %0" : "=r" (framepointer));
-    #else
-   		__asm__ volatile ("mov %%ebp, %0" : "=r" (framepointer));
-    #endif
-    
-    /* loopo ogni frame dello stack fino a trovare quello che contiene il puntatore che ci interessa */
-    for( stackpointer = (void *)framepointer, i = 0; stackpointer; stackpointer = (void *)*((unsigned *)stackpointer), i++ ){
-		// trovato ?
-   		if( stackpointer > address ){
-			/* determino se il puntatore si trova nella parte alta o bassa del frame */
-   			framedelta = stackpointer - address;
-   			framesize  = 8 * i;
-   			return (framedelta >= framesize ? framedelta - framesize : framedelta);
-   		}
-   		/* il puntatore deve essere word aligned */
-   		if( (unsigned long)stackpointer & 0x03 ){
-   			return 0;	
-   		}
-    }
-
-    return 0;
-}
-
-int main(){
-	char buffer[123] = {0};
-	// in questo esempio, il risultato sarà maggiore di 123, poichè ci sono una serie di byte aggiuntivi 
-	// oltre a quelli allocati proprio per evitare sovrascritture dei frame successivi
-	printf( "buffer size : %d\n", get_stack_boundary(buffer) );
-	
-	return 0;
-}</pre></pre></code>

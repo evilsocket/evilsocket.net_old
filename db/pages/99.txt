@@ -101,10 +101,14 @@ Ad esempio, immaginate di dover scrivere, per lavoro, divertimento o puro masoch
 <pre id="line1">&lt;a href="<strong>link da estrarre</strong>" ...&gt;testo del link&lt;/<span class="end-tag">a</span>&gt;</pre>
 e per l'appunto ne estragga il link che ci interessa .
 
-Volendo si potrebbe fare a suon di strpos e cosÃ¬ via, ma considerando in quante forme diverse si puÃ² presentare il tag (basta solo invertire gli attributi <strong>href</strong> e <strong>target </strong>per mandare a puttane un algoritmo basato su strpos e affini) e soprattutto considerando che questo Ã¨ solo un cazzo di esempio XD direi che Ã¨ meglio usare le regex :D<pre><code><?php
-$sito = "http://www.evilsocket.net/";
-// ebbene si, file_get_contents puÃ² essere usata anche per richiedere una pagina web :P
-$html = file_get_contents($sito);</pre></code>if( preg_match_all( "/&lt;\s*a\s+[^&gt;]*href\s*=\s*[\"']?([^\"' &gt;]+)[\"' &gt;]/i", $html, $corrispondenze ) ){
+Volendo si potrebbe fare a suon di strpos e cosÃ¬ via, ma considerando in quante forme diverse si puÃ² presentare il tag (basta solo invertire gli attributi <strong>href</strong> e <strong>target </strong>per mandare a puttane un algoritmo basato su strpos e affini) e soprattutto considerando che questo Ã¨ solo un cazzo di esempio XD direi che Ã¨ meglio usare le regex :D
+
+<div class="codecolorer-container text default" style="overflow:auto;white-space:nowrap;width:100%;height:100%;"><div class="text codecolorer">&amp;lt;?php<br />
+$sito = &quot;http://www.evilsocket.net/&quot;;<br />
+// ebbene si, file_get_contents puÃ² essere usata anche per richiedere una pagina web :P<br />
+$html = file_get_contents($sito);</div></div>
+
+if( preg_match_all( "/&lt;\s*a\s+[^&gt;]*href\s*=\s*[\"']?([^\"' &gt;]+)[\"' &gt;]/i", $html, $corrispondenze ) ){
 /*
 la variabile $corrispondenze a questo punto Ã¨ un vettore bidimensionale .
 Nella prima dimensione, ovvero $corrispondenze[0], la funzione preg_match_all

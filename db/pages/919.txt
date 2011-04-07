@@ -5,38 +5,46 @@ Tags: autotools. configure, building, configure.ac, hybris, makefile.am
 Title: Finalmente gli autotools!!!
 
 Finalmente <a href="http://www.hybris-lang.org/">Hybris</a> supporta gli autotools grazie al lavoro svolto da merlok sul configure.ac e il mio sui Makefile.am.
-Di conseguenza la procedura di compilazione ora è :<pre><pre><code>./autogen.sh
-./configure
-make
-sudo make install</pre></pre></code><break>
+Di conseguenza la procedura di compilazione ora è :
+
+<div class="codecolorer-container text default" style="overflow:auto;white-space:nowrap;width:100%;height:100%;"><div class="text codecolorer">./autogen.sh<br />
+./configure<br />
+make<br />
+sudo make install</div></div>
+
+<break>
 
 Il che *dovrebbe* segnalare subito se manca qualche dipendenza .
 Per i "pigri", è stato aggiornato anche lo script di download ed
-installazione che ora è :<pre><pre><code>#!/bin/bash
-function do_error {
-echo "!!! Error during Hybris installation : "
-echo $1
-rm -rf $2 > /dev/null
-exit 1
-}
+installazione che ora è :
 
-if [ "$(id -u)" != "0" ]; then
-echo "This script must be run as root" 1>&2
-exit 1
-fi
-TMP=`mktemp -u hybris.XXXXXXXXXX`;
-echo "* Cloning the Hybris repository..."
-git clone git://github.com/evilsocket/Hybris.git $TMP > /dev/null ||
-do_error "Could not clone repository ." $TMP
-cd $TMP
-echo "* Running autogen.sh ..."
-./autogen.sh > /dev/null || do_error "Could not run autogen.sh ." $TMP
-echo "* Running configure ..."
-./configure || do_error "Could not run configure ." $TMP
-echo "* Compiling Hybris ..."
-make > /dev/null || do_error "Could not compile source code ." $TMP
-echo "* Installing Hybris ..."
-make install > /dev/null || do_error "Could not install Hybris ." $TMP
-cd ..
-rm -rf $TMP > /dev/null
-echo "* Hybris succesfully installed :)"</pre></pre></code>Il supporto nn è ancora completo al 100% poichè dai Makefile.am non vengono gestite le variabili in ingresso dal configure come prefix o altro, però già questo è un passo avanti poichè il tutto offre un sistema di compilazione molto più scalabile e user friendly ^^
+<div class="codecolorer-container text default" style="overflow:auto;white-space:nowrap;width:100%;height:100%;"><div class="text codecolorer">#!/bin/bash<br />
+function do_error {<br />
+echo &quot;!!! Error during Hybris installation : &quot;<br />
+echo $1<br />
+rm -rf $2 &gt; /dev/null<br />
+exit 1<br />
+}<br />
+<br />
+if [ &quot;$(id -u)&quot; != &quot;0&quot; ]; then<br />
+echo &quot;This script must be run as root&quot; 1&gt;&amp;amp;2<br />
+exit 1<br />
+fi<br />
+TMP=`mktemp -u hybris.XXXXXXXXXX`;<br />
+echo &quot;* Cloning the Hybris repository...&quot;<br />
+git clone git://github.com/evilsocket/Hybris.git $TMP &gt; /dev/null ||<br />
+do_error &quot;Could not clone repository .&quot; $TMP<br />
+cd $TMP<br />
+echo &quot;* Running autogen.sh ...&quot;<br />
+./autogen.sh &gt; /dev/null || do_error &quot;Could not run autogen.sh .&quot; $TMP<br />
+echo &quot;* Running configure ...&quot;<br />
+./configure || do_error &quot;Could not run configure .&quot; $TMP<br />
+echo &quot;* Compiling Hybris ...&quot;<br />
+make &gt; /dev/null || do_error &quot;Could not compile source code .&quot; $TMP<br />
+echo &quot;* Installing Hybris ...&quot;<br />
+make install &gt; /dev/null || do_error &quot;Could not install Hybris .&quot; $TMP<br />
+cd ..<br />
+rm -rf $TMP &gt; /dev/null<br />
+echo &quot;* Hybris succesfully installed :)&quot;</div></div>
+
+Il supporto nn è ancora completo al 100% poichè dai Makefile.am non vengono gestite le variabili in ingresso dal configure come prefix o altro, però già questo è un passo avanti poichè il tutto offre un sistema di compilazione molto più scalabile e user friendly ^^

@@ -16,33 +16,45 @@ oppure offrire lato template un oggetto 'pager' da poter utilizzare per stilizza
 <break>
 Nel template della index ad esempio, possiamo inserire il codice:
 
-<pre><pre><code>  % for page in pager.getCurrentPages():
-  ...  
-  % endfor</pre></code></pre>
+<pre>
+
+<div class="codecolorer-container text default" style="overflow:auto;white-space:nowrap;width:100%;height:100%;"><div class="text codecolorer">&nbsp; % for page in pager.getCurrentPages():<br />
+&nbsp; ... &nbsp;<br />
+&nbsp; % endfor</div></div>
+
+</pre>
 
 Per loopare le pagine disponibili nella pagina attuale (perdonate il gioco di parole XD), mentre a piè pagina, per generare graficamente il pager:
 
-<pre><pre><code>    <div id="pager">
-    <label>PAGINE</label>
-    % for pagen in range( 1, pager.getTotalPages() + 1 ):
-      % if pagen == pager.getCurrentPageNumber():
-        <b>${ pagen }</b>
-      % elif pagen == 1:
-        <a href='${config.siteurl}index.${config.page_ext}'>${ pagen }</a>
-      % else:
-        <a href='${config.siteurl}/index-${pagen}.${config.page_ext}'>${ pagen }</a>
-      % endif
-    % endfor
-    </div></pre></code></pre>
+<pre>
+
+<div class="codecolorer-container text default" style="overflow:auto;white-space:nowrap;width:100%;height:100%;"><div class="text codecolorer">&nbsp; &nbsp; &amp;lt;div id=&amp;quot;pager&amp;quot;&amp;gt;<br />
+&nbsp; &nbsp; &amp;lt;label&amp;gt;PAGINE&amp;lt;/label&amp;gt;<br />
+&nbsp; &nbsp; % for pagen in range( 1, pager.getTotalPages() + 1 ):<br />
+&nbsp; &nbsp; &nbsp; % if pagen == pager.getCurrentPageNumber():<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &amp;lt;b&amp;gt;${ pagen }&amp;lt;/b&amp;gt;<br />
+&nbsp; &nbsp; &nbsp; % elif pagen == 1:<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &amp;lt;a href='${config.siteurl}index.${config.page_ext}'&amp;gt;${ pagen }&amp;lt;/a&amp;gt;<br />
+&nbsp; &nbsp; &nbsp; % else:<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &amp;lt;a href='${config.siteurl}/index-${pagen}.${config.page_ext}'&amp;gt;${ pagen }&amp;lt;/a&amp;gt;<br />
+&nbsp; &nbsp; &nbsp; % endif<br />
+&nbsp; &nbsp; % endfor<br />
+&nbsp; &nbsp; &amp;lt;/div&amp;gt;</div></div>
+
+</pre>
 
 E così via ^^
 
 Un altra cosa (forse meno importante, ma altrettanto utile!) che ho implementato è la possibilità di definire nel file di configurazione di un sito, un comando che verrà eseguito alla fine della (ri)generazione,
 comando che può contenere qualsiasi cosa, ad esempio nel caso di questo sito:
 
-<pre><pre><code>  ...
-  transfer = rsync -ravz out/* -e ssh evilsocket@evilsocket.net:/var/www/evilsocket.net/htdocs/
-  ...</pre></code></pre>
+<pre>
+
+<div class="codecolorer-container text default" style="overflow:auto;white-space:nowrap;width:100%;height:100%;"><div class="text codecolorer">&nbsp; ...<br />
+&nbsp; transfer = rsync -ravz out/* -e ssh evilsocket@evilsocket.net:/var/www/evilsocket.net/htdocs/<br />
+&nbsp; ...</div></div>
+
+</pre>
 
 <em>( E' senza password perchè uso la mia chiave ssh per accedere =) )</em>
 

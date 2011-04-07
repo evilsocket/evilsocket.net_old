@@ -25,7 +25,11 @@ del menu stesso tramite BBFlux, che avviserà l'utente con una notifica dell'avv
 Da questo studio, è nato il pacchetto <b>backbox-fluxbox</b> che installa il DE, BBFlux ed altre personalizzazioni, quindi chi usa BackBox ed è un amante di FluxBox, non deve fare altro
 che dare un bel:
 
-<pre><pre><code>sudo apt-get install backbox-fluxbox</pre></code></pre>
+<pre>
+
+<div class="codecolorer-container text default" style="overflow:auto;white-space:nowrap;width:100%;"><div class="text codecolorer">sudo apt-get install backbox-fluxbox</div></div>
+
+</pre>
 
 Per godersi il tutto :)
 

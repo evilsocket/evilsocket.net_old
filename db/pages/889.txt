@@ -20,267 +20,274 @@ Per questo motivo ho scritto un piccolo set di funzioni PHP che fanno questa cos
 
 A sua volta la libreria si occuperà di eseguire le query, determinare se una determinata query è inseribile in cache o meno, ripulire la cache in caso di aggiornamento dei dati, ecc ecc ecc il tutto sfruttando la <a href="http://php.net/manual/en/function.serialize.php" target="_blank">serializzazione degli oggetti in php</a> .
 
-L'esempio più semplice di utilizzo della libreria potrebbe essere :<pre><pre><code><?php
-include_once( "dbcache.php" );
+L'esempio più semplice di utilizzo della libreria potrebbe essere :
 
-dbc_init( // hostname, utente, password e nome del database al quale connettersi
-		  "localhost",
-		  "utente", 
-		  "password", 
-		  "nome del db", 
-		  // directory in cui salvare i file della cache (deve esistere ed essere scrivibile)
-		  "/path/in/cui/salvare/la/cache", 
-		  // timeout espresso in secondi di un elemento nella cache, dopo il quale verrà eliminato
-		  1800 );
-		  
-// esegue la query
-$obj = dbc_query( "SELECT * FROM notizie" );
+<div class="codecolorer-container php default" style="overflow:auto;white-space:nowrap;width:100%;height:100%;"><div class="php codecolorer"><span class="kw2">&lt;?php</span><br />
+<span class="kw1">include_once</span><span class="br0">&#40;</span> <span class="st0">&quot;dbcache.php&quot;</span> <span class="br0">&#41;</span><span class="sy0">;</span><br />
+<br />
+dbc_init<span class="br0">&#40;</span> <span class="co1">// hostname, utente, password e nome del database al quale connettersi</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span class="st0">&quot;localhost&quot;</span><span class="sy0">,</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span class="st0">&quot;utente&quot;</span><span class="sy0">,</span> <br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span class="st0">&quot;password&quot;</span><span class="sy0">,</span> <br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span class="st0">&quot;nome del db&quot;</span><span class="sy0">,</span> <br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span class="co1">// directory in cui salvare i file della cache (deve esistere ed essere scrivibile)</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span class="st0">&quot;/path/in/cui/salvare/la/cache&quot;</span><span class="sy0">,</span> <br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span class="co1">// timeout espresso in secondi di un elemento nella cache, dopo il quale verrà eliminato</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span class="nu0">1800</span> <span class="br0">&#41;</span><span class="sy0">;</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <br />
+<span class="co1">// esegue la query</span><br />
+<span class="re0">$obj</span> <span class="sy0">=</span> dbc_query<span class="br0">&#40;</span> <span class="st0">&quot;SELECT * FROM notizie&quot;</span> <span class="br0">&#41;</span><span class="sy0">;</span><br />
+<br />
+<span class="co1">// fetcha un array associativo per ogni recordset della query</span><br />
+<span class="kw1">while</span><span class="br0">&#40;</span> <span class="re0">$row</span> <span class="sy0">=</span> dbc_fetch_assoc<span class="br0">&#40;</span><span class="re0">$obj</span><span class="br0">&#41;</span> <span class="br0">&#41;</span><span class="br0">&#123;</span><br />
+&nbsp; &nbsp; <span class="kw1">echo</span> <span class="re0">$row</span><span class="br0">&#91;</span><span class="st_h">'titolo'</span><span class="br0">&#93;</span><span class="sy0">.</span><span class="st0">&quot;&lt;br/&gt;&quot;</span><span class="sy0">;</span><br />
+<span class="br0">&#125;</span><br />
+<br />
+<span class="sy1">?&gt;</span></div></div>
 
-// fetcha un array associativo per ogni recordset della query
-while( $row = dbc_fetch_assoc($obj) ){
-	echo $row['titolo']."<br/>";
-}
-
-?></pre></pre></code>La prima volta che verrà eseguita, la query sarà inviata al database MySQL vero e proprio ed i risultati messi in cache, dalla seconda in poi invece i risultati verranno prelevati direttamente dallo storage su filesystem aumentando i tempi di risposta ed elaborazione e risparmiando le risorse che avrebbe richiesto il database per eseguire la query.
+La prima volta che verrà eseguita, la query sarà inviata al database MySQL vero e proprio ed i risultati messi in cache, dalla seconda in poi invece i risultati verranno prelevati direttamente dallo storage su filesystem aumentando i tempi di risposta ed elaborazione e risparmiando le risorse che avrebbe richiesto il database per eseguire la query.
 
 La cache (che è unica per ogni query, ovvero 10 query in cache equivalgono a 10 file diversi) viene eliminata in due casi :
 <ol>
 	<li>Se il tempo di creazione di un file nella cache supera il timeout impostato durante l'inizializzazione (quindi se è scaduto.</li>
 	<li>Se viene eseguita una query non cachabile, come una INSERT o una UPDATE poichè potenzialmente modificano i dati sul database, rendendo necessario un aggiornamento anche nella cache.</li>
 </ol>
-Bon, detto questo, spero che la libreria possa essere utile a qualcuno, vi lascio con il codice ^^<pre><pre><code><?php
-/*
- * This file is part of DBCACHE.
- *
- * Copyleft of Simone Margaritelli aka evilsocket <evilsocket@gmail.com>
- *
- * DBCACHE is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * hybris is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with hybris.  If not, see <http://www.gnu.org/licenses/>.
-*/
+Bon, detto questo, spero che la libreria possa essere utile a qualcuno, vi lascio con il codice ^^
 
-// funzione di inizializzazione
-function dbc_init( $dbhost, $dbuser, $dbpass, $dbname, $storage, $lifetime = 1800 ){
-	// controllo che la directory di caching esista
-	if( !file_exists($storage) ){
-		die( "DBCACHE : Path '$storage' does not exist ." );
-	}
-	// controllo che sia scrivibile
-	if( !is_writable($storage) ){
-		die( "DBCACHE : Path '$storage' is not writable ." );
-	}
-	// apro una connessione persistente al db
-	mysql_pconnect( $dbhost, $dbuser, $dbpass ) 
-		or die( "DBCACHE : ".mysql_error() );
-	// seleziono il db
-	mysql_select_db( $dbname ) 
-		or die( "DBCACHE : ".mysql_error() );
-		
-	// definisco le variabili che mi servono
-	define( "DBCACHE_STORAGE",  $storage );
-	define( "DBCACHE_LIFETIME", $lifetime );
-}
+<div class="codecolorer-container php default" style="overflow:auto;white-space:nowrap;width:100%;height:100%;"><div class="php codecolorer"><span class="kw2">&lt;?php</span><br />
+<span class="coMULTI">/*<br />
+&nbsp;* This file is part of DBCACHE.<br />
+&nbsp;*<br />
+&nbsp;* Copyleft of Simone Margaritelli aka evilsocket &lt;evilsocket@gmail.com&gt;<br />
+&nbsp;*<br />
+&nbsp;* DBCACHE is free software: you can redistribute it and/or modify<br />
+&nbsp;* it under the terms of the GNU General Public License as published by<br />
+&nbsp;* the Free Software Foundation, either version 3 of the License, or<br />
+&nbsp;* (at your option) any later version.<br />
+&nbsp;*<br />
+&nbsp;* hybris is distributed in the hope that it will be useful,<br />
+&nbsp;* but WITHOUT ANY WARRANTY; without even the implied warranty of<br />
+&nbsp;* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. &nbsp;See the<br />
+&nbsp;* GNU General Public License for more details.<br />
+&nbsp;*<br />
+&nbsp;* You should have received a copy of the GNU General Public License<br />
+&nbsp;* along with hybris. &nbsp;If not, see &lt;http://www.gnu.org/licenses/&gt;.<br />
+*/</span><br />
+<br />
+<span class="co1">// funzione di inizializzazione</span><br />
+<span class="kw2">function</span> dbc_init<span class="br0">&#40;</span> <span class="re0">$dbhost</span><span class="sy0">,</span> <span class="re0">$dbuser</span><span class="sy0">,</span> <span class="re0">$dbpass</span><span class="sy0">,</span> <span class="re0">$dbname</span><span class="sy0">,</span> <span class="re0">$storage</span><span class="sy0">,</span> <span class="re0">$lifetime</span> <span class="sy0">=</span> <span class="nu0">1800</span> <span class="br0">&#41;</span><span class="br0">&#123;</span><br />
+&nbsp; &nbsp; <span class="co1">// controllo che la directory di caching esista</span><br />
+&nbsp; &nbsp; <span class="kw1">if</span><span class="br0">&#40;</span> <span class="sy0">!</span><span class="kw3">file_exists</span><span class="br0">&#40;</span><span class="re0">$storage</span><span class="br0">&#41;</span> <span class="br0">&#41;</span><span class="br0">&#123;</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; <span class="kw3">die</span><span class="br0">&#40;</span> <span class="st0">&quot;DBCACHE : Path '<span class="es4">$storage</span>' does not exist .&quot;</span> <span class="br0">&#41;</span><span class="sy0">;</span><br />
+&nbsp; &nbsp; <span class="br0">&#125;</span><br />
+&nbsp; &nbsp; <span class="co1">// controllo che sia scrivibile</span><br />
+&nbsp; &nbsp; <span class="kw1">if</span><span class="br0">&#40;</span> <span class="sy0">!</span><span class="kw3">is_writable</span><span class="br0">&#40;</span><span class="re0">$storage</span><span class="br0">&#41;</span> <span class="br0">&#41;</span><span class="br0">&#123;</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; <span class="kw3">die</span><span class="br0">&#40;</span> <span class="st0">&quot;DBCACHE : Path '<span class="es4">$storage</span>' is not writable .&quot;</span> <span class="br0">&#41;</span><span class="sy0">;</span><br />
+&nbsp; &nbsp; <span class="br0">&#125;</span><br />
+&nbsp; &nbsp; <span class="co1">// apro una connessione persistente al db</span><br />
+&nbsp; &nbsp; <span class="kw3">mysql_pconnect</span><span class="br0">&#40;</span> <span class="re0">$dbhost</span><span class="sy0">,</span> <span class="re0">$dbuser</span><span class="sy0">,</span> <span class="re0">$dbpass</span> <span class="br0">&#41;</span> <br />
+&nbsp; &nbsp; &nbsp; &nbsp; or <span class="kw3">die</span><span class="br0">&#40;</span> <span class="st0">&quot;DBCACHE : &quot;</span><span class="sy0">.</span><span class="kw3">mysql_error</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#41;</span><span class="sy0">;</span><br />
+&nbsp; &nbsp; <span class="co1">// seleziono il db</span><br />
+&nbsp; &nbsp; <span class="kw3">mysql_select_db</span><span class="br0">&#40;</span> <span class="re0">$dbname</span> <span class="br0">&#41;</span> <br />
+&nbsp; &nbsp; &nbsp; &nbsp; or <span class="kw3">die</span><span class="br0">&#40;</span> <span class="st0">&quot;DBCACHE : &quot;</span><span class="sy0">.</span><span class="kw3">mysql_error</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#41;</span><span class="sy0">;</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; <br />
+&nbsp; &nbsp; <span class="co1">// definisco le variabili che mi servono</span><br />
+&nbsp; &nbsp; <span class="kw3">define</span><span class="br0">&#40;</span> <span class="st0">&quot;DBCACHE_STORAGE&quot;</span><span class="sy0">,</span> &nbsp;<span class="re0">$storage</span> <span class="br0">&#41;</span><span class="sy0">;</span><br />
+&nbsp; &nbsp; <span class="kw3">define</span><span class="br0">&#40;</span> <span class="st0">&quot;DBCACHE_LIFETIME&quot;</span><span class="sy0">,</span> <span class="re0">$lifetime</span> <span class="br0">&#41;</span><span class="sy0">;</span><br />
+<span class="br0">&#125;</span><br />
+<br />
+<span class="co1">// serializza i risultati di una query e li salva in cache</span><br />
+<span class="kw2">function</span> dbc_cache<span class="br0">&#40;</span> <span class="re0">$hash</span><span class="sy0">,</span> <span class="re0">$resource</span> <span class="br0">&#41;</span><span class="br0">&#123;</span><br />
+&nbsp; &nbsp; <span class="re0">$object</span> <span class="sy0">=</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span><br />
+&nbsp; &nbsp; <span class="co1">// indice incrementale per il fetching</span><br />
+&nbsp; &nbsp; <span class="re0">$object</span><span class="br0">&#91;</span><span class="st_h">'index'</span><span class="br0">&#93;</span> &nbsp; &nbsp; &nbsp;<span class="sy0">=</span> <span class="nu0">0</span><span class="sy0">;</span><br />
+&nbsp; &nbsp; <span class="co1">// numero righe</span><br />
+&nbsp; &nbsp; <span class="re0">$object</span><span class="br0">&#91;</span><span class="st_h">'num_rows'</span><span class="br0">&#93;</span> &nbsp; <span class="sy0">=</span> <span class="kw3">mysql_num_rows</span><span class="br0">&#40;</span><span class="re0">$resource</span><span class="br0">&#41;</span><span class="sy0">;</span><br />
+&nbsp; &nbsp; <span class="co1">// numero campi</span><br />
+&nbsp; &nbsp; <span class="re0">$object</span><span class="br0">&#91;</span><span class="st_h">'num_fields'</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="kw3">mysql_num_fields</span><span class="br0">&#40;</span><span class="re0">$resource</span><span class="br0">&#41;</span><span class="sy0">;</span><br />
+&nbsp; &nbsp; <span class="co1">// nome dei campi</span><br />
+&nbsp; &nbsp; <span class="re0">$object</span><span class="br0">&#91;</span><span class="st_h">'fields'</span><span class="br0">&#93;</span> &nbsp; &nbsp; <span class="sy0">=</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>&nbsp; &nbsp; <br />
+&nbsp; &nbsp; <span class="kw1">for</span><span class="br0">&#40;</span> <span class="re0">$i</span> <span class="sy0">=</span> <span class="nu0">0</span><span class="sy0">;</span> <span class="re0">$i</span> <span class="sy0">&lt;</span> <span class="re0">$object</span><span class="br0">&#91;</span><span class="st_h">'num_fields'</span><span class="br0">&#93;</span><span class="sy0">;</span> <span class="re0">$i</span><span class="sy0">++</span> <span class="br0">&#41;</span><span class="br0">&#123;</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; <span class="re0">$object</span><span class="br0">&#91;</span><span class="st_h">'fields'</span><span class="br0">&#93;</span><span class="br0">&#91;</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="kw3">mysql_field_name</span><span class="br0">&#40;</span> <span class="re0">$resource</span><span class="sy0">,</span> <span class="re0">$i</span> <span class="br0">&#41;</span><span class="sy0">;</span><br />
+&nbsp; &nbsp; <span class="br0">&#125;</span><br />
+&nbsp; &nbsp; <span class="co1">// recordset</span><br />
+&nbsp; &nbsp; <span class="re0">$object</span><span class="br0">&#91;</span><span class="st_h">'rows'</span><span class="br0">&#93;</span> &nbsp; &nbsp; &nbsp; <span class="sy0">=</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span><br />
+&nbsp; &nbsp; <span class="kw1">while</span><span class="br0">&#40;</span> <span class="re0">$row</span> <span class="sy0">=</span> <span class="kw3">mysql_fetch_array</span><span class="br0">&#40;</span><span class="re0">$resource</span><span class="br0">&#41;</span> <span class="br0">&#41;</span><span class="br0">&#123;</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; <span class="re0">$object</span><span class="br0">&#91;</span><span class="st_h">'rows'</span><span class="br0">&#93;</span><span class="br0">&#91;</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="re0">$row</span><span class="sy0">;</span> &nbsp; <br />
+&nbsp; &nbsp; <span class="br0">&#125;</span><br />
+&nbsp; &nbsp; <span class="co1">// per sicurezza resetto il puntatore alla risorsa</span><br />
+&nbsp; &nbsp; <span class="sy0">@</span><span class="kw3">mysql_data_seek</span><span class="br0">&#40;</span> <span class="re0">$resource</span><span class="sy0">,</span> <span class="nu0">0</span> <span class="br0">&#41;</span><span class="sy0">;</span><br />
+&nbsp; &nbsp; <span class="co1">// salvo l'oggetto nella cache</span><br />
+&nbsp; &nbsp; <span class="kw1">return</span> dbc_save_cache<span class="br0">&#40;</span> <span class="re0">$hash</span><span class="sy0">,</span> <span class="re0">$object</span> <span class="br0">&#41;</span><span class="sy0">;</span><br />
+<span class="br0">&#125;</span><br />
+<span class="co1">// crea il file di cache per un oggetto</span><br />
+<span class="kw2">function</span> dbc_save_cache<span class="br0">&#40;</span> <span class="re0">$hash</span><span class="sy0">,</span> <span class="sy0">&amp;</span><span class="re0">$obj</span> <span class="br0">&#41;</span><span class="br0">&#123;</span><br />
+&nbsp; &nbsp; <span class="re0">$file</span> <span class="sy0">=</span> DBCACHE_STORAGE<span class="sy0">.</span><span class="st0">&quot;/&quot;</span><span class="sy0">.</span><span class="re0">$hash</span><span class="sy0">;</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; <br />
+&nbsp; &nbsp; <span class="re0">$f</span> <span class="sy0">=</span> <span class="sy0">@</span><span class="kw3">fopen</span><span class="br0">&#40;</span> <span class="re0">$file</span><span class="sy0">,</span> <span class="st_h">'w'</span> <span class="br0">&#41;</span><span class="sy0">;</span><br />
+&nbsp; &nbsp; <span class="kw1">if</span> <span class="br0">&#40;</span> <span class="sy0">!</span><span class="re0">$f</span> <span class="br0">&#41;</span> <span class="br0">&#123;</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; <span class="kw1">return</span> <span class="kw4">false</span><span class="sy0">;</span><br />
+&nbsp; &nbsp; <span class="br0">&#125;</span><br />
+&nbsp; &nbsp; <span class="co1">// imposto un lock esclusivo sul file e ci serializzo i contenuti</span><br />
+&nbsp; &nbsp; <span class="sy0">@</span><span class="kw3">flock</span><span class="br0">&#40;</span> <span class="re0">$f</span><span class="sy0">,</span> LOCK_EX <span class="br0">&#41;</span><span class="sy0">;</span><br />
+&nbsp; &nbsp; <span class="sy0">@</span><span class="kw3">fwrite</span><span class="br0">&#40;</span> <span class="re0">$f</span><span class="sy0">,</span> <span class="kw3">serialize</span><span class="br0">&#40;</span> <span class="re0">$obj</span> <span class="br0">&#41;</span> <span class="br0">&#41;</span><span class="sy0">;</span><br />
+&nbsp; &nbsp; <span class="sy0">@</span><span class="kw3">flock</span><span class="br0">&#40;</span> <span class="re0">$f</span><span class="sy0">,</span> LOCK_UN <span class="br0">&#41;</span><span class="sy0">;</span><br />
+&nbsp; &nbsp; <span class="sy0">@</span><span class="kw3">fclose</span><span class="br0">&#40;</span> <span class="re0">$f</span> <span class="br0">&#41;</span><span class="sy0">;</span><br />
+&nbsp; &nbsp; <span class="sy0">@</span><span class="kw3">chmod</span><span class="br0">&#40;</span> <span class="re0">$file</span><span class="sy0">,</span> <span class="nu8">0644</span> <span class="br0">&#41;</span><span class="sy0">;</span><br />
+&nbsp; &nbsp; <br />
+&nbsp; &nbsp; <span class="kw1">return</span> <span class="re0">$obj</span><span class="sy0">;</span><br />
+<span class="br0">&#125;</span><br />
+<span class="co1">// rimuovo un dato oggetto dalla cache</span><br />
+<span class="kw2">function</span> dbc_remove<span class="br0">&#40;</span> <span class="re0">$hash</span> <span class="br0">&#41;</span><span class="br0">&#123;</span><br />
+&nbsp; &nbsp; <span class="re0">$file</span> <span class="sy0">=</span> DBCACHE_STORAGE<span class="sy0">.</span><span class="st0">&quot;/&quot;</span><span class="sy0">.</span><span class="re0">$hash</span><span class="sy0">;</span><br />
+&nbsp; &nbsp; <span class="kw1">if</span><span class="br0">&#40;</span> <span class="kw3">is_file</span><span class="br0">&#40;</span> <span class="re0">$file</span> <span class="br0">&#41;</span> <span class="br0">&#41;</span><span class="br0">&#123;</span> <br />
+&nbsp; &nbsp; &nbsp; &nbsp; <span class="sy0">@</span><span class="kw3">unlink</span><span class="br0">&#40;</span> <span class="re0">$file</span> <span class="br0">&#41;</span><span class="sy0">;</span><br />
+&nbsp; &nbsp; <span class="br0">&#125;</span><br />
+<span class="br0">&#125;</span><br />
+<span class="co1">// cancello la cache, se $old è true elimino solo gli oggetti scaduti,</span><br />
+<span class="co1">// altrimenti elminino tutto</span><br />
+<span class="kw2">function</span> dbc_clean<span class="br0">&#40;</span> <span class="re0">$old</span> <span class="sy0">=</span> <span class="kw4">true</span> <span class="br0">&#41;</span><span class="br0">&#123;</span><br />
+&nbsp; &nbsp; <span class="kw1">if</span> <span class="br0">&#40;</span> <span class="re0">$dir</span> <span class="sy0">=</span> <span class="sy0">@</span><span class="kw3">opendir</span><span class="br0">&#40;</span> DBCACHE_STORAGE <span class="br0">&#41;</span> <span class="br0">&#41;</span> <span class="br0">&#123;</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; <span class="kw1">while</span> <span class="br0">&#40;</span> <span class="re0">$hash</span> <span class="sy0">=</span> <span class="kw3">readdir</span><span class="br0">&#40;</span> <span class="re0">$dir</span> <span class="br0">&#41;</span> <span class="br0">&#41;</span> <span class="br0">&#123;</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span class="kw1">if</span> <span class="br0">&#40;</span> <span class="re0">$hash</span> <span class="sy0">!=</span> <span class="st_h">'.'</span> <span class="sy0">&amp;&amp;</span> <span class="re0">$hash</span> <span class="sy0">!=</span> <span class="st_h">'..'</span> <span class="sy0">&amp;&amp;</span> <span class="re0">$hash</span> <span class="sy0">!=</span> <span class="st_h">'.htaccess'</span> <span class="br0">&#41;</span> <span class="br0">&#123;</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span class="co1">// Clean all</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span class="kw1">if</span> <span class="br0">&#40;</span><span class="sy0">!</span><span class="re0">$old</span><span class="br0">&#41;</span> <span class="br0">&#123;</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; dbc_remove<span class="br0">&#40;</span><span class="re0">$hash</span><span class="br0">&#41;</span><span class="sy0">;</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span class="br0">&#125;</span> <span class="kw1">elseif</span> <span class="br0">&#40;</span> <span class="br0">&#40;</span> <span class="sy0">@</span><span class="kw3">filemtime</span><span class="br0">&#40;</span> <span class="re0">$file</span> <span class="br0">&#41;</span> <span class="sy0">+</span> DBCACHE_LIFETIME <span class="sy0">-</span> <span class="kw3">time</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#41;</span> <span class="sy0">&lt;</span> <span class="nu0">0</span><span class="br0">&#41;</span> <span class="br0">&#123;</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span class="co1">// Clean only old</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; dbc_remove<span class="br0">&#40;</span><span class="re0">$hash</span><span class="br0">&#41;</span><span class="sy0">;</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span class="br0">&#125;</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span class="br0">&#125;</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; <span class="br0">&#125;</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; <span class="kw3">closedir</span><span class="br0">&#40;</span> <span class="re0">$dir</span> <span class="br0">&#41;</span><span class="sy0">;</span><br />
+&nbsp; &nbsp; <span class="br0">&#125;</span><br />
+<span class="br0">&#125;</span><br />
+<span class="co1">// funzione per controllare se esiste un oggetto in cache</span><br />
+<span class="kw2">function</span> dbc_is_cached<span class="br0">&#40;</span> <span class="re0">$hash</span> <span class="br0">&#41;</span><span class="br0">&#123;</span><br />
+&nbsp; &nbsp; <span class="kw1">return</span> <span class="kw3">file_exists</span><span class="br0">&#40;</span> DBCACHE_STORAGE<span class="sy0">.</span><span class="st0">&quot;/&quot;</span><span class="sy0">.</span><span class="re0">$hash</span> <span class="br0">&#41;</span><span class="sy0">;</span>&nbsp; &nbsp; <br />
+<span class="br0">&#125;</span><br />
+<span class="co1">// determina se una data query è inseribile in cache .</span><br />
+<span class="co1">// solo le query in lettura sono cachabili .</span><br />
+<span class="kw2">function</span> dbc_is_cachable<span class="br0">&#40;</span> <span class="re0">$query</span> <span class="br0">&#41;</span><span class="br0">&#123;</span><br />
+&nbsp; &nbsp; <span class="kw1">return</span> <span class="sy0">!</span><span class="kw3">preg_match</span><span class="br0">&#40;</span> <span class="st0">&quot;/\s*(INSERT[\s]+|DELETE[\s]+|UPDATE[\s]+|REPLACE[\s]+|ALTER[\s]+|SET[\s]+|FOUND_ROWS[\s]+|SQL_NO_CACHE[\s]+)/si&quot;</span><span class="sy0">,</span> <span class="re0">$query</span> <span class="br0">&#41;</span><span class="sy0">;</span>&nbsp; &nbsp; <br />
+<span class="br0">&#125;</span><br />
+<span class="co1">// determina se l'oggetto appartiene alla cache o è una risorsa</span><br />
+<span class="kw2">function</span> dbc_is_cached_object<span class="br0">&#40;</span> <span class="sy0">&amp;</span><span class="re0">$object</span> <span class="br0">&#41;</span><span class="br0">&#123;</span><br />
+&nbsp; &nbsp; <span class="kw1">return</span> <span class="kw3">is_array</span><span class="br0">&#40;</span><span class="re0">$object</span><span class="br0">&#41;</span><span class="sy0">;</span><br />
+<span class="br0">&#125;</span><br />
+<span class="co1">// esegue una query e ne cacha i risultati, oppure preleva direttamente la cache</span><br />
+<span class="co1">// nel caso sia già presente</span><br />
+<span class="kw2">function</span> dbc_query<span class="br0">&#40;</span> <span class="re0">$query</span> <span class="br0">&#41;</span> <span class="br0">&#123;</span><br />
+&nbsp; &nbsp; <span class="co1">// calcolo l'hash della query</span><br />
+&nbsp; &nbsp; <span class="re0">$hash</span> <span class="sy0">=</span> <span class="kw3">md5</span><span class="br0">&#40;</span><span class="re0">$query</span><span class="br0">&#41;</span><span class="sy0">;</span><br />
+&nbsp; &nbsp; <span class="co1">// è già in cache?</span><br />
+&nbsp; &nbsp; <span class="kw1">if</span><span class="br0">&#40;</span> dbc_is_cached<span class="br0">&#40;</span><span class="re0">$hash</span><span class="br0">&#41;</span> <span class="br0">&#41;</span><span class="br0">&#123;</span> &nbsp; &nbsp; &nbsp; &nbsp; <br />
+&nbsp; &nbsp; &nbsp; &nbsp; <span class="re0">$file</span> &nbsp; <span class="sy0">=</span> DBCACHE_STORAGE<span class="sy0">.</span><span class="st0">&quot;/&quot;</span><span class="sy0">.</span><span class="re0">$hash</span><span class="sy0">;</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; <span class="re0">$object</span> <span class="sy0">=</span> <span class="kw4">null</span><span class="sy0">;</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; <span class="kw1">if</span> <span class="br0">&#40;</span> <span class="re0">$filemtime</span> <span class="sy0">=</span> <span class="sy0">@</span><span class="kw3">filemtime</span><span class="br0">&#40;</span> <span class="re0">$file</span> <span class="br0">&#41;</span> <span class="br0">&#41;</span> <span class="br0">&#123;</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span class="co1">// apro il file nella cache impostando un lock esclusivo</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span class="re0">$f</span> <span class="sy0">=</span> <span class="sy0">@</span><span class="kw3">fopen</span><span class="br0">&#40;</span> <span class="re0">$file</span><span class="sy0">,</span> <span class="st_h">'r'</span> <span class="br0">&#41;</span><span class="sy0">;</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span class="kw1">if</span> <span class="br0">&#40;</span> <span class="re0">$f</span> <span class="br0">&#41;</span> <span class="br0">&#123;</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span class="sy0">@</span><span class="kw3">flock</span><span class="br0">&#40;</span> <span class="re0">$f</span><span class="sy0">,</span> LOCK_SH <span class="br0">&#41;</span><span class="sy0">;</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span class="co1">// deserializzo l'oggetto</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span class="re0">$object</span> <span class="sy0">=</span> <span class="kw3">unserialize</span><span class="br0">&#40;</span> <span class="kw3">stream_get_contents</span><span class="br0">&#40;</span> <span class="re0">$f</span> <span class="br0">&#41;</span> <span class="br0">&#41;</span><span class="sy0">;</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span class="sy0">@</span><span class="kw3">flock</span><span class="br0">&#40;</span> <span class="re0">$f</span><span class="sy0">,</span> LOCK_UN <span class="br0">&#41;</span><span class="sy0">;</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span class="sy0">@</span><span class="kw3">fclose</span><span class="br0">&#40;</span> <span class="re0">$f</span> <span class="br0">&#41;</span><span class="sy0">;</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span class="co1">// se l'oggetto è scaduto lo rimuovo dalla cache</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span class="kw1">if</span> <span class="br0">&#40;</span> <span class="br0">&#40;</span> <span class="re0">$filemtime</span> <span class="sy0">+</span> DBCACHE_LIFETIME <span class="sy0">-</span> <span class="kw3">time</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#41;</span> <span class="sy0">&lt;</span> <span class="nu0">0</span> <span class="br0">&#41;</span> <span class="br0">&#123;</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; dbc_remove<span class="br0">&#40;</span> <span class="re0">$hash</span> <span class="br0">&#41;</span><span class="sy0">;</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span class="br0">&#125;</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span class="br0">&#125;</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; <span class="br0">&#125;</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; <span class="kw1">return</span> <span class="re0">$object</span><span class="sy0">;</span><br />
+&nbsp; &nbsp; <span class="br0">&#125;</span><br />
+&nbsp; &nbsp; <span class="co1">// non è nella cache</span><br />
+&nbsp; &nbsp; <span class="kw1">else</span><span class="br0">&#123;</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; <span class="co1">// eseguo la query vera e propria</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; <span class="re0">$resource</span> <span class="sy0">=</span> <span class="sy0">@</span><span class="kw3">mysql_query</span><span class="br0">&#40;</span> <span class="re0">$query</span> <span class="br0">&#41;</span><span class="sy0">;</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; <span class="co1">// se la query è cachabile la inserisco nello storage</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; <span class="kw1">if</span><span class="br0">&#40;</span> dbc_is_cachable<span class="br0">&#40;</span><span class="re0">$query</span><span class="br0">&#41;</span> <span class="sy0">&amp;&amp;</span> <span class="br0">&#40;</span><span class="re0">$object</span> <span class="sy0">=</span> dbc_cache<span class="br0">&#40;</span> <span class="re0">$hash</span><span class="sy0">,</span> <span class="re0">$resource</span> <span class="br0">&#41;</span><span class="br0">&#41;</span> <span class="br0">&#41;</span><span class="br0">&#123;</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span class="kw1">return</span> <span class="re0">$object</span><span class="sy0">;</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; <span class="br0">&#125;</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; <span class="co1">// la query non è cachabile, elimino tutta la cache poichè la query appena</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; <span class="co1">// eseguita ha inserito e/o aggiornato i dati sul db</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; <span class="kw1">else</span><span class="br0">&#123;</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; dbc_clean<span class="br0">&#40;</span> <span class="kw4">false</span> <span class="br0">&#41;</span><span class="sy0">;</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span class="kw1">return</span> <span class="re0">$resource</span><span class="sy0">;</span> &nbsp; <br />
+&nbsp; &nbsp; &nbsp; &nbsp; <span class="br0">&#125;</span><br />
+&nbsp; &nbsp; <span class="br0">&#125;</span><br />
+<span class="br0">&#125;</span> <br />
+<span class="co1">// fetching associativo</span><br />
+<span class="kw2">function</span> dbc_fetch_assoc<span class="br0">&#40;</span> <span class="sy0">&amp;</span><span class="re0">$obj</span> <span class="br0">&#41;</span><span class="br0">&#123;</span><br />
+&nbsp; &nbsp; <span class="kw1">if</span><span class="br0">&#40;</span> dbc_is_cached_object<span class="br0">&#40;</span><span class="re0">$obj</span><span class="br0">&#41;</span> <span class="sy0">==</span> <span class="kw4">false</span> <span class="br0">&#41;</span><span class="br0">&#123;</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; <span class="kw1">return</span> <span class="sy0">@</span><span class="kw3">mysql_fetch_assoc</span><span class="br0">&#40;</span><span class="re0">$obj</span><span class="br0">&#41;</span><span class="sy0">;</span><br />
+&nbsp; &nbsp; <span class="br0">&#125;</span><br />
+&nbsp; &nbsp; <span class="kw1">if</span><span class="br0">&#40;</span> <span class="re0">$obj</span><span class="br0">&#91;</span><span class="st_h">'index'</span><span class="br0">&#93;</span> <span class="sy0">&gt;=</span> <span class="re0">$obj</span><span class="br0">&#91;</span><span class="st_h">'num_rows'</span><span class="br0">&#93;</span> <span class="br0">&#41;</span><span class="br0">&#123;</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; <span class="re0">$obj</span><span class="br0">&#91;</span><span class="st_h">'index'</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="nu0">0</span><span class="sy0">;</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; <span class="kw1">return</span> <span class="kw4">false</span><span class="sy0">;</span> &nbsp; <br />
+&nbsp; &nbsp; <span class="br0">&#125;</span><br />
+&nbsp; &nbsp; <span class="kw1">else</span><span class="br0">&#123;</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; <span class="re0">$row</span> <span class="sy0">=</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; <span class="kw1">for</span><span class="br0">&#40;</span> <span class="re0">$i</span> <span class="sy0">=</span> <span class="nu0">0</span><span class="sy0">;</span> <span class="re0">$i</span> <span class="sy0">&lt;</span> <span class="re0">$obj</span><span class="br0">&#91;</span><span class="st_h">'num_fields'</span><span class="br0">&#93;</span><span class="sy0">;</span> <span class="re0">$i</span><span class="sy0">++</span> <span class="br0">&#41;</span><span class="br0">&#123;</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span class="re0">$row</span><span class="br0">&#91;</span> <span class="re0">$obj</span><span class="br0">&#91;</span><span class="st_h">'fields'</span><span class="br0">&#93;</span><span class="br0">&#91;</span><span class="re0">$i</span><span class="br0">&#93;</span> <span class="br0">&#93;</span> <span class="sy0">=</span> <span class="re0">$obj</span><span class="br0">&#91;</span><span class="st_h">'rows'</span><span class="br0">&#93;</span><span class="br0">&#91;</span> <span class="re0">$obj</span><span class="br0">&#91;</span><span class="st_h">'index'</span><span class="br0">&#93;</span> <span class="br0">&#93;</span><span class="br0">&#91;</span><span class="re0">$i</span><span class="br0">&#93;</span><span class="sy0">;</span> &nbsp; &nbsp; <br />
+&nbsp; &nbsp; &nbsp; &nbsp; <span class="br0">&#125;</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; <span class="re0">$obj</span><span class="br0">&#91;</span><span class="st_h">'index'</span><span class="br0">&#93;</span><span class="sy0">++;</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; <span class="kw1">return</span> <span class="re0">$row</span><span class="sy0">;</span><br />
+&nbsp; &nbsp; <span class="br0">&#125;</span><br />
+<span class="br0">&#125;</span><br />
+<span class="co1">// fetching vettoriale</span><br />
+<span class="kw2">function</span> dbc_fetch_row<span class="br0">&#40;</span> <span class="sy0">&amp;</span><span class="re0">$obj</span> <span class="br0">&#41;</span><span class="br0">&#123;</span><br />
+&nbsp; &nbsp; <span class="kw1">if</span><span class="br0">&#40;</span> dbc_is_cached_object<span class="br0">&#40;</span><span class="re0">$obj</span><span class="br0">&#41;</span> <span class="sy0">==</span> <span class="kw4">false</span> <span class="br0">&#41;</span><span class="br0">&#123;</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; <span class="kw1">return</span> <span class="sy0">@</span><span class="kw3">mysql_fetch_row</span><span class="br0">&#40;</span><span class="re0">$obj</span><span class="br0">&#41;</span><span class="sy0">;</span><br />
+&nbsp; &nbsp; <span class="br0">&#125;</span><br />
+&nbsp; &nbsp; <br />
+&nbsp; &nbsp; <span class="kw1">if</span><span class="br0">&#40;</span> <span class="re0">$obj</span><span class="br0">&#91;</span><span class="st_h">'index'</span><span class="br0">&#93;</span> <span class="sy0">&gt;=</span> <span class="re0">$obj</span><span class="br0">&#91;</span><span class="st_h">'num_rows'</span><span class="br0">&#93;</span> <span class="br0">&#41;</span><span class="br0">&#123;</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; <span class="re0">$obj</span><span class="br0">&#91;</span><span class="st_h">'index'</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="nu0">0</span><span class="sy0">;</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; <span class="kw1">return</span> <span class="kw4">false</span><span class="sy0">;</span> &nbsp; <br />
+&nbsp; &nbsp; <span class="br0">&#125;</span><br />
+&nbsp; &nbsp; <span class="kw1">else</span><span class="br0">&#123;</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; <span class="re0">$row</span> <span class="sy0">=</span> <span class="kw3">array</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; <span class="kw1">for</span><span class="br0">&#40;</span> <span class="re0">$i</span> <span class="sy0">=</span> <span class="nu0">0</span><span class="sy0">;</span> <span class="re0">$i</span> <span class="sy0">&lt;</span> <span class="re0">$obj</span><span class="br0">&#91;</span><span class="st_h">'num_fields'</span><span class="br0">&#93;</span><span class="sy0">;</span> <span class="re0">$i</span><span class="sy0">++</span> <span class="br0">&#41;</span><span class="br0">&#123;</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span class="re0">$row</span><span class="br0">&#91;</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="re0">$obj</span><span class="br0">&#91;</span><span class="st_h">'rows'</span><span class="br0">&#93;</span><span class="br0">&#91;</span> <span class="re0">$obj</span><span class="br0">&#91;</span><span class="st_h">'index'</span><span class="br0">&#93;</span> <span class="br0">&#93;</span><span class="br0">&#91;</span><span class="re0">$i</span><span class="br0">&#93;</span><span class="sy0">;</span> &nbsp; &nbsp; <br />
+&nbsp; &nbsp; &nbsp; &nbsp; <span class="br0">&#125;</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; <span class="re0">$obj</span><span class="br0">&#91;</span><span class="st_h">'index'</span><span class="br0">&#93;</span><span class="sy0">++;</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; <span class="kw1">return</span> <span class="re0">$row</span><span class="sy0">;</span><br />
+&nbsp; &nbsp; <span class="br0">&#125;</span> &nbsp; <br />
+<span class="br0">&#125;</span><br />
+<span class="co1">// rimuove l'oggetto dalla memoria</span><br />
+<span class="kw2">function</span> dbc_free_result<span class="br0">&#40;</span> <span class="sy0">&amp;</span><span class="re0">$obj</span> <span class="br0">&#41;</span><span class="br0">&#123;</span><br />
+&nbsp; &nbsp; <span class="kw1">if</span><span class="br0">&#40;</span> dbc_is_cached_object<span class="br0">&#40;</span><span class="re0">$obj</span><span class="br0">&#41;</span> <span class="sy0">==</span> <span class="kw4">false</span> <span class="br0">&#41;</span><span class="br0">&#123;</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; <span class="kw1">return</span> <span class="sy0">@</span><span class="kw3">mysql_free_result</span><span class="br0">&#40;</span><span class="re0">$obj</span><span class="br0">&#41;</span><span class="sy0">;</span><br />
+&nbsp; &nbsp; <span class="br0">&#125;</span><br />
+&nbsp; &nbsp; <span class="kw3">unset</span><span class="br0">&#40;</span><span class="re0">$obj</span><span class="br0">&#41;</span><span class="sy0">;</span>&nbsp; &nbsp; <br />
+<span class="br0">&#125;</span><br />
+<span class="co1">// restituisce il numero di recordset nell'oggetto</span><br />
+<span class="kw2">function</span> dbc_num_rows<span class="br0">&#40;</span> <span class="sy0">&amp;</span><span class="re0">$obj</span> <span class="br0">&#41;</span><span class="br0">&#123;</span><br />
+&nbsp; &nbsp; <span class="kw1">if</span><span class="br0">&#40;</span> dbc_is_cached_object<span class="br0">&#40;</span><span class="re0">$obj</span><span class="br0">&#41;</span> <span class="sy0">==</span> <span class="kw4">false</span> <span class="br0">&#41;</span><span class="br0">&#123;</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; <span class="kw1">return</span> <span class="sy0">@</span><span class="kw3">mysql_num_rows</span><span class="br0">&#40;</span><span class="re0">$obj</span><span class="br0">&#41;</span><span class="sy0">;</span><br />
+&nbsp; &nbsp; <span class="br0">&#125;</span><br />
+&nbsp; &nbsp; <span class="kw1">return</span> <span class="re0">$obj</span><span class="br0">&#91;</span><span class="st_h">'num_rows'</span><span class="br0">&#93;</span><span class="sy0">;</span>&nbsp; &nbsp; <br />
+<span class="br0">&#125;</span><br />
+<span class="co1">// imposta il cursore sull'oggetto</span><br />
+<span class="kw2">function</span> dbc_data_seek<span class="br0">&#40;</span> <span class="sy0">&amp;</span><span class="re0">$obj</span><span class="sy0">,</span> <span class="re0">$idx</span> <span class="br0">&#41;</span><span class="br0">&#123;</span><br />
+&nbsp; &nbsp; <span class="kw1">if</span><span class="br0">&#40;</span> dbc_is_cached_object<span class="br0">&#40;</span><span class="re0">$obj</span><span class="br0">&#41;</span> <span class="sy0">==</span> <span class="kw4">false</span> <span class="br0">&#41;</span><span class="br0">&#123;</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; <span class="kw1">return</span> <span class="sy0">@</span><span class="kw3">mysql_data_seek</span><span class="br0">&#40;</span><span class="re0">$obj</span><span class="sy0">,</span><span class="re0">$idx</span><span class="br0">&#41;</span><span class="sy0">;</span><br />
+&nbsp; &nbsp; <span class="br0">&#125;</span><br />
+&nbsp; &nbsp; <span class="kw1">if</span><span class="br0">&#40;</span> <span class="re0">$idx</span> <span class="sy0">&gt;=</span> <span class="re0">$obj</span><span class="br0">&#91;</span><span class="st_h">'num_rows'</span><span class="br0">&#93;</span> <span class="br0">&#41;</span><span class="br0">&#123;</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; <span class="kw1">return</span> <span class="kw4">false</span><span class="sy0">;</span> &nbsp; <br />
+&nbsp; &nbsp; <span class="br0">&#125;</span><br />
+&nbsp; &nbsp; <span class="kw1">else</span><span class="br0">&#123;</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; <span class="re0">$obj</span><span class="br0">&#91;</span><span class="st_h">'index'</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="re0">$idx</span><span class="sy0">;</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; <span class="kw1">return</span> <span class="kw4">true</span><span class="sy0">;</span>&nbsp; &nbsp; <br />
+&nbsp; &nbsp; <span class="br0">&#125;</span><br />
+<span class="br0">&#125;</span><br />
+<span class="co1">// restituisce il numero di campi nell'oggetto</span><br />
+<span class="kw2">function</span> dbc_num_fields<span class="br0">&#40;</span> <span class="sy0">&amp;</span><span class="re0">$obj</span> <span class="br0">&#41;</span><span class="br0">&#123;</span><br />
+&nbsp; &nbsp; <span class="kw1">if</span><span class="br0">&#40;</span> dbc_is_cached_object<span class="br0">&#40;</span><span class="re0">$obj</span><span class="br0">&#41;</span> <span class="sy0">==</span> <span class="kw4">false</span> <span class="br0">&#41;</span><span class="br0">&#123;</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; <span class="kw1">return</span> <span class="sy0">@</span><span class="kw3">mysql_num_fields</span><span class="br0">&#40;</span><span class="re0">$obj</span><span class="sy0">,</span><span class="re0">$idx</span><span class="br0">&#41;</span><span class="sy0">;</span><br />
+&nbsp; &nbsp; <span class="br0">&#125;</span><br />
+&nbsp; &nbsp; <span class="kw1">return</span> <span class="re0">$obj</span><span class="br0">&#91;</span><span class="st_h">'num_fields'</span><span class="br0">&#93;</span><span class="sy0">;</span>&nbsp; <br />
+<span class="br0">&#125;</span><br />
+&nbsp; &nbsp; <br />
+<span class="sy1">?&gt;</span></div></div>
 
-// serializza i risultati di una query e li salva in cache
-function dbc_cache( $hash, $resource ){
-	$object = array();
-	// indice incrementale per il fetching
-	$object['index']      = 0;
-	// numero righe
-	$object['num_rows']   = mysql_num_rows($resource);
-	// numero campi
-	$object['num_fields'] = mysql_num_fields($resource);
-	// nome dei campi
-	$object['fields']     = array();	
-	for( $i = 0; $i < $object['num_fields']; $i++ ){              
-		$object['fields'][] = mysql_field_name( $resource, $i );
-	}
-	// recordset
-	$object['rows']       = array();
-	while( $row = mysql_fetch_array($resource) ){
-		$object['rows'][] = $row;	
-	}
-	// per sicurezza resetto il puntatore alla risorsa
-	@mysql_data_seek( $resource, 0 );
-	// salvo l'oggetto nella cache
-	return dbc_save_cache( $hash, $object );
-}
-// crea il file di cache per un oggetto
-function dbc_save_cache( $hash, &$obj ){
-	$file = DBCACHE_STORAGE."/".$hash;
-		
-	$f = @fopen( $file, 'w' );
-	if ( !$f ) {
-		return false;
-	}
-	// imposto un lock esclusivo sul file e ci serializzo i contenuti
-	@flock( $f, LOCK_EX );
-	@fwrite( $f, serialize( $obj ) );
-	@flock( $f, LOCK_UN );
-	@fclose( $f );
-	@chmod( $file, 0644 );
-	
-	return $obj;
-}
-// rimuovo un dato oggetto dalla cache
-function dbc_remove( $hash ){
-	$file = DBCACHE_STORAGE."/".$hash;
-	if( is_file( $file ) ){ 
-		@unlink( $file );
-	}
-}
-// cancello la cache, se $old è true elimino solo gli oggetti scaduti,
-// altrimenti elminino tutto
-function dbc_clean( $old = true ){
-	if ( $dir = @opendir( DBCACHE_STORAGE ) ) {
-		while ( $hash = readdir( $dir ) ) {
-			if ( $hash != '.' && $hash != '..' && $hash != '.htaccess' ) {
-				// Clean all
-				if (!$old) {
-					dbc_remove($hash);
-				} elseif ( ( @filemtime( $file ) + DBCACHE_LIFETIME - time() ) < 0) {
-					// Clean only old
-					dbc_remove($hash);
-				}
-			}
-		}
-		closedir( $dir );
-	}
-}
-// funzione per controllare se esiste un oggetto in cache
-function dbc_is_cached( $hash ){
-	return file_exists( DBCACHE_STORAGE."/".$hash );	
-}
-// determina se una data query è inseribile in cache .
-// solo le query in lettura sono cachabili .
-function dbc_is_cachable( $query ){
-	return !preg_match( "/\s*(INSERT[\s]+|DELETE[\s]+|UPDATE[\s]+|REPLACE[\s]+|ALTER[\s]+|SET[\s]+|FOUND_ROWS[\s]+|SQL_NO_CACHE[\s]+)/si", $query );	
-}
-// determina se l'oggetto appartiene alla cache o è una risorsa
-function dbc_is_cached_object( &$object ){
-	return is_array($object);
-}
-// esegue una query e ne cacha i risultati, oppure preleva direttamente la cache
-// nel caso sia già presente
-function dbc_query( $query ) {
-	// calcolo l'hash della query
-	$hash = md5($query);
-	// è già in cache?
-	if( dbc_is_cached($hash) ){			
-		$file   = DBCACHE_STORAGE."/".$hash;
-		$object = null;
-		if ( $filemtime = @filemtime( $file ) ) {
-			// apro il file nella cache impostando un lock esclusivo
-			$f = @fopen( $file, 'r' );
-			if ( $f ) {
-				@flock( $f, LOCK_SH );
-				// deserializzo l'oggetto
-				$object = unserialize( stream_get_contents( $f ) );
-				@flock( $f, LOCK_UN );
-				@fclose( $f );
-				// se l'oggetto è scaduto lo rimuovo dalla cache
-				if ( ( $filemtime + DBCACHE_LIFETIME - time() ) < 0 ) {
-					dbc_remove( $hash );
-				}
-			}
-		}
-		return $object;
-	}
-	// non è nella cache
-	else{
-		// eseguo la query vera e propria
-		$resource = @mysql_query( $query );
-		// se la query è cachabile la inserisco nello storage
-		if( dbc_is_cachable($query) && ($object = dbc_cache( $hash, $resource )) ){
-			return $object;
-		}
-		// la query non è cachabile, elimino tutta la cache poichè la query appena
-		// eseguita ha inserito e/o aggiornato i dati sul db
-		else{
-			dbc_clean( false );
-			return $resource;	
-		}
-	}
-} 
-// fetching associativo
-function dbc_fetch_assoc( &$obj ){
-	if( dbc_is_cached_object($obj) == false ){
-		return @mysql_fetch_assoc($obj);
-	}
-	if( $obj['index'] >= $obj['num_rows'] ){
-		$obj['index'] = 0;
-		return false;	
-	}
-	else{
-		$row = array();
-		for( $i = 0; $i < $obj['num_fields']; $i++ ){
-			$row[ $obj['fields'][$i] ] = $obj['rows'][ $obj['index'] ][$i];		
-		}
-		$obj['index']++;
-		return $row;
-	}
-}
-// fetching vettoriale
-function dbc_fetch_row( &$obj ){
-	if( dbc_is_cached_object($obj) == false ){
-		return @mysql_fetch_row($obj);
-	}
-	
-	if( $obj['index'] >= $obj['num_rows'] ){
-		$obj['index'] = 0;
-		return false;	
-	}
-	else{
-		$row = array();
-		for( $i = 0; $i < $obj['num_fields']; $i++ ){
-			$row[] = $obj['rows'][ $obj['index'] ][$i];		
-		}
-		$obj['index']++;
-		return $row;
-	}	
-}
-// rimuove l'oggetto dalla memoria
-function dbc_free_result( &$obj ){
-	if( dbc_is_cached_object($obj) == false ){
-		return @mysql_free_result($obj);
-	}
-	unset($obj);	
-}
-// restituisce il numero di recordset nell'oggetto
-function dbc_num_rows( &$obj ){
-	if( dbc_is_cached_object($obj) == false ){
-		return @mysql_num_rows($obj);
-	}
-	return $obj['num_rows'];	
-}
-// imposta il cursore sull'oggetto
-function dbc_data_seek( &$obj, $idx ){
-	if( dbc_is_cached_object($obj) == false ){
-		return @mysql_data_seek($obj,$idx);
-	}
-	if( $idx >= $obj['num_rows'] ){
-		return false;	
-	}
-	else{
-		$obj['index'] = $idx;
-		return true;	
-	}
-}
-// restituisce il numero di campi nell'oggetto
-function dbc_num_fields( &$obj ){
-	if( dbc_is_cached_object($obj) == false ){
-		return @mysql_num_fields($obj,$idx);
-	}
-	return $obj['num_fields'];	
-}
-	
-?></pre></pre></code>

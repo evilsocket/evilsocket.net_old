@@ -11,100 +11,128 @@ Questo può essere comodo poichè, il alcune circostanze, non possiamo creare un
 
 <break>
 
-Per questo scopo, ho creato i file Utilities.m ed Utilities.h (allegati nel progetto di esempio in fondo a questo articolo), che mettono a disposizione le seguenti tre funzioni:<pre><pre><code>#import
+Per questo scopo, ho creato i file Utilities.m ed Utilities.h (allegati nel progetto di esempio in fondo a questo articolo), che mettono a disposizione le seguenti tre funzioni:
 
-/*
-* Aggiunge una UINavigationBar alla view 'root' con il titolo 'title',
-* se 'withBack' è YES aggiunge il tasto 'Indietro'.
-*/
-UINavigationBar *AddNavigationBar( UIViewController *root, NSString *title, BOOL withBack );
-/*
-* Esegue una transazione animata dalla view 'from' alla view 'to' .
-*/
-void GoToView( UIViewController *from, UIViewController *to );
-/*
-* Esegue una transazione animata tornando alla view precedente.
-*/
-void BackFromView( UIViewController *from );</pre></pre></code>Direi che lo scopo delle funzioni è abbastanza evidente già di per se, utilizzeremo la prima per creare graficamente la barra di navigazione, la seconda per andare da una view ad un altra, e l'ultima per tornare alla view precedente quando il tasto "Indietro" è stato premuto ^^.
+<div class="codecolorer-container objc default" style="overflow:auto;white-space:nowrap;width:100%;height:100%;"><div class="objc codecolorer"><span class="co1">#import</span><br />
+<br />
+<span class="coMULTI">/*<br />
+* Aggiunge una UINavigationBar alla view 'root' con il titolo 'title',<br />
+* se 'withBack' è YES aggiunge il tasto 'Indietro'.<br />
+*/</span><br />
+UINavigationBar <span class="sy0">*</span>AddNavigationBar<span class="br0">&#40;</span> UIViewController <span class="sy0">*</span>root, <span class="kw5">NSString</span> <span class="sy0">*</span>title, <span class="kw4">BOOL</span> withBack <span class="br0">&#41;</span>;<br />
+<span class="coMULTI">/*<br />
+* Esegue una transazione animata dalla view 'from' alla view 'to' .<br />
+*/</span><br />
+<span class="kw4">void</span> GoToView<span class="br0">&#40;</span> UIViewController <span class="sy0">*</span>from, UIViewController <span class="sy0">*</span>to <span class="br0">&#41;</span>;<br />
+<span class="coMULTI">/*<br />
+* Esegue una transazione animata tornando alla view precedente.<br />
+*/</span><br />
+<span class="kw4">void</span> BackFromView<span class="br0">&#40;</span> UIViewController <span class="sy0">*</span>from <span class="br0">&#41;</span>;</div></div>
 
-Nel progetto di esempio abbiamo due viste, View1 e View2 ed i rispettivi controller ViewController1 e ViewController2, andiamo a vedere il primo controller come è dichiarato:<pre><pre><code>#import
-#import "Utilities.h"
+Direi che lo scopo delle funzioni è abbastanza evidente già di per se, utilizzeremo la prima per creare graficamente la barra di navigazione, la seconda per andare da una view ad un altra, e l'ultima per tornare alla view precedente quando il tasto "Indietro" è stato premuto ^^.
 
-/*
-* Eseguo qui una pseudo dichiarazione del secondo controller invece
-* di includere il rispettivo header per non creare inclusioni cicliche.
-*/
-@class ViewController2;
+Nel progetto di esempio abbiamo due viste, View1 e View2 ed i rispettivi controller ViewController1 e ViewController2, andiamo a vedere il primo controller come è dichiarato:
 
-@interface ViewController1 : UIViewController {
-UINavigationBar *navbar;
-ViewController2 *seconda;
-}
+<div class="codecolorer-container objc default" style="overflow:auto;white-space:nowrap;width:100%;height:100%;"><div class="objc codecolorer"><span class="co1">#import</span><br />
+<span class="co1">#import &quot;Utilities.h&quot;</span><br />
+<br />
+<span class="coMULTI">/*<br />
+* Eseguo qui una pseudo dichiarazione del secondo controller invece<br />
+* di includere il rispettivo header per non creare inclusioni cicliche.<br />
+*/</span><br />
+<span class="kw1">@class</span> ViewController2;<br />
+<br />
+<span class="kw1">@interface</span> ViewController1 <span class="sy0">:</span> UIViewController <span class="br0">&#123;</span><br />
+UINavigationBar <span class="sy0">*</span>navbar;<br />
+ViewController2 <span class="sy0">*</span>seconda;<br />
+<span class="br0">&#125;</span><br />
+<br />
+<span class="kw1">@property</span> <span class="br0">&#40;</span>nonatomic, retain<span class="br0">&#41;</span> UINavigationBar <span class="sy0">*</span>navbar;<br />
+<span class="kw1">@property</span> <span class="br0">&#40;</span>nonatomic, retain<span class="br0">&#41;</span> ViewController2 <span class="sy0">*</span>seconda;<br />
+<br />
+<span class="sy0">-</span> <span class="br0">&#40;</span>IBAction<span class="br0">&#41;</span>secondaVista;<br />
+<br />
+<span class="kw1">@end</span></div></div>
 
-@property (nonatomic, retain) UINavigationBar *navbar;
-@property (nonatomic, retain) ViewController2 *seconda;
+Anche in questo caso, niente di complicato, abbiamo la nostra UINavigationBar, un puntatore alla seconda vista che ci servirà per la transizione, ed un IBAction associata ad un pulsante sulla prima vista per passare alla seconda (tra un po lo screenshot).
 
-- (IBAction)secondaVista;
+L'implementazione è altrettanto banale, vediamo il codice seguente:
 
-@end</pre></pre></code>Anche in questo caso, niente di complicato, abbiamo la nostra UINavigationBar, un puntatore alla seconda vista che ci servirà per la transizione, ed un IBAction associata ad un pulsante sulla prima vista per passare alla seconda (tra un po lo screenshot).
+<div class="codecolorer-container objc default" style="overflow:auto;white-space:nowrap;width:100%;height:100%;"><div class="objc codecolorer"><span class="sy0">-</span> <span class="br0">&#40;</span><span class="kw4">void</span><span class="br0">&#41;</span>viewDidLoad <span class="br0">&#123;</span><br />
+<span class="br0">&#91;</span>super viewDidLoad<span class="br0">&#93;</span>;<br />
+<span class="coMULTI">/*<br />
+* Creo la navigation bar, senza il tasto 'Indietro' essendo questa la prima vista.<br />
+*/</span><br />
+self.navbar <span class="sy0">=</span> AddNavigationBar<span class="br0">&#40;</span> self, <span class="co3">@</span><span class="st0">&quot;Vista 1&quot;</span>, <span class="kw2">NO</span> <span class="br0">&#41;</span>;<br />
+<span class="coMULTI">/*<br />
+* Alloco il controller per la seconda vista.<br />
+*/</span><br />
+self.seconda <span class="sy0">=</span> <span class="br0">&#91;</span><span class="br0">&#91;</span>ViewController2 alloc<span class="br0">&#93;</span> initWithNibName<span class="sy0">:</span><span class="co3">@</span><span class="st0">&quot;View2&quot;</span> bundle<span class="sy0">:</span><span class="kw2">nil</span><span class="br0">&#93;</span>;<br />
+<span class="br0">&#125;</span><br />
+<br />
+<span class="sy0">-</span> <span class="br0">&#40;</span>IBAction<span class="br0">&#41;</span>secondaVista <span class="br0">&#123;</span><br />
+GoToView<span class="br0">&#40;</span> self, self.seconda <span class="br0">&#41;</span>;<br />
+<span class="br0">&#125;</span></div></div>
 
-L'implementazione è altrettanto banale, vediamo il codice seguente:<pre><pre><code>- (void)viewDidLoad {
-[super viewDidLoad];
-/*
-* Creo la navigation bar, senza il tasto 'Indietro' essendo questa la prima vista.
-*/
-self.navbar = AddNavigationBar( self, @"Vista 1", NO );
-/*
-* Alloco il controller per la seconda vista.
-*/
-self.seconda = [[ViewController2 alloc] initWithNibName:@"View2" bundle:nil];
-}
+Nel viewDidLoad, creiamo la nostra barra ed instanziamo il controller alla seconda vista, mentre nella IBAction, ovvero quando viene premuto il pulsante, usiamo la funzione GoToView per eseguire la transizione animata (il concetto di 'animata' lo approfondiremo tra un po).
 
-- (IBAction)secondaVista {
-GoToView( self, self.seconda );
-}</pre></pre></code>Nel viewDidLoad, creiamo la nostra barra ed instanziamo il controller alla seconda vista, mentre nella IBAction, ovvero quando viene premuto il pulsante, usiamo la funzione GoToView per eseguire la transizione animata (il concetto di 'animata' lo approfondiremo tra un po).
+L'header del secondo controller è ancora più semplice:
 
-L'header del secondo controller è ancora più semplice:<pre><pre><code>#import
-#import "Utilities.h"
+<div class="codecolorer-container objc default" style="overflow:auto;white-space:nowrap;width:100%;height:100%;"><div class="objc codecolorer"><span class="co1">#import</span><br />
+<span class="co1">#import &quot;Utilities.h&quot;</span><br />
+<br />
+<span class="kw1">@interface</span> ViewController2 <span class="sy0">:</span> UIViewController <span class="br0">&#123;</span><br />
+UINavigationBar <span class="sy0">*</span>navbar;<br />
+<span class="br0">&#125;</span><br />
+<br />
+<span class="kw1">@property</span> <span class="br0">&#40;</span>nonatomic, retain<span class="br0">&#41;</span> UINavigationBar <span class="sy0">*</span>navbar;<br />
+<br />
+<span class="kw1">@end</span></div></div>
 
-@interface ViewController2 : UIViewController {
-UINavigationBar *navbar;
-}
+Mentre l'implementazione ha una leggera variazione:
 
-@property (nonatomic, retain) UINavigationBar *navbar;
+<div class="codecolorer-container objc default" style="overflow:auto;white-space:nowrap;width:100%;height:100%;"><div class="objc codecolorer"><span class="sy0">-</span> <span class="br0">&#40;</span><span class="kw4">id</span><span class="br0">&#41;</span>initWithNibName<span class="sy0">:</span><span class="br0">&#40;</span><span class="kw5">NSString</span> <span class="sy0">*</span><span class="br0">&#41;</span>nibNameOrNil bundle<span class="sy0">:</span><span class="br0">&#40;</span><span class="kw5">NSBundle</span> <span class="sy0">*</span><span class="br0">&#41;</span>nibBundleOrNil <span class="br0">&#123;</span><br />
+<span class="kw1">if</span> <span class="br0">&#40;</span><span class="br0">&#40;</span>self <span class="sy0">=</span> <span class="br0">&#91;</span>super initWithNibName<span class="sy0">:</span>nibNameOrNil bundle<span class="sy0">:</span>nibBundleOrNil<span class="br0">&#93;</span><span class="br0">&#41;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span><br />
+<span class="coMULTI">/*<br />
+* Creo la navigation bar, con il tasto 'Indietro' essendo questa la seconda vista.<br />
+*/</span><br />
+self.navbar <span class="sy0">=</span> AddNavigationBar<span class="br0">&#40;</span> self, <span class="co3">@</span><span class="st0">&quot;Vista 2&quot;</span>, <span class="kw2">YES</span> <span class="br0">&#41;</span>;<br />
+<span class="br0">&#125;</span><br />
+<span class="kw1">return</span> self;<br />
+<span class="br0">&#125;</span><br />
+<br />
+<span class="sy0">-</span> <span class="br0">&#40;</span><span class="kw4">void</span><span class="br0">&#41;</span>navigationBar<span class="sy0">:</span><span class="br0">&#40;</span>UINavigationBar<span class="sy0">*</span><span class="br0">&#41;</span>bar buttonClicked<span class="sy0">:</span><span class="br0">&#40;</span><span class="kw4">int</span><span class="br0">&#41;</span>button<br />
+<span class="br0">&#123;</span><br />
+<span class="coMULTI">/*<br />
+* Il tasto 'Indietro' è stato premuto, torniamo alla prima view ^^<br />
+*/</span><br />
+BackFromView<span class="br0">&#40;</span>self<span class="br0">&#41;</span>;<br />
+<span class="br0">&#125;</span></div></div>
 
-@end</pre></pre></code>Mentre l'implementazione ha una leggera variazione:<pre><pre><code>- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-if ((self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])) {
-/*
-* Creo la navigation bar, con il tasto 'Indietro' essendo questa la seconda vista.
-*/
-self.navbar = AddNavigationBar( self, @"Vista 2", YES );
-}
-return self;
-}
-
-- (void)navigationBar:(UINavigationBar*)bar buttonClicked:(int)button
-{
-/*
-* Il tasto 'Indietro' è stato premuto, torniamo alla prima view ^^
-*/
-BackFromView(self);
-}</pre></pre></code>L'inizializzazione è la stessa (eccezion fatta per il tasto 'Indietro', che stavolta imposteremo), mentre appare il nuovo metodo buttonClicked.
+L'inizializzazione è la stessa (eccezion fatta per il tasto 'Indietro', che stavolta imposteremo), mentre appare il nuovo metodo buttonClicked.
 E' necessario dichiarare tale metodo poichè il controller, dichiarato come delegate della UINavigationBar, ne riceve gli eventi, quindi anche l'evento scaturito dalla pressione sul tasto 'Indietro', che in questo caso lancerà la funzione BackFromView riportandoci alla vista principale :)
 
-Riprendiamo un attimo il concetto di transizione animata andando a vedere l'implementazione della funzione GoToView (BackFromView è quasi identica, quindi possiamo tralasciarla ^^) nel file Utilities.m:<pre><pre><code>/*
-* Esegue una transazione animata dalla view 'from' alla view 'to' .
-*/
-void GoToView( UIViewController *from, UIViewController *to ){
-/*
-* Preparo l'animazione e aggiungo la subview.
-*/
-[UIView beginAnimations:nil context:nil];
-[UIView setAnimationDuration:1.0];
-[UIView setAnimationTransition:UIViewAnimationTransitionCurlUp forView:from.view cache:YES];
-[from.view addSubview:to.view];
-[UIView commitAnimations];
-}</pre></pre></code>A parte la riga<pre><pre><code>[from.view addSubview:to.view];</pre></pre></code>che molti di voi già conosceranno (non fa altro che aggiungere una sottovista a quella principale sovrapponendole), il resto potrà sembrare un po singolare.
+Riprendiamo un attimo il concetto di transizione animata andando a vedere l'implementazione della funzione GoToView (BackFromView è quasi identica, quindi possiamo tralasciarla ^^) nel file Utilities.m:
+
+<div class="codecolorer-container objc default" style="overflow:auto;white-space:nowrap;width:100%;height:100%;"><div class="objc codecolorer"><span class="coMULTI">/*<br />
+* Esegue una transazione animata dalla view 'from' alla view 'to' .<br />
+*/</span><br />
+<span class="kw4">void</span> GoToView<span class="br0">&#40;</span> UIViewController <span class="sy0">*</span>from, UIViewController <span class="sy0">*</span>to <span class="br0">&#41;</span><span class="br0">&#123;</span><br />
+<span class="coMULTI">/*<br />
+* Preparo l'animazione e aggiungo la subview.<br />
+*/</span><br />
+<span class="br0">&#91;</span>UIView beginAnimations<span class="sy0">:</span><span class="kw2">nil</span> context<span class="sy0">:</span><span class="kw2">nil</span><span class="br0">&#93;</span>;<br />
+<span class="br0">&#91;</span>UIView setAnimationDuration<span class="sy0">:</span><span class="nu0">1.0</span><span class="br0">&#93;</span>;<br />
+<span class="br0">&#91;</span>UIView setAnimationTransition<span class="sy0">:</span>UIViewAnimationTransitionCurlUp forView<span class="sy0">:</span>from.view cache<span class="sy0">:</span><span class="kw2">YES</span><span class="br0">&#93;</span>;<br />
+<span class="br0">&#91;</span>from.view addSubview<span class="sy0">:</span>to.view<span class="br0">&#93;</span>;<br />
+<span class="br0">&#91;</span>UIView commitAnimations<span class="br0">&#93;</span>;<br />
+<span class="br0">&#125;</span></div></div>
+
+A parte la riga
+
+<div class="codecolorer-container objc default" style="overflow:auto;white-space:nowrap;width:100%;"><div class="objc codecolorer"><span class="br0">&#91;</span>from.view addSubview<span class="sy0">:</span>to.view<span class="br0">&#93;</span>;</div></div>
+
+che molti di voi già conosceranno (non fa altro che aggiungere una sottovista a quella principale sovrapponendole), il resto potrà sembrare un po singolare.
 In realtà è molto semplice, la funzione istruisce l'engine grafico di aggiungere la sottovista, ma di visualizzare un animazione di 1.0 secondi nel farlo.
 In questo caso abbiamo utilizzato l'animazione UIViewAnimationTransitionCurlUp (avvolgi verso l'alto), le altre disponibili con relativa descrizione potrete trovarle a <a href="http://developer.apple.com/library/ios/#documentation/uikit/reference/UIView_Class/UIView/UIView.html" target="_blank">questo indirizzo</a> della documentazione ufficiale.
 
