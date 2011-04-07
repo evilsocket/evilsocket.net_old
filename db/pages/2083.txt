@@ -19,7 +19,7 @@ di altre persone, la voglia di avere dell'hardware non proprio prestante e sping
 tutto mio dove poter fare i miei esperimenti malati :)
 
 Per questo, ora questo sito (come altri di mia proprietà) è hostato su un vps tedes con un Intel Xeon X5670 da circa 3Ghz e 2GB di RAM.
-Nonostante non sia granchè, il mio lavoro già da i suoi frutti e le prestazioni di tutta '�infrastruttura non sono per niente male, anzi superano quelle del dedicato sul
+Nonostante non sia granchè, il mio lavoro già da i suoi frutti e le prestazioni di tutta l'infrastruttura non sono per niente male, anzi superano quelle del dedicato sul
 quale ero prima! :)
 
 In questi giorni, tempo e lavoro (quindi sempre tempo XD) permettendo, posterò alcuni articoli sulla configurazione di un vps di fascia medio bassa
