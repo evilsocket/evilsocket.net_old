@@ -52,21 +52,22 @@
       <ul>
 			  <li> 
 
-<a target="_blank" rel="nofollow" onclick="return translateTo('en');" title="Translate to English"><img  style="cursor: pointer;" alt="Translate to English" src="http://www.backbox.org/forum/Themes/kani_119/images/english.png" title="Translate to English" height="24" width="24" border="0" /></a>
+<a target="_blank" rel="nofollow" onclick="return translateTo('en');" title="Translate to English"><img  style="cursor: pointer;" alt="Translate to English" src="${config.siteurl}/images/english.png" title="Translate to English" height="24" width="24" border="0" /></a>
 
-<a target="_blank" rel="nofollow" onclick="return translateTo('de');" title="Translate to German"><img  style="cursor: pointer;" alt="Translate to German" src="http://www.backbox.org/forum/Themes/kani_119/images/german.png" title="Translate to German" height="24" width="24" border="0" /></a>
+<a target="_blank" rel="nofollow" onclick="return translateTo('de');" title="Translate to German"><img  style="cursor: pointer;" alt="Translate to German" src="${config.siteurl}/images/german.png" title="Translate to German" height="24" width="24" border="0" /></a>
 
-<a target="_blank" rel="nofollow" onclick="return translateTo('es');" title="Translate to Spanish "><img  style="cursor: pointer;" alt="Translate to Spanish " src="http://www.backbox.org/forum/Themes/kani_119/images/spanish.png" title="Translate to Spanish " height="24" width="24" border="0" /></a>
+<a target="_blank" rel="nofollow" onclick="return translateTo('es');" title="Translate to Spanish "><img  style="cursor: pointer;" alt="Translate to Spanish " src="${config.siteurl}/images/spanish.png" title="Translate to Spanish " height="24" width="24" border="0" /></a>
 
-<a target="_blank" rel="nofollow" onclick="return translateTo('fr');" title="Translate to French "><img  style="cursor: pointer;" alt="Translate to French " src="http://www.backbox.org/forum/Themes/kani_119/images/french.png" title="Translate to French " height="24" width="24" border="0" /></a>
+<a target="_blank" rel="nofollow" onclick="return translateTo('fr');" title="Translate to French "><img  style="cursor: pointer;" alt="Translate to French " src="${config.siteurl}/images/french.png" title="Translate to French " height="24" width="24" border="0" /></a>
 <br/>
-<a target="_blank" rel="nofollow" onclick="return translateTo('ja');" title="Translate to Japanese BETA"><img  style="cursor: pointer;" alt="Translate to Japanese BETA" src="http://www.backbox.org/forum/Themes/kani_119/images/japanese.png" title="Translate to Japanese BETA" height="24" width="24" border="0" /></a>
+<a target="_blank" rel="nofollow" onclick="return translateTo('ja');" title="Translate to Japanese BETA"><img  style="cursor: pointer;" alt="Translate to Japanese BETA" src="${config.siteurl}/images/japanese.png" title="Translate to Japanese BETA" height="24" width="24" border="0" /></a>
 
-<a target="_blank" rel="nofollow" onclick="return translateTo('ko');" title="Translate to Korean BETA"><img  style="cursor: pointer;" alt="Translate to Korean BETA" src="http://www.backbox.org/forum/Themes/kani_119/images/korean.png" title="Translate to Korean BETA" height="24" width="24" border="0" /></a>
+<a target="_blank" rel="nofollow" onclick="return translateTo('ko');" title="Translate to Korean BETA"><img  style="cursor: pointer;" alt="Translate to Korean BETA" src="${config.siteurl}/images/korean.png" title="Translate to Korean BETA" height="24" width="24" border="0" /></a>
 
-<a target="_blank" rel="nofollow" onclick="return translateTo('ru');" title="Translate to Russian BETA "><img  style="cursor: pointer;" alt="Translate to Russian BETA " src="http://www.backbox.org/forum/Themes/kani_119/images/russian.png" title="Translate to Russian BETA " height="24" width="24" border="0" /></a>
+<a target="_blank" rel="nofollow" onclick="return translateTo('ru');" title="Translate to Russian BETA "><img  style="cursor: pointer;" alt="Translate to Russian BETA " src="${config.siteurl}/images/russian.png" title="Translate to Russian BETA " height="24" width="24" border="0" /></a>
 
-<a target="_blank" rel="nofollow" onclick="return translateTo('zh-CN');" title="Google-Translate-Chinese (Simplified) BETA"><img  style="cursor: pointer;" alt="Google-Translate-Chinese (Simplified) BETA" src="http://www.backbox.org/forum/Themes/kani_119/images/chinese.png" title="Google-Translate-Chinese (Simplified) BETA" height="24" width="24" border="0" /></a>
+<a target="_blank" rel="nofollow" onclick="return translateTo('zh-CN');" title="Google-Translate-Chinese (Simplified) BETA"><img  style="cursor: pointer;" alt="Google-Translate-Chinese (Simplified) BETA" src="${config.siteurl}/images/chinese.png" title="Google-Translate-Chinese (Simplified) BETA" height="24" 
+width="24" border="0" /></a>
          </li>
     </ul>
 
