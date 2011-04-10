@@ -162,6 +162,7 @@ width="24" border="0" /></a>
       <li><a href="http://retrogod.altervista.org/" target="_blank">rgod</a></li>
       <li><a href="http://ultimoprofetawebblog.wordpress.com/" target="_blank">UltimoProfeta</a></li>
       <li><a href="http://www.oversecurity.net/" target="_blank">Over Security</a></li>
+      <li><a href="http://kn0t.doesntexist.org/" target="_blank">Kn0t - DUNNO</a></li>
     </ul>
 
   </div> <!-- sidebar -->
