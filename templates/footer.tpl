@@ -15,30 +15,6 @@
     </div> <!-- pagewrap -->
     
     <script type="text/javascript">
-    var heyos_tooltips_user = 9805;
-    var heyos_tooltips_type = 'G';
-    </script>
-    <script type="text/javascript" src="http://admaster.heyos.com/core/tooltips.js"></script>
-
-    <script type="text/javascript">
-    var heyos_popexit_user = 9805;
-    var heyos_popexit_type = 'G';
-    </script>
-    <script type="text/javascript" src="http://admaster.heyos.com/core/popexit.js"></script>
-
-    <script type="text/javascript">
-    var heyos_popunder_user = 9805;
-    var heyos_popunder_type = 'G';
-    </script>
-    <script type="text/javascript" src="http://admaster.heyos.com/core/punder.js"></script>
-
-    <script type="text/javascript">
-    var heyos_slide_user = 9805;
-    var heyos_slide_type = 'G';
-    </script>
-    <script type="text/javascript" src="http://admaster.heyos.com/core/slide.js"></script>
-	
-    <script type="text/javascript">
 
       var _gaq = _gaq || [];
       _gaq.push(['_setAccount', 'UA-22026549-1']);
