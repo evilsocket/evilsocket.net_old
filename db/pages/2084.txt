@@ -1,0 +1,141 @@
+Date: 2011-10-04 19:46:12
+Author: evilsocket
+Categories: Hacking, Programmazione, Python
+Tags: giskard, daemon, dos, ddos, connections, netstat, tcp, port, ssh
+Title: Giskard, un software tutto fare per controllare e bloccare il traffico TCP.
+
+<p align="justify">
+Oggi voglio presentare <b>Giskard</b>, uno script che ho reimplementato recentemente (in effetti la prima versione era già sul mio github da un annetto, ma era alquanto rozza) 
+e che mi sta tornando molto utile sul mio <a href="/una-nuova-casa-per-i-miei-domini.html">nuovo vps</a>.
+
+Concettualmente Giskard è molto semplice, non fa altro che, ogni N secondi (vedremo più avanti come definire questo N), leggere e parserizzare il file /proc/net/tcp, ovvero il
+file nel quale sono contenute le informazioni delle connessioni TCP attive sul nostro server (quello che usa anche netstat per capirci), clusterizzare queste connessioni per 
+indirizzo ip remoto ed infine applicare delle regole che l'utente può definire tramite l'apposito file giskard.ini . 
+
+<break>
+
+A che serve? Beh, prendiamo il seguente esempio (che poi è nelle regole di default di giskard.ini) :
+
+<pre>
+  <code>
+  [http-block-dos]
+  port = 80
+  threshold = 20
+  timeout = 3600
+  rule = shorewall drop %s
+  undo = shorewall allow %s
+  </code>
+</pre>
+
+Letteralmente questa regola significa:
+
+"Se un indirizzo ip supera le 20 connessioni sulla porta 80 (http), esegui il comando "shorewall drop indirizzo" (ovvero blocca tramite firewall quell'ip), dopo che sono
+passati 3600 secondi invece esegui "shorewall allow indirizzo" per riabilitarlo a connettersi."
+
+Ovvero, una semplice protezione contro attacchi di tipo <a href="http://it.wikipedia.org/wiki/Denial_of_service" target="_blank">denial of service</a> sulla porta 80 :)
+
+In questo caso, durante una simulazione che ho effettuato con <a href="http://www.joedog.org/index/siege-home" target="_blank">Siege</a> dal mio computer :
+
+<pre>
+  <code>
+  [evilsocket@masamune ~] siege --concurrent=50 --internet --benchmark --time=20m "http://www.evilsocket.net"
+  </code>
+</pre>
+
+Il demone di Giskard sul server ha effettuato le seguenti azioni:
+
+<pre>
+  <code>
+  [10/Apr 18:43:25] [INFO] Giskard daemon started.
+  [10/Apr 18:43:25] [INFO] Giskard is now running .
+  <b>[10/Apr 18:43:45] [WARNING] Address xx.xx.xx.xx has exceeded the threshold of 50 concurrent requests on port 80 with 200 hits, triggering rule 'http-block-dos' for 3600 seconds.</b>
+  </code>
+</pre>
+
+(Dove xx.xx.xx.xx è il mio ip)
+
+Di conseguenza, siege si è bloccato e non è stato più in grado di aprire connessioni verso il server (ne io di navigare il sito) per un ora, rendendo del tutto vano l'attacco DoS.
+
+Giskard supporta diverse regole per la stessa porta, quindi si potrebbero mettere in chain le due seguenti regole:
+
+<pre>
+  <code>
+  [http-limit-bandwidth]
+  port = 80
+  threshold = 20
+  timeout = 3600
+  rule = <em>comando per limitare la banda di un indirizzo ip</em>
+  undo = <em>comando di ripristino</em>
+
+  [http-block-dos]
+  port = 80
+  threshold = 70
+  timeout = 3600
+  rule = shorewall drop %s
+  undo = shorewall allow %s
+  </code>
+</pre>
+
+Quindi, se il numero di richieste/connessioni di un indirizzo sarà compreso tra 20 e 80, verrà semplicemente limitata la banda di uscita del server (quindi l'ip sarà semplicemente considerato
+come un utente che naviga "pesantemente" il sito e rischia di appesantirlo), mentre al superamento delle 80 connessioni verrà considerato come attacco DoS e applicata la regola precedentemente
+descritta.
+
+Il file di configurazione giskard.ini contiene inoltre la sezione <b>DEFAULT</b> con le impostazioni principali del demone, ad esempio:
+
+<pre>
+  <code>
+  [DEFAULT]
+  logging = true
+  logflushrate = 0
+  logfile = /var/log/giskard
+  pidfile = /var/run/giskard.pid
+  whitelist = 127.0.0.1, 0.0.0.0
+  sleep = 20
+  </code>
+</pre>
+
+Quindi il logging sul file /var/log/giskard è abilitato, i dati verranno flushati nel file immediatamente dopo la scrittura, il pid file sarà /var/run/giskard.pid, gli indirizzi 127.0.0.1 (localhost)
+e 0.0.0.0 (ANY) sono in white list ed infine il controllo verrà effettuato ogni 20 secondi.
+
+Oltre ad i classici argomenti <b>start</b> per far partire il demone, <b>stop</b> per fermarlo e <b>restart</b> per reinizializzarlo, è presente anche il comando <b>stats</b> che serve a stampare 
+una serie di informazioni in stile netstat, ma clusterizzate per indirizzo ip, ed il rule set attivo al momento.
+Un output di esempio potrebbe essere :
+
+<pre>
+  <code>
+  [utente@hostname ~] sudo giskard stats
+
+  Giskard 2.1 - Copyleft Simone Margaritelli http://www.evilsocket.net <evilsocket@gmail.com>
+
+  Listeners     :
+
+          0.0.0.0 on port 80
+          0.0.0.0 on port 22
+
+  Server Load   :
+
+          122.104.91.18 :
+                  2 hits on port 80
+          87.223.77.64 :
+                  2 hits on port 80
+          151.95.20.156 :
+                  6 hits on port 80
+                  2 hits on port 22
+
+  Ruleset       :
+
+          Rules for port 80 :
+                  [http-block-dos] 'shorewall drop %s' for 3600 seconds if connections on port 80 are more than 50, then run 'shorewall allow %s' to undo.
+          Rules for port 22 :
+                  [ssh-max-users] 'shorewall drop %s' for 3600 seconds if connections on port 22 are more than 5, then run 'shorewall allow %s' to undo.
+  </code>
+</pre>
+
+Insomma, con questo piccolo demone (che tra l'altro ho ottimizzato per pesare praticamente nulla sia in termini di processore che di memoria) ed un po di fantasia, si possono fare infinite cose oltre l'ovvio,
+cioè la protezione del proprio server ed una gestione un po più proattiva della banda e delle risorse dello stesso.
+
+Trovate lo script sempre sul mio github all'indirizzo <a href="https://github.com/evilsocket/Giskard" target="_blank">https://github.com/evilsocket/Giskard</a> .
+
+Enjoy :)
+</p>
+
