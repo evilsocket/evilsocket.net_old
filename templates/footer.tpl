@@ -7,9 +7,9 @@
         <br/>
         <script type="text/javascript" src="http://widgets.amung.us/small.js"></script>
         <script type="text/javascript">WAU_small('w7u4dxiqkgx9')</script>
-        <br/>
-        <br/>
-        <a href="http://validator.w3.org/check?uri=referer"><img src="http://www.w3.org/Icons/valid-xhtml10" alt="Valid XHTML 1.0 Transitional" height="31" width="88" /></a>
+	<a href="http://www.debian.org/" target="_blank"><img src="${config.siteurl}/images/debian-powered.png" style="border:0px;"/></a>
+	<a href="http://www.python.org/" target="_blank"><img src="${config.siteurl}/images/python-powered.png" style="border:0px;"/></a>
+        <a href="http://validator.w3.org/check?uri=referer"><img src="${config.siteurl}/images/w3c-xhtml.png" alt="Valid XHTML 1.0 Transitional"  style="border:0px;"/></a>
       </p>   
     </div>
 
