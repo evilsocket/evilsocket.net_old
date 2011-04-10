@@ -114,11 +114,11 @@ Un output di esempio potrebbe essere :
 
   Server Load   :
 
-          122.104.91.18 :
+          122.104.xx.xx :
                   2 hits on port 80
-          87.223.77.64 :
+          87.223.xx.xx :
                   2 hits on port 80
-          151.95.20.156 :
+          151.95.xx.xx :
                   6 hits on port 80
                   2 hits on port 22
 
