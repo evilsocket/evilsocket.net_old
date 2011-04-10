@@ -34,7 +34,7 @@
   <div id="sidebar">
     <div id="searchdiv">
       <form method="get" id="searchform" action="${config.siteurl}/" >
-        <input type="text" value="Search" name="s" id="searchinput" onblur="setTimeout('closeResults()',2000); if (this.value == '') {this.value = '';}"  onfocus="if (this.value == 'Search') {this.value = '';}"/>
+        <input type="text" value="Search" name="s" id="searchinput" onblur="if (this.value == '') {this.value = '';}"  onfocus="if (this.value == 'Search') {this.value = '';}"/>
       </form>
     </div> <!-- searchdiv -->
     <br/>
