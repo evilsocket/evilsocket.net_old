@@ -545,7 +545,8 @@ background-color:#fff;
 
 pre, code {
   color:#AAA;
-  font-size:12px;
+  font-size:10px;
+  line-height: 1;
   padding: 5px;
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
