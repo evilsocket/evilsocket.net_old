@@ -23,8 +23,6 @@
           % endif
         % endfor
       </div>
-      <br/>
-      <span class='st_twitter_hcount' displayText='Tweet'></span><span class='st_facebook_hcount' displayText='Facebook'></span> 
     </div>
 
     <!-- DISQUIS -->
