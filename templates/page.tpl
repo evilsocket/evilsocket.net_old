@@ -14,7 +14,6 @@
       <div class="entrybody">
         ${page.content}
         <br/>
-        <span class='st_twitter_hcount' displayText='Tweet'></span><span class='st_facebook_hcount' displayText='Facebook'></span>
       </div>
       <div class="entrymeta">
         Tags: 
@@ -25,9 +24,10 @@
           % endif
         % endfor
       </div>
+      <span class='st_twitter_hcount' displayText='Tweet'></span><span class='st_facebook_hcount' displayText='Facebook'></span> 
     </div>
 
-		<!-- DISQUIS -->
+    <!-- DISQUIS -->
     <div id="disqus_thread"></div>
     <script type="text/javascript">
         var disqus_shortname = 'evilsocket';
