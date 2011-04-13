@@ -13,7 +13,6 @@
       </div>
       <div class="entrybody">
         ${page.content}
-        <br/>
       </div>
       <div class="entrymeta">
         Tags: 
