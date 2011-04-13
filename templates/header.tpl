@@ -26,9 +26,9 @@
 
     <meta name="keywords" content="${ ', '.join( config.keywords ) }" />
     <meta name="description" content="evilsocket.net, hacking, extreme programming and vodka!" />
-		<meta name="generator" content="SWG ${config.version}" />
+    <meta name="generator" content="SWG ${config.version}" />
 
-		<link rel="stylesheet" href="${config.siteurl}/css/style.css" type="text/css" media="screen" /> 
+    <link rel="stylesheet" href="${config.siteurl}/css/style.css" type="text/css" media="screen" /> 
     <link rel="alternate" type="application/rss+xml"  href="${config.siteurl}/feed.xml" title="${config.sitename | h} RSS Feeds" />
     <link rel="shortcut icon" type="image/x-icon" href="${config.siteurl}/images/favicon.ico" />
  
@@ -41,7 +41,11 @@
     // ]]>
     </script>
 
-	</head>
+    <script type="text/javascript">var switchTo5x=true;</script>
+    <script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
+    <script type="text/javascript">stLight.options({publisher:'49e18499-d632-4c01-926d-d97c8004aab9'});</script>
+
+    </head>
 
 	<body id="home" class="log">
     <a href="http://github.com/evilsocket" target="_blank">
