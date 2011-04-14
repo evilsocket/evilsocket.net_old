@@ -1,4 +1,4 @@
-Date: 2011-10-04 19:46:12
+Date: 2011-04-10 19:46:12
 Author: evilsocket
 Categories: Hacking, Programmazione, Python
 Tags: giskard, daemon, dos, ddos, connections, netstat, tcp, port, ssh
