@@ -1,0 +1,514 @@
+Date: 2011-04-14 22:02:48
+Author: evilsocket
+Categories: Papers, Misc
+Tags: nginx, http, web, server, configurazione, debian, installazione, performance, veloce, memoria, cpu, ottimizzazione
+Title: [VPS I] Compilare, installare e configurare NGINX in un ambiente debian.
+
+<p align="justify">
+Come promesso, inizio con questa una serie di piccole guide sulla configurazione di un VPS (o server dedicato) con risorse hardware limitate, o comunque indirizzate a persone 
+che vogliono trarre le massime prestazioni possibili dalle loro macchine.
+
+Tutte le guide, compresa questa, saranno orientate su sistemi <b>debian</b> poichè sono quelli con i quali o più esperienza a livello di server, ma naturalmente
+con piccole modifiche ed accorgimenti saranno riadattabili a qualsiasi altra distribuzione vogliate utilizzare.
+
+Detto questo, iniziamo a vedere come compilare, installare e successivamente installare il server web nginx nel nostro serveruccio :D
+
+<break>
+
+Prima di tutto, parliamo di cosa è effettivamente <b>nginx</b> e del perchè ho scelto questa soluzione (e come me quasi 25 milioni di altre persone) invece del solito Apache.
+<a href="http://wiki.nginx.org/" target="_blank">Nginx</a>, letto 'engine x', è un web server modulare (e non solo un web server a dire il vero) ad <b>altissime prestazioni</b> sviluppato inizialmente dal programmatore Russo Igor Sysoev (nel 2002)
+e successivamente portato avanti fino ad i giorni nostri da una comunità molto attiva e capace di developers.
+
+La sua caratteristica principale, che lo differenzia dal 99% dei suoi concorrenti (Apache compreso), è che non funziona con una architettura a threads, ovvero non crea un thread per ogni
+connessione client in entrata, bensì sfrutta una logica innovativa di eventi asincroni, logica che lo rende non solo <a href="http://www.joeandmotorboat.com/2008/02/28/apache-vs-nginx-web-server-performance-deathmatch/" target="_blank">estremamente più performante</a>, 
+ma la quale fa si che consumi molte, ma dico <b>MOLTE</b> meno risorse a parità di carico.
+
+Tutto questo naturalmente offrendo la stessa configurabilità e modularità di altre alternative molto più blasonate, insomma, basti pensare che infrastrutture del calibro wordpress.com hanno da tempo switchato i loro sistemi
+a nginx per tutti questi motivi e tanti altri ^^.
+
+Ma bando alle ciance, iniziamo!
+
+<h4>Installazione</h4>
+
+Prima di tutto, specifico che <b>non andremo ad installare nginx tramite i repository debian</b> ma compilandone il codice sorgente, questo principalmente perchè ci offre la possibilità di ottimizzare ulteriormente l'infrastruttura ed aggiungere i moduli che ci interessano.
+Mentre scrivo, è appena uscita la versione stabile 1.0.0, quindi andremo a scaricare l'archivio <b>nginx-1.0.0.tar.gz</b> da <a href="http://nginx.org/download/nginx-1.0.0.tar.gz" target="_blank">questo link</a> in una directory nella quale ci è comodo operare 
+e nella quale naturalmente abbiamo permessi di scrittura, diciamo la nostra home.
+
+Decomprimiamolo con il solito
+
+<pre>
+<code>
+tar xvf nginx-1.0.0.tar.gx
+</code>
+</pre>
+
+ed entriamo nella sua directory.
+
+A questo punto, dobbiamo assicurarci di avere le dipendenze necessarie per compilarlo, per assicurarcene ed installare quelle che ci mancano diamo un bel
+
+<pre>
+<code>
+sudo apt-get build-dep nginx
+</code>
+</pre>
+
+Finita la procedura, passiamo alla fase di configurazione.
+Una cosa molto importante, è utilizzare <b>solo</b> i moduli che effettivamente ci servono in modo tale da alleggerire l'eseguibile di nginx il quale in questo modo occuperà ancor meno memoria, per vedere quindi una
+lista delle opzioni di configurazione possibili, da dentro la directory precedentemente estratta diamo un bel
+
+<pre>
+<code>
+./configure --help
+</code>
+</pre>
+
+Una volta che ci siamo fatti un idea di quello che ci serve e quello che invece non vogliamo (disabilitabile tramite le varie opzioni <b>--without--*</b>) procediamo alla configurazione.
+Vi darò la configurazione che sto utilizzando su questo vps che in generale rispecchia le necessità di qualsiasi blogger e soprattutto la struttura delle directory di debian:
+
+<pre>
+<code>
+./configure \
+  --s
+  --conf-path=/etc/nginx/nginx.conf \
+  --pid-path=/var/run/nginx.pid \
+  --lock-path=/var/lock/nginx.lock \
+  --http-log-path=/var/log/nginx/access.log \
+  --error-log-path=/var/log/nginx/error.log \
+  --with-http_stub_status_module \
+  --without-select_module \
+  --without-http_ssi_module \
+  --without-http_autoindex_module \
+  --without-http_geo_module \
+  --without-http_map_module \
+  --without-http_proxy_module \
+  --without-http_uwsgi_module \
+  --without-http_scgi_module \
+  --without-http_memcached_module \
+  --without-http_empty_gif_module \
+  --without-http_upstream_ip_hash_module \
+  --without-mail_pop3_module \ 
+  --without-mail_imap_module \
+  --without-mail_smtp_module
+</code>
+</pre>
+
+Come vedete nelle prime righe abbiamo definito, seguendo lo standard debian, i vari path di installazione dei file, e successivamente abbiamo disabilitato tutto (tanta roba!) quello che non ci serve.
+
+<b>Nota</b>
+<em>Nel caso vogliate aggiungere un modulo non presente tra quelli 'core', una volta scaricato ed estratto potete inserirlo tramite la direttiva <b>--add-module=/path/dei/src/del/modulo</b></em>
+
+Lanciamo il comando ed aspettiamo che finisca, per poi dare i soliti
+
+<pre>
+<code>
+make
+sudo make install
+</code>
+</pre>
+
+Rispettivamente per compilare ed installare nginx.
+
+<h4>Configurazione</h4>
+
+Ok, abbiamo appena concluso il 10% del lavoro (ebbene si!), ora dobbiamo pensare alla sicurezza ed alla sua configurazione.
+
+Vogliamo che il servizio possa essere controllato tramite i soliti /etc/init.d/ scripts giusto? 
+Bene, quindi creiamo il file <b>/etc/init.d/nginx</b> (serviranno i permessi di root) inserendoci il seguente contenuto:
+
+<pre>
+</code>
+#!/bin/sh
+
+DAEMON=/usr/sbin/nginx
+NAME=nginx
+DESC=nginx
+
+test -x $DAEMON || exit 0
+
+# Include nginx defaults if available
+if [ -f /etc/default/nginx ] ; then
+    . /etc/default/nginx
+fi
+
+set -e
+
+. /lib/lsb/init-functions
+
+case "$1" in
+  start)
+    echo -n "Starting $DESC: "
+    start-stop-daemon --start --quiet --pidfile /var/run/nginx.pid --exec $DAEMON -- $DAEMON_OPTS || true
+    echo "$NAME started."
+    ;;
+  stop)
+    echo -n "Stopping $DESC: "
+    start-stop-daemon --stop --quiet --pidfile /var/run/nginx.pid --exec $DAEMON || true
+    echo "$NAME stopped."
+    ;;
+  restart|force-reload)
+    echo -n "Restarting $DESC: "
+    start-stop-daemon --stop --quiet --pidfile /var/run/nginx.pid --exec $DAEMON || true
+    sleep 1
+    start-stop-daemon --start --quiet --pidfile /var/run/nginx.pid --exec $DAEMON -- $DAEMON_OPTS || true
+    echo "$NAME."
+    ;;
+  reload)
+      echo -n "Reloading $DESC configuration: "
+      start-stop-daemon --stop --signal HUP --quiet --pidfile /var/run/nginx.pid --exec $DAEMON || true
+      echo "$NAME."
+      ;;
+  status)
+      status_of_proc -p /var/run/nginx.pid "$DAEMON" nginx && exit 0 || exit $?
+      ;;
+  *)
+    N=/etc/init.d/$NAME
+    echo "Usage: $N {start|stop|restart|reload|force-reload|status}" &gt;&2
+    exit 1
+    ;;
+esac
+
+exit 0
+</code>
+</pre>
+
+Rendiamo lo script eseguibile con
+
+<pre>
+<code>
+sudo chmod +x /etc/init.d/nginx
+</code>
+</pre>
+
+Ed aggiorniamo il sistema di conseguenza
+
+<pre>
+<code>
+sudo update-rc.d -f nginx defaults
+</code>
+</pre>
+
+E' arrivato il momento di creare un utenza con la quale girerà nginx (perchè noi <b>non</b> vogliamo farlo girare come root, <b>VEEEERO</b> ? XD) chiamata (perdonate la poca fantasia) 
+appunto <b>nginx</b>
+
+<pre>
+<code>
+sudo adduser --system --no-create-home --disabled-login --disabled-password --group nginx
+</code>
+</pre>
+
+Inoltre creiamo le due seguenti directory che vedremo più avanti:
+
+<pre>
+<code>
+sudo mkdir /etc/nginx/sites-available/
+sudo mkdir /etc/nginx/sites-enabled/
+</code>
+</pre>
+
+Bene, conclusi questi "preparativi", passiamo alla configurazione vera e propria del server presente nel file <b>/etc/nginx/nginx.conf</b>.
+Inizierò dandovi la mia configurazione e successivamente commenterò le varie parti descrivendone il significato e l'importanza, poi voi di conseguenza la modificherete per renderla
+più adatta alle vostre necessità.
+
+<pre>
+<code>
+user  nginx;
+worker_processes 1;
+
+# [ debug | info | notice | warn | error | crit ]
+error_log  /var/log/nginx/error.log  warn;
+
+events {
+  worker_connections  1024;
+  use epoll;
+}
+
+
+http {
+	include       mime.types;
+	default_type  application/octet-stream;
+	
+	log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+	                	'$status $body_bytes_sent "$http_referer" '
+	                	'"$http_user_agent"';
+	
+	server_tokens off;
+	
+	server_names_hash_max_size    64;
+	server_names_hash_bucket_size 64;
+	
+	client_header_timeout   10m;
+	client_body_timeout     10m;
+	send_timeout            10m;
+	
+	connection_pool_size         512;
+	client_header_buffer_size     8k;
+	large_client_header_buffers 8 8k;
+	request_pool_size            64k;
+	
+	gzip              on;
+	gzip_http_version 1.0;
+	gzip_buffers      16 8k;
+	gzip_comp_level   9;
+	gzip_min_length   2048;
+	gzip_types        text/plain text/css application/x-javascript text/xml application/xml application/xml+rss text/javascript;
+	gzip_vary         on;
+
+	output_buffers  16 32k;
+	postpone_output 1460;
+	
+	sendfile        on;
+	tcp_nopush      on;
+	tcp_nodelay     off;
+	
+	keepalive_timeout  30;
+	keepalive_requests 10;
+	
+	chunked_transfer_encoding off;
+	
+	ignore_invalid_headers on;
+
+  include /etc/nginx/sites-enabled/*; 
+}
+</code>
+</pre>
+
+Sembra complicato, ma vi assicuro che lo è molto di più ... AHHAHAA no scherzo, è semplce, vi spiego :P
+
+<pre>
+<code>
+user  nginx;
+worker_processes 1;
+
+# [ debug | info | notice | warn | error | crit ]
+error_log  /var/log/nginx/error.log  warn;
+</code>
+</pre>
+
+Le prime due righe, impostano l'utente con il quale gira il server (quello che abbiamo creato poc'anzi) ed il numero di processi attivi di nginx (in questo caso solo uno).
+Nginx all'avvio crea un "master process", colui che comanda diciamo, più altri N processi figli verso i quali vengono dirottate le richieste http, dove N è proprio questo
+parametro di configurazione.
+Diciamo che per un server con poca utenza come il mio un solo processo basta ed avanza, aumentate però questo numero in conseguenza del vostro carico e del parametro <b>worker_connections</b>
+che vedremo tra un po.
+
+Le ultime righe impostano il file di logging principale (poichè ogni dominio può, volendo averne uno separato) ed il livello di logging, nel mio caso vengono loggati gli eventi
+partendo dai warnings in poi.
+
+<pre>
+<code>
+events {
+  worker_connections 1024;
+  use epoll;
+}
+</code>
+</pre>
+
+Questa sezione è importantissima, il primo parametro imposta il numero di connessioni massime che un processo slave può servire, questo significa che dobbiamo bilanciare bene il numero
+di processi (nella sezione precedente) e le connessioni che ognuno può accettare ... troppe poche connessioni e molti processi possono saturare le nostre risorse, troppe connessioni
+e pochi processi possono aumentare di molto l'attesa e quindi la latenza di ogni singola connessione.
+La riga <b>use epoll</b> indica il metodo di selezione asincrona, ci basti sapere che epoll va benissimo per GNU/Linux, mentre se ci trovassimo ad esempio in un ambiente *BSD dovremmo
+cambiarlo in base alle indicazioni della documentazione.
+
+<pre>
+<code>
+include       mime.types;
+default_type  application/octet-stream;
+
+log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                	'$status $body_bytes_sent "$http_referer" '
+                	'"$http_user_agent"';
+</code>
+</pre>
+
+Include il file dei mime types standard, imposta quello di default ed imposta il formato della stringa che ci ritroveremo nei log.
+
+<pre>
+<code>
+server_tokens off;
+</code>
+</pre>
+
+Disabilita l'invio della versione di nginx nelle pagine di errore e nell'header 'Server', per evitare di facilitare la vita a chiunque voglia fingerprintare
+il nostro webserver.
+
+<pre>
+<code>
+server_names_hash_max_size    64;
+server_names_hash_bucket_size 64;
+
+client_header_timeout   10m;
+client_body_timeout     10m;
+send_timeout            10m;
+
+connection_pool_size         512;
+client_header_buffer_size     8k;
+large_client_header_buffers 8 8k;
+request_pool_size            64k;
+</code>
+</pre>
+
+Qui impostiamo la dimensione dei vari buffer ed alcuni timeout, per una descrizione più dettagliata cercate nella documentazione perchè non mi va di descrivervi i campi uno
+per uno :D
+
+<pre>
+<code>
+gzip              on;
+gzip_http_version 1.0;
+gzip_buffers      16 8k;
+gzip_comp_level   9;
+gzip_min_length   2048;
+gzip_types        text/plain text/css application/x-javascript text/xml application/xml application/xml+rss text/javascript;
+gzip_vary         on;
+</code>
+</pre>
+
+Abilitiamo il modulo gzip per la compressione dinamica delle pagine, lo abilitiamo anche per HTTP/1.0, settiamo la grandezza dei buffer, compressione massima (livello 9),
+decidiamo che un file deve essere grande almeno 2KiB per essere compresso (se no ci andiamo a perdere molto probabilmente), impostiamo i mime types (oltre a quello html di 
+default) che vogliamo inviare con encoding gzip ed infine abilitiamo l'header http <b>Vary</b> per far si che la cache sia gestita al meglio.
+
+<pre>
+<code>
+output_buffers  16 32k;
+postpone_output 1460;
+</code>
+</pre>
+
+Altre dimensioni di buffer vari.
+
+<pre>
+<code>
+	sendfile        on;
+	tcp_nopush      on;
+	tcp_nodelay     off;
+</code>
+</pre>
+
+Abilitiamo la funzionalità 'sendfile()', abilitiamo l'opzione NOPUSH (quindi nginx cercherà di inviare gli headers in un unico pacchetto TCP) e disabilitiamo l'opzione nodelay per
+ottimizzare la comunicazione sui socket.
+
+<pre>
+<code>
+	keepalive_timeout  30;
+	keepalive_requests 10;
+</code>
+</pre>
+
+Decidiamo che un client può fare un massimo di 10 richieste in una connessione keep-alive, e che scadranno dopo 30 secondi di inattività.
+
+<pre>
+<code>
+chunked_transfer_encoding off;
+</code>
+</pre>
+
+Disabilitiamo il chunked encoding, quindi scegliamo di inviare il file in un unico pezzo.
+
+<pre>
+<code>
+ignore_invalid_headers on;
+</code>
+</pre>
+
+Ignoriamo header non validi (o magari non supportati/disabilitati) piùttosto che generare un errore.
+
+<pre>
+<code>
+include /etc/nginx/sites-enabled/*; 
+</code>
+</pre>
+
+Includiamo tutti i file presenti in quella directory che abbiamo precedentemente creato.
+
+Wow, che faticaccia!!!
+Si, configurazione figa ecc ecc ... ma come lo creiamo un sito?!
+Eheh, semplice, con un altro file di configurazione (e-che-cazzo!!!)
+
+Dunque, diciamo che la nostra root web principale sia <b>/var/www/</b> (come in teoria dovrebbe essere su qualsiasi sistema debian), creiamo una directory per il nostro sito:
+
+<pre>
+<code>
+sudo mkdir /var/www/nostrosito.com
+</code>
+</pre>
+
+E mettiamoci dentro i file html che vogliamo, fatto questo, creiamo dentro la directory <b>/etc/nginx/sites-available</b> (precedentemente creata) il file <b>nostrosito.com</b>
+con i seguenti contenuti (si si poi ve li spiego!)
+
+<pre>
+<code>
+server {
+  listen       80;
+  server_name  ~^(\w*)\.?nostrosito\.com$;
+
+  root /var/www/nostrosito.com;
+}
+</code>
+</pre>
+
+Semplice no?
+C'è la porta di ascolto, la regexp per capire quale dominio gestire e la root che abbiamo creato prima!
+
+Ma anche così, il nostro sito ancora non funziona ... perchè il file è nella cartella sites-available, cioè siti disponibili ... dobbiamo abilitarlo prima!
+Per comodità, ci creiamo un link simbolico dalla sua cartella a sites-enabled
+
+<pre>
+<code>
+sudo ln -s /etc/nginx/sites-available/nostrosito.com /etc/nginx/sites-enabled/nostrosito.com 
+</code>
+</pre>
+
+Abbiamo finito!!!
+Ora facciamo partire nginx con il classico:
+
+<pre>
+<code>
+sudo /etc/init.d/nginx start
+</code>
+</pre>
+
+E se abbiamo fatto tutto bene vedremo il nostro sito rispondere alle richieste http :)
+
+<b>Nota</b>
+<em>Se durante lo startup nginx dovesse dare un errore riguardante i file di log, ci basterà crearlo e chownarlo :
+<pre>
+<code>
+sudo mkdir -p /var/log/nginx
+sudo touch /var/log/nginx/error.log
+sudo touch /var/log/nginx/access.log
+sudo chown -R nginx: /var/log/nginx
+</code>
+</pre>
+</em>
+
+<h4>Url Rewriting</h4>
+
+E se volessimo abilitare l'url rewriting come avviene con il classico .htaccess di cacca-Apache?
+Molto semplice anche questo, possiamo usare la direttiva <b>rewrite</b> 
+
+Diciamo che vogliamo che l'url <b>/feed</b> venga mappato sul file <b>/feed.xml</b> (come su questo sito), dovremmo aggiungere nel blocco <b>server</b>
+della configurazione del nostro sito, la direttiva:
+
+<pre>
+<code>
+rewrite ^/feed$ /feed.xml break;
+</code>
+</pre>
+
+E riavviare nginx ... fatto! :)
+
+Ci sono molte guide online su come convertire gli .htaccess dei cms più famosi (come wordpress o joomla) in formato nginx, quindi se usate una piattaforma
+già pronta non spaventatevi, googlate un po che sicuramente troverete le regole di rewrite per nginx già pronte che vi aspettano.
+
+<h4>Conclusioni</h4>
+
+Per questa prima parte è tutto, abbiamo configurato una marea di roba ma per ora ci troviamo solo con un server in grado di servire contenuti statici, html ed immagini
+insomma, niente php, e soprattutto senza aver effettuato alcune ulteriori configurazioni per aumentarne la sicurezza.
+
+Quindi nella prossima guida vedremo il tweaking di nginx orientato alla sicurezza, e l'installazione di <b>php-fpm</b> per gestire anche i siti dinamici.
+
+Stay tuned!
+
+</p>
+
+
+
+
