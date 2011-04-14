@@ -544,6 +544,7 @@ background-color:#fff;
 }
 
 pre, code {
+  background: black;
   color:#AAA;
   font-size:10px;
   line-height: 1;
@@ -554,6 +555,7 @@ pre, code {
 
 pre {
   border: 1px dotted gray;
+  padding: 5px;
 }
 
 h2,h4 {
