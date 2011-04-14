@@ -8,7 +8,7 @@ Title: [VPS I] Compilare, installare e configurare NGINX in un ambiente debian.
 Come promesso, inizio con questa una serie di piccole guide sulla configurazione di un VPS (o server dedicato) con risorse hardware limitate, o comunque indirizzate a persone 
 che vogliono trarre le massime prestazioni possibili dalle loro macchine.
 
-Tutte le guide, compresa questa, saranno orientate su sistemi <b>debian</b> poichè sono quelli con i quali o più esperienza a livello di server, ma naturalmente
+Tutte le guide, compresa questa, saranno orientate su sistemi <b>debian</b> poichè sono quelli con i quali ho più esperienza a livello di server, ma naturalmente
 con piccole modifiche ed accorgimenti saranno riadattabili a qualsiasi altra distribuzione vogliate utilizzare.
 
 Detto questo, iniziamo a vedere come compilare, installare e successivamente installare il server web nginx nel nostro serveruccio :D
