@@ -1,0 +1,229 @@
+Date: 2011-04-15 19:42:18
+Author: evilsocket
+Categories: Papers, Misc
+Tags: php, fpm, php-fpm, cgi, fcgi, fastcgi, fast-cgi, nginx, http, web, server, configurazione, debian, installazione, performance, veloce, memoria, cpu, ottimizzazione
+Title: [VPS II] Ottimizzare la configurazione di NGINX ed installare PHP-FPM.
+
+<p align="justify">
+
+Nella <a href="/vps-i-compilare-installare-e-configurare-nginx-in-un-ambiente-debian.html">guida precedente</a> abbiamo visto l'installazione e la configurazione di base di un web
+server nginx, nonostante questo alla fine della guida ci ritroviamo con un server in grado di erogare solamente contenuti statici, quindi oggi vedremo le ultime ottimizzazioni
+alla configurazione ma soprattutto l'installazione di <b>php</b> gestito tramite <b>php-fpm</b>.
+
+Questa seconda parte della guida da per scontato che voi abbiate già una configurazione funzionante per il sito <b>nostrosito.com</b> rispettivamente mappato sui file
+
+<pre>
+<code>
+/etc/nginx/sites-available/nostrosito.com
+/etc/nginx/sites-enabled/nostrosito.com
+</code>
+</pre>
+
+Dove il secondo come spiegato è un link simbolico al primo.
+
+Tutte le configurazioni che vedremo oggi quindi faranno riferimento a quel file, in particolare alla sezione <b>server</b> di interesse (spulciatevi l'articolo di ieri se non ricordate ^^).
+<break>
+
+<h4>Limitare i metodi HTTP</h4>
+
+Come tutti (o quasi) sanno, il protocollo HTTP supporta diversi metodi, i due principali sono <b>GET</b> e <b>POST</b>, ma ce ne sono diversi altri come <b>HEAD</b> e <b>TRACE</b> ai quali
+dobbiamo stare attenti poichè potrebbero portare un eventuale attaccante a raccogliere informazioni preziose sul nostro web server.
+
+Di conseguenza, diciamo che il nostro server deve accettare solo le richieste GET, POST e HEAD (quest'ultimo viene usato molto poichè verifica l'esistenza di una pagina senza scaricarne l'intero
+contenuto), quindi nella sezione server del file di configurazione del sito che vogliamo proteggere aggiungiamo quanto segue:
+
+<pre>
+<code>
+if( $request_method !~ ^(GET|POST|HEAD)$ ) {
+	return 444;
+}
+</code>
+</pre>
+
+Quindi in caso di altri tipi di richieste http, il server restituirà un errore 444 terminando subito la richiesta senza restituire alcun tipo di risultato.
+
+<h4>Log e cache per contenuti statici</h4>
+
+Ogni sito per quanto dinamico possa essere ha i suoi contenuti statici, basti pensare ad i file css, i js, le immagini e così via.
+Essendo appunto di natura statica, difficilmente saranno soggetti a cambiamenti e di conseguenza è uno spreco di banda e risorse inviarli ad ogni singola richiesta, quindi
+possiamo fare in modo che alla prima richiesta il browser dell'utente metta in cache tali contenuti in modo tale che, se non vengono cambiati, non verranno inviati
+dal server ma prelevati dalla cache stessa.
+Inoltre, se il file statico richiesto è effettivamente presente sul nostro server, a che scopo loggare tale richiesta e intasare il file di log con informazioni inutili ?
+
+Quindi:
+
+<pre>
+<code>
+location ~* ^.+\.(jpg|jpeg|gif|png|ico|css|zip|tgz|rar|bz2|doc|xls|exe|pdf|ppt|txt|tar|mid|midi|wav|bmp|rtf|js|mov) {   
+  if (-f $request_filename) {
+		expires max;
+		access_log off;
+    break;
+  }
+}
+</code>
+</pre>
+
+Ovvero, per tutti i file con le estensioni elencate che effettivamente esistono, imposta il tempo di cache massimo e disabilita il log delle rispettive richieste http.
+
+<h4>Limitare la banda su file di grandi dimensioni</h4>
+
+Potrebbe capitare di hostare uno o più file di dimensioni ingenti, ad esempio io sono un mirror delle ISO di BackBox Linux.
+In tal proposito, è spesso utile limitare la banda di chi scarica questi file, in modo tale da non far si che poche persone rallentino la navigazione di tutti quanti gli altri utenti.
+
+<pre>
+<code>
+location ~* ^.+\.iso {
+   limit_rate 100k;
+}
+</code>
+</pre>
+
+Sui file con estensione iso, limita la banda per utente a 100k :)
+
+<h4>Creazione di un sotto dominio</h4>
+
+Per adesso, la regola che abbiamo creato nel file di configurazione:
+
+<pre>
+<code>
+server_name  ~^(\w*)\.?nostrosito\.com$;
+</code>
+</pre>
+
+Matcha qualsiasi cosa passiamo prima del nome del sito, da www. a cazzobubbolo.nostrosito.com (a patto che tali sottodomini siano presenti nel dns naturalmente :P), ma come possiamo fare ad esempio
+per far puntare l'url <b>http://forum.nostrosito.com/</b> su una cartella diversa dal www, ad esempio in una cartella <b>forum</b> (che fantasia eh?) ?
+
+Basta creare un nuovo blocco <b>server</b> nel file del nostro sito (o crearne uno separato, ma per una questione di ordine teniamo tutto ciò che riguarda un sito in un unico file ;)) immediatamente
+sotto al blocco principale, ad esempio :
+
+<pre>
+<code>
+server {
+  server_name  ~^(\w*)\.?nostrosito\.com$;
+  ... 
+  ... questo è il blocco principale ...
+  ...
+}
+
+server {
+  server_name forum.nostrosito.com;
+  root /var/www/nostrosito.com/forum;
+  ...
+  ... altre configurazioni come nel blocco principale ...
+  ...
+}
+</code>
+</pre>
+
+E quindi, non ci rimane che configurare il nuovo blocco come faremo con quello principale ed il gioco è fatto :)
+
+<h4>PHP, PHP-FPM e relativa configurazione</h4>
+
+Arriviamo dunque al passaggio finale della configurazione al fine di avere un web server funzionante al 100% anche con siti dinamici, l'installazione di PHP e l'interazione tra di lui e NGINX.
+Al contrario di Apache che ha il suo modulo <b>mod_php</b> integrato per gestire gli script php, NGINX funziona tramite <b>FastCGI</b>.
+FastCGI è l'evoluzione della vecchia interfaccia CGI, un modo quindi per far comunicare un qualsiasi interprete ed un web server con prestazioni nettamente superiori ad i vecchi cgi, ed in molti
+casi superiori anche ad i moduli integrati come quello di Apache.
+
+Il funzionamento è molto semplice, un gestore di processi si mette in ascolto su 127.0.0.1 (quindi solo in locale) su una determinata porta, il web server quando arriva una richiesta per una pagina
+php lo contatta, gli passa la richiesta, il demone fastcgi la interpreta opportunamente e restituisce l'output al web server.
+
+Nello specifico, l'interfaccia che andremo a configurare si chiama PHP-FPM, ovvero PHP FastCGI Process Manager, un gestore di processi ad altissime prestazioni e con un algoritmo di process spawning
+adattivo ed intelliggente (insomma, è tanto più figo delle classiche interfacce fcgi :D).
+
+Per fare questo, al contrario di come abbiamo fatto con NGINX, usufuiremo di alcuni pacchetti deb, questo perchè sia l'interprete php che il gestore php-fpm non necessitano di così molti parametri di
+compilazione avendo moduli dinamici caricati a runtime (mentre NGINX ha moduli statici compilati insieme al server stesso).
+Useremo quindi il respository di PHP 5.3 e PHP-FPM di <b>dotdeb.org</b>, digitando i seguenti comandi:
+
+<pre>
+<code>
+sudo echo "deb http://php53.dotdeb.org stable all" >> /etc/apt/sources.list
+sudo apt-get update
+</code>
+</pre>
+
+A questo punto, installiamo prima  il PHP con la patch di Suhosin (è importante installare prima questi pacchetti, poi quelli successivi e non tutti in un unica volta):
+
+<pre>
+<code>
+sudo apt-get install php5-cli php5-common php5-suhosin
+</code>
+</pre>
+
+Ed infine l'interfaccia CGI ed il gestore dei processi:
+
+<pre>
+<code>
+sudo apt-get install php5-fpm php5-cgi
+</code>
+</pre>
+
+Alla fine dell'installazione, andiamo ad editare il file <b>/etc/php5/fpm/php-fpm.conf</b> aggiungendo in coda i seguenti elementi che ne aumenteranno le prestazioni:
+
+<pre>
+<code>
+pm.max_children = 25
+pm.start_servers = 4
+pm.min_spare_servers = 2
+pm.max_spare_servers = 10
+pm.max_requests = 500
+
+request_terminate_timeout = 30s
+</code>
+</pre>
+
+Quindi gestiremo un massimo di 25 richieste simultanee per singolo processo (ricordate, le richieste sono dal web server, non dagli utenti eh!), ci saranno 4 processi separati, dei quali un minimo di 2 ed un massimo 
+di 10 potranno rimanere inattivi, gestendo complessivamente un massimo di 500 richieste parallele.
+Ovviamente potete personalizzare questi parametri come più preferite in base al carico ed alla potenza del vostro server.
+
+Bon, ora startiamo il demone :)
+
+<pre>
+<code>
+sudo /etc/init.d/php-fpm start
+</code>
+</pre>
+
+Abbiamo quasi finito! Dobbiamo solo "dire" a nginx come gestire i file php e come comunicare con il demone in ascolto, quindi nella sezione <b>server</b> del nostro file di configurazione aggiungeremo
+le seguenti righe: 
+
+<pre>
+<code>
+location ~ .php$ {
+  fastcgi_pass   127.0.0.1:9000;
+  fastcgi_index  index.php;
+  fastcgi_param  SCRIPT_FILENAME /var/www/nostrosito.com$fastcgi_script_name;
+  include fastcgi_params;
+}
+</code>
+</pre>
+
+Sostanzialmente gli diciamo che per i file con estensione php, deve connettersi a 127.0.0.1 sulla porta 9000 (dove è in ascolto il nostro amico fpm), e specifichiamo di passare parametri 
+e nome dello script così come sono alla root del nostro sito (precedentemente configurata tramite il parametro <b>root</b>).
+
+Salviamo il file e riavviamo nginx:
+
+<pre>
+<code>
+sudo /etc/init.d/nginx restart
+</code>
+</pre>
+
+Potete provare se tutto funziona con il solito:
+
+<pre>
+<code>
+<?php phpinfo(); ?>
+</code>
+</pre>
+
+In un file .php a vostra scelta nella root del vostro sito, e richiamandolo da browser vedrete come per magia funzionare il php! :)
+
+<h4>Conclusioni</h4>
+
+E per quanto riguarda la formidabile accoppiata NGINX/PHP-FPM abbiamo finito, nella prossima guida parlerò di come mettere in sicurezza <b>SSH</b> tramite le opportune configurazioni ed introdurrò
+le configurazioni di base del firewall, per poi concluderle nella guida successiva.
+
+Stay tuned! :)
+
+</p>
