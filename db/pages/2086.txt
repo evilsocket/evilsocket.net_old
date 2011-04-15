@@ -213,7 +213,7 @@ Potete provare se tutto funziona con il solito:
 
 <pre>
 <code>
-<?php phpinfo(); ?>
+&lt;?php phpinfo(); ?&gt;
 </code>
 </pre>
 
