@@ -1,0 +1,60 @@
+Date: 2011-04-16 16:58:12
+Author: evilsocket
+Categories: Hacking, Programmazione, Python
+Tags: giskard, changelog, 2.1.3, email alerts, email, alerts, postfix, release, dos, ddos
+Title: Giskard 2.1.3, Alert via email e supporto agli host nella whitelist
+
+<p align="justify">
+Un breve articolo per illustrare al volo le novità nella versione 2.1.3 di <a href="/?s=giskard">Giskard</a> che ho appena rilasciato.
+Oltre a vari bug fix ed ottimizzazioni, in particolare per l'utilizzo della memoria nettamente diminuito e la stabilità in generale,
+ho introdotto due funzionalità abbastanza comode, funzionalità delle quali è emersa la necessità durante l'utilizzo del demone
+sul mio vps, di conseguenza ho pensato di implementarle anche per chiunque altro avesse le mie stesse esigenze :)
+
+<break>
+
+<h4>Alert via email</h4>
+
+Innanzitutto è possibile configurare giskard per inviare email di segnalazione ogni qual volta un indirizzo ip attivi una determinata
+regola, per far questo bisogna inserire nella sezione <b>DEFAULT</b> del file giskard.ini le seguenti righe:
+
+<pre>
+<code>
+[DEFAULT]
+...
+email_alerts = true
+email_to = vostra@email.com
+email_from = giskard@vostrosito.it
+email_subj = Giskard Alert
+...
+</code>
+</pre>
+
+In questo modo come è facile intuire, le email verranno mandate a 'vostra@email.com', con mittente impostato a 'giskard@vostrosito.it' e oggetto 'Giskard Alert'
+Non c'è bisogno di preoccuparsi di avere la casella email intasata con centinaia di email al secondo, poichè giskard una volta attivata una regola per un dato ip,
+non attiverà più quella regola per quell'indirizzo fin tanto che il trigger precedente non è scaduto, evitando così di mail bombardarvi la casella :D
+
+<h4>Hostnames nella whitelist</h4>
+
+Una cosa che ho notato durante i primi giorni di utilizzo, è che giskard bloccava le richieste http del bot di Google, poichè apriva molte connessioni in parallelo.
+Ho pensato li per li di mettere gli ip dei bot in whitelist, però ho scoperto che Google non pubblica una lista di questi indirizzi, ne che rispecchiano sempre
+un intervallo definito ... insomma, l'unico modo sarebbe stato whitelist-are gli hostname.
+
+Quindi, per evitarmi (ed evitarvi) di scrivere tutti i cazzo di hostnames (che cmq cambiano spesso, quindi sarebbe stato inutile) nella whitelist ed avere così
+un giskard.ini di qualche MB, ho introdotto la possibilità di inserire delle espressioni regolari sugli hostname, quindi ad esempio sempre nella sezione <b>DEFAULT</b>:
+
+
+<pre>
+<code>
+[DEFAULT]
+...
+whitelist = 127.0.0.1, 0.0.0.0, [^\.]+\.googlebot\.com
+...
+</code>
+</pre>
+
+In questo modo il demone controllerà anche gli hostname degli "attaccanti" (mantenendo una cache interna, così da velocizzare le successive risoluzioni dns), vedendo
+se matchano con la data espressione regolare ed in tal caso ignorerà eventuali connessioni multiple da quella sorgente.
+
+Questo è quanto :)
+</p>
+
