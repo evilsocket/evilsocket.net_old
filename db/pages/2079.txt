@@ -9,11 +9,11 @@ Nuova release di <a href='http://www.evilsocket.net/?s=swg'>SWG</a>, nuova funzi
 Tramite il flag (opzionale) nel file di configurazione:
 
 <pre>
-
-<div class="codecolorer-container text default" style="overflow:auto;white-space:nowrap;width:100%;height:100%;"><div class="text codecolorer">&nbsp; ...<br />
-&nbsp; gzip = true &nbsp;<br />
-&nbsp; ...</div></div>
-
+<code>
+...
+gzip = true
+...
+</code>
 </pre>
 
 Si abiliterà la compressione GZip delle pagine, quindi non ci saranno più tanti file .html, ma tanti file .html.gz ... i risultati? :)
@@ -25,22 +25,22 @@ Tanto per capirci, questo sito generato con la 1.1.0 pesava circa <b>23 MB</b>, 
 SWG, se troverà abilitata questa opzione si occuperà di creare l'apposito file .htaccess (o di aggiornarne uno esistente), inserendo le righe:
 
 <pre>
+<code>
+# SWG Generated Code
+  AddEncoding gzip .gz
+  DirectoryIndex index.html index.htm index.shtml index.php index.php4 index.php3 index.phtml index.cgi index.html.gz
 
-<div class="codecolorer-container text default" style="overflow:auto;white-space:nowrap;width:100%;height:100%;"><div class="text codecolorer">&nbsp; # SWG Generated Code<br />
-&nbsp; AddEncoding gzip .gz<br />
-&nbsp; DirectoryIndex index.html index.htm index.shtml index.php index.php4 index.php3 index.phtml index.cgi index.html.gz<br />
-<br />
-&nbsp; &amp;lt;Files *.html.gz&amp;gt;<br />
-&nbsp; &nbsp; ForceType text/html<br />
-&nbsp; &amp;lt;/Files&amp;gt;<br />
-<br />
-&nbsp; &amp;lt;FilesMatch .*\.(html)&amp;gt;<br />
-&nbsp; &nbsp; RewriteEngine on<br />
-&nbsp; &nbsp; RewriteCond %{HTTP:Accept-Encoding} gzip<br />
-&nbsp; &nbsp; RewriteCond %{REQUEST_FILENAME}.gz -f<br />
-&nbsp; &nbsp; RewriteRule ^(.*)$ $1.gz [L]<br />
-&nbsp; &amp;lt;/FilesMatch&amp;gt;</div></div>
+  &lt;Files *.html.gz&gt;
+    ForceType text/html
+  &lt;/Files&gt;
 
+  &lt;FilesMatch .*\.(html)&gt;
+    RewriteEngine on
+    RewriteCond %{HTTP:Accept-Encoding} gzip
+    RewriteCond %{REQUEST_FILENAME}.gz -f
+    RewriteRule ^(.*)$ $1.gz [L]
+  &lt;/FilesMatch&gt;</div></div>
+</code>
 </pre>
 
 Le quali come è facile capire, faranno si che quando, ad esempio, la pagina <b>pippo.html</b> viene richiamata da browser, il server manderà il file <b>pippo.html.gz</b> (compresso) al client
