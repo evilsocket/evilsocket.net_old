@@ -5,7 +5,8 @@
       <p> 
         <script type="text/javascript" src="http://widgets.amung.us/small.js"></script>
         <script type="text/javascript">WAU_small('w7u4dxiqkgx9')</script>
-	<a href="http://www.debian.org/" target="_blank"><img src="${config.siteurl}/images/debian-powered.png" alt="Debian Powered" style="border:0px;"/></a>
+	<a href="http://www.gnu.org/"    target="_blank"><img src="${config.siteurl}/images/gnu-powered.png" alt="GNU Is Freedom" style="border:0px;"/></a>
+        <a href="http://www.debian.org/" target="_blank"><img src="${config.siteurl}/images/debian-powered.png" alt="Debian Powered" style="border:0px;"/></a>
 	<a href="http://wiki.nginx.org/" target="_blank"><img src="${config.siteurl}/images/nginx-powered.png" alt="NGINX Powered" style="border:0px;"/></a>
         <a href="http://www.vim.org/"    target="_blank"><img src="${config.siteurl}/images/vim-powered.png" alt="VIM Powered" style="border:0px;"/></a>
         <a href="http://www.python.org/" target="_blank"><img src="${config.siteurl}/images/python-powered.png" alt="Python Powered" style="border:0px;"/></a>
