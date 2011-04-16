@@ -21,6 +21,7 @@ Nel template della index ad esempio, possiamo inserire il codice:
 % for page in pager.getCurrentPages():
   ...  
 % endfor
+</code>
 </pre>
 
 Per loopare le pagine disponibili nella pagina attuale (perdonate il gioco di parole XD), mentre a piè pagina, per generare graficamente il pager:
