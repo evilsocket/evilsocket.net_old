@@ -6,4 +6,5 @@ Title: Alice Router Unlocker
 
 Basandomi sul lavoro di saxdax e drpepperONE che potete trovare su <a href="http://www.milw0rm.com/exploits/6750" target="_blank">milw0rm</a> ho buttato giÃ¹ al volo questo piccolo script che automatizza tutta la procedura descritta nel paper, procedurÃ  che sbloccherÃ  il vostro router di alice mettendo a disposizione taaante interessanti features che mamma telecom voleva tenerci nascoste :P .
 
-<a href="http://www.evilsocket.net/sources/alicefuck.sh.txt" target="_blank">Scarica</a>
+<script type="text/javascript" src="http://snipt.net/embed/baf4eee4853048585c88a361909b6a3d"></script>
+

