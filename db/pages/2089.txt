@@ -1,0 +1,28 @@
+Date: 2011-04-18 21:33:39
+Author: evilsocket
+Categories: Snippets, Tools, C
+Tags: xfce, showdesktop, show, desktop, metam, meta, m
+Title: ShowDestkop in XFCE
+
+<p align="justify">
+Secondo snippet della serata, questa volta un sorgente in C che mi è servito tanto su XFCE ... lo ShowDesktop.
+Sembrerà buffo, ma questa azione (minimizza tutte le finestre insomma) su XFCE è implementata solo come plugin della barra, di conseguenza
+per chi come me usa questo desktop environment non è possibile associarla ad una sequenza di tasti customizzata.
+Premetto che il sorgente non è opera mia, l'ho solo trovato in rete (non so chi sia l'autore) e da quando lo utilizzo (META+m :D) mi trovo
+benissimo :) . 
+
+<break>
+
+Per compilarlo:
+
+<pre>
+<code>
+~ $ gcc showdesktop.c -o showdesktop -lX11
+</code>
+</pre>
+
+Poi copiatevi il binario in /usr/bin o qualsiasi altra directory nel vostro $PATH e impostatevi lo shortcut che preferite ^^
+
+<script type="text/javascript" src="http://snipt.net/embed/10df0ae2446037894915ecb38c496347"></script>
+</p>
+
