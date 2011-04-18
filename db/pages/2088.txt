@@ -1,0 +1,24 @@
+Date: 2011-04-18 21:11:13
+Author: evilsocket
+Categories: Snippets, Tools, Python
+Tags: sezione, snippet, pyerce, escape, escaping, quote, variables, php, python, web, application, webapp, security, script
+Title: Inaugurazione della sezione "Snippets" con Pyerce.
+
+<p align="justify">
+E' da un po di tempo che pensavo di aprire una nuova sezione sul mio blog, dedicata a tutti quei pezzettini di codice, snippet o comunque progettini "minori"
+che però spesso e volentieri (se non sempre XD) mi tornano più utili dei "progettoni".
+Questa sezione conterrà una raccolta dei miei programmi "di tutti i giorni", dei piccoli script che mi sono fatto per semplificarmi la vita nelle più svariate
+operazioni ... magari sono utili anche a qualcun'altro! :)
+
+Iniziamo con <b>Pyerce</b>!
+<break>
+
+Pyerce è un piccolo script in python che accetta come argomento sulla riga di comando una directory contenente una web app in php, e indica dove vengono richiamate
+le variabili negli oggetti $_GET, $_POST, ecc ecc indicandone nome e contenitore.
+Lo scopo è semplice, spesso mi è capitato che clienti/amici mi chiedessero di mettere in sicurezza il loro sito PHP, così invece di cercarmi tutte le variabili
+da ripulire e controllare a mano, ho sempre usato questo script, quindi mo ve lo beccate pure voi! XD
+
+<script type="text/javascript" src="http://snipt.net/embed/5803bb04c5a884f2b5938533cd4c36e0"></script>
+
+</p>
+
