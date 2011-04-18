@@ -84,7 +84,7 @@ Array
   [uid] =&gt; 52417
   [gid] =&gt; 52417
   [gecos] =&gt; pierino.it@pierino.it
-  &lt;strong&gt; [dir] =&gt; /home/www/pierino.it &lt;/strong&gt;
+  <strong> [dir] =&gt; /home/www/pierino.it </strong>
   [shell] =&gt; /bin/true
  )
 
@@ -95,7 +95,7 @@ Array
   [uid] =&gt; 61240
   [gid] =&gt; 61240
   [gecos] =&gt; foobar.com@foobar.com
-  &lt;strong&gt; [dir] =&gt; /home/www/foobar.com &lt;/strong&gt;
+  <strong> [dir] =&gt; /home/www/foobar.com</strong>
   [shell] =&gt; /bin/true
  )
 
