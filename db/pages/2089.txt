@@ -2,7 +2,7 @@ Date: 2011-04-18 21:33:39
 Author: evilsocket
 Categories: Snippets, Tools, C
 Tags: xfce, showdesktop, show, desktop, metam, meta, m
-Title: ShowDestkop in XFCE
+Title: ShowDesktop in XFCE
 
 <p align="justify">
 Secondo snippet della serata, questa volta un sorgente in C che mi è servito tanto su XFCE ... lo ShowDesktop.
