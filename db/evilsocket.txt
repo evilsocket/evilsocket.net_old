@@ -17,6 +17,9 @@ Di conseguenza, potrebbero passare mesi senza nessun'articolo per poi vederne 4 
 
 Detto questo, potete trovare i miei lavori più importanti sulla mia pagina di <a href="http://github.com/evilsocket" target="_blank">github</a>, come ad esempio <a href="http://www.hybris-lang.org/" target="_blank">Hybris</a>, <a href="http://www.evilsocket.net/tags/wp-sentinel.html">WP-Sentinel</a> e <a href="http://www.evilsocket.net/?s=swg">SWG</a>, e tutto il resto, paper, articoli e sorgenti "minori" su questo blog.
 
+Potete inoltre trovarmi su <a href="http://it.linkedin.com/in/simonemargaritelli" target="_blank">LinkedIn</a>, <a href="http://twitter.com/evilsocket" target="_blank">Twitter</a>, <a href="http://identi.ca/evilsocket" target="_blank">Identi.ca</a> 
+ed in diversi altri posti se cercate bene :D 
+
 Vi auguro una buona lettura ^^
 
 <pre>
