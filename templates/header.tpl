@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-	<head profile="http://gmpg.org/xfn/11">
-		<meta http-equiv="Content-type" content="text/html; charset=${config.charset}" />
+  <head profile="http://gmpg.org/xfn/11">
+    <meta http-equiv="Content-type" content="text/html; charset=${config.charset}" />
     <meta http-equiv="Content-language" content="${config.language}" />
     <meta name="google-site-verification" content="6qdVG0z0lac2ceITCoTCNm15CPp3K9Sq41_5IK4OLKM" />
   
-		<title>
+    <title>
     %if page != UNDEFINED and page.title != 'index':
       ${config.sitename | h} | ${page.title | h}
     %elif category != UNDEFINED:
@@ -24,14 +24,30 @@
     %endif
     </title>
 
-    <meta name="keywords" content="${ ', '.join( config.keywords ) }" />
-    <meta name="description" content="evilsocket.net, hacking, extreme programming and vodka!" />
+    %if page != UNDEFINED and page.title != 'index':
+      <meta name="keywords" content="${ ', '.join( [ t.title for t in page.tags ] ) }" />
+      <%
+        import re
+
+        description = re.sub( r'<[^>]*?>', ' ', page.content ).strip()[:150]
+      %>
+      <meta name="description" content="${description | h}" />  
+    %else:
+      <meta name="keywords" content="${ ', '.join( config.keywords ) }" />
+      <meta name="description" content="evilsocket.net, hacking, extreme programming and vodka!" />
+    %endif
+    
     <meta name="generator" content="SWG ${config.version}" />
 
     <link rel="stylesheet" href="${config.siteurl}/css/style.css" type="text/css" media="screen" /> 
     <link rel="alternate" type="application/rss+xml"  href="${config.siteurl}/feed.xml" title="${config.sitename | h} RSS Feeds" />
     <link rel="shortcut icon" type="image/x-icon" href="${config.siteurl}/images/favicon.ico" />
- 
+    <link rel='index' title="${config.sitename}" href="${config.siteurl}/" />
+    
+    %if page != UNDEFINED and page.title != 'index':
+      <link rel="canonical" href="${config.siteurl}${page.url}" />
+    %endif
+
     <script type="text/javascript">
     // <![CDATA[
       function translateTo( lang ){
@@ -47,11 +63,10 @@
 
     </head>
 
-	<body id="home" class="log">
+    <body id="home" class="log">
     <a href="http://github.com/evilsocket" target="_blank">
       <img alt="Fork me on GitHub" src="${config.siteurl}/images/fork-me-on-github.png" style="position: fixed; top: 0; right: 0; border: 0" />
     </a>
-
-		<div id="pagewrap">
+    <div id="pagewrap">
       <%include file="sidebar.tpl"/>
       <div id="content">
