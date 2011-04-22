@@ -1,0 +1,11 @@
+Date: 2011-04-22 19:07:02
+Author: evilsocket
+Categories: Snippet, Python
+Tags: html, python, remove, tags, strip_tags, sanitize, ripulire, rimuovere
+Title: Una riga per rimuovere in Python tag html da una stringa.
+
+<p align="justify">
+Come da titolo, dato che non esiste una funzione nativa per questo, una riga per rimuovere in Python tag html da una stringa.
+
+<script type="text/javascript" src="http://snipt.net/embed/99456d0075c23dd950a8ea2385ab1235"></script>
+</p>
