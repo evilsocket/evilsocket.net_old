@@ -1,0 +1,111 @@
+Date: 2011-04-23 00:38:04
+Author: evilsocket
+Categories: Misc, Tools, Snippet
+Tags: swg, import, importer, static, website, generator, static website generator, wordpress, wp.xml, xml
+Title: Importare un blog da WordPress a SWG
+
+<p align="justify">
+Una delle prime (ovvie) cose che mi sono chiesto <a href="/addio-wordpress-benvenuto-swg.html">quando</a> ho trasformato questo blog da WordPress based a 
+<a href="/?s=swg">SWG</a> based, è stata <b>e ora come cazzobbubbolo li importo tutti quanti gli articoli nel nuovo sistema!?</b> (notare l'espressione
+"<b>cazzobbubbolo</b>", tipica delle zone meridionali della Corea, la quale indica una forte indignazione accompagnata da nausea e diarrea a fischio).
+
+Ovviamente non era concepibile ricopiare tutto quanto a mano, anche perchè diciamocelo, la struttura del database di wordpress non è proprio il massimo della
+leggibilità, così mi sono fatto un piccolo script che prendeva in ingresso il backup xml fatto dall'apposito menu di amministrazione di WP e ne convertiva
+i contenuti nel formato che vuole SWG, addirittura (della serie madonna-mia-quanto-sono-figo-me-lo-dico-pure-da-solo) verificando eventuali riferimenti
+ad immagini nel sito, scaricando tali immagini ed aggiornando l'url dell'eventuale articolo con quello corretto.
+
+Oggi ho dato una bella risistemata a questo programmino e l'ho inserito direttamente nel <a href="https://github.com/evilsocket/swg">repository di SWG</a>, 
+vediamo un po come funziona ^^
+<break>
+
+Il tool <b>wordpress.py</b> che troverete nella cartella <b>importers</b>, può essere inizialmente richiamato :
+
+<pre>
+<code>
+~ $ python swg/importers/wordpress.py --help
+</code>
+</pre>
+
+Comando che visualizzerà il seguente menu d'aiuto :
+
+<pre>
+<code>
+- SWG Wordpress Backup Importer -
+
+Usage: wordpress.py -i wordpress-backup.xml -u 'http://www.your-site-url.com' &lt;options&gt;
+
+Options:
+  -h, --help            show this help message and exit
+  -i WPBACKUP, --input=WPBACKUP
+                        The Wordpress XML backup file.
+  -u SITEURL, --url=SITEURL
+                        URL of the destination website.
+  -o OUTDIR, --output=OUTDIR
+                        Output directory, default is the current working
+                        directory.
+  -e FILEEXT, --extension=FILEEXT
+                        Output file extension, default is txt.
+  -I IMGDIR, --images=IMGDIR
+                        If specified, it's the path where the importer will
+                        try to download images referenced by articles.
+</code>
+</pre>
+
+In pratica, se volessimo importare il file di backup <b>wp.xml</b> del sito <b>http://www.miosito.com</b> nella cartella <b>miosito</b> e scaricare le immagini nella cartella <b>miosito/images</b> (entrambe
+cartelle che verranno create dal tool stesso), useremo la linea di comando:
+
+<pre>
+<code>
+~ $ python swg/importers/wordpress.py -i wp.xml -u 'http://www.miosito.com' -o miosito -I 'miosito/images'
+</code>
+</pre>
+
+Che ad esempio, nel caso del mio vecchio blog su WordPress, produrrebbe l'output:
+
+<pre>
+<code>
+- SWG Wordpress Backup Importer -
+
+@ Loading wp.xml ...
+@ Processing 'Synapse' ...
+@ Saved to miosito/db/pages/0.txt .
+@ Processing 'SmartSocket' ...
+@ Saved to miosito/db/pages/1.txt .
+@ Processing 'Win32 Service Class' ...
+@ Saved to miosito/db/pages/2.txt .
+@ Processing 'Neural Network' ...
+@ Saved to miosito/db/pages/3.txt .
+@ Processing 'Network Guard' ...
+@ Saved to miosito/db/pages/4.txt .
+...
+...
+...
+@ Processing 'Estrazione delle features dalle impronte digitali' ...
+	- downloading 'http://www.evilsocket.net/wp-content/uploads/2009/05/finger.png' to miosito/images/finger.png ...
+	- downloading 'http://www.evilsocket.net/wp-content/uploads/2009/05/soften.png' to miosito/images/soften.png ...
+	- downloading 'http://www.evilsocket.net/wp-content/uploads/2009/05/orientation.png' to miosito/images/orientation.png ...
+	- downloading 'http://www.evilsocket.net/wp-content/uploads/2009/05/entropy.png' to miosito/images/entropy.png ...
+	- downloading 'http://www.evilsocket.net/wp-content/uploads/2009/05/gabor.png' to miosito/images/gabor.png ...
+	- downloading 'http://www.evilsocket.net/wp-content/uploads/2009/05/binarize.png' to miosito/images/binarize.png ...
+	- downloading 'http://www.evilsocket.net/wp-content/uploads/2009/05/thin.png' to miosito/images/thin.png ...
+	- downloading 'http://www.evilsocket.net/wp-content/uploads/2009/05/featured.png' to miosito/images/featured.png ...
+@ Saved to miosito/db/pages/48.txt .
+...
+...
+...
+@ Creating author file miosito/db/evilsocket.txt ...
+@ Creating categories file miosito/db/categories.txt ...
+
+@ Done :)
+</code>
+</pre>
+
+Come vedete elabora tutti gli articoli, scarica le immagini e crea tutto il necessario come ci si aspetterebbe.
+Una volta importato il backup, non resta che creare nella cartella 'miosito' il file di configurazione per SWG sequendo gli standard
+nel <a href="https://github.com/evilsocket/SWG/blob/master/README.md" target="_blank">README</a>, creare i propri template, sistemare la 
+gerarchia delle categorie nel file <b>miosito/db/categories.txt</b> e aggiungere i dettagli che vogliamo su di noi nel file 
+<b>miosito/db/vostro-nickname.txt</b>.
+
+Vi ricordo che se siete disorientati, potete seguire la struttura di questo sito, presente anch'essa su github a 
+<a href="https://github.com/evilsocket/evilsocket.net" target="_blank">questo indirizzo</a>.
+</p>
