@@ -9,7 +9,7 @@
           class="page_item page-item"
         %endif    
         >  
-          <h2><a href='${config.siteurl}index.${config.page_ext}'>Home</a></h2>
+          <h2><a href='${config.siteurl}/index.${config.page_ext}'>Home</a></h2>
         </li>
         %for cat in categories:
           %if category != UNDEFINED and category.title == cat.title:
