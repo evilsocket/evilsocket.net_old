@@ -1,0 +1,136 @@
+Date: 2011-04-25 21:53:53
+Author: evilsocket
+Categories: Misc, Tools
+Tags: swg, 2.1.5, release, serve, server, http, basic, structure, static, static website generator, website, site, http server, httpd
+Title: SWG 2.1.5, tante novità ed un approccio più user friendly.
+
+<p align="justify">
+In seguito alle problematiche riscontrate da LHS, che ringrazio per aver portato alla luce la difficoltà di utilizzo per un utente meno esperto,
+ho rilasciato prima la versione 1.2.4 e poi la 1.2.5 di <a href="/?s=swg">SWG</a>, versione che introduce molte novità, la maggiorparte
+orientate per renderne l'utilizzo più semplice per chiunque voglia creare un sito da zero o importarne uno da un blog WordPress .
+
+<break>
+
+La prima novità è che ora ogni esecuzione di swg, dovrà essere lanciata <b>da dentro</b> la cartella che contiene il progetto del sito, poichè il file
+di configurazione che conterrà tale cartella sarà chiamato non più con un nome a scelta dell'utente, ma strettamente <b>swg.cfg</b>.
+Facendo questo sono riuscito a semplificare molto il file di configurazione evitando possibili errori nell'impostare i percorsi.
+
+La seconda novità, vediamola tramite il comando <b>--help</b> :
+
+<pre>
+<code>
+- SWG 1.2.5 by Simone 'evilsocket' Margaritelli <evilsocket@gmail.com> -
+
+Usage: swg <action>
+
+Options:
+  -h, --help      show this help message and exit
+  -C, --create    Create a new website basic structure, require a folder name
+                  additional parameter.
+  -N, --new       Create a new item and open an editor to edit it.
+  -G, --generate  Start website generation.
+  -S, --serve     Generate website and test it on http://localhost:8080/
+</code>
+</pre>
+
+In pratica, un utente per creare un sito non dovrà fare altro che digitare:
+
+<pre>
+<code>
+python swg.py --create nome-della-cartella
+</code>
+</pre>
+
+Per inizializzare un nuovo sito dentro la cartella <b>nome-della-cartella</b>, all'interno della quale verrà creata una struttura di base con una serie
+di template di default che l'utente potrà/dovrà successivamente personalizzare.
+
+Una volta fatto questo, ho introdotto la possibilità di testare in locale un sito, quindi seguendo il nostro esempio:
+
+<pre>
+<code>
+cd nome-della-cartella
+python ../swg.py --serve
+</code>
+</pre>
+
+Che stamperà l'output:
+
+<pre>
+<code>
+- SWG 1.2.5 by Simone 'evilsocket' Margaritelli &lt;evilsocket@gmail.com&gt; -
+
+@ Parsing pages ...
+@ Sorting pages by date ...
+@ Creating 'output-website' path ...
+@ Importing './robots.txt' to 'output-website/robots.txt' ...
+@ Importing './css' to 'output-website/css' ...
+@ Importing './images' to 'output-website/images' ...
+@ Creating index file ...
+@ Creating 404 file ...
+@ Creating feed.xml file ...
+@ Rendering 1 pages ...
+@ Creating sitemap.xml file ...
+@ DONE
+
+@ MODIFIED : 'output-website/404.html'
+@ MODIFIED : 'output-website/tags/post.html'
+@ MODIFIED : 'output-website/tags/structure.html'
+@ MODIFIED : 'output-website/categories/personal.html'
+@ MODIFIED : 'output-website/members/your-name-here.html'
+@ MODIFIED : 'output-website/tags/website.html'
+@ MODIFIED : 'output-website/tags/basic.html'
+@ MODIFIED : 'output-website/index.html'
+@ MODIFIED : 'output-website/tags/swg.html'
+@ MODIFIED : 'output-website/categories/experience.html'
+@ MODIFIED : 'output-website/tags/test.html'
+@ MODIFIED : 'output-website/hello-world-instructions.html'
+@ MODIFIED : 'output-website/feed.xml'
+
+@ Serving the site on http://localhost:8080/ press ctrl+c to exit ...
+</code>
+</pre>
+
+Ora potete aprire il vostro browser sull'indirizzo <b>http://localhost:8080/</b> per navigare un "anteprima" del sito.
+Vi suggerisco caldamente di leggere l'articolo <b>Hello World / Instructions</b> poichè contiene delle indicazioni sulle successive configurazioni e
+personalizzazioni del sito in questione.
+
+Una volta che siete soddisfatti del risultato, ri generate il sito:
+
+<pre>
+<code>
+cd nome-della-cartella
+python ../swg.py --generate
+</code>
+</pre>
+
+E uploadate il contenuto della cartella di output sul vostro spazio di hosting.
+
+Quando vorrete creare un nuovo articolo, potrete utilizzare:
+
+<pre>
+<code>
+cd nome-della-cartella
+python ../swg.py --new
+</code>
+</pre>
+
+Che aprirà l'editor impostato nel file di configurazione (di default è vim :D) con il nuovo articolo formattato e pronto per essere riempito.
+
+Ricollegandoci al precedente articolo sull'<a href="/importare-un-blog-da-wordpress-a-swg.html">import da WordPress</a>, la procedura completa per creare
+un nuovo sito, importare i dati da wp e provarlo in locale è:  
+
+<pre>
+<code>
+cd cartella-swg
+python swg.py --create miosito
+python importers/wordpress.py -i wp.xml -u 'http://www.miosito.com' -o miosito -I 'miosito/images'
+cd miosito
+python ../swg.py --serve
+</code>
+</pre>
+
+Enjoy, e come sempre se avete problemi fatemi sapere ;)
+
+PS: Consiglio a tutti di crearsi un link simbolico /usr/bin/swg in modo tale da risparmiare tempo e fatica per eseguire swg.py ogni volta :D
+</p>
+
