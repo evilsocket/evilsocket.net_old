@@ -39,10 +39,10 @@
     
     <meta name="generator" content="SWG ${config.version}" />
 
-    <link rel="stylesheet" href="${config.siteurl}/css/style.css" type="text/css" media="screen" /> 
-    <link rel="alternate" type="application/rss+xml"  href="${config.siteurl}/feed.xml" title="${config.sitename | h} RSS Feeds" />
-    <link rel="shortcut icon" type="image/x-icon" href="${config.siteurl}/images/favicon.ico" />
-    <link rel='index' title="${config.sitename}" href="${config.siteurl}/" />
+    <link rel="stylesheet" href="${config.siteurl}css/style.css" type="text/css" media="screen" /> 
+    <link rel="alternate" type="application/rss+xml"  href="${config.siteurl}feed.xml" title="${config.sitename | h} RSS Feeds" />
+    <link rel="shortcut icon" type="image/x-icon" href="${config.siteurl}images/favicon.ico" />
+    <link rel='index' title="${config.sitename}" href="${config.siteurl}" />
     
     %if page != UNDEFINED and page.title != 'index':
       <link rel="canonical" href="${config.siteurl}${page.url}" />
@@ -65,7 +65,7 @@
 
     <body id="home" class="log">
     <a href="http://github.com/evilsocket" target="_blank">
-      <img alt="Fork me on GitHub" src="${config.siteurl}/images/fork-me-on-github.png" style="position: fixed; top: 0; right: 0; border: 0" />
+      <img alt="Fork me on GitHub" src="${config.siteurl}images/fork-me-on-github.png" style="position: fixed; top: 0; right: 0; border: 0" />
     </a>
     <div id="pagewrap">
       <%include file="sidebar.tpl"/>

@@ -9,7 +9,7 @@
           class="page_item page-item"
         %endif    
         >  
-          <h2><a href='${config.siteurl}/index.${config.page_ext}'>Home</a></h2>
+          <h2><a href='${config.siteurl}index.${config.page_ext}'>Home</a></h2>
         </li>
         %for cat in categories:
           %if category != UNDEFINED and category.title == cat.title:
@@ -26,14 +26,14 @@
           class="page_item page-item"
         %endif    
         >  
-          <h2><a href='${config.siteurl}/members/evilsocket.${config.page_ext}'>About Me</a></h2>
+          <h2><a href='${config.siteurl}members/evilsocket.${config.page_ext}'>About Me</a></h2>
         </li>
       </ul>
   </div> <!-- navwidth -->
 
   <div id="sidebar">
     <div id="searchdiv">
-      <form method="get" id="searchform" action="${config.siteurl}/" >
+      <form method="get" id="searchform" action="${config.siteurl}" >
         <input type="text" value="Search" name="s" id="searchinput" onblur="if (this.value == '') {this.value = '';}"  onfocus="if (this.value == 'Search') {this.value = '';}"/>
       </form>
     </div> <!-- searchdiv -->
@@ -42,8 +42,8 @@
     <h2>GPG Public Key</h2>  
     <ul>
 			  <li> 
-        <a href="${config.siteurl}/public-key.txt" target="_blank">
-          <img src="${config.siteurl}/images/lock.png" style="border:0px;" alt="My GPG Public Key" />
+        <a href="${config.siteurl}public-key.txt" target="_blank">
+          <img src="${config.siteurl}images/lock.png" style="border:0px;" alt="My GPG Public Key" />
         </a>
         </li>
     </ul>
@@ -51,15 +51,15 @@
     <h2>Translation</h2>
       <ul>
         <li> 
-            <a target="_blank" rel="nofollow" onclick="return translateTo('en');" title="Translate to English"><img  style="cursor: pointer;" alt="Translate to English" src="${config.siteurl}/images/english.png" title="Translate to English" height="24" width="24" border="0" /></a>
-            <a target="_blank" rel="nofollow" onclick="return translateTo('de');" title="Translate to German"><img  style="cursor: pointer;" alt="Translate to German" src="${config.siteurl}/images/german.png" title="Translate to German" height="24" width="24" border="0" /></a>
-            <a target="_blank" rel="nofollow" onclick="return translateTo('es');" title="Translate to Spanish "><img  style="cursor: pointer;" alt="Translate to Spanish " src="${config.siteurl}/images/spanish.png" title="Translate to Spanish " height="24" width="24" border="0" /></a>
-            <a target="_blank" rel="nofollow" onclick="return translateTo('fr');" title="Translate to French "><img  style="cursor: pointer;" alt="Translate to French " src="${config.siteurl}/images/french.png" title="Translate to French " height="24" width="24" border="0" /></a>
+            <a target="_blank" rel="nofollow" onclick="return translateTo('en');" title="Translate to English"><img  style="cursor: pointer;" alt="Translate to English" src="${config.siteurl}images/english.png" title="Translate to English" height="24" width="24" border="0" /></a>
+            <a target="_blank" rel="nofollow" onclick="return translateTo('de');" title="Translate to German"><img  style="cursor: pointer;" alt="Translate to German" src="${config.siteurl}images/german.png" title="Translate to German" height="24" width="24" border="0" /></a>
+            <a target="_blank" rel="nofollow" onclick="return translateTo('es');" title="Translate to Spanish "><img  style="cursor: pointer;" alt="Translate to Spanish " src="${config.siteurl}images/spanish.png" title="Translate to Spanish " height="24" width="24" border="0" /></a>
+            <a target="_blank" rel="nofollow" onclick="return translateTo('fr');" title="Translate to French "><img  style="cursor: pointer;" alt="Translate to French " src="${config.siteurl}images/french.png" title="Translate to French " height="24" width="24" border="0" /></a>
             <br/>
-            <a target="_blank" rel="nofollow" onclick="return translateTo('ja');" title="Translate to Japanese BETA"><img  style="cursor: pointer;" alt="Translate to Japanese BETA" src="${config.siteurl}/images/japanese.png" title="Translate to Japanese BETA" height="24" width="24" border="0" /></a>
-            <a target="_blank" rel="nofollow" onclick="return translateTo('ko');" title="Translate to Korean BETA"><img  style="cursor: pointer;" alt="Translate to Korean BETA" src="${config.siteurl}/images/korean.png" title="Translate to Korean BETA" height="24" width="24" border="0" /></a>
-            <a target="_blank" rel="nofollow" onclick="return translateTo('ru');" title="Translate to Russian BETA "><img  style="cursor: pointer;" alt="Translate to Russian BETA " src="${config.siteurl}/images/russian.png" title="Translate to Russian BETA " height="24" width="24" border="0" /></a>
-            <a target="_blank" rel="nofollow" onclick="return translateTo('zh-CN');" title="Google-Translate-Chinese (Simplified) BETA"><img  style="cursor: pointer;" alt="Google-Translate-Chinese (Simplified) BETA" src="${config.siteurl}/images/chinese.png" title="Google-Translate-Chinese (Simplified) BETA" height="24" 
+            <a target="_blank" rel="nofollow" onclick="return translateTo('ja');" title="Translate to Japanese BETA"><img  style="cursor: pointer;" alt="Translate to Japanese BETA" src="${config.siteurl}images/japanese.png" title="Translate to Japanese BETA" height="24" width="24" border="0" /></a>
+            <a target="_blank" rel="nofollow" onclick="return translateTo('ko');" title="Translate to Korean BETA"><img  style="cursor: pointer;" alt="Translate to Korean BETA" src="${config.siteurl}images/korean.png" title="Translate to Korean BETA" height="24" width="24" border="0" /></a>
+            <a target="_blank" rel="nofollow" onclick="return translateTo('ru');" title="Translate to Russian BETA "><img  style="cursor: pointer;" alt="Translate to Russian BETA " src="${config.siteurl}images/russian.png" title="Translate to Russian BETA " height="24" width="24" border="0" /></a>
+            <a target="_blank" rel="nofollow" onclick="return translateTo('zh-CN');" title="Google-Translate-Chinese (Simplified) BETA"><img  style="cursor: pointer;" alt="Google-Translate-Chinese (Simplified) BETA" src="${config.siteurl}images/chinese.png" title="Google-Translate-Chinese (Simplified) BETA" height="24" 
             width="24" border="0" /></a>
          </li>
     </ul>
@@ -100,12 +100,12 @@
 
     <h2>Social Links</h2>
     <ul>
-      <li><a href="http://github.com/evilsocket" rel="me">Github <img src="${config.siteurl}/images/github.png" alt="Github" title="Github" /></a></li>
-      <li><a href="http://identi.ca/evilsocket" rel="me">Identi.ca <img src="${config.siteurl}/images/identica.png" alt="Identi.ca" title="Identi.ca" /></a></li>
-      <li><a href="http://twitter.com/evilsocket" rel="me">Twitter <img src="${config.siteurl}/images/twitter.png" alt="Twitter" title="Twitter" /></a></li>
-      <li><a href="http://www.last.fm/user/evilsocket" rel="me">Last.fm <img src="${config.siteurl}/images/lastfm.png" alt="Last.fm" title="Last.fm" /></a></li>
-      <li><a href="http://it.linkedin.com/in/simonemargaritelli" rel="me">LinkedIn <img src="${config.siteurl}/images/linkedin.png" alt="LinkedIn" title="LinkedIn" /></a></li>
-      <li><a href="http://www.google.com/reader/shared/07374427796734922326" rel="me">Google Reader <img src="${config.siteurl}/images/googlereader.png" alt="Google Reader" title="Google Reader" /></a></li>
+      <li><a href="http://github.com/evilsocket" rel="me">Github <img src="${config.siteurl}images/github.png" alt="Github" title="Github" /></a></li>
+      <li><a href="http://identi.ca/evilsocket" rel="me">Identi.ca <img src="${config.siteurl}images/identica.png" alt="Identi.ca" title="Identi.ca" /></a></li>
+      <li><a href="http://twitter.com/evilsocket" rel="me">Twitter <img src="${config.siteurl}images/twitter.png" alt="Twitter" title="Twitter" /></a></li>
+      <li><a href="http://www.last.fm/user/evilsocket" rel="me">Last.fm <img src="${config.siteurl}images/lastfm.png" alt="Last.fm" title="Last.fm" /></a></li>
+      <li><a href="http://it.linkedin.com/in/simonemargaritelli" rel="me">LinkedIn <img src="${config.siteurl}images/linkedin.png" alt="LinkedIn" title="LinkedIn" /></a></li>
+      <li><a href="http://www.google.com/reader/shared/07374427796734922326" rel="me">Google Reader <img src="${config.siteurl}images/googlereader.png" alt="Google Reader" title="Google Reader" /></a></li>
     </ul>
 
     <h2>My Tweets</h2>
