@@ -39,7 +39,7 @@
     
     <meta name="generator" content="SWG ${config.version}" />
 
-    <link rel="stylesheet" href="${config.siteurl}css/style.css" type="text/css" media="screen" /> 
+    <link rel="stylesheet" href="${config.siteurl}/css/style.css" type="text/css" media="screen" /> 
     <link rel="alternate" type="application/rss+xml"  href="${config.siteurl}feed.xml" title="${config.sitename | h} RSS Feeds" />
     <link rel="shortcut icon" type="image/x-icon" href="${config.siteurl}images/favicon.ico" />
     <link rel='index' title="${config.sitename}" href="${config.siteurl}" />
