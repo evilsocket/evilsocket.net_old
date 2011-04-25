@@ -26,7 +26,7 @@
           class="page_item page-item"
         %endif    
         >  
-          <h2><a href='${config.siteurl}members/evilsocket.${config.page_ext}'>About Me</a></h2>
+          <h2><a href='${config.siteurl}/members/evilsocket.${config.page_ext}'>About Me</a></h2>
         </li>
       </ul>
   </div> <!-- navwidth -->
@@ -100,12 +100,12 @@
 
     <h2>Social Links</h2>
     <ul>
-      <li><a href="http://github.com/evilsocket" rel="me">Github <img src="${config.siteurl}images/github.png" alt="Github" title="Github" /></a></li>
-      <li><a href="http://identi.ca/evilsocket" rel="me">Identi.ca <img src="${config.siteurl}images/identica.png" alt="Identi.ca" title="Identi.ca" /></a></li>
-      <li><a href="http://twitter.com/evilsocket" rel="me">Twitter <img src="${config.siteurl}images/twitter.png" alt="Twitter" title="Twitter" /></a></li>
-      <li><a href="http://www.last.fm/user/evilsocket" rel="me">Last.fm <img src="${config.siteurl}images/lastfm.png" alt="Last.fm" title="Last.fm" /></a></li>
-      <li><a href="http://it.linkedin.com/in/simonemargaritelli" rel="me">LinkedIn <img src="${config.siteurl}images/linkedin.png" alt="LinkedIn" title="LinkedIn" /></a></li>
-      <li><a href="http://www.google.com/reader/shared/07374427796734922326" rel="me">Google Reader <img src="${config.siteurl}images/googlereader.png" alt="Google Reader" title="Google Reader" /></a></li>
+      <li><a href="http://github.com/evilsocket" rel="me">Github <img src="${config.siteurl}/images/github.png" alt="Github" title="Github" /></a></li>
+      <li><a href="http://identi.ca/evilsocket" rel="me">Identi.ca <img src="${config.siteurl}/images/identica.png" alt="Identi.ca" title="Identi.ca" /></a></li>
+      <li><a href="http://twitter.com/evilsocket" rel="me">Twitter <img src="${config.siteurl}/images/twitter.png" alt="Twitter" title="Twitter" /></a></li>
+      <li><a href="http://www.last.fm/user/evilsocket" rel="me">Last.fm <img src="${config.siteurl}/images/lastfm.png" alt="Last.fm" title="Last.fm" /></a></li>
+      <li><a href="http://it.linkedin.com/in/simonemargaritelli" rel="me">LinkedIn <img src="${config.siteurl}/images/linkedin.png" alt="LinkedIn" title="LinkedIn" /></a></li>
+      <li><a href="http://www.google.com/reader/shared/07374427796734922326" rel="me">Google Reader <img src="${config.siteurl}/images/googlereader.png" alt="Google Reader" title="Google Reader" /></a></li>
     </ul>
 
     <h2>My Tweets</h2>
