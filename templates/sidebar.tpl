@@ -101,6 +101,7 @@
     <h2>Social Links</h2>
     <ul>
       <li><a href="http://github.com/evilsocket" rel="me">Github <img src="${config.siteurl}/images/github.png" alt="Github" title="Github" /></a></li>
+      <li><a href="http://stackoverflow.com/users/300881/simone-margaritellii" rel="me">StackOverflow <img src="${config.siteurl}/images/stackoverflow.png" alt="StackOverflow" title="StackOverflow" /></a></li>
       <li><a href="http://identi.ca/evilsocket" rel="me">Identi.ca <img src="${config.siteurl}/images/identica.png" alt="Identi.ca" title="Identi.ca" /></a></li>
       <li><a href="http://twitter.com/evilsocket" rel="me">Twitter <img src="${config.siteurl}/images/twitter.png" alt="Twitter" title="Twitter" /></a></li>
       <li><a href="http://www.last.fm/user/evilsocket" rel="me">Last.fm <img src="${config.siteurl}/images/lastfm.png" alt="Last.fm" title="Last.fm" /></a></li>
