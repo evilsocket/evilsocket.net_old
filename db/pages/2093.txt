@@ -1,0 +1,36 @@
+Date: 2011-04-26 03:19:31
+Author: evilsocket
+Categories: Misc, Tools
+Tags: swg, pip, pypi, package, pacchetto, installer, installazione
+Title: SWG ora su PyPi, semplificata la procedura di installazione.
+
+<p align="justify">
+Ho appena rilasciato gli update necessari per inserire SWG all'interno dell'indice di <a href="http://pypi.python.org/pypi/swg" target="_blank">python.org</a>, procedura
+che oltre ad offrire più risalto al progetto, aumenta la facilità di installazione del software.
+
+Per installare SWG, vi servirà PIP (non è una parolaccia :D), il gestore dei pacchetti di PyPi.
+
+<break>
+
+Nel caso non abbiate pip, su un ambiente debian ad esempio potete eseguire:
+
+<pre>
+<code>
+sudo apt-get install python-setuptools python-dev build-essential 
+sudo easy_install pip 
+sudo pip install --upgrade virtualenv 
+</code>
+</pre>
+
+Ed infine, una volta installato pip, procediamo alla ricerca ed all'installazione di SWG dall'indice:
+
+<pre>
+<code>
+pip search swg
+<i>swg                       - SWG - A static website generator</i>
+sudo pip install swg
+</code>
+</pre>
+
+Enjoy ^^
+</p>
