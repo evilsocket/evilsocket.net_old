@@ -1,8 +1,8 @@
 Date: 2011-04-25 21:53:53
 Author: evilsocket
 Categories: Misc, Tools
-Tags: swg, 2.1.5, release, serve, server, http, basic, structure, static, static website generator, website, site, http server, httpd
-Title: SWG 2.1.5, tante novità ed un approccio più user friendly.
+Tags: swg, 1.2.5, release, serve, server, http, basic, structure, static, static website generator, website, site, http server, httpd
+Title: SWG 1.2.5, tante novità ed un approccio più user friendly.
 
 <p align="justify">
 In seguito alle problematiche riscontrate da LHS, che ringrazio per aver portato alla luce la difficoltà di utilizzo per un utente meno esperto,
