@@ -1,6 +1,6 @@
 Date: 2011-05-03 02:19:11
 Author: evilsocket
-Categories: Hacking, Misc, Toold
+Categories: Hacking, Misc, Tools
 Tags: backbox, linux, hacking, distro, distribution, 1.05, release, new
 Title: Download BackBox Linux 1.05
 
@@ -14,6 +14,8 @@ BackBox Linux 1.05 features the following upstream components:
   <li>Linux kernel 2.6.32</li> 
   <li>Xfce 4.6.1</li>
 </ul>
+
+<break>
 
 <strong>What&#8217;s new</strong>
 
