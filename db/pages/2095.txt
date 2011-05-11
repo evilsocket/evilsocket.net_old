@@ -1,0 +1,63 @@
+Date: 2011-05-11 21:50:05
+Author: evilsocket
+Categories: Programmazione, Snippets, Sorgenti, Python
+Tags: netcmd, netcommander, arp, cache, poison, poisoning, mitm, spoof, spoofing, python, scapy
+Title: NetCommander - An easy to use arp spoofing tool.
+
+<p align="justify">
+Di arp spoofing, man in the middle, ecc <a href="/?s=arp" target="_blank">ho già parlato</a> in più di un occasione ed in effetti
+non nascondo che è una delle "tecniche" che uso più spesso, non solo per quello che state pensando voi furboncelli! :D
+
+Sia in passato che attualmente per lavoro, ho avuto la necessità di intercettare il traffico di rete di una o più applicazioni per
+smartphone per reversare il protocollo di comunicazione con il server principale o semplicemente per manipolare i dati in entrata
+ed uscita.
+Finchè si tratta del traffico che il browser mobile eroga e riceve niente di complicato, imposto come proxy http il mio computer sul
+quale ho un apposito demone proxy ed inizio a sniffare ... la cosa si fa più complessa se l'applicazione non è il browser e soprattutto
+nel caso in cui il sistema operativo usato sullo smartphone non consente di impostare un proxy globale per qualsiasi connessione.
+
+Per questo motivo ho sviluppato <b>NetCommander</b> :)
+<break>
+Ogni volta, aprire ettercap, selezionare l'interfaccia, la netmask (che poi non ho mai capito, che cazzo me la fai selezionare a fare la 
+maschera di rete se ho già selezionato l'interfaccia, non sei capace a trovartela da solo brutto software idiota del cazzo?! XD), enumerare
+gli host attivi sulla rete, identificare lo smartphone, selezionare lui ed il router, iniziare l'attacco e così via, come potete vedere
+da soli, è una procedura abbastanza stressante soprattutto se va ripetuta diverse volte nella stessa giornata.
+
+Quindi, con l'aiuto di python, <a href="http://www.clshack.it/?s=scapy" target="_blank">scapy</a>, caffè, sigarette e tanta pazienza (scapy
+non è proprio il progetto più documentato al mondo diciamo -.-) ho iniziato a codarmi un tool molto, ma MOLTO semplice.
+
+Basta passargli il nome dell'interfaccia di rete dalla riga di comando, ed il resto lo fa tutto lui, compreso identificare gli host attivi, 
+la netmask, il gateway di rete e così via ... lasciandovi solo la scelta del/dei bersaglio/i da "colpire".
+
+Naturalmente non è un tool completo come lo può essere ettercap, una volta lanciato dovrete aprire uno sniffer di rete per leggere i vari
+pacchetti, ma in questi casi trovo che WireShark sia decisamente un prodotto migliore di qualsiasi altro sniffer integrato in ettercap :)
+
+Una sessione di esempio può essere:
+
+<pre>
+<code>
+[evilsocket@masamune ~/Sviluppo/netcmd] sudo ./netcmd.py -I eth0
+
+  NetCommander 1.1 - An easy to use arp spoofing tool.
+  Copyleft Simone Margaritelli <evilsocket@gmail.com>
+  http://www.evilsocket.net
+  http://www.backbox.org
+        
+@ Searching for the network gateway address ...
+@ <b>Gateway is 192.168.2.1 on network 192.168.2.0/24 .</b>
+@ Searching for alive network endpoints ...
+@ Please choose your target :
+  [0] 00:01:4a:5e:fe:67 192.168.2.9
+  [1] 00:21:27:f6:75:d5 192.168.2.222
+  [2] 00:13:02:18:f2:c6 192.168.2.55
+  [3] 00:18:de:c7:09:7c 192.168.2.5
+@ <b>Choose [0-3] (* to select all): *</b>
+@ Spoofing, launch your preferred network sniffer to see target traffic ........
+</code>
+</pre>
+
+Tutto qua, il processo è automatizzato al massimo e non bisogna sbattersi ogni volta per selezionare pure l'universo.
+
+Trovate il progetto sempre sul mio github a questo indirizzo <a href="https://github.com/evilsocket/NetCommander" target="_blank">https://github.com/evilsocket/NetCommander</a>.
+
+Enjoy ^^
+</p>
