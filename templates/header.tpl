@@ -54,6 +54,11 @@
         window.open( 'http://www.google.com/translate?sl=it&tl=' + lang + '&u=' + encodeURIComponent(location.href) ); 
         return false;      
       }
+      
+      if(document.location.protocol=='http:'){
+       var Tynt=Tynt||[];Tynt.push('dnKpV4ZZWr4jgEadbi-bnq');Tynt.i={"ap":"Read more:"};
+       (function(){var s=document.createElement('script');s.async="async";s.type="text/javascript";s.src='http://tcr.tynt.com/ti.js';var h=document.getElementsByTagName('script')[0];h.parentNode.insertBefore(s,h);})();
+      }
     // ]]>
     </script>
 
