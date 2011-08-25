@@ -5,7 +5,6 @@ Tags: wp, wordpress, exploit, sendit, plugin, sql injection, blind
 Title: WordPress SendIt plugin <= 1.5.9 Blind SQL Injection Vulnerability
 
 <p align="justify">
-
 Blind sql injection che ho trovato per caso diciamo, nel plugin di wordpress <a href="http://wordpress.org/extend/plugins/sendit/" target="_blank">SendIt</a> dell'italiano 
 <a href="http://www.giuseppesurace.com" target="_blank">Giuseppe Surace</a>, in attesa per exploit-db ...
 
