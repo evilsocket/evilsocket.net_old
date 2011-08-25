@@ -1,0 +1,222 @@
+Date: 2011-08-25 16:15:28
+Author: evilsocket
+Categories: Papers, Misc
+Tags: ssh, sshd, server, configurazione, debian, installazione, performance, veloce, memoria, cpu, ottimizzazione, sicurezza, security, rsa, public key
+Title: [VPS III] Configurazione del demone SSH con accesso a chiave pubblica.
+
+<p align="justify">
+
+Come promesso nella <a href="/vps-ii-ottimizzare-la-configurazione-di-nginx-ed-installare-php-fpm.html">guida precedente</a>, oggi illustrerò il più sinteticamente
+possibile la configurazione SSH per accedere al nostro server in tutta sicurezza.
+Questa è una parte importantissima di tutto il processo di configurazione, poichè ssh è il servizio che più viene utilizzato per gestire da remoto la macchina, quindi
+è <b>fondamentale</b> che sia configurato <b>bene</b> sia dal punto di vista delle performance che della sicurezza, poichè un semplice errore da parte vostra
+potrebbe portare una terza persona ad avere accesso completo al vostro amato server, tragedia che ovviamente vogliamo evitare :D
+
+Premetto che nel tipo di configurazione che andremo a vedere, verrà <b>disabilitato</b> l'accesso tramite password alla shell remota, bensì sarà possibile accedervi
+solamente tramite la vostra coppia di chiavi pubblica e privata opportunamente generata.
+In questo modo, per voi sarà molto più semplice l'accesso non dovendo ricordare e digitare di volta in volta la vostra password, ed allo stesso tempo sarà più difficile
+per un male intenzionato loggarsi al server al vostro posto, non dispondendo della vostra coppia di chiavi ( che voi ovviamente terrete ben protetta e porterete sempre con voi
+magari su una chiavetta usb, per potervi collegare da qualsiasi computer vogliate, ma vedremo questo punto più avanti ).
+<break>
+
+<h4>Nota</h4>
+
+In questo capitolo, do per scontato che avete già il subsystem ssh installato, quindi il client, i tool ecc, nonchè un utenza sul server remoto inserita tra i sudoers 
+per operare sui file di configurazione, i servizi, etc.
+
+<h4>Generazione della chiave RSA</h4>
+
+Prima di tutto, avete bisogno della vostra coppia di chiavi, quindi dovrete generarla dal vostro computer (  ).
+
+<pre>
+<code>
+ssh-keygen -t rsa
+</code>
+</pre>
+
+Vi verrà chiesta una password, lasciatela vuota se non volete utilizzarne una ogni volta che usate tali chiavi.
+A questo punto, nella directory
+
+<pre>
+<code>
+~/.ssh/
+</code>
+</pre>
+
+avrete due file, <b>id_rsa</b> e <b>id_rsa.pub</b> .
+<b>Per nessun motivo al mondo</b> dovrete dare a nessuno il file <b>id_rsa</b>, poichè si tratta della chiave <b>privata</b> e se avete un minimo di nozioni sulla crittografia
+asimmetrica sapete benissimo che diffondere questo file equivale a dare le chiavi di casa vostra ad ogni sconosciuto che incontrate :D
+Il discorso è diverso per il file <b>id_rsa.pub</b> poichè, contenendo la chiave pubblica, può essere diffuso come più preferite.
+
+Ed è proprio questo file che dovrete copiare sul vostro server, nella directory dell'utente che userete per collegarvi via ssh, nello specifico nel file
+
+<pre>
+<code>
+~/.ssh/authorized_keys
+</code>
+</pre>
+
+Quindi, o lo copiate manualmente, oppure se avete già ssh installato e configurato di default potrete copiarlo con il comando:
+
+<pre>
+<code>
+scp ~/.ssh/id_rsa.pub username@vostro-server.com:~/.ssh/authorized_keys
+</code>
+</pre>
+
+Ovviamente prima assicuratevi che la cartella <b>.ssh</b> per quell'utente esista sul server remoto.
+
+Benissimo, come dicevo prima, ora che avete le vostre chiavi, <b>backuppatele</b> ovunque potete, su un cd se necessario, fate in modo anche di poterle avere <b>sempre con voi</b>,
+poichè solo tramite questi due file sarà possibile accedere al vostro server via ssh, quindi se per esempio vi trovate in ufficio, su un computer che non è il vostro personale,
+non sarete in grado di accedere a meno che non abbiate questi due file con voi.
+Così come è importante backupparli per "farli sopravvivere" ad un eventuale formattazione del computer, poichè una volta persi saranno veramente cavoli amari per poter accedere
+al server, a meno che non abbiate un terminale KVM o qualcosa del genere ... quindi, dando per scontato che non lo avete, perdere questi file equivale a perdere il controllo
+del server in questione ^^.
+
+<h4>Configurazione del demone SSH</h4>
+
+Ora che abbiamo le chiavi, dobbiamo configurare il demone SSH per consentire l'accesso solo tramite le chiavi stesse, disabilitando l'accesso tramite password ed in più inserendo
+qualche altra direttiva per rendere il tutto più sicuro.
+
+Andiamo ad editare il file di configurazione in
+
+<pre>
+<code>
+/etc/ssh/sshd_config
+</code>
+</pre>
+
+ed inseriamo le seguenti righe:
+
+<pre>
+<code>
+Port 22
+AllowUsers vostro-nome-utente
+</code>
+</pre>
+
+Come è facile capire, la prima direttiva determina la porta sulla quale mettere in ascolto il demone, se proprio siete paranoici potete usare un altra porta, ma tanto se qualcuno
+vi nmappa il server comunque riesce a capire dove è il servizio SSH, e questo comunque lo eviteremo con la configurazione delle regole del firewall che vedremo più avanti ;)
+La seconda direttiva invece è importante, poichè determina quali utenti possono connettersi tramite SSH ... è importante limitarne l'uso solo all'utenza che volete utilizzare per
+evitare che qualcuno crei, nella peggiore delle ipotesi, utenze backdoorate o magari che qualche servizio "coglione" crei utenze senza password, che comunque non sarebbero un problema
+avendo la configurazione per l'accesso a chiave pubblica, ma non si sa mai :D
+
+<pre>
+<code>
+Protocol 2
+HostKey /etc/ssh/ssh_host_rsa_key
+HostKey /etc/ssh/ssh_host_dsa_key
+UsePrivilegeSeparation yes
+</code>
+</pre>
+
+Usiamo la versione 2 del protocollo in modo da tagliare fuori i vecchi client o qualcuno che prova a fare il furbacchione, diciamo al server dove trovare le sue chiavi di identificazione,
+ed usiamo la separazione dei privilegi, ovvero, quando un utenza si connette, il demone crea un processo secondario con i privilegi di quell'utenza e non con i privilegi del processo 
+primario, questo serve ad evitare eventuali privilege escalations.
+
+<pre>
+<code>
+KeyRegenerationInterval 3600
+ServerKeyBits 768
+</code>
+</pre>
+
+Questo riguarda il protocollo di prima versione, in teoria non servirebbe date le precedenti direttive che lo escludono, ma per scrupolo e sicurezza settiamo a 3600 il time out delle chiavi
+temporanee ed a 768 i loro bit, in modo da evitare lo spoofing di una sessione ssh di prima generazione etc.
+
+<pre>
+<code>
+SyslogFacility AUTH
+LogLevel INFO
+</code>
+</pre>
+
+Il codice da utilizzare nel syslog, ed il livello di logging del demone.
+
+<pre>
+<code>
+LoginGraceTime 120
+PermitRootLogin no
+StrictModes yes
+</code>
+</pre>
+
+Disconnessione automatica dopo 120 secondi se l'utente non è riuscito a loggarsi ( evita connessioni zombie e quindi possibili DOS al servizio ), <b>disabilita il login di root</b> ( importantissimo
+ai fini della sicurezza ) ed abilita il controllo rigido sui permessi della user home, per evitare che qualche coglione lasci la propria home a 777, etc :D
+
+<pre>
+<code>
+RSAAuthentication yes
+PubkeyAuthentication yes
+AuthorizedKeysFile  %h/.ssh/authorized_keys
+</code>
+</pre>
+
+Abilitiamo l'autenticazione tramite chiave pubblica RSA ( quella che ci siamo generati prima ), e specifichiamo il file dove si trova tale chiave per ogni utente, il token <b>%h</b> identifica
+la home directory dell'utente che si sta connettendo.
+
+<pre>
+<code>
+IgnoreRhosts yes
+RhostsRSAAuthentication no
+HostbasedAuthentication no
+</code>
+</pre>
+
+Disabilitiamo del tutto l'autenticazione in base alla fiducia/conoscenza dell'host remoto ... per chi avesse studiato un po, Kevin Mitnick si intrufolò nella rete di Shimomura proprio spoofando
+un host di fiducia e sfruttando questa cattiva configurazione :D
+
+<pre>
+<code>
+PermitEmptyPasswords no
+</code>
+</pre>
+
+Come è facile immaginare, non consete l'uso di password nulle/vuote.
+
+<pre>
+<code>
+ChallengeResponseAuthentication no
+PasswordAuthentication no
+</code>
+</pre>
+
+Disabilita qualsiasi tipo di autenticazione che non sia tramite chiave RSA.
+
+<pre>
+<code>
+X11Forwarding no
+PrintMotd no
+PrintLastLog yes
+TCPKeepAlive yes
+</code>
+</pre>
+
+Disabilita il <a href="/howto-use-a-backbox-application-remotely-with-ssh-and-x11-forwarding.html" target="_blank">forwarding del server grafico</b>, il MOTD, stampa l'ultima riga del log alla connessione
+ed abilita il keep-alive per una maggiore stabilità della connessione TCP.
+
+<pre>
+<code>
+AcceptEnv LANG LC_*
+</code>
+</pre>
+
+Consente al terminale dell'utente connesso di impostare il proprio 'locale', in modo da supportare terminali particolari, lingue straniere, ecc.
+
+<h4>Messa in produzione</h4>
+
+Bene, una volta salvato il file con questi contenuti, riavviamo il demone
+
+<pre>
+<code>
+sudo /etc/init.d/ssh restart
+</code>
+</pre>
+
+E verifichiamo che non abbiamo più bisogno della password per connetterci, ma il client ssh trovando nella nostra home directory i due file RSA, ci logga in automatico sul server, cosa che ovviamente non
+avviene da <b>qualsiasi</b> altro computer che non abbia quei due file :)
+
+<h4>Conclusione</h4>
+
+Per questa parte è tutto, nella prossima vedremo come configurare il firewall, e più nello specifico il <b>port knocking</b> per blindare al 100% il nostro serverino ^^
+</p>
