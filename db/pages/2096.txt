@@ -26,7 +26,7 @@ per operare sui file di configurazione, i servizi, etc.
 
 <h4>Generazione della chiave RSA</h4>
 
-Prima di tutto, avete bisogno della vostra coppia di chiavi, quindi dovrete generarla dal vostro computer (  ).
+Prima di tutto, avete bisogno della vostra coppia di chiavi, quindi dovrete generarla dal vostro computer:
 
 <pre>
 <code>
