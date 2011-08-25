@@ -192,7 +192,7 @@ TCPKeepAlive yes
 </code>
 </pre>
 
-Disabilita il <a href="/howto-use-a-backbox-application-remotely-with-ssh-and-x11-forwarding.html" target="_blank">forwarding del server grafico</b>, il MOTD, stampa l'ultima riga del log alla connessione
+Disabilita il <a href="/howto-use-a-backbox-application-remotely-with-ssh-and-x11-forwarding.html" target="_blank">forwarding del server grafico</a>, il MOTD, stampa l'ultima riga del log alla connessione
 ed abilita il keep-alive per una maggiore stabilità della connessione TCP.
 
 <pre>
