@@ -37,7 +37,7 @@ boolean condition checking :
 [ submit.php line 29 ]
 
 if($user_count>0) :
-  $errore_presente = "<div class=\"error\">".__('email address already present', 'sendit')."</div>";
+  $errore_presente = "&gt;div class=\"error\"&lt;".__('email address already present', 'sendit')."</div>";
   die($errore_presente);
 
 ---
