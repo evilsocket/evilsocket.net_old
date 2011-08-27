@@ -63,7 +63,6 @@
             <a target="_blank" rel="nofollow" onclick="return translateTo('fr');" title="Translate to French ">
               <img style="cursor: pointer;" alt="Translate to French " src="${config.siteurl}/images/flags/fr.png" title="Translate to French " border="0" />
             </a>
-            <br/>
             <a target="_blank" rel="nofollow" onclick="return translateTo('ja');" title="Translate to Japanese BETA">
               <img style="cursor: pointer;" alt="Translate to Japanese BETA" src="${config.siteurl}/images/flags/jp.png" title="Translate to Japanese BETA" border="0" />
             </a>
