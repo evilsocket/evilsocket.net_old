@@ -1,0 +1,292 @@
+Date: 2011-08-27 14:04:27
+Author: evilsocket
+Categories: Papers, Misc
+Tags: firewall, shorewall, knock, knockd, port knocking, knocking, configurazione, howto, vps, server
+Title: [VPS IV] Configurazione del firewall tramite Shorewall e del port knocking.
+
+<p align="justify">
+
+Oggi vedremo come configurare il nostro firewall in modo tale di blindare il nostro server il più possibile da attacchi esterni e/o accessi indesiderati.
+Per fare questo utilizzeremo <a href="http://shorewall.net/" target="_blank">ShoreWall</a>, un software implementato in perl che ci faciliterà veramente
+di molto la gestione delle regole del nostro firewall.
+Successivamente vedremo come configurare una politica di port knocking in modo tale da abilitare l'accesso alla porta SSH solo per il nostro indirizzo ip
+e solo dopo che avremmo mandato una sequenza di pacchetti tcp e/o udp pre determinata.
+<break>
+
+<h4>Installazione di Shorewall</h4>
+
+Per installare shorewall vi basterà un semplice
+
+<pre>
+<code>
+sudo apt-get install shorewall
+</code>
+</pre>
+
+Dovrete verificare di aver installato almeno la versione <b>4.4</b> tramite il comando
+
+<pre>
+<code>
+shorewall version
+</code>
+</pre>
+
+In caso contrario, dovrete installarlo tramite i pacchetti disponibili sul sito ufficiale precedentemente linkato.
+
+<h4>Configurare Shorewall</h4>
+
+Una volta che abbiamo installato il software, procediamo a copiare le configurazioni di default che vengono distribuite insieme al pacchetto, per fare questo:
+
+<pre>
+<code>
+sudo cp /usr/share/doc/shorewall/default-config/* /etc/shorewall/
+</code>
+</pre>
+
+Ora iniziamo a modificare questi file per personalizzare la nostra installazione, per prima cosa dobbiamo definire delle <b>zone</b>, ovvero gli 'alias' con
+i quali chiameremo negli altri file di configurazione la nostra rete.
+Editiamo il file 
+
+<pre>
+<code>
+/etc/shorewall/zones
+</code>
+</pre>
+
+Ed inseriamo i seguenti contenuti:
+
+<pre>
+<code>
+#
+# Shorewall version 4 - Zones File
+#
+# For information about this file, type "man shorewall-zones"
+#
+# The manpage is also online at
+# http://www.shorewall.net/manpages/shorewall-zones.html
+#
+###############################################################################
+#ZONE   TYPE            OPTIONS         IN                      OUT
+#                                       OPTIONS                 OPTIONS
+fw      firewall
+net     ipv4
+#LAST LINE - ADD YOUR ENTRIES ABOVE THIS ONE - DO NOT REMOVE
+</code>
+</pre>
+
+Come vedete, abbiamo definito la zona <b>fw</b> che identifica la rete locale dal punto di vista del firewall, e la zona <b>net</b>, considerata come la rete esterna.
+
+Prossimo passo, la definizione dell'interfaccia di rete che vogliamo far controllare al firewall, editiamo il file
+
+<pre>
+<code>
+/etc/shorewall/interfaces
+</code>
+</pre>
+
+Ed inseriamo i contenuti:
+
+<pre>
+<code>
+#
+# Shorewall version 4 - Interfaces File
+#
+# For information about entries in this file, type "man shorewall-interfaces"
+#
+# The manpage is also online at
+# http://www.shorewall.net/manpages/shorewall-interfaces.html
+#
+###############################################################################
+#ZONE   INTERFACE       BROADCAST       OPTIONS
+net eth0 detect
+#LAST LINE -- ADD YOUR ENTRIES BEFORE THIS ONE -- DO NOT REMOVE
+</code>
+</pre>
+
+Nel caso in cui la vostra interfaccia di rete si chiami diversamente, sostituite <b>eth0</b> con il suo nome.
+Il parametro <b>detect</b> ci evita di doverne specificare le proprietà, lasciando a shorewall il compito di 'capire' di che tipo di interfaccia si tratta.
+
+Passiamo ora alla politica del firewall, di default gli faremo bloccare <b>tutto</b> il traffico in entrata su <b>tutte</b> le porte e successivamente apriremo
+solo le porte che ci interessano, in questo modo bloccheremo syn flooding, ping, ecc ecc
+Editiamo il file
+
+<pre>
+<code>
+/etc/shorewall/policy
+</code>
+</pre>
+
+Ed inseriamo il contenuto:
+
+<pre>
+<code>
+#
+# Shorewall version 4 - Policy File
+#
+# For information about entries in this file, type "man shorewall-policy"
+#
+# The manpage is also online at
+# http://www.shorewall.net/manpages/shorewall-policy.html
+#
+###############################################################################
+#SOURCE         DEST            POLICY          LOG             LIMIT:BURST
+fw net ACCEPT
+net all DROP info
+all all REJECT info
+#LAST LINE -- DO NOT REMOVE
+</code>
+</pre>
+
+Tradotto in linguaggio umano, consenti tutto il traffico <b>dal</b> server verso l'esterno, e blocca tutto il traffico <b>verso</b> il server loggandolo come 'info'
+nel syslog.
+
+Ora inseriamo la regola che sblocca il traffico sulla porta 80 del webserver, porta che sarà l'<b>unica</b> sbloccata di default in modo tale da consentire la navigazione
+di un eventuale nostro sito o comunque l'esercizio di qualsiasi servizio su quella porta.
+Per fare questo, editiamo il file
+
+<pre>
+<code>
+/etc/shorewall/rules
+</code>
+</pre>
+
+Ed inseriamo il contenuto:
+
+<pre>
+<code>
+#
+# Shorewall version 4 - Rules File
+#
+# For information on the settings in this file, type "man shorewall-rules"
+#
+# The manpage is also online at
+# http://www.shorewall.net/manpages/shorewall-rules.html
+#
+############################################################################################################################
+#ACTION         SOURCE          DEST            PROTO   DEST    SOURCE          ORIGINAL        RATE            USER/   MARK
+#                                                       PORT    PORT(S)         DEST            LIMIT           GROUP
+ACCEPT net fw tcp www
+#LAST LINE -- ADD YOUR ENTRIES BEFORE THIS ONE -- DO NOT REMOVE
+</code>
+</pre>
+
+Abbastanza intuitivo.
+
+A questo punto possiamo configurare shorewall per partire in automatico all'avvio del sistema, editando il file:
+
+<pre>
+<code>
+/etc/default/shorewall
+</code>
+</pre>
+
+ed impostiamo il parametro <b>startup</b> ad <b>1</b>.
+
+<b>Non fate partire ancora il firewall!!!</b> poichè non avendo ancora inserito le politiche di port knocking, bloccherebbe gli accessi a SSH e voi sareste inesorabilmente
+tagliati fuori :)
+
+<h4>Installazione e configurazione di Knockd</h4>
+
+Bene, sperando vivamente che avete seguito il consiglio appena dato, vediamo un po di installare il nostro demone per il port knocking, prima una brevissima spiegazione di cosa
+sia il port knocking per chi non lo sapesse.
+
+Il port knocking (da qui in poi abbreviato PK perchè mi da al cazzo scriverlo ogni volta :D) è una tecnica che consente, in linea generale, di eseguire un azione su un server
+nel momento in cui il demone di PK rileva determinati pacchetti tcp e/o udp in entrata.
+Nel caso più comune, ovvero quello che ci serve ed andremo a vedere, se un utente si connette su una sequenza di porte ben determinata (porte che non necessariamente devono
+essere aperte, il demone intercetterà comunque i pacchetti SYN) possiamo decidere di far aprire la porta SSH ad esempio (esempio preso a caso eh! XD), e con un altra sequenza
+(o con la stessa, ripetuta una seconda volta) farla chiudere.
+
+Questo significa che normalmente sul server non ci sarà niente di aperto se non la porta del webserver, poi quando ci dovremo connettere manderemo questi pacchetti (tramite l'apposito
+client knock o tramite un merdoso script bash che si connette a tutte le porte, come faccio io :D) ed il server per magia aprirà la porta SSH, <b>solo</b> per il nostro indirizzo
+ip, quindi il resto del mondo continuerà a vederla chiusa ... figo no? ^^
+
+Indi per cui, procediamo all'installazione:
+
+<pre>
+<code>
+sudo apt-get install knockd
+</code>
+</pre>
+
+Ed inseriamo nel file:
+
+<pre>
+<code>
+/etc/knockd.conf
+</code>
+</pre>
+
+La regola:
+
+<pre>
+<code>
+[ssh]
+  sequence         = 1234:tcp,8765:tcp,54321:tcp,2023:tcp
+  seq_timeout      = 5
+  start_command    = /sbin/iptables --append dynamic -s %IP% -p tcp --dport 22 -j ACCEPT
+  tcpflags         = syn
+  cmd_timeout      = 60
+  stop_command     = /sbin/iptables --delete dynamic -s %IP% -p tcp --dport 22 -j ACCEPT
+</code>
+</pre>
+
+Oooooooovvero.
+
+La nostra famosa sequenza consiste nelle porte 1234, 8765, 54321 e 2023 (non fate i coglioni, usate sequenze lunghe e complesse!) tutte tcp per semplicità.
+Abbiamo 5 secondi per completare tale sequenza di connessioni (in questo preciso ordine, ricordate!), dopo di che verrà sbloccata la porta 22 per il nostro
+indirizzo.
+Tale porta rimarrà sbloccata per 60 secondi, al termine dei quali se non ci sarà stata nessuna connessione verrà automaticamente richiusa.
+<b>dynamic</b> è il nome di una chain che crea in automatico shorewall alla quale andremo ad aggiungere le nostre regole per il PK.
+
+Ora la configurazione finale, editiamo il file:
+
+<pre>
+<code>
+/etc/default/knockd
+</code>
+</pre>
+
+Impostiamo il flag <b>START_KNOCKD</b> ad <b>1</b> per far partire knockd in automatico all'avvio, e decommentiamo la riga che contiene il flag <b>KNOCKD_OPTS</b>
+modificandolo opportunamente in base al nome della nostra interfaccia di rete, nel caso di questo esempio:
+
+<pre>
+<code>
+KNOCKD_OPTS="-i eth0"
+</code>
+</pre>
+
+<h4>Avvio e conclusione</h4>
+
+Fatto questo, siamo pronti!!!
+
+Avviamo il demone knockd:
+
+<pre>
+<code>
+sudo /etc/init.d/knockd start
+</code>
+</pre>
+
+Poi avviamo shorewall:
+
+<pre>
+<code>
+sudo shorewall start
+</code>
+</pre>
+
+Ed il firewall è servito!
+Potete verificare il tutto con una bella scansione del vostro server, qualcosa del tipo:
+
+<pre>
+<code>
+sudo nmap -sS -P0 -A -vvv indirizzo-del-vostro-server
+</code>
+</pre>
+
+E vedrete solo la porta 80 aperta, nonostante ci sia anche la 22 che ovviamente viene filtrata dal firewall.
+Per aprirla e connettervi, potete usare telnet, netcat o quello che preferite sulla famosa sequenza di porte di PK, e successivamente usare il normale client SSH per loggarvi.
+
+Anche per questa parte della guida è tutto :)
+</p>
+
