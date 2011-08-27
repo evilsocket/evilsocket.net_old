@@ -51,16 +51,31 @@
     <h2>Translation</h2>
       <ul>
         <li> 
-            <a target="_blank" rel="nofollow" onclick="return translateTo('en');" title="Translate to English"><img  style="cursor: pointer;" alt="Translate to English" src="${config.siteurl}/images/english.png" title="Translate to English" height="24" width="24" border="0" /></a>
-            <a target="_blank" rel="nofollow" onclick="return translateTo('de');" title="Translate to German"><img  style="cursor: pointer;" alt="Translate to German" src="${config.siteurl}/images/german.png" title="Translate to German" height="24" width="24" border="0" /></a>
-            <a target="_blank" rel="nofollow" onclick="return translateTo('es');" title="Translate to Spanish "><img  style="cursor: pointer;" alt="Translate to Spanish " src="${config.siteurl}/images/spanish.png" title="Translate to Spanish " height="24" width="24" border="0" /></a>
-            <a target="_blank" rel="nofollow" onclick="return translateTo('fr');" title="Translate to French "><img  style="cursor: pointer;" alt="Translate to French " src="${config.siteurl}/images/french.png" title="Translate to French " height="24" width="24" border="0" /></a>
+            <a target="_blank" rel="nofollow" onclick="return translateTo('en');" title="Translate to English">
+              <img style="cursor: pointer;" alt="Translate to English" src="${config.siteurl}/images/flags/us.png" title="Translate to English" border="0" />
+            </a>
+            <a target="_blank" rel="nofollow" onclick="return translateTo('de');" title="Translate to German">
+              <img style="cursor: pointer;" alt="Translate to German" src="${config.siteurl}/images/flags/de.png" title="Translate to German" border="0" />
+            </a>
+            <a target="_blank" rel="nofollow" onclick="return translateTo('es');" title="Translate to Spanish ">
+              <img style="cursor: pointer;" alt="Translate to Spanish " src="${config.siteurl}/images/flags/es.png" title="Translate to Spanish " border="0" />
+            </a>
+            <a target="_blank" rel="nofollow" onclick="return translateTo('fr');" title="Translate to French ">
+              <img style="cursor: pointer;" alt="Translate to French " src="${config.siteurl}/images/flags/fr.png" title="Translate to French " border="0" />
+            </a>
             <br/>
-            <a target="_blank" rel="nofollow" onclick="return translateTo('ja');" title="Translate to Japanese BETA"><img  style="cursor: pointer;" alt="Translate to Japanese BETA" src="${config.siteurl}/images/japanese.png" title="Translate to Japanese BETA" height="24" width="24" border="0" /></a>
-            <a target="_blank" rel="nofollow" onclick="return translateTo('ko');" title="Translate to Korean BETA"><img  style="cursor: pointer;" alt="Translate to Korean BETA" src="${config.siteurl}/images/korean.png" title="Translate to Korean BETA" height="24" width="24" border="0" /></a>
-            <a target="_blank" rel="nofollow" onclick="return translateTo('ru');" title="Translate to Russian BETA "><img  style="cursor: pointer;" alt="Translate to Russian BETA " src="${config.siteurl}/images/russian.png" title="Translate to Russian BETA " height="24" width="24" border="0" /></a>
-            <a target="_blank" rel="nofollow" onclick="return translateTo('zh-CN');" title="Google-Translate-Chinese (Simplified) BETA"><img  style="cursor: pointer;" alt="Google-Translate-Chinese (Simplified) BETA" src="${config.siteurl}/images/chinese.png" title="Google-Translate-Chinese (Simplified) BETA" height="24" 
-            width="24" border="0" /></a>
+            <a target="_blank" rel="nofollow" onclick="return translateTo('ja');" title="Translate to Japanese BETA">
+              <img style="cursor: pointer;" alt="Translate to Japanese BETA" src="${config.siteurl}/images/flags/jp.png" title="Translate to Japanese BETA" border="0" />
+            </a>
+            <a target="_blank" rel="nofollow" onclick="return translateTo('ko');" title="Translate to Korean BETA">
+              <img style="cursor: pointer;" alt="Translate to Korean BETA" src="${config.siteurl}/images/flags/kr.png" title="Translate to Korean BETA" border="0" />
+            </a>
+            <a target="_blank" rel="nofollow" onclick="return translateTo('ru');" title="Translate to Russian BETA ">
+              <img style="cursor: pointer;" alt="Translate to Russian BETA " src="${config.siteurl}/images/flags/ru.png" title="Translate to Russian BETA " border="0" />
+            </a>
+            <a target="_blank" rel="nofollow" onclick="return translateTo('zh-CN');" title="Translate to Chinese BETA">
+              <img style="cursor: pointer;" alt="Translate to Chinese BETA" src="${config.siteurl}/images/flags/cn.png" title="Translate to Chinese BETA" border="0" />
+            </a>
          </li>
     </ul>
 
