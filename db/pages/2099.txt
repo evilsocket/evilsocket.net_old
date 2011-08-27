@@ -5,7 +5,6 @@ Tags: firewall, shorewall, knock, knockd, port knocking, knocking, configurazion
 Title: [VPS IV] Configurazione del firewall tramite Shorewall e del port knocking.
 
 <p align="justify">
-
 Oggi vedremo come configurare il nostro firewall in modo tale di blindare il nostro server il più possibile da attacchi esterni e/o accessi indesiderati.
 Per fare questo utilizzeremo <a href="http://shorewall.net/" target="_blank">ShoreWall</a>, un software implementato in perl che ci faciliterà veramente
 di molto la gestione delle regole del nostro firewall.
