@@ -8,7 +8,6 @@ Title: Joomla Simple File Lister module <= 1.0 Directory Traversal Vulnerability
 Come da titolo, 'Joomla Simple File Lister module <= 1.0 Directory Traversal Vulnerability', sempre in attesa per exploit-db.
 Il codice è veramente incasinato, non capisco perchè per enumerare il contenuto di una directory c'è bisogno di tanta merda, alla
 fine lo sventurato programmatore non ha fatto altro che complicarsi la vita e lasciare il suo modulo con un bel buco.
-
 <break>
 
 <pre>
