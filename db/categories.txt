@@ -1,4 +1,4 @@
-Hacking: Exploiting, Reversing, Tools, Wardriving, Web Hacking
+Hacking: Exploiting, Exploits, Reversing, Tools, Wardriving, Web Hacking
 Misc
 Papers
 Personali
