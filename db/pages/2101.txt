@@ -14,7 +14,6 @@ dei computer connessi ogni 10 secondi (tramite l'opzione -A).
 
 Per entrambe queste nuove funzionalità ringrazio <a href="https://github.com/meh" target="_blank">meh</a> che ha partecipato al progetto migliorandolo :)
 
-Enjoy ^^
-</p>
+Enjoy ^^</p>
 
 
