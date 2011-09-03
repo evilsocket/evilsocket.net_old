@@ -1,0 +1,41 @@
+Date: 2011-09-03 15:36:57
+Author: evilsocket
+Categories: Hacking, Misc, Tools
+Tags: backbox, linux, hacking, distro, distribution, 2.0, release, new
+Title: BackBox Linux 2 Released!
+
+<p align="justify">
+The BackBox team is proud to announce the release of BackBox Linux 2.
+
+BackBox 2 features the following upstream components:
+
+<ul>
+  <li>Ubuntu 11.04</li> 
+  <li>Linux Kernel 2.6.38</li> 
+  <li>XFCE 4.8.0</li>
+</ul>
+<break>
+<h4>What's new</h4>
+
+<ul>
+  <li>System upgrade</li>
+  <li>Performance boost</li>
+  <li>New look and feel</li>
+  <li>Improved start menu</li>
+  <li>Bug fixing</li>
+  <li>Hacking tools new or updated</li>
+  <li>Three new section: Vulnerabilty Assessment, Forensic Analysis and VoIP Analysis</li>
+  <li>Much, much more!</li>
+</ul>
+
+<h4>System requirements</h4>
+<ul>
+  <li>32-bit or 64-bit processor</li>
+  <li>256 MB of system memory (RAM)</li>
+  <li>2 GB of disk space for installation</li>
+  <li>Graphics card capable of 800×600 resolution</li>
+  <li>CD-ROM drive or USB port</li>
+</ul>
+
+<b><a href="http://www.backbox.org/content/download" target="_blank">DOWNLOAD LINKS</a></b>
+</p>
