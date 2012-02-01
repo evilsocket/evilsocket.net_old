@@ -1,0 +1,25 @@
+Date: 2012-02-02 00:35:04
+Author: evilsocket
+Categories: Hacking, PHP, Programmazione, Sorgenti, Web Hacking
+Tags: evilsocket, plugin, security, security system, sentinel, wordpress, wp-sentinel, 2.0
+Title: Rilasciato WP-Sentinel 2.0
+
+<p>
+Dopo molto tempo che non lavoravo su questo progetto, alcuni eventi, tra i quali il responso di molti utenti (wp-sentinel conta ad oggi più di 7000 downloads!), 
+ho deciso di riprenderne lo sviluppo per risolvere i bug che affliggevano la vecchia versione e migliorarne complessivamente prestazioni e funzionalità.
+Di conseguenza oggi ho rilasciato la versione 2.0, caratterizzata da una totale riscrittura del motore interno nonchè ad una riorganizzazione del codice
+e della logica.
+
+Nei prossimi giorni rilascerò ulteriori versioni poichè questo è solo l'inizio del lavoro che ho intenzione di svolgere :D
+Vi lascio con il changelog della 2.0:
+
+<pre>
+  * Complete rewriting of the engine.
+  * Big performance boost.
+  * Implemented pre rules hooks and alarm hooks.
+  * Configuration and rules are now json encoded.
+  * Fixed bug when short tags support is off.
+  * Fixed value flattening bug.
+  * Fixed value decoding.
+</pre>
+</p>
