@@ -1,0 +1,29 @@
+Date: 2012-02-02 21:31:58
+Author: evilsocket
+Categories: Hacking, PHP, Programmazione, Sorgenti, Web Hacking
+Tags: evilsocket, plugin, security, security system, sentinel, wordpress, wp-sentinel, 2.0.2
+Title: Rilasciato WP-Sentinel 2.0
+
+<p>
+Come promesso ieri a coloro che mi hanno mandato le varie segnalazioni, ecco un nuovo rilascio:
+
+<pre>
+== Changelog ==
+
+= 2.0.2 =
+* Added whitelisted variable to make JetPack work properly.
+
+= 2.0.1 =
+* Implemented a full set of rules, tnx to PHPIDS guys.
+* Fixed routine which checks if the user is an admin.
+* Fixed issue that caused many other plugins such as JetPack, WP Stats and so on not to work.
+* Fixed issue that caused the admin to be banned.
+* Fixed minor issues that caused php notices.
+* Fixed admin html.
+</pre>
+
+Da notare che il rule set è stato completamente rinnovato (contento clshack ? :D) grazie al magnifico lavoro
+dei ragazzi di PHPIDS.
+
+Un bacio a tutti, as usual, let me know if you find some bug or bad behaviour ^^
+</p>
