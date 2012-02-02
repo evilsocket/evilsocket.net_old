@@ -2,7 +2,7 @@ Date: 2012-02-02 21:31:58
 Author: evilsocket
 Categories: Hacking, PHP, Programmazione, Sorgenti, Web Hacking
 Tags: evilsocket, plugin, security, security system, sentinel, wordpress, wp-sentinel, 2.0.2
-Title: Rilasciato WP-Sentinel 2.0
+Title: Rilasciato WP-Sentinel 2.0.2
 
 <p>
 Come promesso ieri a coloro che mi hanno mandato le varie segnalazioni, ecco un nuovo rilascio:
