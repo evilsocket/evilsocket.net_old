@@ -38,7 +38,9 @@
     %endif
     
     <meta name="generator" content="SWG ${config.version}" />
-
+    
+		<meta property="og:image" content="${config.siteurl}/images/glider.png"/>
+		
     <link rel="stylesheet" href="${config.siteurl}/css/style.css" type="text/css" media="screen" /> 
     <link rel="alternate" type="application/rss+xml"  href="${config.siteurl}feed.xml" title="${config.sitename | h} RSS Feeds" />
     <link rel="shortcut icon" type="image/x-icon" href="${config.siteurl}/images/favicon.ico" />
