@@ -1,0 +1,90 @@
+Date: 2012-05-24 00:56:21
+Author: evilsocket
+Categories: Hacking, PHP, Programmazione, Sorgenti
+Tags: crittografia, crypt, encrypt, decrypt, chiave, simmetrica, crittografia simmetrica, multi chiave, multi key, aes, rijndael, bit, bits, positive bits
+Title: Crittografia Simmetrica Multi Chiave
+
+<p>
+Dopo tanto tempo che non scrivevo sul blog, voglio affrontare un argomento sia teorico che pratico partendo da un esperienza che mi è capitata qualche tempo fa.
+
+Per motivi che non sto qui a specificare ( principalmente per sicurezza ) ho avuto la necessità di salvare su un database dei dati sensibili non in chiaro, a dire
+il vero l'intero database doveva essere criptato in modo tale che anche dopo un eventuale fuoriuscita di dati sarebbe stato inservibile.
+
+Un altro punto importante era che ogni utente che poteva loggarsi al sistema in questione, avrebbe dovuto/potuto decriptare i dati in questione con la propria chiave
+di accesso, ovviamente diversa da utente ad utente.
+
+Quindi, la domanda era, come posso criptare un dato e renderlo decriptabile con più di una chiave senza replicare lo stesso dato N volte per N chiavi diverse ?
+
+Vediamo come risolvere questo problema :)
+
+<break>
+
+La logica mi ha portato a pensare che, avendo N chiavi, dovevo trovare un metodo per trovare in esse delle proprietà comuni a tutte quante, in modo da poterle "trasformare"
+in un unica chiave.
+
+Nel mio esempio mostrerò un algoritmo banale, chi legge potrà ovviamente trovare metodi più complessi, ingegnosi e sicuri del mio, ma sempre rimanendo nell'ottica dell'esempio
+direi che è una metodologia appropriata … ovvero, chiavi diverse possono avere in comune <strong>il numero di bit positivi</strong>.
+
+Mi spiego meglio, prendiamo in esame la parola "ciao", che convertita in esadecimale ( stando alla tabella ASCII ) è :
+
+<pre>63 69 61 6f</pre>
+
+E in binario
+
+<pre>01100011 01101001 01100001 01101111</pre>
+
+Possiamo vedere che nella prima lettera i bit positivi sono 4, nella seconda sempre 4, poi 3 ed infine sono 6, da qui la sequenza
+
+<pre>4436</pre>
+
+Se poi prendiamo in esame ad esempio la stringa "M.&~" ed eseguiamo lo stesso procedimento:
+
+<pre>4d 2e 26 7e</pre>
+
+<pre>01001101 00101110 00100110 01111110</pre>
+
+Vediamo che otteniamo la stessa sequenza di bit positivi, ovvero <strong>4436</strong>, ecco il nostro primo passo, avendo una chiave arbitraria di partenza, siamo riusciti a trovare
+un criterio che ci consente di generarne altre N con le stesse proprietà che ci riconducono alla medesima sequenza numerica che ci interessa.
+
+Il passo successivo è di aggiungere un po di entropia alla nostra <strong>master key</strong> ( 4436 ), poiché una chiave composta solamente di numeri avrebbe un charset troppo ristretto
+e di conseguenza sarebbe troppo "guessabile" per un eventuale persona che volesse rompere il nostro algoritmo.
+Per ottenere ciò, un metodo potrebbe essere definire una tabella di simboli casuali, utilizzare la nostra master key come una serie di indici nella tabella e poi eseguire un hash md5
+della stringa di simboli risultante.
+
+Ad esempio, prendiamo la tabella:
+
+<pre>&PhM7.4d~]rGnW5[iY>3"|m+?g@)QNwaq{8,BE/kjIH^se@#VD\\fUZlK*(vLT}:y2OtCc;AzSxJ016%X_$&lt;u`-pF9R=\'!bod@rk</pre>
+
+Dividendo la master key in due indici da due cifre ( si può fare ovviamente anche un raggruppamento più piccolo o più grande ), quindi 44 e 36, vediamo che i caratteri nella tabella sono
+
+<pre>
+  44 36
+  s  B
+</pre>
+
+( contare per credere :D )
+
+Da qui, eseguendo l'md5 della stringa "sB", abbiamo l'hash finale 
+
+<pre>c437259a06973b9c7f5ce65ef15a52d4</pre>
+
+Che possiamo utilizzare per criptare e decriptare come preferiamo il nostro stream di dati :)
+
+Quindi, ricapitolando:
+
+<ol type="I">
+	<li>Definiamo una chiave di partenza ( più complessa e lunga possibile )</li>
+	<li>Ne estraiamo una o più caratteristiche che può condividere con altre chiavi diverse</li>
+	<li>Generiamo altre chiavi con le stesse caratteristiche</li>
+	<li>Strutturiamo un algoritmo che possa accettare N chiavi, ridurle ad una master key, crittare e decrittare dati con quella chiave</li>
+</ol>
+
+Per l'ultimo punto sta alla fantasia del lettore, per i più pigri allego alla fine di questo articolo una classe PHP che implementa già il tutto usando come standard di codifica
+l'algoritmo <a href="http://it.wikipedia.org/wiki/Advanced_Encryption_Standard" target="_blank">AES</a> ( o Rijndael ) e che ha già tutte le funzioni per contare i bit positivi, 
+generare una master key da una tabella predefinita di simboli e creare una nuova chiave da una di partenza che ne condivida le stesse caratteristiche.
+
+Spero che l'articolo sia utile a qualcuno, per dubbi, domande, ecc lasciate un commento ;)
+
+<script type="text/javascript" src="https://snipt.net/embed/d2c65ffb4d56e2765059c7336a1d6a85/"></script>
+
+</p>
