@@ -1,0 +1,31 @@
+Date: 2012-05-28 19:20:24
+Author: evilsocket
+Categories: Hacking, PHP, Programmazione, Sorgenti
+Tags: crittografia, crypt, encrypt, decrypt, chiave, simmetrica, crittografia simmetrica, multi chiave, multi key, aes, rijndael, bit, bits, positive bits, sessione, session, cookie, httponly, sessioni
+Title: Sessioni Sicure e Crittografate
+
+<p>
+In un <a href="/php-local-session-manipulation-e-configurazione-sbagliata-dei-permessi.html">precedente articolo</a> abbiamo visto come, a causa di una configurazione errata dei permessi su un server, 
+presumibilmente sul vostro hosting condiviso, sia possibile leggere le sessioni degli altri utenti ( e degli altri siti ) e "forzare" il sistema ad attribuirci il session id di qualcun'altro, o più
+semplicemente a carpire dei dati sensibili da queste sessioni salvate in chiaro su file system.
+
+In questo articolo andremo a vedere una possibile metodologia per lasciare le nostre sessioni su file system ( quindi senza appesantire il database ) ed essere comunque sicuri che nessuno possa accedere
+ai loro dati in chiaro.
+<break>
+
+La teoria è molto semplice, come è facile intuire dobbiamo crittare i dati di sessione prima di inserirli nell'oggetto PHP <strong>$_SESSION</strong>, crittarli in modo tale che solo l'utente al quale
+appartengono possa decrittarli e di conseguenza utilizzarli.
+
+Come è possibile farlo ? Semplice, creiamo una chiave di codifica e la inseriamo nei <strong>cookie</strong> dell'utente in questione, una volta creata questa chiave la utilizzeremo per codificare i dati
+della sua sessione.
+Così facendo, chiunque riuscisse a grabbare i suoi cookie non se ne farebbe nulla poichè ( se strutturiamo le sessioni per essere valide per indirizzo ip ) non avrebbe accesso ai dati ma solo alla chiave,
+d'altro canto, chiunque cercasse di leggere i file di sessione sul server, si troverebbe davanti solo ad una serie di dati binari incomprensibili senza avere la chiave della quale abbiamo parlato.
+
+<strong>Nota</strong>: Prima di lasciarvi al codice, vorrei sottolineare che è comunque meglio impostare l'opzione <a href="https://www.owasp.org/index.php/HttpOnly" target="_blank">httponly</a> dei cookie a true in modo tale da disabilitare l'accesso via javascript ai cookie
+stessi.
+
+
+<script type="text/javascript" src="https://snipt.net/embed/d3e6955d96c3c409dc9bcd82cbc35faa/"></script>
+
+
+</p>
