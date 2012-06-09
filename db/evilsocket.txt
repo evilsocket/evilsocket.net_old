@@ -3,24 +3,16 @@ avatar: http://www.gravatar.com/avatar/299758694008b3a4af42fc193774a47f?d=wavata
 email: evilsocket@gmail.com
 website: http://www.evilsocket.net
 
-<a href="http://www.evilsocket.net/images/me.jpg"><img class="alignleft size-full wp-image-1796" title="me" src="http://www.evilsocket.net/images/me.jpg" alt="" width="200" height="285" /></a>Mmmm ... non sono mai stato bravo a parlare di me, spero solo di non combinare il solito casino.
+I'm a sr. developer and security consultant from Italy, specialized in Unix derived systems such as GNU/Linux, *BSD, Mac OS X and on Microsoft platforms (95,98,2000,ME,XP,Vista,7,2003 Server) programming.
+I developed some applications for embedded/mobile devices too, for instance iOS (iPod Touch, iPhone and iPad), Symbian OS and BlackBerry.
 
-Che dire, mi chiamo Simone, sono di Roma, sono dell'85 e attualmente lavoro come programmatore e analista per una società della mia città.
+I have strong technical background in ethical hacking and security assessments, both for web and stand alone applications.
+I've published many essays about computer security, biometrics and artificial intelligence as well as many open source projects ( i'm an open source activist ) mainly hosted on <a href="http://www.github.com/evilsocket" target="_blank">GitHub</a>.
 
-Ho iniziato a programmare quando ero molto giovane, successivamente ho studiato molti linguaggi di programmazione arrivando ad oggi a padroneggiarne bene almeno una decina.
 
-Crescendo, oltre che alla programmazione, ho iniziato ad interessarmi alla sicurezza informatica, al movimento open source e a tutto ciò che questi due elementi si portavano dietro in quel periodo, quando un modem 28K era il massimo della tecnologia e per caricare una pagina ci volevano alcuni minuti ^^
+You will be able to find me on <a href="http://it.linkedin.com/in/simonemargaritelli" target="_blank">LinkedIn</a>, <a href="http://twitter.com/evilsocket" target="_blank">Twitter</a>, <a href="http://identi.ca/evilsocket" target="_blank">Identi.ca</a> and <a href="http://www.github.com/evilsocket" target="_blank">GitHub</a>.
 
-In questo blog, voglio condividere con chiunque sia interessato, o chiunque sia solo di passaggio, tutte quelle informazioni che difficilmente si trovano sulla rete, per questo non aspettatevi pubblicazioni con cadenza periodica ... scrivo quando ho voglia di scrivere e soprattutto quando c'è qualcosa da scrivere.
-
-Di conseguenza, potrebbero passare mesi senza nessun'articolo per poi vederne 4 pubblicati di fila ... l'importante è che la conoscenza e la cultura vengono diffuse in modo del tutto gratuito e libero per chiunque, così come dovrebbe essere in ogni altro aspetto.
-
-Detto questo, potete trovare i miei lavori più importanti sulla mia pagina di <a href="http://github.com/evilsocket" target="_blank">github</a>, come ad esempio <a href="http://www.hybris-lang.org/" target="_blank">Hybris</a>, <a href="http://www.evilsocket.net/tags/wp-sentinel.html">WP-Sentinel</a> e <a href="http://www.evilsocket.net/?s=swg">SWG</a>, e tutto il resto, paper, articoli e sorgenti "minori" su questo blog.
-
-Potete inoltre trovarmi su <a href="http://it.linkedin.com/in/simonemargaritelli" target="_blank">LinkedIn</a>, <a href="http://twitter.com/evilsocket" target="_blank">Twitter</a>, <a href="http://identi.ca/evilsocket" target="_blank">Identi.ca</a> 
-ed in diversi altri posti se cercate bene :D 
-
-Vi auguro una buona lettura ^^
+Enjoy :) 
 
 <pre>
 -----BEGIN GEEK CODE BLOCK-----
