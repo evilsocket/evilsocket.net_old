@@ -1,0 +1,66 @@
+Date: 2012-06-22 21:20:15
+Author: evilsocket
+Categories: Hacking, Papers, Misc
+Tags: openssl, ssl, secure socket layer, chat, encryption, crittografia, sicura, sicuro, chat sicura, certificate, self signed certificate
+Title: Improvvisare un canale di comunicazione sicuro con OpenSSL
+
+<p>
+
+Spesso mi capita di dover comunicare velocemente con qualcuno non utilizzando un canale di comunicazione convenzionale ( msn, skype, email, ... ) o comunque non controllato da me e di conseguenza
+mi trovo ad aprire ( o a connettermi a ) sessioni netcat in ascolto ed a comunicare indirizzo ip o indirizzo del server con la relativa porta alla persona con la quale voglio scambiare una confidenza,
+un file o in generale qualsiasi tipo di messaggio del quale non voglio rimanga traccia alcuna.
+
+Questo metodo, se pur veloce e abbastanza sicuro ( presumendo che nessuna delle due parti salvi i log della conversazione o simili ), non mi protegge tuttavia dalla possibilità di un attacco MITM, ovvero
+da un eventuale osservatore esterno che abbia modo di inserirsi o comunque leggere sul mio canale di comunicazione ( arp spoofing, eventuali connessioni sotto sorveglianza, and so on ... ).
+
+In questo breve articolo andremo a vedere come sostituire netcat con un applicativo altrettanto comune ( quasi ogni computer unix based l'ha installato di default ) che però sopperisce alle mancanze del
+nostro amico <b>nc</b> in quanto a sicurezza del canale trasmissivo, ovvero <b>openssl</b>.
+<break>
+
+Quello che non tutti sanno è che <a href="http://it.wikipedia.org/wiki/OpenSSL" target="_blank">OpenSSL</a> ( dove SSL sta per <b>secure socket layer</b> ) non è solamente un implementazione dei protocolli
+SSL e TLS, quindi non solo un insieme di librerie, ma contiene anche un binario ( per l'appunto <b>openssl</b> ) che è un coltellino svizzero per quanto riguarda firme, certificati e molto altro in questo
+ambito.
+
+La logica è molto simile a quella di <b>GnuPG</b> ( di fatto si basa sugli stessi presupposti crittografici ), quindi ogni parte deve avere un suo certificato auto generato ( chiamato <b>self signed certificate</b> poichè
+non c'è nessuna authority ad attestarne l'effettiva autenticità se non noi stessi ) che conterrà le chiavi pubbliche e private per la comunicazione.
+
+Vediamo quindi come generare uno di questi certificati ( sia colui che fungerà da server che da client dovrà eseguire questo passaggio ) :
+
+<pre>
+<code>
+openssl req -x509 -nodes -days 365 -newkey rsa:1024 -keyout certificato.pem -out certificato.pem
+</code>
+</pre>
+
+Il software ci farà una serie di domande alle quali dovremmo rispondere al fine di indicare i dati con i quali riempire il certificato, come nome, cognome, email e così via ... nonostante non sia obbligatorio
+inserire dati veritieri, è fortemente consigliato se volete utilizzare il certificato per identificarvi ( ovviamente ).
+
+Fatto questo, troverete sul vostro computer il file <b>certificato.pem</b> che contiene la coppia di chiavi, chiavi che saranno valide per 365 giorni da quel momento.
+
+Ora, colui che vorrà fare da server, non dovrà fare altro che eseguire il comando:
+
+<pre>
+<code>
+openssl s_server -accept 10000 -cert certificato.pem
+</code>
+</pre>
+
+Ed aprirà una sessione in ascolto sulla porta 10000.
+
+Lato clienti invece, si dovrà dare il comando:
+
+<pre>
+<code>
+openssl s_client -connect host-name-o-ip-server:10000 -cert certificato.pem
+</code>
+</pre>
+
+Dove ovviamente <em>host-name-o-ip-server</em> sarà, come è facile intuire, l'host name o l'indirizzo ip del server in ascolto sulla 10000 ( o qualsiasi altra porta abbiate usato ).
+
+In questo modo saremo connessi come accade con netcat e potremmo comunicare nello stesso modo, ma la nostra sessione sarà autenticata e soprattutto criptata, in modo tale che un eventuale
+osservatore esterno se la prenda in quel posto :)
+
+Spero questo breve articolo sia stato utile, come al solito per commenti e/o domande potete scrivere nello spazio sottostante.
+
+</p>
+
