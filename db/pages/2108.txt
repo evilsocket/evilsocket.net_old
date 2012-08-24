@@ -1,0 +1,49 @@
+Date: 2012-08-24 17:13:00
+Author: evilsocket
+Categories: Python, Programmazione, Sorgenti
+Tags: android, market, google, googleplay, google play, apk, download, downloader, direct link, script
+Title: GooglePlay Downloader - Scaricare gli APK direttamente sul proprio pc
+
+<p>
+Basandomi sul lavoro di <a href="http://code.google.com/p/android-market-api/" target="_blank">questi</a> ragazzi e sulla ( poca ) documentazione riguardante
+i protocolli di Google ed i protocol buffers, ho realizzato uno script in grado di trovare il link per il download diretto di un applicazione Android dato il suo
+identificativo ed i vostri dati di accesso al market.
+<break>
+
+Nell help possiamo leggere:
+
+
+<pre>Usage: gplay-downloader.py [options]
+
+EXAMPLE:
+	gplay-downloader.py --email your-email@gmail.com --password your-password --name com.arttech.xbugsfree --country "Italy" --operator "3" --device your-device-id
+
+Options:
+  -h, --help            show this help message and exit
+  -e EMAIL, --email=EMAIL
+                        Your android account email.
+  -p PASSWORD, --password=PASSWORD
+                        Your android account password.
+  -n PACKAGE, --name=PACKAGE
+                        Package identifier ( com.something.name ).
+  -c COUNTRY, --country=COUNTRY
+                        Your country.
+  -o OPERATOR, --operator=OPERATOR
+                        Your phone operator.
+  -d DEVICE, --device=DEVICE
+                        Your device ID ( can be obtained with this app https://play.google.com/store/apps/details?id=com.redphx.deviceid ) .
+</pre>
+
+Quindi, il nome del pacchetto ( parametro -n o --name ) lo potete trovare nel suo link al market, ad esempio per l'applicazione DeviceID, il cui link è
+
+<pre>https://play.google.com/store/apps/details?id=com.redphx.deviceid</pre>
+
+l'ID sarà
+
+<pre>com.redphx.deviceid</pre>
+
+Per i parametri country e operator, vi basterà lanciare una volta il programma omettendoli per avere la lista dei paesi e degli operatori supportati, in fine, per il 
+device id potete usare <a href="https://play.google.com/store/apps/details?id=com.redphx.deviceid" target="_blank">questa</a> applicazione.
+
+Il progetto si trova su github a <a href="https://github.com/evilsocket/google-play-downloader" target="_blank"><b>questo indirizzo</b></a>, enjoy ^^
+</p>
