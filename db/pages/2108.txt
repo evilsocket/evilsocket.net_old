@@ -12,7 +12,6 @@ identificativo ed i vostri dati di accesso al market.
 
 Nell help possiamo leggere:
 
-
 <pre>Usage: gplay-downloader.py [options]
 
 EXAMPLE:
@@ -46,4 +45,8 @@ Per i parametri country e operator, vi basterà lanciare una volta il programma 
 device id potete usare <a href="https://play.google.com/store/apps/details?id=com.redphx.deviceid" target="_blank">questa</a> applicazione.
 
 Il progetto si trova su github a <a href="https://github.com/evilsocket/google-play-downloader" target="_blank"><b>questo indirizzo</b></a>, enjoy ^^
+
+<b>IMPORTANTE</b>: Non pensate nemmeno di utilizzare lo script per scaricare "a scrocco" applicazioni a pagamento, se l'app è a pagamento ( e non l'avete già acquistata ) o non è compatibile con il vostro
+dispositivo, non sarà possibile scaricarla :)
+
 </p>
