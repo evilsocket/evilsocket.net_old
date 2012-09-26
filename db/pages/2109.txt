@@ -1,0 +1,42 @@
+Date: 2012-09-26 21:46:25
+Author: evilsocket
+Categories: Android, Programmazione, Sorgenti
+Tags: android, dsploit, network, analysis, poisoning, mitm, scanning, scan, nmap
+Title: dSploit - An Android network penetration suite
+
+<p>
+Vi voglio presentare un progetto al quale sto lavorando da qualche settimana ormai e che gode della "sponsorizzazione" della comunità di
+<a href="http://www.backbox.org/" target="_blank">BackBox Linux</a>, un software per Android chiamato <b>dSploit</b>.
+<break>
+
+<h4>Cosa è dSploit ?</h4>
+
+<b>dSploit</b> è una suite per Android per l'analisi e la penetrazione di rete, che mira ad offrire ai professionisti ed i geek della IT Security lo strumento professionale
+più avanzato e completo per eseguire security assesments di rete su un dispositivo mobile.
+Una volta avviata l'applicazione, l'utente sarà in grado di mappare la propria rete, identificare i sistemi operativi ed i servizi in esecuzione sugli altri endpoint, cercare
+le relative vulnerabilità note, craccare procedure di login dei più comuni sistemi di autenticazione, eseguire attacchi di tipo <b>man in the middle</b> e conseguentemente
+avere il totale controllo del traffico di rete, sia passivo con un password sniffer e dei dissector dei protocolli più comuni, che attivo manipolando in tempo reale i pacchetti
+da e verso le altre macchine connesse sulla nostra stessa rete, ecc ecc.
+
+<h4>Requiaiti</h4>
+
+I requisiti per poter installare ed utilizzare dSploit sono :
+
+<ul>
+  <li>Un dispositivo Android con almeno la versione 3.0 del sistema operativo.</li>
+  <li>Il dispositivo deve essere necessariamente <b>rootato</b>.</li>
+  <li>Una full install di <b>busybox</b> ( quindi con tutti i binari installati, non quella parziale ).</li>
+</ul>
+
+Se rispettate questi requisiti, potete ( e mi fate un favore! :D ) diventare dei beta tester, scaricando l'applicazione da <a href="https://github.com/evilsocket/dsploit/dSploit-1.0.0b.apk">questo link</a>.
+dSploit integra, oltre ad un sistema automatico di aggiornamenti, un crash reporting istantaneo ... in pratica, se vi crasha, io ricevo un email con tutti i dati relativi al crash in modo
+da poter intervenire sul codice tempestivamente.
+
+Per ora è una versione <b>beta</b>, quindi eventuali crash potrebbero verificarsi :)
+
+Se avete bisogno di ulteriori informazioni, fatemi sapere, vi lascio con un <a href="http://min.us/mqHHC8w0z" target="_blank">po di immagini</a> :)
+
+
+<b>PS</b>: Non è supportata la rotazione, l'app gira solo in landscape ed è una cosa voluta, se avete applicazioni tipo "rotation control" che forzano la rotazione anche
+su app che non la supportano, aspettatevi tanti crash ... e vi sta bene, tiè! :D
+</p>
