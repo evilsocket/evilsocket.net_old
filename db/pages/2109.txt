@@ -18,7 +18,7 @@ le relative vulnerabilità note, craccare procedure di login dei più comuni sis
 avere il totale controllo del traffico di rete, sia passivo con un password sniffer e dei dissector dei protocolli più comuni, che attivo manipolando in tempo reale i pacchetti
 da e verso le altre macchine connesse sulla nostra stessa rete, ecc ecc.
 
-<h4>Requiaiti</h4>
+<h4>Requisiti</h4>
 
 I requisiti per poter installare ed utilizzare dSploit sono :
 
