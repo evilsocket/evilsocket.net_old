@@ -23,12 +23,12 @@ da e verso le altre macchine connesse sulla nostra stessa rete, ecc ecc.
 I requisiti per poter installare ed utilizzare dSploit sono :
 
 <ul>
-  <li>Un dispositivo Android con almeno la versione 3.0 del sistema operativo.</li>
+  <li>Un dispositivo Android con almeno la versione 2.3 ( gingerbread ) del sistema operativo.</li>
   <li>Il dispositivo deve essere necessariamente <b>rootato</b>.</li>
   <li>Una full install di <b>busybox</b> ( quindi con tutti i binari installati, non quella parziale ).</li>
 </ul>
 
-Se rispettate questi requisiti, potete ( e mi fate un favore! :D ) diventare dei beta tester, scaricando l'applicazione da <a href="https://github.com/evilsocket/dsploit/dSploit-1.0.0b.apk/qr_code">questo link</a>.
+Se rispettate questi requisiti, potete ( e mi fate un favore! :D ) diventare dei beta tester, scaricando l'applicazione da <a href="https://github.com/evilsocket/dsploit/downloads">questo link</a>.
 dSploit integra, oltre ad un sistema automatico di aggiornamenti, un crash reporting istantaneo ... in pratica, se vi crasha, io ricevo un email con tutti i dati relativi al crash in modo
 da poter intervenire sul codice tempestivamente.
 
