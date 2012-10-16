@@ -23,7 +23,6 @@ Brevemente, le funzionalità attualmente implementate sono:
   <b>RouterPWN</b><br/>
   Lancia gli attacchi di routerpwn.com sul vostro router.
 </li>
-
 <li>
   <b>Trace</b><br/>
   Effettua un traceroute del bersaglio.
