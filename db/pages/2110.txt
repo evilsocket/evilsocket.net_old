@@ -1,0 +1,97 @@
+Date: 2012-10-16 19:16:50
+Author: evilsocket
+Categories: Android, Programmazione, Sorgenti
+Tags: android, dsploit, network, analysis, poisoning, mitm, scanning, scan, nmap
+Title: dSploit supera i 20.000 download con tante novità!
+
+<p>
+Scrivo questo breve post per riassumere un po la situazione sullo sviluppo di <a href="/?s=dsploit">dSploit</a>, sono stati giorni molto
+impegnativi, ma anche pieni di soddisfazione.
+
+Ho <a href="http://forum.xda-developers.com/showthread.php?t=1914699" target="_blank">presentato il progetto</a> alla comunità di XDA, in cerca di aiuto, 
+collaboratori, beta tester e, diciamocela tutta, anche un po di pubblicità, e ha funzionato alla grande! :D
+
+Ci sono state <b>ventidue</b> release dal mio ultimo post su dSploit, molte delle quali per correggere bug che sono emersi durante i test, aggiungere il supporto
+ad Android 2.3 e così via, ma altrettante hanno introdotto nuove funzionalità che rendono ad oggi dSploit il software per Android più completo in questo ambito
+( e non siamo nemmeno alla prima versione stabile! :D ), il che è confermato dal fatto che ha superato i 20.000 ( ventimila-porco-cazzo! ) download.
+
+Brevemente, le funzionalità attualmente implementate sono:
+<break>
+
+<ul>
+<li>
+  <b>RouterPWN</b><br/>
+  Lancia gli attacchi di routerpwn.com sul vostro router.
+</li>
+
+<li>
+  <b>Trace</b><br/>
+  Effettua un traceroute del bersaglio.
+</li>
+<li>
+  <b>Port Scanner</b><br/>
+  Un port scanner a pacchetti SYN che cerca velocemente le porte aperte su un dato obiettivo.
+</li>
+<li>
+  <b>Inspector</b><br/>
+  Esegue un analisi approfondita sul bersaglio, identificandone quando possibile il sistema operativo e la versione dei servizi in esecuzione.    
+</li>
+<li>
+  <b>Vulnerability Finder</b><br/>
+  Cerca le vulnerabilità note dei servizi in esecuzione tramite il National Vulnerability Database.    
+</li>
+<li>
+  <b>Login Cracker</b><br/>
+  Un login cracker molto veloce che supporta una marea di protocolli diversi, sia tramite bruteforcing che wordlist.  
+</li>
+<li>
+  <b>Packet Forger</b><br/>
+  Strumento multi uso per creare ed inviare pacchetti TCP o UDP al bersaglio.    
+</li>
+<li>
+  <b>MITM</b><br/>
+  Un insieme di strumenti per attacchi di tipo man in the middle sulla rete.<br/>
+  <ul>
+     <li><b>Simple Sniff</b><br/>
+       Redireziona tutto il traffico di rete sul dispositivo e mostra delle statistiche.
+     </li>
+     <li>
+       <b>Password Sniffer</b><br/>
+         Sniffa le password di tutti i computer in rete per diversi protocolli come http, ftp, imap, imaps, irc, msn, ecc.
+      </li>
+     <li>
+       <b>Session Hijacker</b>
+       Strumento che attende sessioni e cookie dalla rete e rubandole ci consente di loggarci come un altro utente a qualsiasi sito web
+       tramite un mini browser integrato.    
+     </li>
+     <li>
+       <b>Kill Connections</b><br/>
+       Fa in modo che l'obiettivo non riesca più a navigare.
+    </li>
+    <li>
+      <b>Redirect</b><br/>
+      Redireziona tutto il traffico http verso un altro indirizzo.
+    </li>
+    <li>
+      <b>Replace Images</b><br/>
+      Rimpiazza le immagini di tutte le pagine web che gli utenti della rete stanno navigando con un immagine a nostra scelta.    
+    </li>
+    <li>
+      <b>Replace Videos</b><br/>
+      Come sopra, ma rimpiazza i video di youtube.
+    </li>    
+    <li>
+      <b>Script Injection</b><br/>
+      Inserisce in tutte le pagine visitate sulla rete un javascript a nostra scelta ( utile se utilizzato ad esempio insieme a <a href="http://beefproject.com/" target="_blank">BeEF</a> ).  
+    </li>
+    <li>
+      <b>Custom Filter</b><br/>
+      Ci consente di definire dei filtri di sostituzione a nostra scelta per le pagine web ( supporta stringhe semplici ed espressioni regolari ).
+    </li>
+  </ul>
+</li>
+</ul>
+
+Vi ricordo che per scaricare l'ultima versione disponibile potete andare su <a href="https://github.com/evilsocket/dsploit/downloads" target="_blank">questa pagina</a>, mentre per segnalarmi eventuali bug su <a href="https://github.com/evilsocket/dsploit/issues" target="_blank">quest'altra</a> ... enjoy ^^
+</p>
+
