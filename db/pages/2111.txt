@@ -10,7 +10,7 @@ asimmetrico totalmente lato client, offre messaggistica istantanea sicura.
 
 La particolarità di quest sistema è la completa integrazione nei browser, essendo sviluppato principalmente come estensione di Firefox, Safari e Chrome.
 <break>
-Purtroppo la cosa non mi va molto a genio, non mi fanno impazzire le applicazioni che girano tramite il mio browser, in particolare se c'i sono di mezzo concetti come privacy e sicurezza, di conseguenza
+Purtroppo la cosa non mi va molto a genio, non mi fanno impazzire le applicazioni che girano tramite il mio browser, in particolare se ci sono di mezzo concetti come privacy e sicurezza, di conseguenza
 ho scritto una piccola applicazione in Python, <strong><a href="https://github.com/evilsocket/pycryptocat" target="_blank">pyCryptoCat</a></strong> che, appoggiandosi sui file stessi di CryptoCat crea
 un ambiente standalone nel quale far girare la nostra chat, sfruttando i bindings del motore WebKit e le GTK.
 
