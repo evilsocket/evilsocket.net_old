@@ -1,0 +1,18 @@
+Date: 2013-05-07 21:01:31
+Author: evilsocket
+Categories: Programmazione, Sorgenti, Python, Hacking
+Tags: cryptocat, chat, secure, safe chat, privacy, xmpp, jabber, pycryptocat
+Title: pyCryptoCat - Una chat sicura a prova di intercettazione.
+
+<p>
+<img class="alignleft" src="http://www.evilsocket.net/images/cryptocat.png" alt="CryptoCat" width="150" /> Ultimamente sono venuto a conoscenza del progetto <a href="https://crypto.cat/" target="_blank">CryptoCat</a>, un sistema di chat che utilizzando l'estensione OTR di jabber e l'encrypting
+asimmetrico totalmente lato client, offre messaggistica istantanea sicura.
+
+La particolarità di quest sistema è la completa integrazione nei browser, essendo sviluppato principalmente come estensione di Firefox, Safari e Chrome.
+<break>
+Purtroppo la cosa non mi va molto a genio, non mi fanno impazzire le applicazioni che girano tramite il mio browser, in particolare se c'i sono di mezzo concetti come privacy e sicurezza, di conseguenza
+ho scritto una piccola applicazione in Python, <strong><a href="https://github.com/evilsocket/pycryptocat" target="_blank">pyCryptoCat</a> che, appoggiandosi sui file stessi di CryptoCat crea
+un ambiente standalone nel quale far girare la nostra chat, sfruttando i bindings del motore WebKit e le GTK.
+
+A breve il software sarà pacchettizzato e quindi integrato anche per BackBox Linux.
+</p>
