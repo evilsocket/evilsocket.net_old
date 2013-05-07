@@ -124,7 +124,7 @@
     </ul>
 
     <h2>My Tweets</h2>
-    <ul>
+    <ul style="max-width:180px;overflow:hidden;">
       <li>
       <script type="text/javascript" src="http://widgets.twimg.com/j/2/widget.js"></script> 
       <script type="text/javascript"> 
